@@ -61,12 +61,15 @@ let categoriaActual = "todas";
 let logueado = false;
 let editandoId = null;
 
+// URL de backend en Vercel
+const BACKEND_URL = "https://tu-backend-vercel.vercel.app"; // <- Cambia esto a tu dominio real
+
 // 🔐 LOGIN
 async function mostrarLogin() {
   const user = prompt("Usuario:");
   const pass = prompt("Contraseña:");
 
-  const res = await fetch("/login", {
+  const res = await fetch(`${BACKEND_URL}/login`, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ user, pass })
@@ -85,7 +88,7 @@ async function mostrarLogin() {
 // 🔹 CARGAR NOTICIAS
 async function cargarNoticias() {
   contenedor.innerHTML = "Cargando...";
-  const res = await fetch("/noticias");
+  const res = await fetch(`${BACKEND_URL}/noticias`);
   let lista = await res.json();
   const busq = buscador.value.toLowerCase();
   lista = lista.filter(n => {
@@ -97,7 +100,7 @@ async function cargarNoticias() {
   if (lista.length === 0) { contenedor.innerHTML = "<p>No hay noticias</p>"; return; }
 
   lista.reverse().forEach(n => {
-    const imagen = n.imagen ? `/uploads/${n.imagen}` : "https://via.placeholder.com/400x200";
+    const imagen = n.imagen || "https://via.placeholder.com/400x200";
     contenedor.innerHTML += `
       <div class="p-3 rounded shadow bg-white dark-card">
         <img src="${imagen}" class="w-full h-40 object-cover rounded mb-2">
@@ -153,7 +156,7 @@ async function agregarNoticia() {
   formData.append("categoria", categoria);
   if (file) formData.append("imagen", file);
 
-  const url = editandoId ? `/noticias/${editandoId}` : "/noticias";
+  const url = editandoId ? `${BACKEND_URL}/noticias/${editandoId}` : `${BACKEND_URL}/noticias`;
   const metodo = editandoId ? "PUT" : "POST";
 
   await fetch(url, { method: metodo, body: formData });
@@ -171,13 +174,13 @@ function limpiar() {
 // ❌ ELIMINAR
 async function eliminar(id) {
   if (!confirm("¿Eliminar noticia?")) return;
-  await fetch(`/noticias/${id}`, { method: "DELETE" });
+  await fetch(`${BACKEND_URL}/noticias/${id}`, { method: "DELETE" });
   cargarNoticias();
 }
 
 // ❤️ LIKES
 async function darLike(id) {
-  await fetch(`/noticias/${id}/like`, { method: "POST" });
+  await fetch(`${BACKEND_URL}/noticias/${id}/like`, { method: "POST" });
   cargarNoticias();
 }
 
@@ -191,9 +194,9 @@ async function agregarComentario(id) {
   const input = document.getElementById(`input-com-${id}`);
   const texto = input.value;
   if (!texto) return;
-  await fetch(`/noticias/${id}/comentario`, {
+  await fetch(`${BACKEND_URL}/noticias/${id}/comentario`, {
     method: "POST",
-    headers: { "Content-Type":"application/json" },
+    headers: { "Content-Type":"application/json"},
     body: JSON.stringify({ texto })
   });
   input.value = "";
