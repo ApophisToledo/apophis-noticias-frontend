@@ -3,52 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apophis Noticias - Diario de Rosario</title>
-<meta name="description" content="Noticias de Rosario, Santa Fe, Argentina y el mundo. Deportes, política, arte, policiales y entretenimiento.">
-<!-- Google Analytics básico -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-X"></script>
+<title>𓂀 Apophis Noticias 𓂀</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- SEO / Google -->
+<meta name="description" content="Noticias de Rosario, provincia, país y mundo con estilo egipcio. Deportes, política, arte y más.">
+<meta name="keywords" content="Noticias, Rosario, Argentina, Deportes, Política, Arte, Show, Policiales">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'UA-XXXXXX-X');
+gtag('config','UA-XXXXX-Y');
 </script>
-<script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body{background:linear-gradient(#fdf6e3,#f4e3b2);font-family:"Papyrus",fantasy;color:#000;margin:0;}
-header{background:#d4af37;box-shadow:0 4px 8px rgba(0,0,0,0.3);padding:1rem;text-align:center;}
-.card{background:#fff7d1;border:2px solid #d4af37;border-radius:12px;padding:1rem;transition:transform 0.3s,box-shadow 0.3s,opacity 0.5s;opacity:0;position:relative;}
-.card.show{opacity:1;}
-.card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(212,175,55,0.5);}
-button{cursor:pointer;transition:transform 0.2s;}
-button:hover{transform:scale(1.05);}
-input{border:1px solid #d4af37;border-radius:6px;padding:0.3rem;width:100%;}
-.filtroBtn{background:#000;color:#fff;padding:0.5rem 1rem;border-radius:6px;margin-right:0.5rem;margin-bottom:0.5rem;}
+body { background: linear-gradient(#fdf6e3,#f4e3b2); font-family:"Papyrus", fantasy; }
+header { background:#d4af37; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
+.card { background:#fff7d1; border:2px solid #d4af37; border-radius:12px; padding:1rem; transition: all 0.3s; }
+.card:hover { transform: scale(1.03); box-shadow:0 6px 16px rgba(212,175,55,0.5); }
+button { cursor:pointer; transition: all 0.2s; }
+button:hover { transform: scale(1.05); }
+input { border:1px solid #d4af37; border-radius:6px; padding:0.3rem; }
 </style>
 </head>
 <body>
-<header>
+
+<header class="p-5 text-center">
 <h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
-<p>Noticias de la ciudad, provincia, país y mundo</p>
-<button onclick="mostrarLogin()" class="filtroBtn">Admin Login</button>
-<div style="margin-top:0.5rem;">
-  <button class="filtroBtn" onclick="filtrar('')">Todas</button>
-  <button class="filtroBtn" onclick="filtrar('deportes')">Deportes</button>
-  <button class="filtroBtn" onclick="filtrar('politica')">Política</button>
-  <button class="filtroBtn" onclick="filtrar('policiales')">Policiales</button>
-  <button class="filtroBtn" onclick="filtrar('arte')">Arte</button>
-  <button class="filtroBtn" onclick="filtrar('show')">Entretenimiento</button>
-</div>
+<p class="mt-1 text-lg">Noticias de Rosario, provincia, país y mundo</p>
 </header>
 
 <!-- LOGIN MODAL -->
-<div id="modalAdmin" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;">
-  <div style="background:#fff7d1;padding:2rem;border-radius:12px;max-width:400px;width:90%;">
-    <h2 style="text-align:center;font-size:1.5rem;margin-bottom:1rem;">Admin Login</h2>
-    <input id="adminUser" type="text" placeholder="Usuario" style="width:100%;margin-bottom:0.5rem;padding:0.5rem;">
-    <input id="adminPass" type="password" placeholder="Contraseña" style="width:100%;margin-bottom:0.5rem;padding:0.5rem;">
-    <button onclick="loginAdmin()" style="width:100%;background:#d4af37;color:white;padding:0.5rem;border:none;border-radius:6px;">Ingresar</button>
-    <p id="adminError" style="color:red;margin-top:0.5rem;text-align:center;"></p>
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+  <div class="bg-yellow-100 p-6 rounded shadow-lg w-80 text-center">
+    <h2 class="text-2xl font-bold mb-4">Login Admin</h2>
+    <input id="user" placeholder="Usuario" class="border px-2 py-1 w-full mb-2">
+    <input id="pass" type="password" placeholder="Contraseña" class="border px-2 py-1 w-full mb-4">
+    <button onclick="login()" class="bg-yellow-700 text-white px-4 py-2 rounded">Ingresar</button>
+    <p id="loginError" class="text-red-600 mt-2"></p>
   </div>
 </div>
 
@@ -58,73 +53,47 @@ input{border:1px solid #d4af37;border-radius:6px;padding:0.3rem;width:100%;}
 
 <script>
 const API = "https://apophis-noticias-backend.vercel.app";
-let isAdmin=false;
+let isAdmin = false;
 
-async function cargar(categoria=''){
+async function login(){
+  const user=document.getElementById("user").value;
+  const pass=document.getElementById("pass").value;
   try{
-    const res = await fetch(API+"/noticias"+(categoria?`?categoria=${categoria}`:''));
+    const res = await fetch(`${API}/login`, {
+      method:"POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({user, pass})
+    });
     const data = await res.json();
-    const contenedor = document.getElementById("contenedor");
-    if(!data.length){ contenedor.innerHTML="<p>No hay noticias</p>"; return; }
+    if(data.ok){
+      isAdmin=true;
+      document.getElementById("loginModal").style.display="none";
+      cargar();
+    } else document.getElementById("loginError").innerText="Usuario o contraseña incorrectos";
+  }catch(err){ console.error(err); document.getElementById("loginError").innerText="Error de conexión"; }
+}
 
-    contenedor.innerHTML = data.map((n,i)=>`
-      <div class="card" data-id="${n._id}" style="transition-delay:${i*100}ms">
+async function cargar(){
+  try{
+    const res = await fetch(API+"/noticias");
+    const data = await res.json();
+    const contenedor=document.getElementById("contenedor");
+    if(!data.length){ contenedor.innerHTML="<p>No hay noticias todavía</p>"; return; }
+    contenedor.innerHTML=data.map(n=>`
+      <div class="card">
         <h2 class="text-xl font-bold mb-2">${n.titulo}</h2>
-        ${n.imagen?`<img src="${n.imagen}" style="width:100%;border-radius:8px;margin-bottom:0.5rem;">`:''}
+        ${n.imagen ? `<img src="${n.imagen}" class="mb-2 w-full rounded">` : ""}
         <p class="mb-3">${n.contenido}</p>
-        <button onclick="like('${n._id}')">❤️ ${n.likes}</button>
-        <button onclick="dislike('${n._id}')" style="margin-left:0.5rem;">👎 ${n.dislikes}</button>
-        <div style="margin-top:0.5rem;">
-          <input id="c-${n._id}" placeholder="Comentario">
-          <button onclick="coment('${n._id}')">Enviar</button>
+        <button onclick="like('${n._id}')" class="bg-yellow-700 text-white px-3 py-1 rounded mb-2">❤️ ${n.likes}</button>
+        <button onclick="dislike('${n._id}')" class="bg-gray-700 text-white px-3 py-1 rounded mb-2">👎 ${n.dislikes||0}</button>
+        <div>
+          <input id="c-${n._id}" placeholder="Comentario" class="w-full mb-1 text-black">
+          <button onclick="coment('${n._id}')" class="bg-yellow-500 w-full py-1 rounded">Enviar</button>
         </div>
+        ${isAdmin ? `<button onclick="eliminar('${n._id}')" class="bg-red-600 text-white w-full py-1 mt-2 rounded">Eliminar</button>` : ""}
       </div>
     `).join("");
-
-    document.querySelectorAll(".card").forEach(card=>card.classList.add("show"));
-
-    if(isAdmin) mostrarBotonesAdmin();
-
-  }catch(err){ console.error(err); contenedor.innerHTML="Error conectando con el servidor"; }
-}
-
-function filtrar(c){ cargar(c); }
-
-function mostrarLogin(){ document.getElementById("modalAdmin").style.display="flex"; }
-async function loginAdmin(){
-  const user=document.getElementById("adminUser").value;
-  const pass=document.getElementById("adminPass").value;
-  try{
-    const res = await fetch(`${API}/login`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
-    const data = await res.json();
-    if(data.ok){ isAdmin=true; document.getElementById("modalAdmin").style.display="none"; alert("¡Bienvenido admin!"); mostrarBotonesAdmin(); }
-    else document.getElementById("adminError").innerText="Usuario o contraseña incorrecta";
-  }catch(err){ console.error(err); document.getElementById("adminError").innerText="Error de conexión"; }
-}
-
-function mostrarBotonesAdmin(){
-  document.querySelectorAll(".card").forEach(card=>{
-    const id=card.dataset.id;
-    if(card.querySelector(".deleteBtn")) return;
-    let btnDelete=document.createElement("button");
-    btnDelete.innerText="Eliminar";
-    btnDelete.className="deleteBtn";
-    btnDelete.style.background="#e74c3c";
-    btnDelete.style.color="#fff";
-    btnDelete.style.marginTop="0.5rem";
-    btnDelete.style.border="none";
-    btnDelete.style.borderRadius="4px";
-    btnDelete.style.padding="0.3rem 0.6rem";
-    btnDelete.onclick=()=>eliminarNoticia(id);
-    card.appendChild(btnDelete);
-  });
-}
-
-async function eliminarNoticia(id){
-  if(!isAdmin) return alert("No autorizado");
-  if(!confirm("¿Seguro querés eliminar esta noticia?")) return;
-  await fetch(`${API}/noticias/${id}`,{method:"DELETE"});
-  cargar();
+  }catch(err){ console.error(err); document.getElementById("contenedor").innerHTML="Error conectando con el servidor"; }
 }
 
 async function like(id){ await fetch(`${API}/noticias/${id}/like`,{method:"POST"}); cargar(); }
@@ -132,12 +101,21 @@ async function dislike(id){ await fetch(`${API}/noticias/${id}/dislike`,{method:
 async function coment(id){
   const texto=document.getElementById("c-"+id).value;
   if(!texto) return alert("Escribí algo");
-  await fetch(`${API}/noticias/${id}/comentario`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({texto})});
+  await fetch(`${API}/noticias/${id}/comentario`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({texto})
+  });
+  cargar();
+}
+async function eliminar(id){
+  if(!confirm("¿Seguro que querés eliminar esta noticia?")) return;
+  await fetch(`${API}/noticias/${id}`,{method:"DELETE"});
   cargar();
 }
 
-// Cargar al inicio
 cargar();
 </script>
+
 </body>
 </html>
