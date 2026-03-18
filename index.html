@@ -3,117 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𓂀 Apophis Noticias 𓂀</title>
+<title>Apophis Noticias - Rosario</title>
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- SEO / Google -->
-<meta name="description" content="Noticias de Rosario, provincia, país y mundo con estilo egipcio. Deportes, política, arte y más.">
-<meta name="keywords" content="Noticias, Rosario, Argentina, Deportes, Política, Arte, Show, Policiales">
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','UA-XXXXX-Y');
-</script>
-
 <style>
-body { background: linear-gradient(#fdf6e3,#f4e3b2); font-family:"Papyrus", fantasy; }
-header { background:#d4af37; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
-.card { background:#fff7d1; border:2px solid #d4af37; border-radius:12px; padding:1rem; transition: all 0.3s; }
-.card:hover { transform: scale(1.03); box-shadow:0 6px 16px rgba(212,175,55,0.5); }
-button { cursor:pointer; transition: all 0.2s; }
-button:hover { transform: scale(1.05); }
-input { border:1px solid #d4af37; border-radius:6px; padding:0.3rem; }
+body { background: linear-gradient(#fdf6e3,#f4e3b2); font-family: "Papyrus", fantasy; color: #000; }
+header { background-color: #d4af37; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+.card { background:#fff7d1; border:2px solid #d4af37; border-radius:12px; padding:1rem; transition: transform 0.2s; }
+.card:hover { transform: scale(1.02); box-shadow:0 4px 12px rgba(212,175,55,0.5);}
+button{cursor:pointer;}
+input, select{border:1px solid #d4af37; border-radius:6px; padding:0.3rem;}
+
+/* Modal */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+.modal-content { background:#fff7d1; padding:2rem; border-radius:12px; position:relative; width:90%; max-width:400px; text-align:center; }
+.close { position:absolute; top:0.5rem; right:0.5rem; font-size:1.5rem; cursor:pointer; }
+
+.comment { background:#fff0c0; margin-top:0.5rem; padding:0.3rem; border-radius:6px; }
 </style>
 </head>
 <body>
 
 <header class="p-5 text-center">
-<h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
-<p class="mt-1 text-lg">Noticias de Rosario, provincia, país y mundo</p>
+  <h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
+  <p class="mt-1 text-lg">Noticias de Rosario</p>
+  <button onclick="abrirModal('login')" class="mt-3 bg-yellow-700 text-white px-4 py-2 rounded">Admin Login</button>
+  <button id="crearBtn" onclick="abrirModal('crear')" class="mt-3 bg-green-700 text-white px-4 py-2 rounded hidden">Crear Noticia</button>
 </header>
 
-<!-- LOGIN MODAL -->
-<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-  <div class="bg-yellow-100 p-6 rounded shadow-lg w-80 text-center">
-    <h2 class="text-2xl font-bold mb-4">Login Admin</h2>
-    <input id="user" placeholder="Usuario" class="border px-2 py-1 w-full mb-2">
-    <input id="pass" type="password" placeholder="Contraseña" class="border px-2 py-1 w-full mb-4">
-    <button onclick="login()" class="bg-yellow-700 text-white px-4 py-2 rounded">Ingresar</button>
-    <p id="loginError" class="text-red-600 mt-2"></p>
+<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+  <p>Cargando noticias...</p>
+</main>
+
+<!-- Modal Login -->
+<div id="modal-login" class="modal flex">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal('login')">×</span>
+    <h2 class="text-xl font-bold mb-4">Login Admin</h2>
+    <input id="user" type="text" placeholder="Usuario"><br><br>
+    <input id="pass" type="password" placeholder="Contraseña"><br><br>
+    <button onclick="loginAdmin()" class="bg-yellow-700 text-white px-4 py-1 rounded">Ingresar</button>
   </div>
 </div>
 
-<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-<p>Cargando noticias...</p>
-</main>
+<!-- Modal Crear Noticia -->
+<div id="modal-crear" class="modal flex">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal('crear')">×</span>
+    <h2 class="text-xl font-bold mb-4">Crear Nueva Noticia</h2>
+    <input id="titulo" type="text" placeholder="Título"><br><br>
+    <textarea id="contenido" placeholder="Contenido" class="w-full mb-2"></textarea><br>
+    <select id="categoria" class="mb-2">
+      <option value="">Selecciona categoría</option>
+      <option value="deportes">Deportes</option>
+      <option value="politica">Política</option>
+      <option value="policiales">Policiales</option>
+      <option value="arte">Arte</option>
+      <option value="show">Show</option>
+    </select><br>
+    <input id="imagen" type="file" accept="image/*" class="mb-2"><br>
+    <button onclick="crearNoticia()" class="bg-green-700 text-white px-4 py-1 rounded">Crear</button>
+  </div>
+</div>
 
 <script>
 const API = "https://apophis-noticias-backend.vercel.app";
-let isAdmin = false;
+let esAdmin = false;
 
-async function login(){
-  const user=document.getElementById("user").value;
-  const pass=document.getElementById("pass").value;
+// ─── Modal ─────────────────────────────
+function abrirModal(tipo){ document.getElementById(`modal-${tipo}`).style.display="flex"; }
+function cerrarModal(tipo){ document.getElementById(`modal-${tipo}`).style.display="none"; }
+
+// ─── Login Admin ───────────────────────
+async function loginAdmin(){
+  const user = document.getElementById("user").value;
+  const pass = document.getElementById("pass").value;
   try{
-    const res = await fetch(`${API}/login`, {
-      method:"POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({user, pass})
+    const res = await fetch(`${API}/login`,{
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({user,pass})
     });
-    const data = await res.json();
-    if(data.ok){
-      isAdmin=true;
-      document.getElementById("loginModal").style.display="none";
-      cargar();
-    } else document.getElementById("loginError").innerText="Usuario o contraseña incorrectos";
-  }catch(err){ console.error(err); document.getElementById("loginError").innerText="Error de conexión"; }
+    if(res.ok){
+      esAdmin = true;
+      alert("✅ Login correcto");
+      cerrarModal('login');
+      document.getElementById("crearBtn").classList.remove("hidden");
+      cargar(); // recargar noticias para mostrar botones admin
+    } else {
+      const data = await res.json();
+      alert("❌ "+data.error);
+    }
+  }catch(err){ console.error(err); alert("Error conectando al servidor"); }
 }
 
+// ─── Crear Noticia ────────────────────
+async function crearNoticia(){
+  const titulo = document.getElementById("titulo").value;
+  const contenido = document.getElementById("contenido").value;
+  const categoria = document.getElementById("categoria").value;
+  const imagenFile = document.getElementById("imagen").files[0];
+
+  let imagenUrl = "";
+  if(imagenFile){
+    const formData = new FormData();
+    formData.append("file", imagenFile);
+    try{
+      const res = await fetch(`${API}/upload`, {method:"POST", body:formData});
+      const data = await res.json();
+      imagenUrl = data.url;
+    }catch(err){ console.error(err); alert("Error subiendo imagen"); return; }
+  }
+
+  try{
+    const res = await fetch(`${API}/noticias`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({titulo,contenido,categoria,imagen:imagenUrl})
+    });
+    if(res.ok){ alert("✅ Noticia creada"); cerrarModal('crear'); cargar(); }
+  }catch(err){ console.error(err); alert("Error creando noticia"); }
+}
+
+// ─── Noticias ─────────────────────────
 async function cargar(){
   try{
     const res = await fetch(API+"/noticias");
     const data = await res.json();
-    const contenedor=document.getElementById("contenedor");
+    const contenedor = document.getElementById("contenedor");
     if(!data.length){ contenedor.innerHTML="<p>No hay noticias todavía</p>"; return; }
-    contenedor.innerHTML=data.map(n=>`
+
+    contenedor.innerHTML = data.map(n=>`
       <div class="card">
         <h2 class="text-xl font-bold mb-2">${n.titulo}</h2>
-        ${n.imagen ? `<img src="${n.imagen}" class="mb-2 w-full rounded">` : ""}
         <p class="mb-3">${n.contenido}</p>
+        ${n.imagen ? `<img src="${n.imagen}" class="mb-2 rounded">` : ""}
         <button onclick="like('${n._id}')" class="bg-yellow-700 text-white px-3 py-1 rounded mb-2">❤️ ${n.likes}</button>
-        <button onclick="dislike('${n._id}')" class="bg-gray-700 text-white px-3 py-1 rounded mb-2">👎 ${n.dislikes||0}</button>
+        <button onclick="dislike('${n._id}')" class="bg-red-700 text-white px-3 py-1 rounded mb-2">👎</button>
         <div>
           <input id="c-${n._id}" placeholder="Comentario" class="w-full mb-1 text-black">
           <button onclick="coment('${n._id}')" class="bg-yellow-500 w-full py-1 rounded">Enviar</button>
         </div>
-        ${isAdmin ? `<button onclick="eliminar('${n._id}')" class="bg-red-600 text-white w-full py-1 mt-2 rounded">Eliminar</button>` : ""}
+        <div>
+          ${n.comentarios.map(c=>`<div class="comment">💬 ${c.texto}</div>`).join("")}
+        </div>
+        ${esAdmin ? `<button onclick="eliminar('${n._id}')" class="bg-red-900 text-white px-3 py-1 rounded mt-2">Eliminar</button>` : ""}
       </div>
     `).join("");
+
   }catch(err){ console.error(err); document.getElementById("contenedor").innerHTML="Error conectando con el servidor"; }
 }
 
-async function like(id){ await fetch(`${API}/noticias/${id}/like`,{method:"POST"}); cargar(); }
-async function dislike(id){ await fetch(`${API}/noticias/${id}/dislike`,{method:"POST"}); cargar(); }
-async function coment(id){
-  const texto=document.getElementById("c-"+id).value;
+// ─── Likes / Dislikes / Comentarios / Eliminar ─────────
+async function like(id){ await fetch(`${API}/noticias/${id}/like`, {method:"POST"}); cargar(); }
+async function dislike(id){ await fetch(`${API}/noticias/${id}/dislike`, {method:"POST"}); cargar(); }
+async function coment(id){ 
+  const texto = document.getElementById("c-"+id).value;
   if(!texto) return alert("Escribí algo");
-  await fetch(`${API}/noticias/${id}/comentario`,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({texto})
-  });
+  await fetch(`${API}/noticias/${id}/comentario`, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({texto})});
   cargar();
 }
 async function eliminar(id){
   if(!confirm("¿Seguro que querés eliminar esta noticia?")) return;
-  await fetch(`${API}/noticias/${id}`,{method:"DELETE"});
+  await fetch(`${API}/noticias/${id}`, {method:"DELETE"});
   cargar();
 }
 
+// cargar al abrir
 cargar();
 </script>
 
