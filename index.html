@@ -1,215 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Apophis Noticias</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { background-color: #f4e3b2; }
-    .dark-bg { background-color: #1a1a1a !important; color: #f4e3b2 !important; }
-    .dark-card { background-color: #333 !important; color: #f4e3b2 !important; }
-  </style>
-</head>
-<body class="text-gray-800 transition-colors duration-300">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<header class="bg-yellow-700 text-white p-5 flex justify-between items-center">
-  <h1 class="text-3xl font-bold">📰 Apophis Noticias</h1>
-  <div class="flex gap-2">
-    <input id="buscador" type="text" placeholder="Buscar..." class="p-2 rounded text-black">
-    <button onclick="toggleDark()" class="bg-black px-3 py-2 rounded">🌙</button>
-    <button onclick="mostrarLogin()" class="bg-black px-3 py-2 rounded">Admin</button>
-  </div>
+<title>Apophis Noticias</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  background: linear-gradient(#fdf6e3,#f4e3b2);
+  font-family: "Papyrus", fantasy;
+  color: #000;
+}
+header {
+  background-color: #d4af37;
+  padding: 2rem;
+  text-align: center;
+}
+.card {
+  background:#fff7d1;
+  border:2px solid #d4af37;
+  border-radius: 12px;
+  padding: 1rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>𓂀 Apophis Noticias 𓂀</h1>
+<p>Noticias de Rosario estilo egipcio</p>
 </header>
 
-<nav class="bg-yellow-600 text-white p-3 flex gap-3 justify-center text-sm">
-  <button onclick="filtrar('todas')">Todas</button>
-  <button onclick="filtrar('politica')">Política</button>
-  <button onclick="filtrar('deportes')">Deportes</button>
-  <button onclick="filtrar('policiales')">Policiales</button>
-  <button onclick="filtrar('arte')">Arte & Show</button>
-  <button onclick="filtrar('ciudad')">Ciudad</button>
-</nav>
-
-<section id="adminPanel" class="p-5 bg-yellow-200" style="display:none;">
-  <h2 class="text-xl font-bold mb-3">Agregar Noticia</h2>
-
-  <input id="titulo" placeholder="Título" class="p-2 w-full mb-2">
-  <input type="file" id="imagen" class="p-2 w-full mb-2">
-
-  <select id="categoria" class="p-2 w-full mb-2">
-    <option value="politica">Política</option>
-    <option value="deportes">Deportes</option>
-    <option value="policiales">Policiales</option>
-    <option value="arte">Arte & Show</option>
-    <option value="ciudad">Ciudad</option>
-  </select>
-
-  <textarea id="contenido" placeholder="Contenido" class="p-2 w-full mb-2"></textarea>
-  <button onclick="agregarNoticia()" class="bg-yellow-700 text-white px-4 py-2 rounded">Publicar</button>
-</section>
-
-<main id="contenedor" class="p-5 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></main>
+<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6"></main>
 
 <script>
-const contenedor = document.getElementById("contenedor");
-const buscador = document.getElementById("buscador");
-const adminPanel = document.getElementById("adminPanel");
-const inputImagen = document.getElementById("imagen");
 
-let categoriaActual = "todas";
-let logueado = false;
-let editandoId = null;
+const API = "https://apophis-noticias-backend-git-main-apophistoledos-projects.vercel.app";
 
-// URL de backend en Vercel
-const BACKEND_URL = "https://tu-backend-vercel.vercel.app"; // <- Cambia esto a tu dominio real
-
-// 🔐 LOGIN
-async function mostrarLogin() {
-  const user = prompt("Usuario:");
-  const pass = prompt("Contraseña:");
-
-  const res = await fetch(`${BACKEND_URL}/login`, {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ user, pass })
-  });
+async function cargar(){
+  const res = await fetch(API + "/noticias");
   const data = await res.json();
-  if (data.ok) {
-    logueado = true;
-    adminPanel.style.display = "block";
-    alert("Login correcto");
-    cargarNoticias();
-  } else {
-    alert("Datos incorrectos");
+
+  const contenedor = document.getElementById("contenedor");
+
+  if(data.length === 0){
+    contenedor.innerHTML = "<p>No hay noticias aún</p>";
+    return;
   }
+
+  contenedor.innerHTML = data.map(n => `
+    <div class="card">
+      <h2>${n.titulo}</h2>
+      <p>${n.contenido}</p>
+
+      <button onclick="like('${n._id}')">❤️ ${n.likes}</button>
+
+      <input id="c-${n._id}" placeholder="Comentario">
+      <button onclick="coment('${n._id}')">Enviar</button>
+    </div>
+  `).join("");
 }
 
-// 🔹 CARGAR NOTICIAS
-async function cargarNoticias() {
-  contenedor.innerHTML = "Cargando...";
-  const res = await fetch(`${BACKEND_URL}/noticias`);
-  let lista = await res.json();
-  const busq = buscador.value.toLowerCase();
-  lista = lista.filter(n => {
-    const coincideBusqueda = n.titulo.toLowerCase().includes(busq);
-    const coincideCategoria = categoriaActual === "todas" || n.categoria === categoriaActual;
-    return coincideBusqueda && coincideCategoria;
+async function like(id){
+  await fetch(`${API}/noticias/${id}/like`, {method:"POST"});
+  cargar();
+}
+
+async function coment(id){
+  const texto = document.getElementById("c-"+id).value;
+
+  await fetch(`${API}/noticias/${id}/comentario`, {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({texto})
   });
-  contenedor.innerHTML = "";
-  if (lista.length === 0) { contenedor.innerHTML = "<p>No hay noticias</p>"; return; }
 
-  lista.reverse().forEach(n => {
-    const imagen = n.imagen || "https://via.placeholder.com/400x200";
-    contenedor.innerHTML += `
-      <div class="p-3 rounded shadow bg-white dark-card">
-        <img src="${imagen}" class="w-full h-40 object-cover rounded mb-2">
-        <h3 class="text-lg font-bold">${n.titulo}</h3>
-        <p class="text-sm">${n.contenido}</p>
-        <span class="text-xs">${n.categoria}</span>
-
-        <div class="flex gap-2 mt-2 items-center">
-          <button onclick="darLike('${n._id}')" class="bg-red-500 text-white px-2 py-1 rounded">❤️ ${n.likes || 0}</button>
-          <button onclick="mostrarComentarios('${n._id}')" class="bg-blue-500 text-white px-2 py-1 rounded">💬 ${n.comentarios?.length || 0}</button>
-          ${logueado ? `
-            <button onclick="cargarEdicion('${n._id}','${n.titulo}','${n.contenido}','${n.categoria}')" class="bg-yellow-600 text-white px-2 py-1 rounded">Editar</button>
-            <button onclick="eliminar('${n._id}')" class="bg-gray-800 text-white px-2 py-1 rounded">Eliminar</button>
-          ` : ""}
-        </div>
-
-        <div id="comentarios-${n._id}" class="mt-2 hidden">
-          <input id="input-com-${n._id}" placeholder="Escribir comentario..." class="p-1 w-full mb-1 text-black">
-          <button onclick="agregarComentario('${n._id}')" class="bg-green-600 text-white px-2 py-1 rounded mb-2">Enviar</button>
-          <div id="lista-com-${n._id}"></div>
-        </div>
-
-      </div>
-    `;
-    if (n.comentarios) actualizarListaComentarios(n._id, n.comentarios);
-  });
+  cargar();
 }
 
-function toggleDark() { document.body.classList.toggle("dark-bg"); }
-function filtrar(cat) { categoriaActual = cat; cargarNoticias(); }
-buscador.addEventListener("input", cargarNoticias);
+cargar();
 
-// ✏️ EDICIÓN
-function cargarEdicion(id, titulo, contenido, categoria) {
-  document.getElementById("titulo").value = titulo;
-  document.getElementById("contenido").value = contenido;
-  document.getElementById("categoria").value = categoria;
-  editandoId = id;
-}
-
-// 📤 AGREGAR / EDITAR
-async function agregarNoticia() {
-  if (!logueado) return alert("Debes iniciar sesión");
-  const titulo = document.getElementById("titulo").value;
-  const contenido = document.getElementById("contenido").value;
-  const categoria = document.getElementById("categoria").value;
-  const file = inputImagen.files[0];
-  if (!titulo || !contenido) return alert("Completa los campos");
-
-  const formData = new FormData();
-  formData.append("titulo", titulo);
-  formData.append("contenido", contenido);
-  formData.append("categoria", categoria);
-  if (file) formData.append("imagen", file);
-
-  const url = editandoId ? `${BACKEND_URL}/noticias/${editandoId}` : `${BACKEND_URL}/noticias`;
-  const metodo = editandoId ? "PUT" : "POST";
-
-  await fetch(url, { method: metodo, body: formData });
-  limpiar();
-  editandoId = null;
-  cargarNoticias();
-}
-
-function limpiar() {
-  document.getElementById("titulo").value = "";
-  document.getElementById("contenido").value = "";
-  inputImagen.value = "";
-}
-
-// ❌ ELIMINAR
-async function eliminar(id) {
-  if (!confirm("¿Eliminar noticia?")) return;
-  await fetch(`${BACKEND_URL}/noticias/${id}`, { method: "DELETE" });
-  cargarNoticias();
-}
-
-// ❤️ LIKES
-async function darLike(id) {
-  await fetch(`${BACKEND_URL}/noticias/${id}/like`, { method: "POST" });
-  cargarNoticias();
-}
-
-// 💬 COMENTARIOS
-function mostrarComentarios(id) {
-  const div = document.getElementById(`comentarios-${id}`);
-  div.classList.toggle("hidden");
-}
-
-async function agregarComentario(id) {
-  const input = document.getElementById(`input-com-${id}`);
-  const texto = input.value;
-  if (!texto) return;
-  await fetch(`${BACKEND_URL}/noticias/${id}/comentario`, {
-    method: "POST",
-    headers: { "Content-Type":"application/json"},
-    body: JSON.stringify({ texto })
-  });
-  input.value = "";
-  cargarNoticias();
-}
-
-function actualizarListaComentarios(id, comentarios) {
-  const listaDiv = document.getElementById(`lista-com-${id}`);
-  listaDiv.innerHTML = comentarios.map(c => `<p class="text-xs border-b border-gray-200">${c.texto}</p>`).join("");
-}
-
-// 🚀 INICIO
-cargarNoticias();
 </script>
 
 </body>
