@@ -4,104 +4,163 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apophis Noticias - Egipto Estilo</title>
+<title>𓂀 Apophis Noticias</title>
+
+<meta name="description" content="Noticias de Rosario, Argentina y el mundo">
+<meta name="keywords" content="noticias, rosario, argentina">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 body {
-  background: linear-gradient(#fdf6e3,#f4e3b2); /* estilo papiro */
-  font-family: "Papyrus", fantasy;
-  color: #000000;
+  background: linear-gradient(#fdf6e3,#e6d3a3);
+  font-family: Georgia, serif;
 }
+
 header {
-  background-color: #d4af37;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  background: linear-gradient(to right,#c2a14d,#d4af37);
+  text-align:center;
+  padding:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
+
+header::after {
+  content: "𓂀 𓁹 𓆣";
+  display:block;
+}
+
+.filtros button {
+  background:#d4af37;
+  padding:8px;
+  margin:5px;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.filtros button:hover {
+  transform:scale(1.05);
+}
+
 .card {
-  background:#fff7d1;
-  border:2px solid #d4af37;
-  border-radius: 12px;
-  padding: 1rem;
-  transition: transform 0.2s;
+  background: linear-gradient(#fff8dc,#f5deb3);
+  border:2px solid #c2a14d;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  opacity:0;
+  animation:fade 0.6s forwards;
 }
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+
+@keyframes fade {
+  to { opacity:1; }
 }
-button {
-  cursor: pointer;
-}
-input {
-  border:1px solid #d4af37;
-  border-radius: 6px;
-  padding:0.3rem;
+
+img {
+  border-radius:10px;
+  margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
-<header class="p-5 text-center">
+
+<header>
 <h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
-<p class="mt-1 text-lg">Noticias de Rosario, Argentina y el mundo</p>
+<p>Rosario • Argentina • Mundo</p>
 </header>
 
-<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-<p>Cargando noticias...</p>
+<div class="filtros text-center">
+<button onclick="filtrar('')">Todas</button>
+<button onclick="filtrar('política')">Política</button>
+<button onclick="filtrar('deportes')">Deportes</button>
+<button onclick="filtrar('policiales')">Policiales</button>
+<button onclick="filtrar('arte')">Arte</button>
+<button onclick="filtrar('show')">Entretenimiento</button>
+</div>
+
+<main class="p-6">
+  <div id="destacada" class="mb-6"></div>
+  <div id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 </main>
 
 <script>
-const API = "https://apophis-noticias-backend.vercel.app"; // apunta al backend Vercel
+const API = "https://apophis-noticias-backend.vercel.app";
 
-async function cargar() {
-  try {
-    const res = await fetch(API + "/noticias");
-    const data = await res.json();
-    const contenedor = document.getElementById("contenedor");
+let categoriaActual = "";
 
-    if (!data.length) {
-      contenedor.innerHTML = "<p>No hay noticias todavía</p>";
-      return;
-    }
-
-    contenedor.innerHTML = data.map(n => `
-      <div class="card">
-        <h2 class="text-xl font-bold mb-2">${n.titulo}</h2>
-        <p class="mb-3">${n.contenido}</p>
-        <button onclick="like('${n._id}')" class="bg-yellow-700 text-white px-3 py-1 rounded mb-2">
-          ❤️ ${n.likes}
-        </button>
-        <div>
-          <input id="c-${n._id}" placeholder="Comentario" class="w-full mb-1 text-black">
-          <button onclick="coment('${n._id}')" class="bg-yellow-500 w-full py-1 rounded">Enviar</button>
-        </div>
-      </div>
-    `).join("");
-  } catch (err) {
-    console.error("Error:", err);
-    document.getElementById("contenedor").innerHTML = "Error conectando con el servidor";
-  }
-}
-
-async function like(id) {
-  await fetch(`${API}/noticias/${id}/like`, { method: "POST" });
+function filtrar(cat){
+  categoriaActual = cat;
   cargar();
 }
 
-async function coment(id) {
-  const texto = document.getElementById("c-" + id).value;
-  if (!texto) return alert("Escribí algo");
+async function cargar(){
+  try {
+    const url = categoriaActual
+      ? API + "/noticias?categoria=" + categoriaActual
+      : API + "/noticias";
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if(!data.length){
+      document.getElementById("contenedor").innerHTML = "No hay noticias";
+      return;
+    }
+
+    render(data);
+
+  } catch {
+    document.getElementById("contenedor").innerHTML = "Error servidor";
+  }
+}
+
+function render(data){
+  const destacada = data[0];
+
+  document.getElementById("destacada").innerHTML = `
+    <div class="card">
+      ${destacada.imagen ? `<img src="${destacada.imagen}">` : ""}
+      <h2 class="text-2xl font-bold">${destacada.titulo}</h2>
+      <p>${destacada.contenido}</p>
+    </div>
+  `;
+
+  const resto = data.slice(1);
+
+  document.getElementById("contenedor").innerHTML = resto.map(n => `
+    <div class="card">
+      ${n.imagen ? `<img src="${n.imagen}">` : ""}
+      <h3 class="font-bold">${n.titulo}</h3>
+
+      <button onclick="like('${n._id}')">
+        ❤️ ${n.likes}
+      </button>
+
+      <input id="c-${n._id}" placeholder="Comentario">
+      <button onclick="coment('${n._id}')">Enviar</button>
+    </div>
+  `).join("");
+}
+
+async function like(id){
+  await fetch(`${API}/noticias/${id}/like`, {method:"POST"});
+  cargar();
+}
+
+async function coment(id){
+  const texto = document.getElementById("c-"+id).value;
 
   await fetch(`${API}/noticias/${id}/comentario`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ texto })
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({texto})
   });
 
   cargar();
 }
 
-// cargar al abrir
 cargar();
 </script>
+
 </body>
 </html>

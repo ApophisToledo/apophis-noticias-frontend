@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="p-6 bg-yellow-100">
+
+<h1 class="text-2xl mb-4">Panel Admin</h1>
+
+<input id="titulo" placeholder="Título" class="block mb-2 w-full p-2">
+<textarea id="contenido" placeholder="Contenido" class="block mb-2 w-full p-2"></textarea>
+
+<select id="categoria" class="mb-2 p-2 w-full">
+<option>política</option>
+<option>deportes</option>
+<option>policiales</option>
+<option>arte</option>
+<option>show</option>
+</select>
+
+<input id="imagen" placeholder="URL imagen" class="block mb-2 w-full p-2">
+
+<button onclick="crear()" class="bg-yellow-600 text-white p-2 w-full">
+Crear
+</button>
+
+<script>
+const API = "https://apophis-noticias-backend.vercel.app";
+
+async function crear(){
+  await fetch(API + "/noticias", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      titulo: titulo.value,
+      contenido: contenido.value,
+      categoria: categoria.value,
+      imagen: imagen.value
+    })
+  });
+
+  alert("Creada");
+}
+</script>
+
+</body>
+</html>
