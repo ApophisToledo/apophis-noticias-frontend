@@ -4,86 +4,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apophis Noticias</title>
+<title>Apophis Noticias - Egipto Estilo</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 body {
-  background: linear-gradient(#fdf6e3,#f4e3b2);
+  background: linear-gradient(#fdf6e3,#f4e3b2); /* estilo papiro */
   font-family: "Papyrus", fantasy;
-  color: #000;
+  color: #000000;
 }
 header {
   background-color: #d4af37;
-  padding: 2rem;
-  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 .card {
   background:#fff7d1;
   border:2px solid #d4af37;
   border-radius: 12px;
   padding: 1rem;
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
+}
+button {
+  cursor: pointer;
+}
+input {
+  border:1px solid #d4af37;
+  border-radius: 6px;
+  padding:0.3rem;
 }
 </style>
 </head>
 
 <body>
-
-<header>
-<h1>𓂀 Apophis Noticias 𓂀</h1>
-<p>Noticias de Rosario estilo egipcio</p>
+<header class="p-5 text-center">
+<h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
+<p class="mt-1 text-lg">Noticias de Rosario, Argentina y el mundo</p>
 </header>
 
-<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6"></main>
+<main id="contenedor" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+<p>Cargando noticias...</p>
+</main>
 
 <script>
+const API = "https://apophis-noticias-backend.vercel.app"; // apunta al backend Vercel
 
-const API = "https://apophis-noticias-backend-git-main-apophistoledos-projects.vercel.app";
+async function cargar() {
+  try {
+    const res = await fetch(API + "/noticias");
+    const data = await res.json();
+    const contenedor = document.getElementById("contenedor");
 
-async function cargar(){
-  const res = await fetch(API + "/noticias");
-  const data = await res.json();
+    if (!data.length) {
+      contenedor.innerHTML = "<p>No hay noticias todavía</p>";
+      return;
+    }
 
-  const contenedor = document.getElementById("contenedor");
-
-  if(data.length === 0){
-    contenedor.innerHTML = "<p>No hay noticias aún</p>";
-    return;
+    contenedor.innerHTML = data.map(n => `
+      <div class="card">
+        <h2 class="text-xl font-bold mb-2">${n.titulo}</h2>
+        <p class="mb-3">${n.contenido}</p>
+        <button onclick="like('${n._id}')" class="bg-yellow-700 text-white px-3 py-1 rounded mb-2">
+          ❤️ ${n.likes}
+        </button>
+        <div>
+          <input id="c-${n._id}" placeholder="Comentario" class="w-full mb-1 text-black">
+          <button onclick="coment('${n._id}')" class="bg-yellow-500 w-full py-1 rounded">Enviar</button>
+        </div>
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Error:", err);
+    document.getElementById("contenedor").innerHTML = "Error conectando con el servidor";
   }
-
-  contenedor.innerHTML = data.map(n => `
-    <div class="card">
-      <h2>${n.titulo}</h2>
-      <p>${n.contenido}</p>
-
-      <button onclick="like('${n._id}')">❤️ ${n.likes}</button>
-
-      <input id="c-${n._id}" placeholder="Comentario">
-      <button onclick="coment('${n._id}')">Enviar</button>
-    </div>
-  `).join("");
 }
 
-async function like(id){
-  await fetch(`${API}/noticias/${id}/like`, {method:"POST"});
+async function like(id) {
+  await fetch(`${API}/noticias/${id}/like`, { method: "POST" });
   cargar();
 }
 
-async function coment(id){
-  const texto = document.getElementById("c-"+id).value;
+async function coment(id) {
+  const texto = document.getElementById("c-" + id).value;
+  if (!texto) return alert("Escribí algo");
 
   await fetch(`${API}/noticias/${id}/comentario`, {
-    method:"POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({texto})
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ texto })
   });
 
   cargar();
 }
 
+// cargar al abrir
 cargar();
-
 </script>
-
 </body>
 </html>
