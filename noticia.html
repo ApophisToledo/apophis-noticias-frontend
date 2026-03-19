@@ -7,20 +7,60 @@
 <body>
 
 <div id="n"></div>
+<input id="comentario">
+<button onclick="comentar()">Comentar</button>
+<div id="comentarios"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id=new URLSearchParams(location.search).get("id");
 
+let userId=localStorage.getItem("userId");
+if(!userId){
+  userId=Date.now().toString();
+  localStorage.setItem("userId",userId);
+}
+
 async function cargar(){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
 
-  document.getElementById("n").innerHTML=`
+  nDiv.innerHTML=`
     <h1>${n.titulo}</h1>
-    ${n.imagen?`<img src="${n.imagen}">`:''}
     <p>${n.contenido}</p>
+    <p>👁 ${n.vistas}</p>
+    <button onclick="like()">👍 ${n.likes}</button>
+    <button onclick="dislike()">👎 ${n.dislikes}</button>
   `;
+
+  comentarios.innerHTML=n.comentarios.map(c=>`
+    <div>
+      ${c.texto}
+      ${c.userId===userId?`<button onclick="borrar('${c.id}')">X</button>`:''}
+    </div>
+  `).join("");
+}
+
+async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
+async function dislike(){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
+
+async function comentar(){
+  await fetch(API+"/noticias/"+id+"/comentario",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({texto:comentario.value,userId})
+  });
+  comentario.value="";
+  cargar();
+}
+
+async function borrar(cid){
+  await fetch(API+"/noticias/"+id+"/comentario/"+cid,{
+    method:"DELETE",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({userId})
+  });
+  cargar();
 }
 
 cargar();
