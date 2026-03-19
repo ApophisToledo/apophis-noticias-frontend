@@ -1,95 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Apophis Noticias</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{background:#f4e3b2;font-family:Georgia;}
+.header{background:black;color:white;padding:20px;text-align:center;font-size:2rem;}
+.urgente{background:red;color:white;padding:10px;text-align:center;font-weight:bold;animation:blink 1s infinite;}
+@keyframes blink{50%{opacity:0;}}
+</style>
+</head>
+<body>
+
+<div class="header">𓂀 Apophis Noticias</div>
+<div id="urgente" class="urgente"></div>
+
+<div style="padding:10px;">
+<input id="user" placeholder="Usuario">
+<input id="pass" type="password" placeholder="Clave">
+<button onclick="login()">Admin</button>
+</div>
+
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const ADMIN_KEY="apophis_secreto_123";
 
-const params=new URLSearchParams(location.search);
-const isAdmin=params.get("admin")===ADMIN_KEY;
-
-// ACTIVAR PANEL ADMIN SIN ROMPER NADA
-if(isAdmin){
-  document.getElementById("dashboard").style.display="block";
-}
-
-// 🔥 CARGAR TODO
-async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
-
-  // 🟥 ÚLTIMO MOMENTO (SE MANTIENE)
-  if(data.length){
-    const u=data[0];
-    ultimoMomento.innerHTML=`🚨 ÚLTIMO MOMENTO: ${u.titulo}`;
-  }
-
-  // 📰 NOTICIAS
-  noticias.innerHTML=data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-      ${n.imagen?`<img src="${n.imagen}">`:''}
-      ${n.video?`<video src="${n.video}" controls></video>`:''}
-      <p>${n.contenido.substring(0,80)}</p>
-      <p>👍 ${n.likes} 👎 ${n.dislikes} 👁️ ${n.vistas}</p>
-    </div>
-  `).join("");
-}
-
-// 🔥 CREAR (ADMIN)
-async function crear(){
-  const fd=new FormData();
-  const file=img.files[0];
-
-  let url="";
-  if(file){
-    fd.append("file",file);
-
-    const r=await fetch(API+"/upload",{
-      method:"POST",
-      headers:{"x-admin-key":ADMIN_KEY},
-      body:fd
-    });
-
-    const d=await r.json();
-    url=d.url;
-  }
-
-  await fetch(API+"/noticias",{
+async function login(){
+  const res = await fetch(API+"/login",{
     method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "x-admin-key":ADMIN_KEY
-    },
-    body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.value,
-      categoria:categoria.value,
-      imagen:url
-    })
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user:user.value,password:pass.value})
   });
 
-  alert("Publicada");
-  cargar();
+  const data = await res.json();
+
+  if(data.token){
+    localStorage.setItem("token", data.token);
+    location="admin.html";
+  }else{
+    alert("Error login");
+  }
 }
 
-// 🔥 BUSCADOR (SE MANTIENE)
-async function buscar(){
-  const q=searchInput.value;
-  const res=await fetch(API+"/noticias/search?q="+q);
-  const data=await res.json();
-
-  noticias.innerHTML=data.map(n=>`<div class="card">${n.titulo}</div>`).join("");
+// 🔴 ÚLTIMO MOMENTO
+async function urgente(){
+  const res = await fetch(API+"/noticias/urgente");
+  const n = await res.json();
+  if(n) urgenteDiv.innerText="🔴 ÚLTIMO MOMENTO: "+n.titulo;
 }
-
-// 🔥 FILTRO (SE MANTIENE)
-async function filtrar(cat){
-  const res=await fetch(API+"/noticias/categoria/"+cat);
-  const data=await res.json();
-
-  noticias.innerHTML=data.map(n=>`<div class="card">${n.titulo}</div>`).join("");
-}
-
-function ir(id){
-  location="noticia.html?id="+id;
-}
-
-cargar();
+urgente();
 </script>
+
+</body>
+</html>
