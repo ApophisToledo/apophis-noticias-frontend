@@ -4,17 +4,31 @@
 <meta charset="UTF-8">
 <title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body{background:#f4e3b2;font-family:Georgia;}
+body{background:#f4e3b2;font-family:Georgia;margin:0;}
 .header{background:black;color:white;padding:20px;text-align:center;font-size:2rem;}
-.urgente{background:red;color:white;padding:10px;text-align:center;font-weight:bold;animation:blink 1s infinite;}
-@keyframes blink{50%{opacity:0;}}
+.ticker{background:red;color:white;overflow:hidden;white-space:nowrap;}
+.ticker span{
+  display:inline-block;
+  padding-left:100%;
+  animation:ticker 15s linear infinite;
+}
+@keyframes ticker{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-100%);}
+}
 </style>
 </head>
+
 <body>
 
 <div class="header">𓂀 Apophis Noticias</div>
-<div id="urgente" class="urgente"></div>
+
+<!-- 🔴 TICKER TV -->
+<div class="ticker">
+  <span id="tickerText">Cargando últimas noticias...</span>
+</div>
 
 <div style="padding:10px;">
 <input id="user" placeholder="Usuario">
@@ -25,6 +39,7 @@ body{background:#f4e3b2;font-family:Georgia;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
+// 🔐 LOGIN
 async function login(){
   const res = await fetch(API+"/login",{
     method:"POST",
@@ -42,13 +57,27 @@ async function login(){
   }
 }
 
-// 🔴 ÚLTIMO MOMENTO
-async function urgente(){
-  const res = await fetch(API+"/noticias/urgente");
-  const n = await res.json();
-  if(n) urgenteDiv.innerText="🔴 ÚLTIMO MOMENTO: "+n.titulo;
+// 🔴 TICKER (FIX ERROR JSON)
+async function cargarTicker(){
+  try{
+    const res = await fetch(API+"/noticias");
+    if(!res.ok) return;
+
+    const text = await res.text();
+    if(!text) return;
+
+    const data = JSON.parse(text);
+
+    const titulos = data.slice(0,5).map(n=>n.titulo).join(" 🔴 ");
+    document.getElementById("tickerText").innerText = titulos;
+
+  }catch(e){
+    console.log("Ticker error:", e);
+  }
 }
-urgente();
+
+cargarTicker();
+setInterval(cargarTicker, 10000);
 </script>
 
 </body>
