@@ -4,99 +4,73 @@
 <meta charset="UTF-8">
 <title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;}
+body{font-family:Georgia;margin:0;background:#f4e3b2;transition:.3s;}
 @media (prefers-color-scheme: dark){body{background:#111;color:white;}}
-
-.container{max-width:1200px;margin:auto;}
-
 .header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;}
-
-.eye::after{
-content:"●";
-position:absolute;
-animation:moveEye 3s infinite;
-}
-@keyframes moveEye{
-0%{transform:translate(0,0);}
-50%{transform:translate(3px,0);}
-100%{transform:translate(0,0);}
-}
-
-.slider{
-margin:15px;
-background:red;
-color:white;
-padding:15px;
-text-align:center;
-border-radius:10px;
-cursor:pointer;
-}
-
-.cat{background:black;color:white;padding:10px;border-radius:6px;margin:5px;display:inline-block;cursor:pointer;}
-.cat:hover{background:gold;color:black;}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;padding:15px;}
-.card{background:#fff8dc;padding:10px;border-radius:10px;cursor:pointer;}
+.eye::after{content:"●";position:absolute;animation:moveEye 3s infinite;}
+@keyframes moveEye{0%{transform:translate(0,0);}50%{transform:translate(4px,0);}100%{transform:translate(0,0);}}
+.slider{margin:15px;background:red;color:white;padding:15px;text-align:center;border-radius:10px;cursor:pointer;}
+.categorias{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.cat{background:black;color:white;padding:10px 15px;border-radius:8px;cursor:pointer;transition:.3s;}
+.cat:hover{background:gold;color:black;transform:scale(1.1);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:20px;}
+.card{background:#fff8dc;padding:15px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;transition:.3s;animation:fadeIn .5s ease;}
+.card:hover{transform:translateY(-5px) scale(1.02);}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.btn{padding:5px 10px;border-radius:5px;margin:3px;}
+.like{background:green;color:white;}
+.dislike{background:red;color:white;}
 </style>
 </head>
-
 <body>
 
-<div class="header">𓂀 APOPHIS NOTICIAS 𓂀</div>
+<div class="header">𓂀 <span class="eye">𓁹</span> APOPHIS NOTICIAS <span class="eye">𓁹</span> 𓂀</div>
 
 <div class="container">
+<button onclick="abrirLogin()">Admin</button>
+<div id="loginBox" style="display:none;">
+<input id="user" placeholder="Usuario">
+<input id="pass" placeholder="Pass" type="password">
+<button onclick="login()">Ingresar</button>
+</div>
 
 <div id="sliderText" class="slider"></div>
 
-<div>
-<span class="cat" onclick="cat('politica')">Política</span>
-<span class="cat" onclick="cat('deportes')">Deportes</span>
-<span class="cat" onclick="cat('policiales')">Policiales</span>
-<span class="cat" onclick="cat('arte')">Arte</span>
-<span class="cat" onclick="cat('show')">Show</span>
+<div class="categorias">
+<div class="cat" onclick="cat('politica')">Política</div>
+<div class="cat" onclick="cat('deportes')">Deportes</div>
+<div class="cat" onclick="cat('policiales')">Policiales</div>
+<div class="cat" onclick="cat('arte')">Arte</div>
+<div class="cat" onclick="cat('show')">Show</div>
 </div>
 
 <div id="contenedor" class="grid"></div>
-
 </div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+let noticias=[],i=0;
 
-let noticias=[];
-let i=0;
+function abrirLogin(){loginBox.style.display="block";}
+async function login(){
+  const res=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:user.value,password:pass.value})});
+  const data=await res.json();
+  if(data.token){localStorage.setItem("token",data.token);alert("Admin activado");location="admin.html";}
+  else alert("Error");
+}
 
 async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
-  noticias=data;
-
-  contenedor.innerHTML=data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h3>${n.titulo}</h3>
-      <p>${n.contenido.substring(0,100)}</p>
-      <p>👁 ${n.vistas} 👍 ${n.likes} 👎 ${n.dislikes}</p>
-    </div>
-  `).join("");
-
+  const res=await fetch(API+"/noticias");noticias=await res.json();
+  contenedor.innerHTML=noticias.map(n=>`<div class="card"><h2 onclick="ir('${n._id}')">${n.titulo}</h2><p>${n.contenido.substring(0,100)}</p><p>👁 ${n.vistas}</p><button class="btn like" onclick="like('${n._id}')">👍 ${n.likes}</button><button class="btn dislike" onclick="dislike('${n._id}')">👎 ${n.dislikes}</button></div>`).join("");
   slider();
 }
-
-function slider(){
-  setInterval(()=>{
-    const n=noticias[i];
-    sliderText.innerHTML=`<div onclick="ir('${n._id}')">🔴 ${n.titulo}</div>`;
-    i=(i+1)%noticias.length;
-  },4000);
-}
-
+function slider(){setInterval(()=>{const n=noticias[i];sliderText.innerHTML=`<div onclick="ir('${n._id}')">🔴 ${n.titulo}</div>`;i=(i+1)%noticias.length;},4000);}
+async function like(id){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
+async function dislike(id){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
 function ir(id){location="noticia.html?id="+id;}
 function cat(c){location="categoria.html?cat="+c;}
-
 cargar();
 </script>
-
 </body>
 </html>

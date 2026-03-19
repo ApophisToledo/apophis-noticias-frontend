@@ -3,69 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Noticia</title>
+<style>
+body{font-family:Georgia;background:#f4e3b2;}
+.container{max-width:900px;margin:auto;background:#fff8dc;padding:20px;border-radius:12px;}
+.btn{padding:6px 10px;border-radius:6px;margin:5px;}
+</style>
 </head>
 <body>
-
-<button onclick="location='index.html'">Inicio</button>
-
+<div class="container">
+<button onclick="volver()">⬅ Inicio</button>
 <div id="n"></div>
-
+<h3>Comentarios</h3>
 <input id="comentario">
 <button onclick="comentar()">Enviar</button>
-
 <div id="comentarios"></div>
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id=new URLSearchParams(location.search).get("id");
-
-let userId=localStorage.getItem("userId");
-if(!userId){
-  userId=Date.now().toString();
-  localStorage.setItem("userId",userId);
-}
+let userId=localStorage.getItem("userId")||Date.now();localStorage.setItem("userId",userId);
 
 async function cargar(){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
-
-  document.getElementById("n").innerHTML=`
-    <h1>${n.titulo}</h1>
-    <p>${n.contenido}</p>
-    <p>👁 ${n.vistas}</p>
-    <button onclick="like()">👍 ${n.likes}</button>
-    <button onclick="dislike()">👎 ${n.dislikes}</button>
-  `;
-
-  comentarios.innerHTML=n.comentarios.map(c=>`
-    <div>${c.texto} ${c.userId===userId?`<button onclick="borrar('${c.id}')">X</button>`:''}</div>
-  `).join("");
+  document.getElementById("n").innerHTML=`<h1>${n.titulo}</h1><p>${n.contenido}</p><p>👁 ${n.vistas}</p><button class="btn" onclick="like()">👍 ${n.likes}</button><button class="btn" onclick="dislike()">👎 ${n.dislikes}</button>`;
+  comentarios.innerHTML=n.comentarios.map(c=>`<div>${c.texto}</div>`).join("");
 }
-
 async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
 async function dislike(){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
-
-async function comentar(){
-  await fetch(API+"/noticias/"+id+"/comentario",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({texto:comentario.value,userId})
-  });
-  comentario.value="";
-  cargar();
-}
-
-async function borrar(cid){
-  await fetch(API+"/noticias/"+id+"/comentario/"+cid,{
-    method:"DELETE",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({userId})
-  });
-  cargar();
-}
-
+async function comentar(){await fetch(API+"/noticias/"+id+"/comentario",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({texto:comentario.value,userId})});comentario.value="";cargar();}
+function volver(){location="index.html";}
 cargar();
 </script>
-
 </body>
 </html>
