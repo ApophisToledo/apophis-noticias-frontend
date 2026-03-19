@@ -6,12 +6,16 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{background:#f4e3b2;font-family:serif;margin:0;}
-.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px; transition: transform 0.3s;}
-.card:hover{transform: scale(1.02);}
+h1 span{animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px; transition: all 0.3s; cursor:pointer;}
+.card:hover{transform:translateY(-5px) scale(1.02); box-shadow:0 5px 15px rgba(0,0,0,0.3);}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:99999;}
 .modal-content{background:white;padding:20px;border-radius:10px;position:relative;}
 .close-btn{position:absolute;top:5px;right:10px;font-size:18px;cursor:pointer;}
 .panel{position:fixed;top:0;right:0;width:400px;height:100%;background:white;overflow:auto;padding:15px;display:none;z-index:9999;}
+#ultimoMomento{background:red;color:white;font-weight:bold;padding:5px;overflow:hidden;white-space:nowrap;}
+#ultimoMomento img{height:40px;width:40px;object-fit:cover;border-radius:5px;margin-right:5px;}
 </style>
 </head>
 <body>
@@ -20,7 +24,7 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
   <span>👁️</span> 𓂀 Apophis Noticias 𓂀 <span>👁️</span>
 </h1>
 
-<!-- Botones de login y registro -->
+<!-- Botones login y registro -->
 <div class="text-center mb-4">
   <button onclick="abrirLogin()" class="bg-black text-white px-4 py-2 mr-2">Ingresar Admin</button>
   <button onclick="abrirRegistro()" class="bg-blue-800 text-white px-4 py-2">Registro</button>
@@ -33,23 +37,23 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
 </div>
 
 <!-- Categorías -->
-<div id="categorias" class="flex justify-center gap-3 mb-4">
+<div id="categorias" class="flex justify-center gap-3 mb-4 flex-wrap">
   <button onclick="filtrar('politica')" class="px-3 py-1 bg-yellow-500 rounded">Política</button>
   <button onclick="filtrar('deportes')" class="px-3 py-1 bg-green-500 rounded">Deportes</button>
   <button onclick="filtrar('policiales')" class="px-3 py-1 bg-red-500 rounded">Policiales</button>
   <button onclick="filtrar('arte')" class="px-3 py-1 bg-purple-500 rounded">Arte</button>
   <button onclick="filtrar('show')" class="px-3 py-1 bg-pink-500 rounded">Show</button>
+  <button onclick="cargar()" class="px-3 py-1 bg-gray-700 text-white rounded">Inicio</button>
 </div>
 
 <!-- Último momento -->
-<div id="ultimoMomento" class="p-2 mb-4 text-white font-bold text-lg animate-pulse bg-red-600 flex items-center gap-2"></div>
+<div id="ultimoMomento"></div>
 
-<!-- Contenedor de noticias -->
+<!-- Noticias -->
 <div id="noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
 <!-- Publicidad -->
-<div class="text-center mb-4">
-  <!-- Google AdSense ejemplo -->
+<div class="text-center my-4">
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-TU_CLIENTE_ADSENSE"
@@ -83,10 +87,8 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
 <!-- DASHBOARD ADMIN -->
 <div id="dashboard" class="panel">
   <h2 class="text-xl mb-2">Panel Admin</h2>
-
   <input id="titulo" placeholder="Titulo" class="border w-full mb-2 p-1">
   <textarea id="contenido" class="border w-full mb-2 p-1"></textarea>
-
   <select id="categoria" class="border w-full mb-2 p-1">
     <option value="politica">Política</option>
     <option value="deportes">Deportes</option>
@@ -94,61 +96,57 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
     <option value="arte">Arte</option>
     <option value="show">Show</option>
   </select>
-
   <input type="file" id="img" class="mb-2">
   <input type="file" id="video" class="mb-2">
-
   <button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Crear Noticia</button>
-
   <h3>Noticias</h3>
   <div id="listaAdmin"></div>
-
   <button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar Panel</button>
 </div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-let token="";
+let token = localStorage.getItem("token") || "";
 let admin=false;
 
-// MODALES
+// Modales
 function abrirLogin(){ document.getElementById("login").style.display="flex"; }
 function cerrarLogin(){ document.getElementById("login").style.display="none"; }
 function abrirRegistro(){ document.getElementById("registro").style.display="flex"; }
 function cerrarRegistro(){ document.getElementById("registro").style.display="none"; }
 function cerrarAdmin(){ document.getElementById("dashboard").style.display="none"; }
 
-// LOGIN ADMIN
+// LOGIN
 async function login(){
-  const u = document.getElementById("user").value.trim();
-  const p = document.getElementById("pass").value.trim();
+  const u=document.getElementById("user").value.trim();
+  const p=document.getElementById("pass").value.trim();
   if(!u||!p){ alert("Complete usuario y contraseña"); return; }
-
   try{
-    const res = await fetch(API+"/login",{method:"POST",
+    const res=await fetch(API+"/login",{method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({user:u, pass:p})
     });
     if(!res.ok){ alert("Usuario o contraseña incorrecta"); return; }
-    const data = await res.json();
-    token = data.token; admin = true;
-    cerrarLogin(); document.getElementById("dashboard").style.display="block";
+    const data=await res.json();
+    token=data.token; admin = (data.role==="admin");
+    localStorage.setItem("token", token);
+    cerrarLogin();
+    if(admin) document.getElementById("dashboard").style.display="block";
     cargar();
   }catch(e){ alert("Error de conexión"); console.error(e);}
 }
 
 // REGISTRO
 async function registrar(){
-  const u = document.getElementById("regUser").value.trim();
-  const p = document.getElementById("regPass").value.trim();
+  const u=document.getElementById("regUser").value.trim();
+  const p=document.getElementById("regPass").value.trim();
   if(!u||!p){ alert("Complete usuario y contraseña"); return; }
-
   try{
-    const res = await fetch(API+"/register",{method:"POST",
+    const res=await fetch(API+"/register",{method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({user:u, pass:p})
     });
-    if(!res.ok){ const err = await res.json(); alert(err.error || "Error al registrar"); return; }
+    if(!res.ok){ const err=await res.json(); alert(err.error||"Error al registrar"); return; }
     alert("Usuario registrado, ahora puede ingresar"); cerrarRegistro();
   }catch(e){ alert("Error de conexión"); console.error(e);}
 }
@@ -157,15 +155,20 @@ async function registrar(){
 async function cargar(){
   const res = await fetch(API+"/noticias"); const data = await res.json();
 
-  // Último momento
+  // Último Momento Ticker
   if(data.length>0){
-    const ultimo = data[0];
-    document.getElementById("ultimoMomento").innerHTML = `<img src="${ultimo.imagen||''}" class="w-10 h-10 rounded mr-2"> Último Momento: ${ultimo.titulo}`;
+    let i=0;
+    setInterval(()=>{
+      const ultimo = data[i % data.length];
+      document.getElementById("ultimoMomento").innerHTML =
+        `<img src="${ultimo.imagen||''}"> Último Momento: ${ultimo.titulo}`;
+      i++;
+    },4000);
   }
 
   // Noticias
   document.getElementById("noticias").innerHTML = data.map(n=>`
-    <div class="card cursor-pointer" onclick="ir('${n._id}')">
+    <div class="card" onclick="ir('${n._id}')">
       <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
       ${n.video?`<video src="${n.video}" controls class="w-full rounded mb-2"></video>`:''}
@@ -186,7 +189,7 @@ async function cargar(){
   }
 }
 
-// Crear noticia (fotos y videos)
+// Crear noticia
 async function crear(){
   const fd = new FormData();
   const img = document.getElementById("img").files[0];
@@ -196,8 +199,8 @@ async function crear(){
 
   let url=""; let vurl="";
   if(img){
-    const r = await fetch(API+"/upload",{method:"POST",headers:{Authorization:token},body:fd});
-    const d = await r.json(); url = d.url; vurl = d.video || '';
+    const r = await fetch(API+"/upload",{method:"POST", headers:{Authorization:token}, body:fd});
+    const d = await r.json(); url=d.url; vurl=d.video || '';
   }
 
   await fetch(API+"/noticias",{method:"POST",
@@ -213,6 +216,13 @@ async function crear(){
   alert("Noticia creada"); cargar();
 }
 
+// Editar noticia
+async function editar(id){
+  const res=await fetch(API+"/noticias/"+id);
+  const n=await res.json();
+  titulo.value=n.titulo; contenido.value=n.contenido; categoria.value=n.categoria;
+}
+
 // Eliminar noticia
 async function eliminar(id){
   if(!confirm("Eliminar noticia?")) return;
@@ -220,18 +230,11 @@ async function eliminar(id){
   cargar();
 }
 
-// Editar noticia
-async function editar(id){
-  const res = await fetch(API+"/noticias/"+id); const n = await res.json();
-  titulo.value = n.titulo; contenido.value = n.contenido; categoria.value = n.categoria;
-}
-
 // Filtrar
 async function filtrar(cat){
-  const res = await fetch(API+"/noticias/categoria/"+cat);
-  const data = await res.json();
+  const res=await fetch(API+"/noticias/categoria/"+cat); const data=await res.json();
   document.getElementById("noticias").innerHTML = data.map(n=>`
-    <div class="card cursor-pointer" onclick="ir('${n._id}')">
+    <div class="card" onclick="ir('${n._id}')">
       <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
       <p>${n.contenido.substring(0,80)}...</p>
@@ -239,14 +242,13 @@ async function filtrar(cat){
   `).join("");
 }
 
-// Buscar noticias
+// Buscar
 async function buscar(){
-  const q = document.getElementById("searchInput").value.trim();
+  const q=document.getElementById("searchInput").value.trim();
   if(!q) return cargar();
-  const res = await fetch(API+"/noticias/search?q="+encodeURIComponent(q));
-  const data = await res.json();
+  const res=await fetch(API+"/noticias/search?q="+encodeURIComponent(q)); const data=await res.json();
   document.getElementById("noticias").innerHTML = data.map(n=>`
-    <div class="card cursor-pointer" onclick="ir('${n._id}')">
+    <div class="card" onclick="ir('${n._id}')">
       <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
       <p>${n.contenido.substring(0,80)}...</p>
@@ -254,11 +256,10 @@ async function buscar(){
   `).join("");
 }
 
-// Ir a noticia
 function ir(id){ location="noticia.html?id="+id; }
 
-cargar();
+// Cargar al inicio
+window.onload=()=>{ if(token){ document.getElementById("dashboard").style.display="block"; cargar(); } else cargar(); }
 </script>
-
 </body>
 </html>
