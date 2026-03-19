@@ -6,15 +6,29 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{background:#f4e3b2;font-family:serif;margin:0;}
-.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px;transition:transform 0.3s;cursor:pointer;}
+.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px; transition: transform 0.3s; cursor:pointer;}
 .card:hover{transform: scale(1.02);}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:99999;}
+.modal-content{background:white;padding:20px;border-radius:10px;position:relative;}
+.close-btn{position:absolute;top:5px;right:10px;font-size:18px;cursor:pointer;}
 .panel{position:fixed;top:0;right:0;width:400px;height:100%;background:white;overflow:auto;padding:15px;display:none;z-index:9999;}
+.animate-pulse-red{animation: pulseRed 1s infinite;}
+@keyframes pulseRed {0%,100%{background:red;}50%{background:#ff6666;}}
 </style>
 </head>
 <body>
 
-<h1 class="text-5xl text-center p-4">𓂀 Apophis Noticias 𓂀</h1>
+<h1 class="text-5xl text-center p-4 animate-pulse">
+  <span>👁️</span> 𓂀 Apophis Noticias 𓂀 <span>👁️</span>
+</h1>
 
+<!-- Buscador -->
+<div class="text-center mb-4">
+  <input id="searchInput" placeholder="Buscar noticias..." class="border p-1 w-64">
+  <button onclick="buscar()" class="bg-yellow-600 px-2 text-white">Buscar</button>
+</div>
+
+<!-- Categorías -->
 <div id="categorias" class="flex justify-center gap-3 mb-4">
   <button onclick="filtrar('politica')" class="px-3 py-1 bg-yellow-500 rounded">Política</button>
   <button onclick="filtrar('deportes')" class="px-3 py-1 bg-green-500 rounded">Deportes</button>
@@ -23,9 +37,13 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
   <button onclick="filtrar('show')" class="px-3 py-1 bg-pink-500 rounded">Show</button>
 </div>
 
+<!-- Último momento tipo Crónica TV -->
+<div id="ultimoMomento" class="p-2 mb-4 text-white font-bold text-lg flex items-center gap-2 animate-pulse-red"></div>
+
+<!-- Contenedor de noticias -->
 <div id="noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-<!-- PANEL ADMIN -->
+<!-- PANEL ADMIN (solo con ?admin=true) -->
 <div id="dashboard" class="panel">
   <h2 class="text-xl mb-2">Panel Admin Secreto</h2>
   <input id="titulo" placeholder="Titulo" class="border w-full mb-2 p-1">
@@ -42,25 +60,39 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
   <button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Crear Noticia</button>
   <h3>Noticias</h3>
   <div id="listaAdmin"></div>
+  <button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar Panel</button>
 </div>
 
 <script>
-const API = "https://apophis-noticias-backend.vercel.app";
+const API="https://apophis-noticias-backend.vercel.app";
 const urlParams = new URLSearchParams(window.location.search);
-const admin = urlParams.get("admin") === "true";
+const admin = urlParams.get("admin")==="true";
 if(admin) document.getElementById("dashboard").style.display="block";
 
+function cerrarAdmin(){document.getElementById("dashboard").style.display="none";}
+
 async function cargar(){
-  const res = await fetch(API+"/noticias");
-  const data = await res.json();
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+
+  // Último momento
+  if(data.length>0){
+    const ultimo=data[0];
+    document.getElementById("ultimoMomento").innerHTML = `<img src="${ultimo.imagen||''}" class="w-10 h-10 rounded mr-2"> Último Momento: ${ultimo.titulo}`;
+  }
+
+  // Noticias
   document.getElementById("noticias").innerHTML = data.map(n=>`
     <div class="card" onclick="ir('${n._id}')">
       <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
+      ${n.video?`<video src="${n.video}" controls class="w-full rounded mb-2"></video>`:''}
       <p>${n.contenido.substring(0,80)}...</p>
+      <p>👍 ${n.likes.length} | 👎 ${n.dislikes.length} | 👁️ ${n.vistas}</p>
     </div>
   `).join("");
 
+  // Admin lista
   if(admin){
     document.getElementById("listaAdmin").innerHTML = data.map(n=>`
       <div class="border p-2 mb-2">
@@ -71,70 +103,41 @@ async function cargar(){
     `).join("");
   }
 }
-cargar();
-
-async function filtrar(cat){
-  const res = await fetch(API+"/noticias/categoria/"+cat);
-  const data = await res.json();
-  document.getElementById("noticias").innerHTML = data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h2 class="font-bold text-lg">${n.titulo}</h2>
-      ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
-      <p>${n.contenido.substring(0,80)}...</p>
-    </div>
-  `).join("");
-}
 
 async function crear(){
-  const tituloEl = document.getElementById("titulo").value;
-  const contenidoEl = document.getElementById("contenido").value;
-  const categoriaEl = document.getElementById("categoria").value;
-  const img = document.getElementById("img").files[0];
-  const video = document.getElementById("video").files[0];
-
-  const fd = new FormData();
+  const fd=new FormData();
+  const img=document.getElementById("img").files[0];
+  const video=document.getElementById("video").files[0];
   if(img) fd.append("file", img);
   if(video) fd.append("video", video);
 
   let url="", vurl="";
   if(img){
     const r = await fetch(API+"/upload",{method:"POST", body:fd});
-    const d = await r.json();
-    url = d.url; vurl = d.video || '';
+    const d=await r.json(); url=d.url; vurl=d.video||'';
   }
 
   await fetch(API+"/noticias",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({
-      titulo: tituloEl,
-      contenido: contenidoEl,
-      categoria: categoriaEl,
-      imagen: url,
-      video: vurl
+    body:JSON.stringify({
+      titulo:titulo.value,
+      contenido:contenido.value,
+      categoria:categoria.value,
+      imagen:url,
+      video:vurl
     })
   });
-
-  alert("Noticia creada");
-  cargar();
+  alert("Noticia creada"); cargar();
 }
 
-async function eliminar(id){
-  if(!confirm("Eliminar noticia?")) return;
-  await fetch(API+"/noticias/"+id,{method:"DELETE"});
-  cargar();
-}
+async function eliminar(id){if(!confirm("Eliminar noticia?")) return; await fetch(API+"/noticias/"+id,{method:"DELETE"}); cargar();}
+async function editar(id){const res=await fetch(API+"/noticias/"+id); const n=await res.json(); titulo.value=n.titulo; contenido.value=n.contenido; categoria.value=n.categoria;}
+async function filtrar(cat){ const res=await fetch(API+"/noticias/categoria/"+cat); const data=await res.json(); document.getElementById("noticias").innerHTML=data.map(n=>`<div class="card" onclick="ir('${n._id}')"><h2>${n.titulo}</h2>${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}<p>${n.contenido.substring(0,80)}...</p></div>`).join(""); }
+async function buscar(){ const q=document.getElementById("searchInput").value.trim(); if(!q) return cargar(); const res=await fetch(API+"/noticias/search?q="+encodeURIComponent(q)); const data=await res.json(); document.getElementById("noticias").innerHTML=data.map(n=>`<div class="card" onclick="ir('${n._id}')"><h2>${n.titulo}</h2>${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}<p>${n.contenido.substring(0,80)}...</p></div>`).join(""); }
+function ir(id){location="noticia.html?id="+id+(admin?"&admin=true":"");}
 
-async function editar(id){
-  const res = await fetch(API+"/noticias/"+id);
-  const n = await res.json();
-  document.getElementById("titulo").value = n.titulo;
-  document.getElementById("contenido").value = n.contenido;
-  document.getElementById("categoria").value = n.categoria;
-}
-
-function ir(id){ location="noticia.html?id="+id; }
-
+cargar();
 </script>
 </body>
 </html>
