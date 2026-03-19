@@ -10,17 +10,19 @@ body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
 .header span.title{font-size:2rem;cursor:pointer;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
 .container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
-.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;transition:.3s;text-align:center;color:#111;}
+.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;text-align:center;color:#111;transition:.3s;}
 .card h2{font-size:1.5rem;font-weight:bold;color:#111;}
 .card:hover{transform:translateY(-5px) scale(1.02);}
-.card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
+.card button{margin:5px;padding:5px 8px;border:none;border-radius:6px;cursor:pointer;background:#111;color:gold;}
+.card button:hover{background:gold;color:black;}
+body.dark .card{background:#222;color:#f0e68c;border-left:5px solid gold;}
+body.dark .card button{background:#f0e68c;color:#111;}
+body.dark .card button:hover{background:#111;color:gold;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
 body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 .admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
-.admin-btn:hover{opacity:1;}
 body.dark .admin-btn{background:#f0e68c;color:#111;}
 </style>
 </head>
@@ -59,8 +61,13 @@ function toggleDark(){
 function loginAdmin(){
   const user=prompt("Usuario Admin:");
   const pass=prompt("Contraseña:");
-  if(user==="admin" && pass==="1234"){location="admin.html";}
-  else{alert("Usuario o contraseña incorrecta");}
+  const usuarios=[
+    {usuario:"Apophis", password:"1234"},
+    {usuario:"Benja357", password:"abcd"}
+  ];
+  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
+  if(encontrado){ location="admin.html"; }
+  else{ alert("Usuario o contraseña incorrecta"); }
 }
 
 async function cargar(){

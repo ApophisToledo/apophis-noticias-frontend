@@ -57,7 +57,14 @@ button.eliminar{background:red;color:white;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let token = localStorage.getItem("token");
-if(!token){ token = prompt("Admin Usuario:") + ":" + prompt("Admin Pass:"); localStorage.setItem("token", token); }
+if(!token){ 
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  if((user==="Apophis" && pass==="1234")||(user==="Benja357" && pass==="abcd")){
+    token=btoa(user+":"+pass);
+    localStorage.setItem("token", token);
+  } else{ alert("Usuario o contraseña incorrecta"); location="index.html"; }
+}
 
 async function cargar(){
   const res=await fetch(API+"/noticias");
@@ -81,11 +88,11 @@ async function crear(){
     const fd = new FormData();
     if(imgFile) fd.append("file", imgFile);
     if(videoFile) fd.append("video", videoFile);
-    const r = await fetch(API+"/upload",{method:"POST",headers:{Authorization:token},body:fd});
+    const r = await fetch(API+"/upload",{method:"POST",headers:{Authorization:"Basic "+token},body:fd});
     const d = await r.json();
     url=d.url||''; vurl=d.video||'';
   }
-  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json",Authorization:token},
+  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Basic "+token},
     body:JSON.stringify({titulo:titulo.value,contenido:contenido.innerHTML,categoria:categoria.value,imagen:url,video:vurl})
   });
   alert("Noticia creada/actualizada");
@@ -94,7 +101,7 @@ async function crear(){
 
 async function eliminar(id){
   if(!confirm("Eliminar noticia?")) return;
-  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:token}});
+  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:"Basic "+token}});
   cargar();
 }
 

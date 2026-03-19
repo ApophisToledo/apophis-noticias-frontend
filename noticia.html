@@ -66,8 +66,13 @@ function toggleDark(){
 function loginAdmin(){
   const user=prompt("Usuario Admin:");
   const pass=prompt("Contraseña:");
-  if(user==="admin" && pass==="1234"){location="admin.html";}
-  else{alert("Usuario o contraseña incorrecta");}
+  const usuarios=[
+    {usuario:"Apophis", password:"1234"},
+    {usuario:"Benja357", password:"abcd"}
+  ];
+  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
+  if(encontrado){ location="admin.html"; }
+  else{ alert("Usuario o contraseña incorrecta"); }
 }
 
 async function cargar(){
