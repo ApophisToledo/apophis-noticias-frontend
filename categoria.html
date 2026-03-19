@@ -8,30 +8,21 @@
 body{background:#f4e3b2;font-family:Georgia;margin:0;padding:10px;}
 .header{background:#111;color:white;padding:15px;display:flex;justify-content:space-between;align-items:center;}
 .nav{display:flex;justify-content:center;gap:10px;background:#222;padding:10px;}
-.nav button{color:white;cursor:pointer;}
-.nav button:hover{color:gold;}
+.nav button{color:white;cursor:pointer;padding:5px 10px;border-radius:5px;}
+.nav button:hover{color:gold;background:black;}
 .grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;padding:15px;}
 .card{background:#fff8dc;border-left:5px solid gold;padding:15px;border-radius:10px;cursor:pointer;transition:.3s;opacity:0;transform:translateY(20px);animation:fadeInUp 0.5s forwards;}
+.card img{max-width:100%;border-radius:10px;margin-top:5px;}
 @keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div>𓂀 Apophis Noticias</div>
   <div>
     <button onclick="volverInicio()" class="bg-black text-white px-2 py-1 rounded">← Inicio</button>
   </div>
-</div>
-
-<!-- NAV CATEGORIAS -->
-<div class="nav">
-  <button onclick="verCat('politica')">Política</button>
-  <button onclick="verCat('deportes')">Deportes</button>
-  <button onclick="verCat('policiales')">Policiales</button>
-  <button onclick="verCat('arte')">Arte</button>
-  <button onclick="verCat('show')">Show</button>
 </div>
 
 <h2 id="titulo" class="text-2xl text-center mt-4"></h2>
@@ -41,10 +32,11 @@ body{background:#f4e3b2;font-family:Georgia;margin:0;padding:10px;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const cat=new URLSearchParams(location.search).get("cat");
+let token = localStorage.getItem("token");
+let user = localStorage.getItem("user");
 titulo.innerText="Categoría: "+cat;
 
 function volverInicio(){location="index.html";}
-function verCat(c){location="categoria.html?cat="+c;}
 function ir(id){location="noticia.html?id="+id;}
 
 async function cargar(){
@@ -55,13 +47,15 @@ async function cargar(){
   contenedor.innerHTML=filtradas.map((n,i)=>`
     <div class="card" style="animation-delay:${i*0.1}s" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
+      ${n.imagen?`<img src="${n.imagen}">`:''}
       <p>${n.contenido.substring(0,100)}...</p>
-      <p>👁️ ${n.vistas} 👍 ${n.likes.length}</p>
+      <p>👁️ ${n.vistas} 👍 ${n.likes.length} 👎 ${n.dislikes.length}</p>
     </div>
   `).join("");
 }
 
 cargar();
 </script>
+
 </body>
 </html>

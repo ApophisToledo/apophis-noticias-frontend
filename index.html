@@ -2,44 +2,50 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>𓂀 Apophis Noticias</title>
+<title>𓂀 Apophis Noticias 𓂀</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{
+body {
   background:#f4e3b2;
   font-family:Georgia;
   margin:0;
+  padding:0;
 }
 
-/* HEADER */
+/* TITULO */
 .header{
   background:#111;
   color:white;
-  padding:15px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  text-align:center;
+  padding:25px 10px;
+  font-size:2.5rem;
   position:sticky;
   top:0;
   z-index:10;
 }
+.header span{display:inline-block; margin:0 15px; animation:ojos 1.5s infinite alternate;}
+@keyframes ojos{from{transform:scale(1);} to{transform:scale(1.3);}}
 
-/* NAV */
+/* BOTONES LOGIN / REGISTER / ADMIN */
 .nav{
   display:flex;
   justify-content:center;
-  gap:15px;
-  background:#222;
+  gap:10px;
   padding:10px;
+  background:#222;
 }
 .nav button{
+  padding:6px 12px;
+  border-radius:5px;
+  cursor:pointer;
   color:white;
+  font-weight:bold;
 }
 .nav button:hover{
-  color:gold;
+  background:gold; color:black;
 }
 
-/* GRID */
+/* GRID NOTICIAS */
 .grid{
   max-width:1200px;
   margin:auto;
@@ -61,14 +67,28 @@ body{
   transform:translateY(20px);
   animation:fadeInUp 0.5s forwards;
 }
-.card:nth-child(1){animation-delay:.1s;}
-.card:nth-child(2){animation-delay:.2s;}
-.card:nth-child(3){animation-delay:.3s;}
-.card:nth-child(4){animation-delay:.4s;}
+.card img{max-width:100%; border-radius:10px; margin-top:5px;}
+@keyframes fadeInUp{to{opacity:1; transform:translateY(0);}}
 
-@keyframes fadeInUp{
-  to{opacity:1; transform:translateY(0);}
+/* ULTIMO MOMENTO */
+.ultimo{
+  background:red;
+  color:white;
+  text-align:center;
+  font-weight:bold;
+  padding:10px;
+  animation:blinkBg 1s infinite alternate;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
 }
+.ultimo img{
+  max-width:50px;
+  border-radius:5px;
+  border:2px solid white;
+}
+@keyframes blinkBg{from{opacity:1;} to{opacity:.6;}}
 
 /* MODAL */
 .modal{
@@ -95,7 +115,7 @@ body{
   box-shadow:-3px 0 10px rgba(0,0,0,0.3);
 }
 
-/* NOTIF */
+/* NOTIFICACIONES */
 .notif{
   position:fixed;
   bottom:20px;
@@ -106,100 +126,65 @@ body{
   border-radius:5px;
   display:none;
 }
-
-/* ULTIMO MOMENTO */
-.ultimo{
-  background:#ffcc00;
-  padding:10px;
-  text-align:center;
-  font-weight:bold;
-  animation:blink 1.5s infinite alternate;
-}
-
-@keyframes blink{
-  from{opacity:1;}
-  to{opacity:.6;}
-}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- TITULO -->
 <div class="header">
-  <div>𓂀 APOPHIS NOTICIAS</div>
-  <div id="userPanel" class="flex gap-2 items-center">
-    <button onclick="abrirLogin()" class="bg-white text-black px-2 py-1 rounded">Ingresar</button>
-    <button onclick="abrirRegister()" class="bg-yellow-500 px-2 py-1 rounded">Registro</button>
-  </div>
+  <span>𓂀</span> Apophis Noticias <span>𓂀</span>
 </div>
 
 <!-- ULTIMO MOMENTO -->
-<div id="ultimoMomento" class="ultimo">Último momento: cargando...</div>
+<div id="ultimoMomento" class="ultimo">
+  <img id="imgUltimo" src="" alt="">
+  <span id="textoUltimo">Último momento...</span>
+</div>
 
 <!-- NAV -->
-<div class="nav">
-  <button onclick="verCat('politica')">Política</button>
-  <button onclick="verCat('deportes')">Deportes</button>
-  <button onclick="verCat('policiales')">Policiales</button>
-  <button onclick="verCat('arte')">Arte</button>
-  <button onclick="verCat('show')">Show</button>
-  <button onclick="volverInicio()">Inicio</button>
+<div class="nav" id="navPanel">
+  <button onclick="abrirLogin()">Ingresar</button>
+  <button onclick="abrirRegister()">Registro</button>
+  <button id="btnAdmin" onclick="abrirAdmin()" style="display:none;background:black;">✍️ Admin</button>
 </div>
 
-<!-- BOTÓN ADMIN -->
-<div class="text-center mt-3">
-  <button id="btnAdmin" onclick="abrirAdmin()" style="display:none;background:black;color:white;padding:6px 10px;border-radius:5px">
-    ✍️ Panel Admin
-  </button>
-</div>
-
-<!-- PUBLICIDAD -->
-<div class="text-center p-3 bg-yellow-200 mt-2">PUBLICIDAD</div>
-
-<!-- NOTICIAS -->
+<!-- GRID NOTICIAS -->
 <div id="noticias" class="grid"></div>
 
-<!-- LOGIN -->
+<!-- MODALES LOGIN / REGISTER -->
 <div id="login" class="modal">
-<div class="bg-white p-4 rounded w-80">
-<h2>Login</h2>
-<input id="user" placeholder="Usuario" class="border w-full mb-2 p-1">
-<input id="pass" type="password" placeholder="Contraseña" class="border w-full mb-2 p-1">
-<button onclick="login()" class="bg-black text-white w-full">Entrar</button>
-</div>
+  <div class="bg-white p-4 rounded w-80">
+    <h2>Login</h2>
+    <input id="user" placeholder="Usuario" class="border w-full mb-2 p-1">
+    <input id="pass" type="password" placeholder="Contraseña" class="border w-full mb-2 p-1">
+    <button onclick="login()" class="bg-black text-white w-full">Entrar</button>
+  </div>
 </div>
 
-<!-- REGISTER -->
 <div id="register" class="modal">
-<div class="bg-white p-4 rounded w-80">
-<h2>Registro</h2>
-<input id="userR" placeholder="Usuario" class="border w-full mb-2 p-1">
-<input id="passR" type="password" placeholder="Contraseña" class="border w-full mb-2 p-1">
-<button onclick="register()" class="bg-yellow-600 text-white w-full">Crear cuenta</button>
-</div>
+  <div class="bg-white p-4 rounded w-80">
+    <h2>Registro</h2>
+    <input id="userR" placeholder="Usuario" class="border w-full mb-2 p-1">
+    <input id="passR" type="password" placeholder="Contraseña" class="border w-full mb-2 p-1">
+    <button onclick="register()" class="bg-yellow-600 text-white w-full">Crear cuenta</button>
+  </div>
 </div>
 
 <!-- PANEL ADMIN -->
 <div id="adminPanel" class="panel">
 <h2 class="text-xl mb-2">Panel Admin</h2>
-
 <input id="titulo" placeholder="Título" class="border w-full mb-2 p-1">
 <textarea id="contenido" class="border w-full mb-2 p-1"></textarea>
 <select id="categoria" class="border w-full mb-2 p-1">
-<option value="politica">Política</option>
-<option value="deportes">Deportes</option>
-<option value="policiales">Policiales</option>
-<option value="arte">Arte</option>
-<option value="show">Show</option>
+  <option value="politica">Política</option>
+  <option value="deportes">Deportes</option>
+  <option value="policiales">Policiales</option>
+  <option value="arte">Arte</option>
+  <option value="show">Show</option>
 </select>
-
 <input type="file" id="img" class="mb-2">
-
 <button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Publicar</button>
-
-<h3>Tus noticias</h3>
 <div id="listaAdmin"></div>
-
 <button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar</button>
 </div>
 
@@ -208,21 +193,34 @@ body{
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+let token = localStorage.getItem("token");
+let user = localStorage.getItem("user");
+
+// Mostrar usuario y botón admin
+function mostrarUsuario(){
+  const navPanel=document.getElementById("navPanel");
+  if(user){
+    navPanel.innerHTML=`👤 ${user} <button onclick="logout()">Salir</button>`;
+    if(user==="admin"){ document.getElementById("btnAdmin").style.display="inline-block"; }
+  }
+}
 
 // Notificaciones
 function noti(msg){
-  notif.innerText=msg;
-  notif.style.display="block";
-  setTimeout(()=>notif.style.display="none",2000);
+  const n=document.getElementById("notif");
+  n.innerText=msg;
+  n.style.display="block";
+  setTimeout(()=>n.style.display="none",2000);
 }
 
 // LOGIN / REGISTER
 function abrirLogin(){login.style.display="flex";}
 function abrirRegister(){register.style.display="flex";}
+function logout(){localStorage.clear(); location.reload();}
 
 async function register(){
-  await fetch(API+"/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:userR.value,pass:passR.value})});
-  noti("Usuario creado");
+  const res=await fetch(API+"/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:userR.value,pass:passR.value})});
+  if(res.ok){ noti("Usuario creado"); register.style.display="none"; }
 }
 
 async function login(){
@@ -231,86 +229,70 @@ async function login(){
   const d=await res.json();
   localStorage.setItem("token",d.token);
   localStorage.setItem("user",d.user);
+  token=d.token; user=d.user;
   login.style.display="none";
   mostrarUsuario();
+  cargarAdmin();
 }
 
-// Logout
-function logout(){localStorage.clear(); location.reload();}
-
-// Mostrar usuario y botón admin
-function mostrarUsuario(){
-  const u=localStorage.getItem("user");
-  if(u){
-    userPanel.innerHTML=`👤 ${u} <button onclick="logout()">Salir</button>`;
-    if(u==="admin"){ btnAdmin.style.display="inline-block"; }
-  }
-}
-
-// Abrir / cerrar admin
-function abrirAdmin(){adminPanel.style.display="block"; cargarAdmin();}
+// ADMIN
+function abrirAdmin(){adminPanel.style.display="block";}
 function cerrarAdmin(){adminPanel.style.display="none";}
 
-// Crear noticia
+// CREAR NOTICIA
 async function crear(){
   let url="";
   if(img.files[0]){
     const fd=new FormData();
     fd.append("file",img.files[0]);
-    const r=await fetch(API+"/upload",{method:"POST",body:fd});
+    const r=await fetch(API+"/upload",{method:"POST",body:fd, headers:{Authorization:token}});
     const d=await r.json();
     url=d.url;
   }
-  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json",Authorization:localStorage.getItem("token")},body:JSON.stringify({titulo:titulo.value,contenido:contenido.value,categoria:categoria.value,imagen:url})});
+  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({titulo:titulo.value,contenido:contenido.value,categoria:categoria.value,imagen:url})});
   noti("Publicada");
   cargar();
   cargarAdmin();
 }
 
-// Cargar admin
+// CARGAR ADMIN
 async function cargarAdmin(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
-  const u=localStorage.getItem("user");
-  listaAdmin.innerHTML=data.filter(n=>n.autor===u).map(n=>`<div>${n.titulo} <button onclick="eliminar('${n._id}')">❌</button></div>`).join("");
+  listaAdmin.innerHTML=data.filter(n=>n.autor===user).map(n=>`<div>${n.titulo} <button onclick="eliminar('${n._id}')">❌</button></div>`).join("");
 }
 
-// Eliminar
+// ELIMINAR
 async function eliminar(id){
-  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:localStorage.getItem("token")}});
+  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:token}});
   cargar();
   cargarAdmin();
 }
 
-// Cargar noticias y ultimo momento
+// CARGAR NOTICIAS Y ULTIMO MOMENTO
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
-  
-  // Último momento
-  if(data[0]) document.getElementById("ultimoMomento").innerText="Último momento: "+data[0].titulo;
-  
-  // Grid noticias
+  const ult=data[0];
+  if(ult){
+    document.getElementById("textoUltimo").innerText="Último momento: "+ult.titulo;
+    document.getElementById("imgUltimo").src=ult.imagen || "";
+  }
+
   noticias.innerHTML=data.map((n,i)=>`<div class="card" style="animation-delay:${i*0.1}s" onclick="ir('${n._id}')">
     <h2>${n.titulo}</h2>
     <p>${n.contenido.substring(0,100)}...</p>
-    <p>👁️ ${n.vistas} 👍 ${n.likes.length}</p>
+    <p>👁️ ${n.vistas} 👍 ${n.likes.length} 👎 ${n.dislikes.length}</p>
   </div>`).join("");
 }
 
-// Categorías
-function verCat(cat){location="categoria.html?cat="+cat;}
-function volverInicio(){location="index.html";}
-
-// Ir noticia
 function ir(id){location="noticia.html?id="+id;}
 
-// Iniciar
+// INICIAR
 mostrarUsuario();
 cargar();
-
-// Rotación automática de noticias recientes
 setInterval(cargar,10000);
 </script>
+
 </body>
 </html>

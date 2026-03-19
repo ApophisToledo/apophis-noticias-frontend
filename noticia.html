@@ -11,11 +11,11 @@ body{background:#f4e3b2;font-family:Georgia;margin:0;padding:10px;}
 .button:hover{background:gold;color:black;}
 .card{background:#fff8dc;padding:10px;border-left:5px solid gold;border-radius:10px;margin:10px;transition:.3s;opacity:0;transform:translateY(20px);animation:fadeInUp 0.5s forwards;}
 @keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+textarea{width:100%;padding:5px;border-radius:5px;margin-top:5px;}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div>𓂀 Apophis Noticias</div>
   <div>
@@ -23,45 +23,38 @@ body{background:#f4e3b2;font-family:Georgia;margin:0;padding:10px;}
   </div>
 </div>
 
-<!-- NOTICIA -->
 <div id="n" class="card"></div>
 
-<!-- COMENTARIOS -->
 <h3>Comentarios</h3>
 <div id="comentarios" class="grid"></div>
-<textarea id="comentario" class="border w-full p-2 mb-2" placeholder="Escribe un comentario"></textarea>
+<textarea id="comentario" placeholder="Escribe un comentario"></textarea>
 <button onclick="comentar()" class="button">Enviar</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id=new URLSearchParams(location.search).get("id");
-const user=localStorage.getItem("user");
+let token = localStorage.getItem("token");
+let user = localStorage.getItem("user");
 
 function volverInicio(){location="index.html";}
 
-// Cargar noticia
 async function cargar(){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
-  
-  n.vistas = n.vistas || 0;
-  n.likes = n.likes || [];
-  n.dislikes = n.dislikes || [];
-
-  n.vistas++;
-  await fetch(API+"/noticias/"+id,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({vistas:n.vistas})});
+  n.likes=n.likes||[];
+  n.dislikes=n.dislikes||[];
+  n.comentarios=n.comentarios||[];
 
   document.getElementById("n").innerHTML=`
     <h1>${n.titulo}</h1>
-    ${n.imagen?`<img src="${n.imagen}" style="max-width:100%;border-radius:10px;margin-top:10px;">`:''}
+    ${n.imagen?`<img src="${n.imagen}">`:""}
     <p>${n.contenido}</p>
     <p>
-      👍 ${n.likes.length} <button onclick="like()" class="button">Like</button> 
+      👍 ${n.likes.length} <button onclick="like()" class="button">Like</button>
       👎 ${n.dislikes.length} <button onclick="dislike()" class="button">No me gusta</button>
     </p>
   `;
 
-  // Comentarios
   comentarios.innerHTML=n.comentarios.map(c=>`
     <div class="card">
       💬 ${c.user}: ${c.texto} ${c.user===user?`<button onclick="borrarComentario('${c._id}')" class="button">❌</button>`:''}
@@ -69,35 +62,34 @@ async function cargar(){
   `).join("");
 }
 
-// Like
 async function like(){
-  await fetch(API+"/noticias/"+id+"/like",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user})});
+  if(!token){alert("Debes ingresar");return;}
+  await fetch(API+"/noticias/"+id+"/like",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token}});
   cargar();
 }
 
-// Dislike
 async function dislike(){
-  await fetch(API+"/noticias/"+id+"/dislike",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user})});
+  if(!token){alert("Debes ingresar");return;}
+  await fetch(API+"/noticias/"+id+"/dislike",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token}});
   cargar();
 }
 
-// Comentar
 async function comentar(){
-  if(!user){alert("Debes ingresar");return;}
+  if(!token){alert("Debes ingresar");return;}
   const texto=document.getElementById("comentario").value;
   if(!texto) return;
-  await fetch(API+"/noticias/"+id+"/comentario",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({texto,user})});
+  await fetch(API+"/noticias/"+id+"/comentario",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({texto})});
   document.getElementById("comentario").value="";
   cargar();
 }
 
-// Borrar comentario
 async function borrarComentario(cid){
-  await fetch(API+"/noticias/"+id+"/comentario/"+cid,{method:"DELETE",headers:{"Content-Type":"application/json",Authorization:localStorage.getItem("token")}});
+  await fetch(API+"/noticias/"+id+"/comentario/"+cid,{method:"DELETE",headers:{Authorization:token}});
   cargar();
 }
 
 cargar();
 </script>
+
 </body>
 </html>
