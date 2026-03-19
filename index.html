@@ -6,60 +6,176 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{background:#f4e3b2;font-family:Georgia;margin:0;}
-.header{background:black;color:gold;padding:20px;text-align:center;font-size:2rem;animation:glow 2s infinite alternate;}
-@keyframes glow{from{text-shadow:0 0 5px gold;}to{text-shadow:0 0 20px orange;}}
-.ticker{background:red;color:white;overflow:hidden;white-space:nowrap;}
-.ticker span{display:inline-block;padding-left:100%;animation:ticker 15s linear infinite;}
-@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;padding:15px;}
-.card{background:#fff8dc;padding:10px;border-left:5px solid gold;border-radius:10px;}
+body{
+  margin:0;
+  font-family:Georgia;
+  background:#f4e3b2;
+  transition:.3s;
+}
+
+/* 🌙 DARK MODE */
+@media (prefers-color-scheme: dark){
+  body{background:#111;color:white;}
+}
+
+/* CONTENEDOR CENTRAL */
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+/* HEADER */
+.header{
+  background:black;
+  color:gold;
+  padding:25px;
+  text-align:center;
+  font-size:2.2rem;
+  letter-spacing:3px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* OJOS */
+.eye{animation:blink 3s infinite;}
+@keyframes blink{0%,90%,100%{opacity:1;}95%{opacity:0;}}
+
+/* SLIDER */
+.slider{
+  margin:15px;
+  border-radius:10px;
+  background:linear-gradient(90deg,red,darkred);
+  padding:15px;
+  text-align:center;
+  color:white;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* CATEGORIAS */
+.categorias{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:15px;
+}
+.cat{
+  background:black;
+  color:white;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 3px 8px rgba(0,0,0,0.3);
+}
+.cat:hover{
+  background:gold;
+  color:black;
+  transform:translateY(-3px) scale(1.05);
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+/* CARD PRO */
+.card{
+  background:#fff8dc;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  transition:.3s;
+  animation:fadeIn .5s ease;
+}
+
+.card:hover{
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
+
+.card img{
+  border-radius:8px;
+  margin-top:10px;
+}
+
+/* DARK */
+@media (prefers-color-scheme: dark){
+  .card{background:#1e1e1e;}
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">𓂀 𓆣 𓁹 APOPHIS NOTICIAS 𓁹 𓆣 𓂀</div>
+<div class="header">
+𓂀 <span class="eye">𓁹</span> APOPHIS NOTICIAS <span class="eye">𓁹</span> 𓂀
+</div>
 
-<div class="ticker"><span id="tickerText"></span></div>
+<div class="container">
 
-<h2>🔥 Ranking</h2>
-<div id="ranking"></div>
+<div class="slider" id="sliderText">Cargando noticias...</div>
+
+<div class="categorias">
+  <div class="cat" onclick="cat('politica')">Política</div>
+  <div class="cat" onclick="cat('deportes')">Deportes</div>
+  <div class="cat" onclick="cat('policiales')">Policiales</div>
+  <div class="cat" onclick="cat('arte')">Arte</div>
+  <div class="cat" onclick="cat('show')">Show</div>
+</div>
 
 <div id="contenedor" class="grid"></div>
+
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
+let noticiasGlobal=[];
+let i=0;
+
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
+  noticiasGlobal=data;
 
   contenedor.innerHTML=data.map(n=>`
     <div class="card" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
-      <p>${n.contenido.substring(0,100)}</p>
+      ${n.imagen?`<img src="${n.imagen}" width="100%">`:''}
+      <p>${n.contenido.substring(0,100)}...</p>
+
+      <p style="margin-top:10px;font-weight:bold;">
+        👁 ${n.vistas} | 👍 ${n.likes} | 👎 ${n.dislikes}
+      </p>
     </div>
   `).join("");
 
-  tickerText.innerText=data.slice(0,5).map(n=>n.titulo).join(" 🔴 ");
+  slider();
 }
 
-async function rankingLoad(){
-  const res=await fetch(API+"/ranking");
-  const data=await res.json();
+function slider(){
+  if(noticiasGlobal.length===0) return;
 
-  ranking.innerHTML=data.map(n=>`
-    <div onclick="ir('${n._id}')">
-      🔥 ${n.titulo} (${n.vistas} vistas)
-    </div>
-  `).join("");
+  setInterval(()=>{
+    sliderText.innerText="🔴 "+noticiasGlobal[i].titulo;
+    i=(i+1)%noticiasGlobal.length;
+  },4000);
 }
 
-function ir(id){ location="noticia.html?id="+id; }
+function ir(id){location="noticia.html?id="+id;}
+function cat(c){location="categoria.html?cat="+c;}
 
 cargar();
-rankingLoad();
 </script>
 
 </body>
