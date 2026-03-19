@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Categoría</title>
+<title>Categoría - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{background:#f4e3b2;font-family:Georgia;margin:0;padding:0;}
+body{background:#f4e3b2;font-family:serif;margin:0;padding:0;}
 .header{background:#111;color:white;padding:20px;text-align:center;position:sticky;top:0;z-index:10;font-size:2rem;}
 .header span{display:inline-block;margin:0 15px;animation:ojos 1.5s infinite alternate;}
 @keyframes ojos{from{transform:scale(1);} to{transform:scale(1.3);}}
@@ -27,30 +27,31 @@ body{background:#f4e3b2;font-family:Georgia;margin:0;padding:0;}
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const cat=new URLSearchParams(location.search).get("cat");
+const cat=new URLSearchParams(location.search).get("cat") || "politica";
 let token=localStorage.getItem("token");
 let user=localStorage.getItem("user");
 
 titulo.innerText="Categoría: "+cat;
 
-function volverInicio(){location="index.html";}
-function ir(id){location="noticia.html?id="+id;}
+function volverInicio(){ location="index.html"; }
+function ir(id){ location="noticia.html?id="+id; }
 
 async function cargar(){
-  const res=await fetch(API+"/noticias");
+  const res=await fetch(API+"/noticias/categoria/"+cat);
   const data=await res.json();
-  const filtradas=data.filter(n=>n.categoria===cat);
-  contenedor.innerHTML=filtradas.map((n,i)=>`
+
+  contenedor.innerHTML = data.map((n,i)=>`
     <div class="card" style="animation-delay:${i*0.1}s" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
+      <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}">`:''}
+      ${n.video?`<video src="${n.video}" controls class="w-full mt-2 mb-2"></video>`:''}
       <p>${n.contenido.substring(0,100)}...</p>
       <p>👁️ ${n.vistas} 👍 ${n.likes.length} 👎 ${n.dislikes.length}</p>
     </div>
   `).join("");
 }
 
-cargar();
+window.onload=cargar;
 </script>
 
 </body>
