@@ -6,33 +6,23 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-:root{
-  --bg:#f4e3b2;
-  --card:#fff8dc;
-  --text:#222;
-}
-
-.dark{
-  --bg:#121212;
-  --card:#1e1e1e;
-  --text:#eee;
-}
-
 body{
-  background:var(--bg);
-  color:var(--text);
+  background:#f4e3b2;
   font-family:Georgia;
-  transition:.3s;
+  margin:0;
 }
 
+/* HEADER */
 .header{
   background:#111;
   color:white;
-  padding:15px;
-  text-align:center;
-  font-size:28px;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
+/* NAV */
 .nav{
   display:flex;
   justify-content:center;
@@ -43,38 +33,25 @@ body{
 .nav button{
   color:white;
 }
-.nav button:hover{color:gold;}
-
-.slider{
-  position:relative;
-  height:300px;
-  overflow:hidden;
-}
-.slide{
-  position:absolute;
-  width:100%;
-  height:100%;
-  transition:opacity .5s;
-}
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.slide h2{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  background:rgba(0,0,0,.6);
-  color:white;
-  padding:10px;
+.nav button:hover{
+  color:gold;
 }
 
+/* GRID */
+.grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:15px;
+  padding:15px;
+}
+
+/* CARD */
 .card{
-  background:var(--card);
+  background:#fff8dc;
   border-left:5px solid gold;
-  padding:10px;
-  margin:10px;
+  padding:15px;
   border-radius:10px;
   transition:.3s;
   cursor:pointer;
@@ -84,47 +61,262 @@ body{
   box-shadow:0 0 10px gold;
 }
 
-.ultimo{
-  background:red;
-  color:white;
-  padding:5px;
-  text-align:center;
-  animation:blink 1s infinite;
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
-@keyframes blink{
-  50%{opacity:.5;}
+
+/* PANEL ADMIN */
+.panel{
+  position:fixed;
+  right:0;
+  top:0;
+  width:320px;
+  height:100%;
+  background:white;
+  padding:15px;
+  overflow:auto;
+  display:none;
+}
+
+/* NOTIF */
+.notif{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:black;
+  color:white;
+  padding:10px;
+  border-radius:5px;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">𓂀 APOPHIS NOTICIAS</div>
+<!-- HEADER -->
+<div class="header">
+  <div>𓂀 APOPHIS NOTICIAS</div>
 
-<div class="nav">
-<button onclick="verCat('politica')">Política</button>
-<button onclick="verCat('deportes')">Deportes</button>
-<button onclick="verCat('policiales')">Policiales</button>
-<button onclick="toggleDark()">🌙</button>
+  <div id="userPanel">
+    <button onclick="abrirLogin()">Ingresar</button>
+    <button onclick="abrirRegister()">Registro</button>
+  </div>
 </div>
 
-<div class="ultimo" id="ultimo">ÚLTIMO MOMENTO</div>
+<!-- NAV -->
+<div class="nav">
+  <button onclick="verCat('politica')">Política</button>
+  <button onclick="verCat('deportes')">Deportes</button>
+  <button onclick="verCat('policiales')">Policiales</button>
+  <button onclick="verCat('show')">Show</button>
+</div>
 
-<div class="slider" id="slider"></div>
+<!-- BOTÓN ADMIN -->
+<div class="text-center mt-3">
+  <button id="btnAdmin" onclick="abrirAdmin()" style="display:none;background:black;color:white;padding:6px 10px;border-radius:5px">
+    ✍️ Panel Admin
+  </button>
+</div>
 
-<div class="text-center p-4 bg-yellow-200">PUBLICIDAD</div>
+<!-- PUBLICIDAD -->
+<div class="text-center p-3 bg-yellow-200 mt-2">PUBLICIDAD</div>
 
-<div id="noticias"></div>
+<!-- NOTICIAS -->
+<div id="noticias" class="grid"></div>
+
+<!-- LOGIN -->
+<div id="login" class="modal">
+<div class="bg-white p-4 rounded">
+<input id="user" placeholder="Usuario" class="border w-full mb-2">
+<input id="pass" type="password" placeholder="Contraseña" class="border w-full mb-2">
+<button onclick="login()" class="bg-black text-white w-full">Entrar</button>
+</div>
+</div>
+
+<!-- REGISTER -->
+<div id="register" class="modal">
+<div class="bg-white p-4 rounded">
+<input id="userR" placeholder="Usuario" class="border w-full mb-2">
+<input id="passR" type="password" class="border w-full mb-2">
+<button onclick="register()" class="bg-yellow-600 text-white w-full">Crear</button>
+</div>
+</div>
+
+<!-- PANEL ADMIN -->
+<div id="adminPanel" class="panel">
+<h2 class="text-xl mb-2">Panel Admin</h2>
+
+<input id="titulo" placeholder="Título" class="border w-full mb-2">
+<textarea id="contenido" class="border w-full mb-2"></textarea>
+<select id="categoria" class="border w-full mb-2">
+<option value="politica">Política</option>
+<option value="deportes">Deportes</option>
+<option value="policiales">Policiales</option>
+<option value="show">Show</option>
+</select>
+
+<input type="file" id="img" class="mb-2">
+
+<button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Publicar</button>
+
+<h3>Tus noticias</h3>
+<div id="listaAdmin"></div>
+
+<button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar</button>
+</div>
+
+<!-- NOTIFICACIONES -->
+<div id="notif" class="notif"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-let pagina=0;
-let todas=[];
+// NOTIFICACIONES
+function noti(msg){
+  notif.innerText=msg;
+  notif.style.display="block";
+  setTimeout(()=>notif.style.display="none",2000);
+}
 
-// DARK MODE
-function toggleDark(){
-  document.body.classList.toggle("dark");
+// LOGIN
+function abrirLogin(){login.style.display="flex";}
+function abrirRegister(){register.style.display="flex";}
+
+async function register(){
+  await fetch(API+"/register",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user:userR.value,pass:passR.value})
+  });
+  noti("Usuario creado");
+}
+
+async function login(){
+  const res=await fetch(API+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user:user.value,pass:pass.value})
+  });
+
+  if(!res.ok){alert("Error login");return;}
+
+  const d=await res.json();
+  localStorage.setItem("token",d.token);
+  localStorage.setItem("user",d.user);
+
+  login.style.display="none";
+  mostrarUsuario();
+}
+
+// LOGOUT
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+// MOSTRAR USUARIO
+function mostrarUsuario(){
+  const u=localStorage.getItem("user");
+
+  if(u){
+    userPanel.innerHTML=`
+      👤 ${u}
+      <button onclick="logout()">Salir</button>
+    `;
+
+    if(u==="admin"){
+      btnAdmin.style.display="inline-block";
+    }
+  }
+}
+
+// ADMIN
+function abrirAdmin(){
+  adminPanel.style.display="block";
+  cargarAdmin();
+}
+function cerrarAdmin(){
+  adminPanel.style.display="none";
+}
+
+// CREAR NOTICIA
+async function crear(){
+  let url="";
+
+  if(img.files[0]){
+    const fd=new FormData();
+    fd.append("file",img.files[0]);
+
+    const r=await fetch(API+"/upload",{method:"POST",body:fd});
+    const d=await r.json();
+    url=d.url;
+  }
+
+  await fetch(API+"/noticias",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:localStorage.getItem("token")
+    },
+    body:JSON.stringify({
+      titulo:titulo.value,
+      contenido:contenido.value,
+      categoria:categoria.value,
+      imagen:url
+    })
+  });
+
+  noti("Publicada");
+  cargar();
+  cargarAdmin();
+}
+
+// LISTA ADMIN
+async function cargarAdmin(){
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+  const u=localStorage.getItem("user");
+
+  listaAdmin.innerHTML=data
+    .filter(n=>n.autor===u)
+    .map(n=>`
+      <div>
+        ${n.titulo}
+        <button onclick="eliminar('${n._id}')">❌</button>
+      </div>
+    `).join("");
+}
+
+// ELIMINAR
+async function eliminar(id){
+  await fetch(API+"/noticias/"+id,{
+    method:"DELETE",
+    headers:{Authorization:localStorage.getItem("token")}
+  });
+  cargarAdmin();
+  cargar();
+}
+
+// CARGAR NOTICIAS
+async function cargar(){
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+
+  noticias.innerHTML=data.map(n=>`
+    <div class="card" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+      <p>${n.contenido.substring(0,100)}...</p>
+      <p>👁️ ${n.vistas} 👍 ${n.likes.length}</p>
+    </div>
+  `).join("");
 }
 
 // IR
@@ -132,63 +324,13 @@ function ir(id){
   location="noticia.html?id="+id;
 }
 
+// CATEGORIA
 function verCat(cat){
   location="categoria.html?cat="+cat;
 }
 
-// SLIDER
-function crearSlider(data){
-  slider.innerHTML=data.slice(0,5).map((n,i)=>`
-    <div class="slide" style="opacity:${i==0?1:0}">
-      ${n.imagen?`<img src="${n.imagen}">`:""}
-      <h2 onclick="ir('${n._id}')">${n.titulo}</h2>
-    </div>
-  `).join("");
-
-  let i=0;
-  setInterval(()=>{
-    const slides=document.querySelectorAll(".slide");
-    slides.forEach(s=>s.style.opacity=0);
-    i=(i+1)%slides.length;
-    slides[i].style.opacity=1;
-  },3000);
-}
-
-// CARGAR
-async function cargar(){
-  const res=await fetch(API+"/noticias");
-  todas=await res.json();
-
-  crearSlider(todas);
-
-  // ÚLTIMO MOMENTO
-  ultimo.innerText="ÚLTIMO: "+todas[0].titulo;
-
-  render();
-}
-
-// RENDER
-function render(){
-  const chunk=todas.slice(pagina*5,(pagina+1)*5);
-
-  noticias.innerHTML+=chunk.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-      <p>${n.contenido.substring(0,100)}...</p>
-      <p>👍 ${n.likes.length} 👎 ${n.dislikes.length}</p>
-    </div>
-  `).join("");
-
-  pagina++;
-}
-
-// SCROLL INFINITO
-window.onscroll=()=>{
-  if(window.innerHeight+window.scrollY>=document.body.offsetHeight-100){
-    render();
-  }
-};
-
+// INIT
+mostrarUsuario();
 cargar();
 </script>
 

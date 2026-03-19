@@ -2,30 +2,56 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Categoría</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{background:#f4e3b2;font-family:Georgia;margin:0;}
+
+.header{background:#111;color:white;padding:15px;text-align:center;}
+
+.grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:15px;
+  padding:15px;
+}
+
+.card{
+  background:#fff8dc;
+  border-left:5px solid gold;
+  padding:15px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.card:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 10px gold;
+}
+</style>
 </head>
 
-<body class="p-4">
+<body>
 
-<a href="index.html">← Inicio</a>
+<div class="header">Categoría</div>
 
-<h1 id="titulo"></h1>
-<div id="contenedor"></div>
+<div id="contenedor" class="grid"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const cat = new URLSearchParams(location.search).get("cat");
-
-titulo.innerText=cat;
+const cat=new URLSearchParams(location.search).get("cat");
 
 async function cargar(){
-  const res=await fetch(API+"/noticias/categoria/"+cat);
+  const res=await fetch(API+"/noticias");
   const data=await res.json();
 
-  contenedor.innerHTML=data.map(n=>`
-    <div onclick="ir('${n._id}')">
+  const filtradas=data.filter(n=>n.categoria===cat);
+
+  contenedor.innerHTML=filtradas.map(n=>`
+    <div class="card" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
+      <p>${n.contenido.substring(0,100)}...</p>
     </div>
   `).join("");
 }
