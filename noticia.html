@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Noticia</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="p-4">
+<body class="p-4 bg-yellow-100">
 
 <a href="index.html">← Volver</a>
 
 <div id="n"></div>
 
-<textarea id="comentario"></textarea>
+<textarea id="comentario" class="border w-full"></textarea>
 <button onclick="comentar()">Enviar</button>
 
 <script>
@@ -24,28 +23,49 @@ async function cargar(){
   const n=await res.json();
 
   document.getElementById("n").innerHTML=`
-    <h1>${n.titulo}</h1>
-    ${n.imagen?`<img src="${n.imagen}">`:""}
-    <p>${n.contenido}</p>
+  <h1>${n.titulo}</h1>
+  ${n.imagen?`<img src="${n.imagen}">`:""}
+  <p>${n.contenido}</p>
 
-    <button onclick="like()">👍 ${n.likes}</button>
+  <button onclick="like()">👍 ${n.likes.length}</button>
+  <button onclick="dislike()">👎 ${n.dislikes.length}</button>
 
-    ${n.comentarios.map(c=>`<p>💬 ${c.texto}</p>`).join("")}
+  ${n.comentarios.map(c=>`
+    <p>${c.texto} - ${c.user}
+    ${c.user===localStorage.getItem("user")?
+    `<button onclick="borrar('${c.id}')">❌</button>`:""}
+    </p>
+  `).join("")}
   `;
 }
 
 async function like(){
-  await fetch(API+"/noticias/"+id+"/like",{method:"POST"});
+  await fetch(API+"/noticias/"+id+"/like",{method:"POST",headers:{Authorization:localStorage.getItem("token")}});
+  cargar();
+}
+
+async function dislike(){
+  await fetch(API+"/noticias/"+id+"/dislike",{method:"POST",headers:{Authorization:localStorage.getItem("token")}});
   cargar();
 }
 
 async function comentar(){
   await fetch(API+"/noticias/"+id+"/comentario",{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:localStorage.getItem("token")
+    },
     body:JSON.stringify({texto:comentario.value})
   });
+  cargar();
+}
 
+async function borrar(cid){
+  await fetch(API+"/comentario/"+id+"/"+cid,{
+    method:"DELETE",
+    headers:{Authorization:localStorage.getItem("token")}
+  });
   cargar();
 }
 

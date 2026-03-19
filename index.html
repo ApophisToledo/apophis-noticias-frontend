@@ -6,10 +6,28 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{background:#f4e3b2;font-family:serif;}
-.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px;}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:99999;}
-.panel{position:fixed;top:0;right:0;width:300px;height:100%;background:white;overflow:auto;padding:15px;display:none;}
+body{background:#f4e3b2;font-family:Georgia;}
+.card{
+  background:#fff8dc;
+  border-left:5px solid gold;
+  padding:15px;
+  margin:15px;
+  border-radius:10px;
+  transition:.3s;
+}
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 15px gold;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
 </style>
 </head>
 
@@ -17,54 +35,52 @@ body{background:#f4e3b2;font-family:serif;}
 
 <h1 class="text-3xl text-center p-4">𓂀 Apophis Noticias</h1>
 
-<div class="text-center">
-  <button onclick="abrirLogin()" class="bg-black text-white px-4 py-2">Admin</button>
+<div class="text-center space-x-2">
+<button onclick="abrirLogin()" class="bg-black text-white px-4 py-2">Login</button>
+<button onclick="abrirRegister()" class="bg-yellow-600 text-white px-4 py-2">Registro</button>
+</div>
+
+<div class="text-center my-4">
+<button onclick="verCat('politica')">Política</button>
+<button onclick="verCat('deportes')">Deportes</button>
+<button onclick="verCat('policiales')">Policiales</button>
 </div>
 
 <div id="noticias"></div>
 
+<div class="text-center p-4 bg-yellow-200">PUBLICIDAD</div>
+
 <!-- LOGIN -->
 <div id="login" class="modal">
-  <div class="bg-white p-4 rounded">
-    <h2>Admin</h2>
-    <input id="user" placeholder="Usuario" class="border w-full mb-2">
-    <input id="pass" type="password" placeholder="Contraseña" class="border w-full mb-2">
-    <button onclick="login()" class="bg-black text-white w-full">Entrar</button>
-  </div>
+<div class="bg-white p-4">
+<input id="user" placeholder="Usuario"><br>
+<input id="pass" type="password" placeholder="Contraseña"><br>
+<button onclick="login()">Entrar</button>
+</div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="panel">
-  <h2 class="text-xl mb-2">Panel Admin</h2>
-
-  <input id="titulo" placeholder="Titulo" class="border w-full mb-2">
-  <textarea id="contenido" class="border w-full mb-2"></textarea>
-
-  <select id="categoria" class="border w-full mb-2">
-    <option value="politica">Política</option>
-    <option value="deportes">Deportes</option>
-    <option value="policiales">Policiales</option>
-    <option value="arte">Arte</option>
-    <option value="show">Show</option>
-  </select>
-
-  <input type="file" id="img" class="mb-2">
-
-  <button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Publicar</button>
-
-  <h3>Noticias</h3>
-  <div id="listaAdmin"></div>
-
-  <button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar</button>
+<!-- REGISTER -->
+<div id="register" class="modal">
+<div class="bg-white p-4">
+<input id="userR" placeholder="Usuario"><br>
+<input id="passR" type="password" placeholder="Contraseña"><br>
+<button onclick="register()">Crear cuenta</button>
+</div>
 </div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-let admin=false;
 
-// LOGIN
-function abrirLogin(){
-  document.getElementById("login").style.display="flex";
+function abrirLogin(){login.style.display="flex";}
+function abrirRegister(){register.style.display="flex";}
+
+async function register(){
+  await fetch(API+"/register",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user:userR.value,pass:passR.value})
+  });
+  alert("Registrado");
 }
 
 async function login(){
@@ -73,90 +89,32 @@ async function login(){
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({user:user.value,pass:pass.value})
   });
-
-  if(res.ok){
-    admin=true;
-    document.getElementById("login").style.display="none";
-    document.getElementById("dashboard").style.display="block";
-    cargar();
-  }else{
-    alert("Error login");
-  }
+  const d=await res.json();
+  localStorage.setItem("token",d.token);
+  localStorage.setItem("user",d.user);
+  alert("Logeado");
 }
 
-// CERRAR
-function cerrarAdmin(){
-  document.getElementById("dashboard").style.display="none";
+function verCat(cat){
+  location="categoria.html?cat="+cat;
 }
 
-// CARGAR
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
 
-  // PUBLICO
-  document.getElementById("noticias").innerHTML=
-  data.map(n=>`
-    <div class="card">
-      <h2 onclick="ir('${n._id}')">${n.titulo}</h2>
-      <p>${n.contenido.substring(0,80)}...</p>
-      <p>👍 ${n.likes} | 👁️ ${n.vistas}</p>
-    </div>
+  noticias.innerHTML=data.map(n=>`
+  <div class="card">
+    ${n.imagen?`<img src="${n.imagen}">`:""}
+    <h2 onclick="ir('${n._id}')">${n.titulo}</h2>
+    <p>${n.contenido.substring(0,100)}...</p>
+    <p>👍 ${n.likes.length} 👎 ${n.dislikes.length}</p>
+  </div>
   `).join("");
-
-  // ADMIN LISTA
-  if(admin){
-    document.getElementById("listaAdmin").innerHTML=
-    data.map(n=>`
-      <div class="border p-2 mb-2">
-        <b>${n.titulo}</b><br>
-        <button onclick="eliminar('${n._id}')" class="bg-red-500 text-white px-2">Eliminar</button>
-      </div>
-    `).join("");
-  }
 }
 
-// IR
 function ir(id){
   location="noticia.html?id="+id;
-}
-
-// CREAR
-async function crear(){
-  let url="";
-  const img=document.getElementById("img");
-
-  if(img.files[0]){
-    const fd=new FormData();
-    fd.append("file",img.files[0]);
-
-    const r=await fetch(API+"/upload",{method:"POST",body:fd});
-    const d=await r.json();
-    url=d.url;
-  }
-
-  await fetch(API+"/noticias",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.value,
-      categoria:categoria.value,
-      imagen:url
-    })
-  });
-
-  alert("Publicada");
-  cargar();
-}
-
-// DELETE
-async function eliminar(id){
-  await fetch(API+"/noticias/"+id,{
-    method:"DELETE",
-    headers:{user:"admin",pass:"1234"}
-  });
-  cargar();
 }
 
 cargar();
