@@ -98,46 +98,58 @@ function cerrarAdmin(){ document.getElementById("dashboard").style.display="none
 
 // --- LOGIN ---
 async function login(){
-  const u = document.getElementById("user").value;
-  const p = document.getElementById("pass").value;
+  const u = document.getElementById("user").value.trim();
+  const p = document.getElementById("pass").value.trim();
   if(!u||!p){ alert("Complete usuario y contraseña"); return; }
 
-  const res = await fetch(API+"/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({user:u, pass:p})
-  });
+  try{
+    const res = await fetch(API+"/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({user:u, pass:p})
+    });
 
-  if(res.ok){
+    if(!res.ok){
+      alert("Usuario o contraseña incorrecta");
+      return;
+    }
+
     const data = await res.json();
     token = data.token;
     admin = true;
     cerrarLogin();
     document.getElementById("dashboard").style.display="block";
     cargar();
-  } else {
-    alert("Usuario o contraseña incorrecta");
+  } catch(e){
+    alert("Error al conectar con el backend");
+    console.error(e);
   }
 }
 
 // --- REGISTRO ---
 async function registrar(){
-  const u = document.getElementById("regUser").value;
-  const p = document.getElementById("regPass").value;
+  const u = document.getElementById("regUser").value.trim();
+  const p = document.getElementById("regPass").value.trim();
   if(!u||!p){ alert("Complete usuario y contraseña"); return; }
 
-  const res = await fetch(API+"/register",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({user:u, pass:p})
-  });
+  try{
+    const res = await fetch(API+"/register",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({user:u, pass:p})
+    });
 
-  if(res.ok){
+    if(!res.ok){
+      const err = await res.json();
+      alert(err.error || "Error al registrar");
+      return;
+    }
+
     alert("Usuario registrado, ahora puede ingresar");
     cerrarRegistro();
-  } else {
-    const err = await res.json();
-    alert(err.error || "Error al registrar");
+  } catch(e){
+    alert("Error al conectar con el backend");
+    console.error(e);
   }
 }
 
@@ -214,7 +226,7 @@ async function eliminar(id){
   cargar();
 }
 
-// --- EDITAR (abre panel con datos) ---
+// --- EDITAR ---
 async function editar(id){
   const res = await fetch(API+"/noticias/"+id);
   const n = await res.json();
