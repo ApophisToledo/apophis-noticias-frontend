@@ -1,42 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Apophis Noticias</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:Georgia;margin:0;background:#f4e3b2;}
+.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;position:sticky;top:0;z-index:10;}
+.container{max-width:900px;margin:auto;padding:20px;}
+input,textarea,select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
+button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;margin-top:5px;}
+button.crear{background:green;color:white;width:100%;}
+button.cerrar{background:red;color:white;width:100%;}
+.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;}
+</style>
+</head>
+<body>
+<div class="header">𓂀 APOPHIS NOTICIAS 𓂀</div>
+<div class="container">
+<h2>Panel Admin</h2>
+<input id="titulo" placeholder="Título">
+<textarea id="contenido" placeholder="Contenido"></textarea>
+<select id="categoria">
+  <option value="politica">Política</option>
+  <option value="deportes">Deportes</option>
+  <option value="policiales">Policiales</option>
+  <option value="arte">Arte</option>
+  <option value="show">Show</option>
+</select>
+<input type="file" id="img">
+<input type="file" id="video">
+<button class="crear" onclick="crear()">Crear / Actualizar Noticia</button>
+<h2>Noticias Existentes</h2>
+<div id="listaAdmin"></div>
+<button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
+</div>
+
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const token = localStorage.getItem("token");
+let token = localStorage.getItem("token");
+if(!token){ alert("Debes ingresar primero en index.html"); location="index.html"; }
 
-if(!token){ location="index.html"; }
+async function cargar(){
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+  listaAdmin.innerHTML = data.map(n=>`<div class="card"><b>${n.titulo}</b><div style="margin-top:5px;"><button onclick="editar('${n._id}')">Editar</button><button onclick="eliminar('${n._id}')">Eliminar</button></div></div>`).join("");
+}
 
 async function crear(){
-  let url="";
-
-  const file = img.files[0];
-  if(file){
-    const fd = new FormData();
-    fd.append("file", file);
-
-    const r = await fetch(API+"/upload",{
-      method:"POST",
-      headers:{Authorization:"Bearer "+token},
-      body:fd
-    });
-
-    const d = await r.json();
-    url = d.url;
+  const fd=new FormData();
+  const img=document.getElementById("img").files[0];
+  const video=document.getElementById("video").files[0];
+  if(img) fd.append("file",img);
+  if(video) fd.append("video",video);
+  let url="",vurl="";
+  if(img){
+    const r=await fetch(API+"/upload",{method:"POST",headers:{Authorization:"Bearer "+token},body:fd});
+    const d=await r.json(); url=d.url||''; vurl=d.video||'';
   }
-
-  await fetch(API+"/noticias",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization:"Bearer "+token
-    },
-    body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.value,
-      categoria:categoria.value,
-      imagen:url,
-      urgente:urgenteCheck.checked
-    })
-  });
-
-  alert("Publicado 🚀");
+  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({titulo:titulo.value,contenido:contenido.value,categoria:categoria.value,imagen:url,video:vurl})});
+  alert("Noticia creada/actualizada");cargar();
 }
+
+async function eliminar(id){
+  if(!confirm("Eliminar noticia?")) return;
+  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:"Bearer "+token}});
+  cargar();
+}
+
+async function editar(id){
+  const res=await fetch(API+"/noticias/"+id);
+  const n=await res.json();
+  titulo.value=n.titulo;contenido.value=n.contenido;categoria.value=n.categoria;
+}
+
+function cerrarAdmin(){location="index.html";}
+window.onload=cargar;
 </script>
+</body>
+</html>

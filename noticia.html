@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Noticia</title>
 <style>
-body{font-family:Georgia;background:#f4e3b2;}
-.container{max-width:900px;margin:auto;background:#fff8dc;padding:20px;border-radius:12px;}
+body{font-family:Georgia;margin:0;background:#f4e3b2;}
+@media (prefers-color-scheme: dark){body{background:#111;color:white;}}
+.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;position:sticky;top:0;z-index:10;}
+.container{max-width:900px;margin:auto;padding:20px;background:#fff8dc;border-radius:12px;}
 .btn{padding:6px 10px;border-radius:6px;margin:5px;}
 </style>
 </head>
 <body>
+<div class="header">𓂀 APOPHIS NOTICIAS 𓂀</div>
 <div class="container">
 <button onclick="volver()">⬅ Inicio</button>
 <div id="n"></div>
@@ -22,14 +25,22 @@ body{font-family:Georgia;background:#f4e3b2;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id=new URLSearchParams(location.search).get("id");
-let userId=localStorage.getItem("userId")||Date.now();localStorage.setItem("userId",userId);
+let userId=localStorage.getItem("userId")||Date.now();
+localStorage.setItem("userId",userId);
 
 async function cargar(){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
-  document.getElementById("n").innerHTML=`<h1>${n.titulo}</h1><p>${n.contenido}</p><p>👁 ${n.vistas}</p><button class="btn" onclick="like()">👍 ${n.likes}</button><button class="btn" onclick="dislike()">👎 ${n.dislikes}</button>`;
+  document.getElementById("n").innerHTML=`
+    <h1>${n.titulo}</h1>
+    <p>${n.contenido}</p>
+    <p>👁 ${n.vistas}</p>
+    <button class="btn" onclick="like()">👍 ${n.likes}</button>
+    <button class="btn" onclick="dislike()">👎 ${n.dislikes}</button>
+  `;
   comentarios.innerHTML=n.comentarios.map(c=>`<div>${c.texto}</div>`).join("");
 }
+
 async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
 async function dislike(){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
 async function comentar(){await fetch(API+"/noticias/"+id+"/comentario",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({texto:comentario.value,userId})});comentario.value="";cargar();}

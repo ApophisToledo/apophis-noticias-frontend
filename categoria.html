@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Categoría</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:Georgia;margin:0;background:#f4e3b2;transition:.3s;}
+@media (prefers-color-scheme: dark){body{background:#111;color:white;}}
+.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;position:sticky;top:0;z-index:10;}
+.container{max-width:1200px;margin:auto;padding:15px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
+.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;transition:.3s;}
+.card:hover{transform:translateY(-5px) scale(1.02);}
+</style>
 </head>
 <body>
-
-<button onclick="location='index.html'">Inicio</button>
-
-<h2 id="titulo"></h2>
-
-<div id="contenedor"></div>
+<div class="header">𓂀 APOPHIS NOTICIAS 𓂀</div>
+<div class="container">
+<h2 id="tituloCat"></h2>
+<div id="contenedor" class="grid"></div>
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const cat=new URLSearchParams(location.search).get("cat");
-
-titulo.innerText="Categoría: "+cat;
+const catParam=new URLSearchParams(location.search).get("cat");
+tituloCat.innerText="Categoría: "+catParam;
 
 async function cargar(){
-  const res=await fetch(API+"/noticias/categoria/"+cat);
+  const res=await fetch(API+"/noticias/categoria/"+catParam);
   const data=await res.json();
-
-  contenedor.innerHTML=data.slice(0,10).map(n=>`
-    <div onclick="location='noticia.html?id=${n._id}'">
-      ${n.titulo} 👁 ${n.vistas}
+  contenedor.innerHTML=data.map(n=>`
+    <div class="card" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+      <p>${n.contenido.substring(0,100)}</p>
+      <p>👁 ${n.vistas}</p>
+      <button class="btn like" onclick="like('${n._id}')">👍 ${n.likes}</button>
+      <button class="btn dislike" onclick="dislike('${n._id}')">👎 ${n.dislikes}</button>
     </div>
   `).join("");
 }
 
+async function like(id){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
+async function dislike(id){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
+function ir(id){location="noticia.html?id="+id;}
 cargar();
 </script>
-
 </body>
 </html>
