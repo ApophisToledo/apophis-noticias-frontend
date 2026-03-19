@@ -1,49 +1,36 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Categoría</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{background:#f4e3b2;font-family:Georgia;margin:0;padding:0;}
-.header{background:#111;color:white;padding:20px;text-align:center;position:sticky;top:0;z-index:10;font-size:2rem;}
-.button{background:black;color:white;padding:5px 10px;border-radius:5px;margin:5px;cursor:pointer;}
-.button:hover{background:gold;color:black;}
-.grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;padding:15px;}
-.card{background:#fff8dc;border-left:5px solid gold;padding:15px;border-radius:10px;margin:10px;transition:.3s;cursor:pointer;}
-</style>
 </head>
 <body>
 
-<div class="header">𓂀 Apophis Noticias 𓂀</div>
-<button onclick="volverInicio()" class="button">← Inicio</button>
-<h2 id="titulo" class="text-2xl text-center mt-4"></h2>
-<div id="contenedor" class="grid"></div>
+<button onclick="location='index.html'">Inicio</button>
+
+<h2 id="titulo"></h2>
+
+<div id="contenedor"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const cat=new URLSearchParams(location.search).get("cat");
-const urlParams = new URLSearchParams(window.location.search);
-const admin = urlParams.get("admin") === "true";
 
 titulo.innerText="Categoría: "+cat;
 
-function volverInicio(){ location="index.html"+(admin?"?admin=true":""); }
-function ir(id){ location="noticia.html?id="+id+(admin?"&admin=true":""); }
-
 async function cargar(){
-  const res = await fetch(API+"/noticias/categoria/"+cat);
-  const data = await res.json();
-  contenedor.innerHTML = data.map((n,i)=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-      ${n.imagen?`<img src="${n.imagen}">`:''}
-      <p>${n.contenido.substring(0,100)}...</p>
+  const res=await fetch(API+"/noticias/categoria/"+cat);
+  const data=await res.json();
+
+  contenedor.innerHTML=data.slice(0,10).map(n=>`
+    <div onclick="location='noticia.html?id=${n._id}'">
+      ${n.titulo} 👁 ${n.vistas}
     </div>
   `).join("");
 }
 
 cargar();
 </script>
+
 </body>
 </html>
