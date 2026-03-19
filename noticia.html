@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<title>Noticia</title>
+
+<meta name="description" content="Noticia de Apophis Noticias">
+
+<meta property="og:type" content="article">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-yellow-100 p-5">
+
+<a href="index.html">← Volver</a>
+
+<div id="noticia"></div>
+
+<script>
+const API="https://apophis-noticias-backend.vercel.app";
+const id = new URLSearchParams(location.search).get("id");
+
+async function cargar(){
+
+  const res = await fetch(API+"/noticias/"+id);
+  const n = await res.json();
+
+  // 🔥 SEO DINÁMICO
+  document.title = n.titulo;
+
+  const desc = document.createElement("meta");
+  desc.name="description";
+  desc.content = n.contenido.substring(0,150);
+  document.head.appendChild(desc);
+
+  const og = document.createElement("meta");
+  og.setAttribute("property","og:title");
+  og.content = n.titulo;
+  document.head.appendChild(og);
+
+  document.getElementById("noticia").innerHTML=`
+    <h1 class="text-3xl">${n.titulo}</h1>
+    <p>${n.contenido}</p>
+
+    ${n.imagen ? `<img src="${n.imagen}">`:""}
+
+    <p>👁 ${n.vistas}</p>
+
+    <button onclick="like()">❤️ ${n.likes}</button>
+    <button onclick="dislike()">👎 ${n.dislikes}</button>
+
+    <button onclick="compartir()">Compartir</button>
+  `;
+
+  fetch(API+"/noticias/"+id+"/view",{method:"POST"});
+}
+
+function compartir(){
+  window.open(`https://wa.me/?text=${location.href}`);
+}
+
+async function like(){
+  await fetch(API+"/noticias/"+id+"/like",{method:"POST"});
+  location.reload();
+}
+
+async function dislike(){
+  await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});
+  location.reload();
+}
+
+cargar();
+</script>
+
+</body>
+</html>
