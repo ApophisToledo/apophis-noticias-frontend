@@ -5,22 +5,23 @@
 <title>Noticia</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{font-family:Georgia;margin:0;background:#f4e3b2;transition:.3s;}
-@media (prefers-color-scheme: dark){body{background:#111;color:white;}}
+body{font-family:Georgia;margin:0;transition:.3s;background:#f4e3b2;color:black;}
+body.dark{background:#111;color:#f0e68c;}
 .header{
   background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
-  position:sticky;top:0;z-index:10;cursor:pointer;
-  display:flex;justify-content:center;align-items:center;gap:10px;
+  display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;
 }
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
 @keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
 .container{max-width:800px;margin:auto;padding:15px;}
 .card{background:#fff8dc;padding:15px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:15px;}
+.card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
 h1{font-size:2rem;font-weight:bold;margin-bottom:10px;}
 .btn{padding:5px 10px;border-radius:5px;margin:3px;}
 .like{background:green;color:white;}
 .dislike{background:red;color:white;}
 .comentario{margin-top:10px;padding:5px;border:1px solid #ccc;border-radius:5px;}
+button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
 </style>
 </head>
 <body>
@@ -43,9 +44,17 @@ h1{font-size:2rem;font-weight:bold;margin-bottom:10px;}
 <div id="comentarios"></div>
 </div>
 
+<button class="toggle-dark" onclick="toggleDark()">🌙</button>
+
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id = new URLSearchParams(location.search).get("id");
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  noticiaDiv.classList.toggle("dark");
+  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
+}
 
 async function cargar(){
   const res = await fetch(API+"/noticias/"+id);
@@ -75,8 +84,8 @@ function mostrarComentarios(coms){
   comentarios.innerHTML = coms.map(c=>`<div class="comentario">${c.texto}</div>`).join("");
 }
 function volverInicio(){location="index.html";}
+
 window.onload=cargar;
 </script>
-
 </body>
 </html>
