@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <title>Noticia</title>
-
 <script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{
-  background:#f4e3b2;
-  font-family:serif;
-}
-</style>
-
 </head>
 
-<body class="p-6">
+<body class="p-4">
 
-<a href="index.html" class="bg-black text-white px-3 py-1 rounded">← Volver</a>
+<a href="index.html">← Volver</a>
 
 <div id="n"></div>
+
+<textarea id="comentario"></textarea>
+<button onclick="comentar()">Enviar</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
@@ -30,13 +23,30 @@ async function cargar(){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
 
-  document.title=n.titulo;
-
   document.getElementById("n").innerHTML=`
-    <h1 class="text-3xl">${n.titulo}</h1>
-    ${n.imagen?`<img src="${n.imagen}" class="my-3">`:""}
+    <h1>${n.titulo}</h1>
+    ${n.imagen?`<img src="${n.imagen}">`:""}
     <p>${n.contenido}</p>
+
+    <button onclick="like()">👍 ${n.likes}</button>
+
+    ${n.comentarios.map(c=>`<p>💬 ${c.texto}</p>`).join("")}
   `;
+}
+
+async function like(){
+  await fetch(API+"/noticias/"+id+"/like",{method:"POST"});
+  cargar();
+}
+
+async function comentar(){
+  await fetch(API+"/noticias/"+id+"/comentario",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({texto:comentario.value})
+  });
+
+  cargar();
 }
 
 cargar();

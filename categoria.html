@@ -1,46 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta charset="UTF-8">
 <title>Categoría</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-yellow-100 p-5">
+<body class="p-4">
 
 <a href="index.html">← Inicio</a>
 
 <h1 id="titulo"></h1>
-
-<div id="ranking"></div>
 <div id="contenedor"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const cat = new URLSearchParams(location.search).get("cat");
 
-document.getElementById("titulo").innerText = cat;
+titulo.innerText=cat;
 
 async function cargar(){
+  const res=await fetch(API+"/noticias/categoria/"+cat);
+  const data=await res.json();
 
-  const res = await fetch(API+"/noticias/categoria/"+cat);
-  const data = await res.json();
-
-  document.getElementById("contenedor").innerHTML=
-  data.map(n=>`
+  contenedor.innerHTML=data.map(n=>`
     <div onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
     </div>
   `).join("");
-
-  const r = await fetch(API+"/ranking/"+cat);
-  const rank = await r.json();
-
-  document.getElementById("ranking").innerHTML=
-    rank.map(n=>`<p onclick="ir('${n._id}')">🔥 ${n.titulo}</p>`).join("");
 }
 
 function ir(id){
-  window.location="noticia.html?id="+id;
+  location="noticia.html?id="+id;
 }
 
 cargar();

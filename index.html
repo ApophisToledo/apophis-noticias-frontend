@@ -1,160 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>𓂀 Apophis Noticias | Rosario</title>
-<meta name="description" content="Noticias de Rosario, Argentina y el mundo.">
-
+<title>𓂀 Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{
-  background:#f4e3b2;
-  font-family: serif;
-}
-
-/* portada principal */
-.hero{
-  position:relative;
-  overflow:hidden;
-  border-radius:12px;
-}
-.hero img{
-  width:100%;
-  height:300px;
-  object-fit:cover;
-}
-.hero h2{
-  position:absolute;
-  bottom:0;
-  background:rgba(0,0,0,0.6);
-  color:white;
-  width:100%;
-  padding:10px;
-}
-
-/* tarjetas */
-.card{
-  background:#fff7d1;
-  border:1px solid #d4af37;
-  padding:10px;
-  border-radius:10px;
-  transition:.3s;
-}
-.card:hover{
-  transform:scale(1.02);
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* modal */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-.modal-content{
-  background:#fff7d1;
-  padding:20px;
-  border-radius:10px;
-  width:300px;
-}
+body{background:#f4e3b2;font-family:serif;}
+.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:99999;}
+.panel{position:fixed;top:0;right:0;width:300px;height:100%;background:white;overflow:auto;padding:15px;display:none;}
 </style>
-
 </head>
 
 <body>
 
-<header class="bg-yellow-600 text-center p-5">
-  <h1 class="text-4xl font-bold">𓂀 Apophis Noticias 𓂀</h1>
+<h1 class="text-3xl text-center p-4">𓂀 Apophis Noticias</h1>
 
-  <button onclick="abrirLogin()" class="mt-2 bg-black text-white px-3 py-1 rounded">
-    Admin
-  </button>
-</header>
+<div class="text-center">
+  <button onclick="abrirLogin()" class="bg-black text-white px-4 py-2">Admin</button>
+</div>
 
-<!-- PORTADA -->
-<section class="p-4">
-  <div id="principal"></div>
-</section>
-
-<!-- SECCIONES -->
-<section class="p-4 grid md:grid-cols-3 gap-4" id="secundarias"></section>
+<div id="noticias"></div>
 
 <!-- LOGIN -->
 <div id="login" class="modal">
-  <div class="modal-content">
+  <div class="bg-white p-4 rounded">
     <h2>Admin</h2>
-    <input id="user" placeholder="Usuario" class="w-full border mb-2">
-    <input id="pass" type="password" placeholder="Contraseña" class="w-full border mb-2">
-    <button onclick="login()" class="bg-yellow-600 w-full">Ingresar</button>
+    <input id="user" placeholder="Usuario" class="border w-full mb-2">
+    <input id="pass" type="password" placeholder="Contraseña" class="border w-full mb-2">
+    <button onclick="login()" class="bg-black text-white w-full">Entrar</button>
   </div>
 </div>
 
-<!-- PANEL -->
-<div id="admin" class="modal">
-  <div class="modal-content">
-    <h2>Crear noticia</h2>
-    <input id="titulo" placeholder="Título" class="w-full border mb-2">
-    <textarea id="contenido" class="w-full border mb-2"></textarea>
-    <select id="categoria" class="w-full border mb-2">
-      <option value="politica">Política</option>
-      <option value="deportes">Deportes</option>
-      <option value="policiales">Policiales</option>
-      <option value="arte">Arte</option>
-      <option value="show">Show</option>
-    </select>
-    <input type="file" id="img">
-    <button onclick="crear()" class="bg-green-600 w-full text-white mt-2">Publicar</button>
-  </div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="panel">
+  <h2 class="text-xl mb-2">Panel Admin</h2>
+
+  <input id="titulo" placeholder="Titulo" class="border w-full mb-2">
+  <textarea id="contenido" class="border w-full mb-2"></textarea>
+
+  <select id="categoria" class="border w-full mb-2">
+    <option value="politica">Política</option>
+    <option value="deportes">Deportes</option>
+    <option value="policiales">Policiales</option>
+    <option value="arte">Arte</option>
+    <option value="show">Show</option>
+  </select>
+
+  <input type="file" id="img" class="mb-2">
+
+  <button onclick="crear()" class="bg-green-600 text-white w-full mb-3">Publicar</button>
+
+  <h3>Noticias</h3>
+  <div id="listaAdmin"></div>
+
+  <button onclick="cerrarAdmin()" class="bg-red-600 text-white w-full mt-3">Cerrar</button>
 </div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let admin=false;
 
-// CARGAR
-async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
-
-  if(!data.length) return;
-
-  // PRINCIPAL
-  const p=data[0];
-  document.getElementById("principal").innerHTML=`
-    <div class="hero" onclick="ir('${p._id}')">
-      <img src="${p.imagen || ''}">
-      <h2>${p.titulo}</h2>
-    </div>
-  `;
-
-  // SECUNDARIAS
-  document.getElementById("secundarias").innerHTML=
-  data.slice(1).map(n=>`
-    <div class="card">
-      ${admin ? `<button onclick="eliminar('${n._id}')">X</button>`:""}
-      <div onclick="ir('${n._id}')">
-        <h3>${n.titulo}</h3>
-        <p>${n.contenido.substring(0,80)}...</p>
-      </div>
-    </div>
-  `).join("");
-}
-
-// IR
-function ir(id){
-  location="noticia.html?id="+id;
-}
-
 // LOGIN
-function abrirLogin(){login.style.display="flex";}
+function abrirLogin(){
+  document.getElementById("login").style.display="flex";
+}
+
 async function login(){
   const res=await fetch(API+"/login",{
     method:"POST",
@@ -164,15 +76,55 @@ async function login(){
 
   if(res.ok){
     admin=true;
-    login.style.display="none";
-    admin.style.display="flex";
+    document.getElementById("login").style.display="none";
+    document.getElementById("dashboard").style.display="block";
     cargar();
+  }else{
+    alert("Error login");
   }
+}
+
+// CERRAR
+function cerrarAdmin(){
+  document.getElementById("dashboard").style.display="none";
+}
+
+// CARGAR
+async function cargar(){
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+
+  // PUBLICO
+  document.getElementById("noticias").innerHTML=
+  data.map(n=>`
+    <div class="card">
+      <h2 onclick="ir('${n._id}')">${n.titulo}</h2>
+      <p>${n.contenido.substring(0,80)}...</p>
+      <p>👍 ${n.likes} | 👁️ ${n.vistas}</p>
+    </div>
+  `).join("");
+
+  // ADMIN LISTA
+  if(admin){
+    document.getElementById("listaAdmin").innerHTML=
+    data.map(n=>`
+      <div class="border p-2 mb-2">
+        <b>${n.titulo}</b><br>
+        <button onclick="eliminar('${n._id}')" class="bg-red-500 text-white px-2">Eliminar</button>
+      </div>
+    `).join("");
+  }
+}
+
+// IR
+function ir(id){
+  location="noticia.html?id="+id;
 }
 
 // CREAR
 async function crear(){
   let url="";
+  const img=document.getElementById("img");
 
   if(img.files[0]){
     const fd=new FormData();
@@ -195,13 +147,15 @@ async function crear(){
   });
 
   alert("Publicada");
-  admin.style.display="none";
   cargar();
 }
 
 // DELETE
 async function eliminar(id){
-  await fetch(API+"/noticias/"+id,{method:"DELETE"});
+  await fetch(API+"/noticias/"+id,{
+    method:"DELETE",
+    headers:{user:"admin",pass:"1234"}
+  });
   cargar();
 }
 
