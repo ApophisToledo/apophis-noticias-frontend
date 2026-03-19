@@ -115,13 +115,16 @@ async function login(){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({user:u, pass:p})
     });
-    if(!res.ok){ const err = await res.json(); alert(err.error||"Usuario o contraseña incorrecta"); return; }
+    
     const data = await res.json();
+    if(!res.ok){ alert(data.error || "Usuario o contraseña incorrecta"); return; }
+
     token = data.token;
     admin = (data.role==="admin");
-    localStorage.setItem("token", token);
+    document.getElementById("dashboard").style.display = admin ? "block" : "none";
+    alert("Bienvenido "+data.user+"!"); // Mensaje opcional
+
     cerrarLogin();
-    if(admin) document.getElementById("dashboard").style.display="block";
     cargar();
   }catch(e){ alert("Error de conexión"); console.error(e);}
 }
