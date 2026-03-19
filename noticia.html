@@ -2,15 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Noticia</title>
+<title>Noticia - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:black;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-.header{
-  background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
-  display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;
-}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
+.header span.title{font-size:2rem;cursor:pointer;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
 @keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
 .container{max-width:800px;margin:auto;padding:15px;}
@@ -22,26 +20,28 @@ h1{font-size:2rem;font-weight:bold;margin-bottom:10px;}
 .dislike{background:red;color:white;}
 .comentario{margin-top:10px;padding:5px;border:1px solid #ccc;border-radius:5px;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
+body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 </style>
 </head>
 <body>
 
-<div class="header" onclick="location='index.html'">
+<div class="header">
   <span class="eyes">𓂀</span>
   <span class="eyes">𓁹</span>
-  <span>APOPHIS NOTICIAS</span>
+  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
+  <button class="admin-btn" onclick="location='admin.html'" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;">Admin</button>
 </div>
 
 <div class="container">
-<button onclick="volverInicio()">← Inicio</button>
-<div id="noticiaDiv" class="card"></div>
+  <button onclick="volverInicio()">← Inicio</button>
+  <div id="noticiaDiv" class="card"></div>
 
-<h3>Comentarios:</h3>
-<textarea id="comentarioInput" placeholder="Escribe un comentario"></textarea>
-<button onclick="comentar()">Comentar</button>
-<div id="comentarios"></div>
+  <h3>Comentarios:</h3>
+  <textarea id="comentarioInput" placeholder="Escribe un comentario" style="width:100%;padding:8px;margin:5px 0;border-radius:5px;"></textarea>
+  <button onclick="comentar()" style="padding:8px 12px;border-radius:5px;margin-bottom:10px;">Comentar</button>
+  <div id="comentarios"></div>
 </div>
 
 <button class="toggle-dark" onclick="toggleDark()">🌙</button>
@@ -49,11 +49,15 @@ button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-rad
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const id = new URLSearchParams(location.search).get("id");
+const noticiaDiv=document.getElementById("noticiaDiv");
+const comentarios=document.getElementById("comentarios");
+const comentarioInput=document.getElementById("comentarioInput");
 
 function toggleDark(){
   document.body.classList.toggle("dark");
   noticiaDiv.classList.toggle("dark");
   document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
+  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
 async function cargar(){
@@ -68,7 +72,7 @@ async function cargar(){
     <button class="btn like" onclick="like()">👍 ${n.likes}</button>
     <button class="btn dislike" onclick="dislike()">👎 ${n.dislikes}</button>
   `;
-  mostrarComentarios(n.comentarios);
+  mostrarComentarios(n.comentarios || []);
 }
 
 async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
@@ -80,12 +84,11 @@ async function comentar(){
   comentarioInput.value='';
   cargar();
 }
-function mostrarComentarios(coms){
-  comentarios.innerHTML = coms.map(c=>`<div class="comentario">${c.texto}</div>`).join("");
-}
+function mostrarComentarios(coms){comentarios.innerHTML = coms.map(c=>`<div class="comentario">${c.texto}</div>`).join("");}
 function volverInicio(){location="index.html";}
 
 window.onload=cargar;
 </script>
+
 </body>
 </html>

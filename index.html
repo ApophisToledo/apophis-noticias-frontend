@@ -5,33 +5,44 @@
 <title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:black;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-.header{
-  background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
-  display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;
-}
+h2,h3,p,span,button{transition:.3s;}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
+.header span.title{font-size:2rem;cursor:pointer;}
+.header .admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
+body.dark .header .admin-btn{background:#f0e68c;color:#111;}
+.header .admin-btn:hover{opacity:1;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
 @keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
 .container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
-.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;transition:.3s;text-align:center;}
-.card h2{font-size:1.5rem;font-weight:bold;color:black;}
+.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;text-align:center;color:#111;}
+.card h2{font-size:1.5rem;font-weight:bold;color:#111;}
+.card button{margin:5px;padding:5px 8px;border:none;border-radius:6px;cursor:pointer;background:#111;color:gold;}
+.card button:hover{background:gold;color:black;}
 .card:hover{transform:translateY(-5px) scale(1.02);}
-.card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
-button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
-button.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;transition:.3s;}
+body.dark .card{background:#222;color:#f0e68c;border-left:5px solid gold;}
+body.dark .card button{background:#f0e68c;color:#111;}
+body.dark .card button:hover{background:#111;color:gold;}
+button.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;}
 button.cat-btn:hover{background:gold;color:black;}
+body.dark button.cat-btn{background:#f0e68c;color:#111;}
+body.dark button.cat-btn:hover{background:#111;color:gold;}
+button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
+button.toggle-dark:hover{opacity:1;}
+body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 </style>
 </head>
 <body>
 
-<div class="header" onclick="location='index.html'">
+<div class="header">
   <span class="eyes">𓂀</span>
   <span class="eyes">𓁹</span>
-  <span>APOPHIS NOTICIAS</span>
+  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
+  <button class="admin-btn" onclick="location='admin.html'">Admin</button>
 </div>
 
 <div class="container">
@@ -52,23 +63,28 @@ button.cat-btn:hover{background:gold;color:black;}
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+const contenedor=document.getElementById("contenedor");
 
 function toggleDark(){
   document.body.classList.toggle("dark");
   document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
+  const btn=document.querySelector(".toggle-dark");
+  btn.textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
 async function cargar(){
-  const res = await fetch(API+"/noticias");
-  const data = await res.json();
-  contenedor.innerHTML = data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-      <p>👁 ${n.vistas}</p>
-      <button onclick="event.stopPropagation();like('${n._id}')">👍 ${n.likes}</button>
-      <button onclick="event.stopPropagation();dislike('${n._id}')">👎 ${n.dislikes}</button>
-    </div>
-  `).join("");
+  try{
+    const res = await fetch(API+"/noticias");
+    const data = await res.json();
+    contenedor.innerHTML = data.map(n=>`
+      <div class="card" onclick="ir('${n._id}')">
+        <h2>${n.titulo}</h2>
+        <p>👁 ${n.vistas}</p>
+        <button onclick="event.stopPropagation();like('${n._id}')">👍 ${n.likes}</button>
+        <button onclick="event.stopPropagation();dislike('${n._id}')">👎 ${n.dislikes}</button>
+      </div>
+    `).join("");
+  }catch(e){contenedor.innerHTML="<p>Error al cargar noticias.</p>";console.error(e);}
 }
 
 async function like(id){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}

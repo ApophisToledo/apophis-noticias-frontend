@@ -5,85 +5,125 @@
 <title>Admin - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{background:#f4e3b2;font-family:serif;margin:0;padding:0;}
-h1{font-size:2rem;text-align:center;margin:15px;}
-input, select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
-button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;}
+/* --- Base y Dark Mode --- */
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body.dark{background:#111;color:#f0e68c;}
+h1,h2,h3,p,span,button,input,textarea{transition:.3s;}
+
+/* --- Header --- */
+.header{
+  background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:sticky;top:0;z-index:10;cursor:pointer;
+}
+.header span.title{font-size:2rem;cursor:pointer;}
+.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+
+/* --- Container --- */
+.container{max-width:800px;margin:auto;padding:15px;}
+input, select, textarea{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #111;}
+body.dark input, body.dark textarea, body.dark select{background:#222;color:#f0e68c;border:1px solid #f0e68c;}
+
+/* --- Botones --- */
+button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;transition:.3s;}
 button.crear{background:green;color:white;width:100%;margin-top:5px;}
 button.cerrar{background:red;color:white;width:100%;margin-top:5px;}
 button.editar{background:gold;color:black;margin-right:5px;}
 button.eliminar{background:red;color:white;}
-.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;}
-.header{
-  background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
-  position:sticky;top:0;z-index:10;cursor:pointer;
-  display:flex;justify-content:center;align-items:center;gap:10px;
+body.dark button.crear{background:#0a6f0a;color:#f0e68c;}
+body.dark button.cerrar{background:#6f0a0a;color:#f0e68c;}
+body.dark button.editar{background:#f0e68c;color:#111;}
+body.dark button.eliminar{background:#ff4444;color:#111;}
+
+/* --- Cards tipo Crónica TV --- */
+.card{
+  background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+.card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
+
+/* --- Editor toolbar --- */
 .editor-toolbar{margin:10px 0;display:flex;gap:5px;flex-wrap:wrap;}
 .editor-toolbar button{padding:5px 8px;border-radius:5px;background:#eee;}
 .editor-toolbar select{padding:5px;border-radius:5px;}
-#contenido{border:1px solid #ccc;border-radius:5px;padding:8px;min-height:150px;}
+body.dark .editor-toolbar button, body.dark .editor-toolbar select{background:#444;color:#f0e68c;}
+
+/* --- Toggle Dark Button --- */
+button.toggle-dark{
+  position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;font-size:1.2rem;
+}
+body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 </style>
 </head>
 <body>
 
-<div class="header" onclick="location='index.html'">
+<div class="header">
   <span class="eyes">𓂀</span>
   <span class="eyes">𓁹</span>
-  <span>APOPHIS NOTICIAS</span>
+  <span class="title">ADMIN PANEL</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
 </div>
 
-<h1>Panel Admin - Apophis Noticias</h1>
+<div class="container">
+  <h1>Panel Admin - Apophis Noticias</h1>
 
-<input id="titulo" placeholder="Título">
-<select id="categoria">
-  <option value="politica">Política</option>
-  <option value="deportes">Deportes</option>
-  <option value="policiales">Policiales</option>
-  <option value="arte">Arte</option>
-  <option value="show">Show</option>
-</select>
-
-<input type="file" id="img">
-<input type="file" id="video">
-
-<div class="editor-toolbar">
-  <button onclick="document.execCommand('bold',false,null)">B</button>
-  <button onclick="document.execCommand('italic',false,null)">I</button>
-  <button onclick="document.execCommand('underline',false,null)">U</button>
-  <select onchange="document.execCommand('fontSize',false,this.value)">
-    <option value="1">Tamaño 1</option>
-    <option value="2">Tamaño 2</option>
-    <option value="3">Tamaño 3</option>
-    <option value="4">Tamaño 4</option>
-    <option value="5">Tamaño 5</option>
-    <option value="6">Tamaño 6</option>
-    <option value="7">Tamaño 7</option>
+  <input id="titulo" placeholder="Título">
+  <select id="categoria">
+    <option value="politica">Política</option>
+    <option value="deportes">Deportes</option>
+    <option value="policiales">Policiales</option>
+    <option value="arte">Arte</option>
+    <option value="show">Show</option>
   </select>
-  <input type="color" onchange="document.execCommand('foreColor',false,this.value)">
+
+  <input type="file" id="img">
+  <input type="file" id="video">
+
+  <div class="editor-toolbar">
+    <button onclick="document.execCommand('bold',false,null)">B</button>
+    <button onclick="document.execCommand('italic',false,null)">I</button>
+    <button onclick="document.execCommand('underline',false,null)">U</button>
+    <select onchange="document.execCommand('fontSize',false,this.value)">
+      <option value="1">Tamaño 1</option>
+      <option value="2">Tamaño 2</option>
+      <option value="3">Tamaño 3</option>
+      <option value="4">Tamaño 4</option>
+      <option value="5">Tamaño 5</option>
+      <option value="6">Tamaño 6</option>
+      <option value="7">Tamaño 7</option>
+    </select>
+    <input type="color" onchange="document.execCommand('foreColor',false,this.value)">
+  </div>
+
+  <div id="contenido" contenteditable="true" placeholder="Contenido de la noticia"></div>
+
+  <button class="crear" onclick="crear()">Crear / Actualizar Noticia</button>
+
+  <h2>Noticias Existentes</h2>
+  <div id="listaAdmin"></div>
+
+  <button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
 </div>
 
-<div id="contenido" contenteditable="true" placeholder="Contenido de la noticia"></div>
-
-<button class="crear" onclick="crear()">Crear / Actualizar Noticia</button>
-
-<h2>Noticias Existentes</h2>
-<div id="listaAdmin"></div>
-
-<button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
+<button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let token = localStorage.getItem("token");
 if(!token){ alert("Debes ingresar primero en index.html"); location="index.html"; }
 
+const listaAdmin = document.getElementById("listaAdmin");
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
+  const btn = document.querySelector(".toggle-dark");
+  btn.textContent = document.body.classList.contains("dark")?"☀️":"🌙";
+}
+
 async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+  const res = await fetch(API+"/noticias");
+  const data = await res.json();
   listaAdmin.innerHTML = data.map(n=>`
     <div class="card">
       <b>${n.titulo}</b>
@@ -129,17 +169,16 @@ async function eliminar(id){
 }
 
 async function editar(id){
-  const res=await fetch(API+"/noticias/"+id);
-  const n=await res.json();
-  titulo.value=n.titulo;
-  contenido.innerHTML=n.contenido;
-  categoria.value=n.categoria;
+  const res = await fetch(API+"/noticias/"+id);
+  const n = await res.json();
+  titulo.value = n.titulo;
+  contenido.innerHTML = n.contenido;
+  categoria.value = n.categoria;
 }
 
 function cerrarAdmin(){ location="index.html"; }
 
-window.onload=cargar;
+window.onload = cargar;
 </script>
-
 </body>
 </html>
