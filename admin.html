@@ -5,22 +5,41 @@
 <title>Admin - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{font-family:Georgia;margin:0;background:#f4e3b2;}
-.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;position:sticky;top:0;z-index:10;}
-.container{max-width:900px;margin:auto;padding:20px;}
-input,textarea,select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
-button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;margin-top:5px;}
-button.crear{background:green;color:white;width:100%;}
-button.cerrar{background:red;color:white;width:100%;}
+body{background:#f4e3b2;font-family:serif;margin:0;padding:0;}
+h1{font-size:2rem;text-align:center;margin:15px;}
+input, select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
+button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;}
+button.crear{background:green;color:white;width:100%;margin-top:5px;}
+button.cerrar{background:red;color:white;width:100%;margin-top:5px;}
+button.editar{background:gold;color:black;margin-right:5px;}
+button.eliminar{background:red;color:white;}
 .card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;}
+.header{
+  background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
+  position:sticky;top:0;z-index:10;cursor:pointer;
+  display:flex;justify-content:center;align-items:center;gap:10px;
+}
+.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+.editor-toolbar{margin:10px 0;display:flex;gap:5px;flex-wrap:wrap;}
+.editor-toolbar button{padding:5px 8px;border-radius:5px;background:#eee;}
+.editor-toolbar select{padding:5px;border-radius:5px;}
+#contenido{border:1px solid #ccc;border-radius:5px;padding:8px;min-height:150px;}
 </style>
 </head>
 <body>
-<div class="header">𓂀 APOPHIS NOTICIAS 𓂀</div>
-<div class="container">
-<h2>Panel Admin</h2>
+
+<div class="header" onclick="location='index.html'">
+  <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
+  <span>APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
+  <span class="eyes">𓂀</span>
+</div>
+
+<h1>Panel Admin - Apophis Noticias</h1>
+
 <input id="titulo" placeholder="Título">
-<textarea id="contenido" placeholder="Contenido"></textarea>
 <select id="categoria">
   <option value="politica">Política</option>
   <option value="deportes">Deportes</option>
@@ -28,13 +47,34 @@ button.cerrar{background:red;color:white;width:100%;}
   <option value="arte">Arte</option>
   <option value="show">Show</option>
 </select>
+
 <input type="file" id="img">
 <input type="file" id="video">
+
+<div class="editor-toolbar">
+  <button onclick="document.execCommand('bold',false,null)">B</button>
+  <button onclick="document.execCommand('italic',false,null)">I</button>
+  <button onclick="document.execCommand('underline',false,null)">U</button>
+  <select onchange="document.execCommand('fontSize',false,this.value)">
+    <option value="1">Tamaño 1</option>
+    <option value="2">Tamaño 2</option>
+    <option value="3">Tamaño 3</option>
+    <option value="4">Tamaño 4</option>
+    <option value="5">Tamaño 5</option>
+    <option value="6">Tamaño 6</option>
+    <option value="7">Tamaño 7</option>
+  </select>
+  <input type="color" onchange="document.execCommand('foreColor',false,this.value)">
+</div>
+
+<div id="contenido" contenteditable="true" placeholder="Contenido de la noticia"></div>
+
 <button class="crear" onclick="crear()">Crear / Actualizar Noticia</button>
+
 <h2>Noticias Existentes</h2>
 <div id="listaAdmin"></div>
+
 <button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
-</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
@@ -44,38 +84,62 @@ if(!token){ alert("Debes ingresar primero en index.html"); location="index.html"
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
-  listaAdmin.innerHTML = data.map(n=>`<div class="card"><b>${n.titulo}</b><div style="margin-top:5px;"><button onclick="editar('${n._id}')">Editar</button><button onclick="eliminar('${n._id}')">Eliminar</button></div></div>`).join("");
+  listaAdmin.innerHTML = data.map(n=>`
+    <div class="card">
+      <b>${n.titulo}</b>
+      <div style="margin-top:5px;">
+        <button class="editar" onclick="editar('${n._id}')">Editar</button>
+        <button class="eliminar" onclick="eliminar('${n._id}')">Eliminar</button>
+      </div>
+    </div>
+  `).join("");
 }
 
 async function crear(){
-  const fd=new FormData();
-  const img=document.getElementById("img").files[0];
-  const video=document.getElementById("video").files[0];
-  if(img) fd.append("file",img);
-  if(video) fd.append("video",video);
-  let url="",vurl="";
+  const fd = new FormData();
+  const img = document.getElementById("img").files[0];
+  const video = document.getElementById("video").files[0];
+  if(img) fd.append("file", img);
+  if(video) fd.append("video", video);
+
+  let url="", vurl="";
   if(img){
-    const r=await fetch(API+"/upload",{method:"POST",headers:{Authorization:"Bearer "+token},body:fd});
-    const d=await r.json(); url=d.url||''; vurl=d.video||'';
+    const r = await fetch(API+"/upload",{method:"POST",headers:{Authorization:token},body:fd});
+    const d = await r.json(); url=d.url || ''; vurl=d.video || '';
   }
-  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({titulo:titulo.value,contenido:contenido.value,categoria:categoria.value,imagen:url,video:vurl})});
-  alert("Noticia creada/actualizada");cargar();
+
+  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json",Authorization:token},
+    body:JSON.stringify({
+      titulo:titulo.value,
+      contenido:contenido.innerHTML,
+      categoria:categoria.value,
+      imagen:url,
+      video:vurl
+    })
+  });
+
+  alert("Noticia creada/actualizada");
+  cargar();
 }
 
 async function eliminar(id){
   if(!confirm("Eliminar noticia?")) return;
-  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:"Bearer "+token}});
+  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:token}});
   cargar();
 }
 
 async function editar(id){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
-  titulo.value=n.titulo;contenido.value=n.contenido;categoria.value=n.categoria;
+  titulo.value=n.titulo;
+  contenido.innerHTML=n.contenido;
+  categoria.value=n.categoria;
 }
 
-function cerrarAdmin(){location="index.html";}
+function cerrarAdmin(){ location="index.html"; }
+
 window.onload=cargar;
 </script>
+
 </body>
 </html>

@@ -23,16 +23,20 @@ body{
   position:sticky;
   top:0;
   z-index:10;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
 }
-.eye::after{
-  content:"●";
-  position:absolute;
-  animation:moveEye 3s infinite;
+.eyes{
+  display:inline-block;
+  font-size:1.5rem;
+  animation:blink 4s infinite;
 }
-@keyframes moveEye{
-  0%{transform:translate(0,0);}
-  50%{transform:translate(4px,0);}
-  100%{transform:translate(0,0);}
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1);}
+  95%{transform:scaleY(0.1);}
 }
 .container{max-width:1200px;margin:auto;padding:15px;}
 .slider{
@@ -75,9 +79,13 @@ body{
   box-shadow:0 8px 20px rgba(0,0,0,0.2);
   cursor:pointer;
   transition:.3s;
+  text-align:center;
 }
-.card:hover{
-  transform:translateY(-5px) scale(1.02);
+.card:hover{transform:translateY(-5px) scale(1.02);}
+.card h2{
+  font-size:1.5rem;
+  font-weight:bold;
+  color:black;
 }
 .btn{padding:5px 10px;border-radius:5px;margin:3px;}
 .like{background:green;color:white;}
@@ -86,7 +94,13 @@ body{
 </head>
 <body>
 
-<div class="header">𓂀 <span class="eye">𓁹</span> APOPHIS NOTICIAS <span class="eye">𓁹</span> 𓂀</div>
+<div class="header" onclick="location='index.html'">
+  <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
+  <span>APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
+  <span class="eyes">𓂀</span>
+</div>
 
 <div class="container">
 <button onclick="abrirLogin()">Admin</button>
@@ -126,7 +140,6 @@ async function cargar(){
   contenedor.innerHTML=noticias.map(n=>`
     <div class="card">
       <h2 onclick="ir('${n._id}')">${n.titulo}</h2>
-      <p>${n.contenido.substring(0,100)}</p>
       <p>👁 ${n.vistas}</p>
       <button class="btn like" onclick="like('${n._id}')">👍 ${n.likes}</button>
       <button class="btn dislike" onclick="dislike('${n._id}')">👎 ${n.dislikes}</button>
