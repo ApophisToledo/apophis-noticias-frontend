@@ -6,7 +6,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{background:#f4e3b2;font-family:serif;margin:0;}
-.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px; transition: transform 0.3s; cursor:pointer;}
+.card{background:#fff7d1;padding:10px;border-radius:10px;margin:10px; transition: transform 0.3s;}
 .card:hover{transform: scale(1.02);}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:99999;}
 .modal-content{background:white;padding:20px;border-radius:10px;position:relative;}
@@ -37,15 +37,15 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
   <button onclick="filtrar('show')" class="px-3 py-1 bg-pink-500 rounded">Show</button>
 </div>
 
-<!-- Último momento tipo Crónica TV -->
+<!-- Último momento -->
 <div id="ultimoMomento" class="p-2 mb-4 text-white font-bold text-lg flex items-center gap-2 animate-pulse-red"></div>
 
 <!-- Contenedor de noticias -->
 <div id="noticias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-<!-- PANEL ADMIN (solo con ?admin=true) -->
+<!-- PANEL ADMIN HARDCODEADO (NO LOGIN) -->
 <div id="dashboard" class="panel">
-  <h2 class="text-xl mb-2">Panel Admin Secreto</h2>
+  <h2 class="text-xl mb-2">Panel Admin</h2>
   <input id="titulo" placeholder="Titulo" class="border w-full mb-2 p-1">
   <textarea id="contenido" class="border w-full mb-2 p-1"></textarea>
   <select id="categoria" class="border w-full mb-2 p-1">
@@ -65,25 +65,27 @@ body{background:#f4e3b2;font-family:serif;margin:0;}
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const urlParams = new URLSearchParams(window.location.search);
-const admin = urlParams.get("admin")==="true";
-if(admin) document.getElementById("dashboard").style.display="block";
 
-function cerrarAdmin(){document.getElementById("dashboard").style.display="none";}
+// ✅ TOKEN ADMIN HARDCODEADO (Generar desde backend o jwt.io)
+const adminToken = "AQUI_TU_TOKEN_GENERADO_MANUALMENTE";
 
+function abrirAdmin(){ document.getElementById("dashboard").style.display="block"; }
+function cerrarAdmin(){ document.getElementById("dashboard").style.display="none"; }
+
+// CARGAR NOTICIAS
 async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+  const res = await fetch(API+"/noticias");
+  const data = await res.json();
 
   // Último momento
   if(data.length>0){
-    const ultimo=data[0];
+    const ultimo = data[0];
     document.getElementById("ultimoMomento").innerHTML = `<img src="${ultimo.imagen||''}" class="w-10 h-10 rounded mr-2"> Último Momento: ${ultimo.titulo}`;
   }
 
   // Noticias
   document.getElementById("noticias").innerHTML = data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
+    <div class="card cursor-pointer" onclick="ir('${n._id}')">
       <h2 class="font-bold text-lg">${n.titulo}</h2>
       ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
       ${n.video?`<video src="${n.video}" controls class="w-full rounded mb-2"></video>`:''}
@@ -92,52 +94,90 @@ async function cargar(){
     </div>
   `).join("");
 
-  // Admin lista
-  if(admin){
-    document.getElementById("listaAdmin").innerHTML = data.map(n=>`
-      <div class="border p-2 mb-2">
-        <b>${n.titulo}</b><br>
-        <button onclick="eliminar('${n._id}')" class="bg-red-500 text-white px-2">Eliminar</button>
-        <button onclick="editar('${n._id}')" class="bg-yellow-500 text-white px-2">Editar</button>
-      </div>
-    `).join("");
-  }
+  // Lista admin
+  document.getElementById("listaAdmin").innerHTML = data.map(n=>`
+    <div class="border p-2 mb-2">
+      <b>${n.titulo}</b><br>
+      <button onclick="eliminar('${n._id}')" class="bg-red-500 text-white px-2">Eliminar</button>
+      <button onclick="editar('${n._id}')" class="bg-yellow-500 text-white px-2">Editar</button>
+    </div>
+  `).join("");
 }
 
 async function crear(){
-  const fd=new FormData();
-  const img=document.getElementById("img").files[0];
-  const video=document.getElementById("video").files[0];
+  const fd = new FormData();
+  const img = document.getElementById("img").files[0];
+  const video = document.getElementById("video").files[0];
   if(img) fd.append("file", img);
   if(video) fd.append("video", video);
 
   let url="", vurl="";
   if(img){
-    const r = await fetch(API+"/upload",{method:"POST", body:fd});
-    const d=await r.json(); url=d.url; vurl=d.video||'';
+    const r = await fetch(API+"/upload",{method:"POST", headers:{Authorization:adminToken}, body:fd});
+    const d = await r.json();
+    url = d.url; vurl = d.video || '';
   }
 
-  await fetch(API+"/noticias",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
+  await fetch(API+"/noticias",{method:"POST", headers:{"Content-Type":"application/json", Authorization:adminToken},
     body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.value,
-      categoria:categoria.value,
-      imagen:url,
-      video:vurl
+      titulo: titulo.value,
+      contenido: contenido.value,
+      categoria: categoria.value,
+      imagen: url,
+      video: vurl
     })
   });
-  alert("Noticia creada"); cargar();
+
+  alert("Noticia creada");
+  cargar();
 }
 
-async function eliminar(id){if(!confirm("Eliminar noticia?")) return; await fetch(API+"/noticias/"+id,{method:"DELETE"}); cargar();}
-async function editar(id){const res=await fetch(API+"/noticias/"+id); const n=await res.json(); titulo.value=n.titulo; contenido.value=n.contenido; categoria.value=n.categoria;}
-async function filtrar(cat){ const res=await fetch(API+"/noticias/categoria/"+cat); const data=await res.json(); document.getElementById("noticias").innerHTML=data.map(n=>`<div class="card" onclick="ir('${n._id}')"><h2>${n.titulo}</h2>${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}<p>${n.contenido.substring(0,80)}...</p></div>`).join(""); }
-async function buscar(){ const q=document.getElementById("searchInput").value.trim(); if(!q) return cargar(); const res=await fetch(API+"/noticias/search?q="+encodeURIComponent(q)); const data=await res.json(); document.getElementById("noticias").innerHTML=data.map(n=>`<div class="card" onclick="ir('${n._id}')"><h2>${n.titulo}</h2>${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}<p>${n.contenido.substring(0,80)}...</p></div>`).join(""); }
-function ir(id){location="noticia.html?id="+id+(admin?"&admin=true":"");}
+async function eliminar(id){
+  if(!confirm("Eliminar noticia?")) return;
+  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:adminToken}});
+  cargar();
+}
 
+async function editar(id){
+  const res = await fetch(API+"/noticias/"+id);
+  const n = await res.json();
+  titulo.value=n.titulo; contenido.value=n.contenido; categoria.value=n.categoria;
+}
+
+async function filtrar(cat){
+  const res = await fetch(API+"/noticias/categoria/"+cat);
+  const data = await res.json();
+  document.getElementById("noticias").innerHTML = data.map(n=>`
+    <div class="card cursor-pointer" onclick="ir('${n._id}')">
+      <h2 class="font-bold text-lg">${n.titulo}</h2>
+      ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
+      <p>${n.contenido.substring(0,80)}...</p>
+    </div>
+  `).join("");
+}
+
+async function buscar(){
+  const q = document.getElementById("searchInput").value.trim();
+  if(!q) return cargar();
+  const res = await fetch(API+"/noticias/search?q="+encodeURIComponent(q));
+  const data = await res.json();
+  document.getElementById("noticias").innerHTML = data.map(n=>`
+    <div class="card cursor-pointer" onclick="ir('${n._id}')">
+      <h2 class="font-bold text-lg">${n.titulo}</h2>
+      ${n.imagen?`<img src="${n.imagen}" class="w-full h-40 object-cover rounded mt-2 mb-2">`:''}
+      <p>${n.contenido.substring(0,80)}...</p>
+    </div>
+  `).join("");
+}
+
+function ir(id){ location="noticia.html?id="+id; }
+
+// Cargar noticias al inicio
 cargar();
 </script>
+
+<!-- BOTÓN ABRIR ADMIN (Opcional) -->
+<button onclick="abrirAdmin()" class="fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded">Abrir Panel Admin</button>
+
 </body>
 </html>
