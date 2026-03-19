@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{background:#f4e3b2;font-family:Georgia;}
+img{border-radius:10px;}
+</style>
 </head>
 
-<body class="p-4 bg-yellow-100">
+<body class="p-4">
 
 <a href="index.html">← Volver</a>
 
 <div id="n"></div>
 
-<textarea id="comentario" class="border w-full"></textarea>
+<textarea id="comentario" class="border w-full mt-4"></textarea>
 <button onclick="comentar()">Enviar</button>
 
 <script>
@@ -23,19 +28,20 @@ async function cargar(){
   const n=await res.json();
 
   document.getElementById("n").innerHTML=`
-  <h1>${n.titulo}</h1>
-  ${n.imagen?`<img src="${n.imagen}">`:""}
-  <p>${n.contenido}</p>
+    <h1 class="text-3xl mb-4">${n.titulo}</h1>
+    ${n.imagen?`<img src="${n.imagen}" class="mb-4">`:""}
+    <p class="text-lg mb-4">${n.contenido}</p>
 
-  <button onclick="like()">👍 ${n.likes.length}</button>
-  <button onclick="dislike()">👎 ${n.dislikes.length}</button>
+    <button onclick="like()">👍 ${n.likes.length}</button>
+    <button onclick="dislike()">👎 ${n.dislikes.length}</button>
 
-  ${n.comentarios.map(c=>`
-    <p>${c.texto} - ${c.user}
-    ${c.user===localStorage.getItem("user")?
-    `<button onclick="borrar('${c.id}')">❌</button>`:""}
-    </p>
-  `).join("")}
+    <h3 class="mt-4">Comentarios</h3>
+    ${n.comentarios.map(c=>`
+      <p>${c.texto} - ${c.user}
+      ${c.user===localStorage.getItem("user")?
+      `<button onclick="borrar('${c.id}')">❌</button>`:""}
+      </p>
+    `).join("")}
   `;
 }
 
