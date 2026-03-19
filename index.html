@@ -5,7 +5,7 @@
 <title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{font-family:Georgia;margin:0;transition:.3s;background:#f4e3b2;color:black;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:black;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 .header{
   background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
@@ -16,10 +16,12 @@ body.dark{background:#111;color:#f0e68c;}
 .container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
 .card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;transition:.3s;text-align:center;}
-.card:hover{transform:translateY(-5px) scale(1.02);}
 .card h2{font-size:1.5rem;font-weight:bold;color:black;}
+.card:hover{transform:translateY(-5px) scale(1.02);}
 .card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
+button.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;transition:.3s;}
+button.cat-btn:hover{background:gold;color:black;}
 </style>
 </head>
 <body>
@@ -34,12 +36,12 @@ button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-rad
 
 <div class="container">
   <h2>Categorías</h2>
-  <div id="categorias" style="margin-bottom:20px;">
-    <button onclick="verCat('politica')">Política</button>
-    <button onclick="verCat('deportes')">Deportes</button>
-    <button onclick="verCat('policiales')">Policiales</button>
-    <button onclick="verCat('arte')">Arte</button>
-    <button onclick="verCat('show')">Show</button>
+  <div id="categorias">
+    <button class="cat-btn" onclick="verCat('politica')">Política</button>
+    <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
+    <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
+    <button class="cat-btn" onclick="verCat('arte')">Arte</button>
+    <button class="cat-btn" onclick="verCat('show')">Show</button>
   </div>
 
   <h2>Últimas Noticias</h2>
@@ -51,13 +53,11 @@ button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-rad
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-// Toggle modo oscuro
 function toggleDark(){
   document.body.classList.toggle("dark");
   document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
 }
 
-// Cargar últimas noticias
 async function cargar(){
   const res = await fetch(API+"/noticias");
   const data = await res.json();
