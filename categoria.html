@@ -19,6 +19,9 @@ body.dark{background:#111;color:#f0e68c;}
 .card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
 body.dark button.toggle-dark{background:#f0e68c;color:#111;}
+.admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
+.admin-btn:hover{opacity:1;}
+body.dark .admin-btn{background:#f0e68c;color:#111;}
 </style>
 </head>
 <body>
@@ -29,7 +32,7 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
   <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="location='admin.html'" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;">Admin</button>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
 <div class="container">
@@ -50,6 +53,14 @@ function toggleDark(){
   document.body.classList.toggle("dark");
   document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
   document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
+}
+
+// --- Login Admin ---
+function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  if(user==="admin" && pass==="1234"){location="admin.html";}
+  else{alert("Usuario o contraseña incorrecta");}
 }
 
 async function cargar(){

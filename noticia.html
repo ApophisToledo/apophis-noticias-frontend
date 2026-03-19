@@ -21,6 +21,9 @@ h1{font-size:2rem;font-weight:bold;margin-bottom:10px;}
 .comentario{margin-top:10px;padding:5px;border:1px solid #ccc;border-radius:5px;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
 body.dark button.toggle-dark{background:#f0e68c;color:#111;}
+.admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
+.admin-btn:hover{opacity:1;}
+body.dark .admin-btn{background:#f0e68c;color:#111;}
 </style>
 </head>
 <body>
@@ -31,7 +34,7 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
   <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="location='admin.html'" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;">Admin</button>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
 <div class="container">
@@ -56,23 +59,32 @@ const comentarioInput=document.getElementById("comentarioInput");
 function toggleDark(){
   document.body.classList.toggle("dark");
   noticiaDiv.classList.toggle("dark");
-  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
   document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
+// --- Login Admin ---
+function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  if(user==="admin" && pass==="1234"){location="admin.html";}
+  else{alert("Usuario o contraseña incorrecta");}
+}
+
 async function cargar(){
-  const res = await fetch(API+"/noticias/"+id);
-  const n = await res.json();
-  noticiaDiv.innerHTML = `
-    <h1>${n.titulo}</h1>
-    ${n.imagen?`<img src="${n.imagen}" style="max-width:100%">`:''}
-    ${n.video?`<video src="${n.video}" controls style="max-width:100%"></video>`:''}
-    <p>${n.contenido}</p>
-    <p>👁 ${n.vistas}</p>
-    <button class="btn like" onclick="like()">👍 ${n.likes}</button>
-    <button class="btn dislike" onclick="dislike()">👎 ${n.dislikes}</button>
-  `;
-  mostrarComentarios(n.comentarios || []);
+  try{
+    const res = await fetch(API+"/noticias/"+id);
+    const n = await res.json();
+    noticiaDiv.innerHTML = `
+      <h1>${n.titulo}</h1>
+      ${n.imagen?`<img src="${n.imagen}" style="max-width:100%">`:''}
+      ${n.video?`<video src="${n.video}" controls style="max-width:100%"></video>`:''}
+      <p>${n.contenido}</p>
+      <p>👁 ${n.vistas}</p>
+      <button class="btn like" onclick="like()">👍 ${n.likes}</button>
+      <button class="btn dislike" onclick="dislike()">👎 ${n.dislikes}</button>
+    `;
+    mostrarComentarios(n.comentarios || []);
+  }catch(e){console.error(e);}
 }
 
 async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
