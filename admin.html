@@ -60,7 +60,7 @@ let token = localStorage.getItem("token");
 if(!token){ 
   const user=prompt("Usuario Admin:");
   const pass=prompt("Contraseña:");
-  if((user==="Apophis" && pass==="1234")||(user==="Benja357" && pass==="abcd")){
+  if((user==="Apophis" && pass==="Benja357")||(user==="Ari" && pass==="1804")){
     token=btoa(user+":"+pass);
     localStorage.setItem("token", token);
   } else{ alert("Usuario o contraseña incorrecta"); location="index.html"; }
