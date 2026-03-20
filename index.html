@@ -10,7 +10,6 @@ body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
 .header span.title{font-size:2rem;cursor:pointer;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
 .container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
 .card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;text-align:center;color:#111;transition:.3s;}
@@ -31,8 +30,6 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 .admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
 .admin-btn:hover{opacity:1;}
 body.dark .admin-btn{background:#f0e68c;color:#111;}
-
-/* Últimas Noticias tipo Crónica */
 #ultimasNoticias{background:red;color:white;padding:10px;overflow:hidden;white-space:nowrap;font-weight:bold;font-size:1.1rem;cursor:pointer;}
 #ultimasNoticias span{display:inline-block;margin-right:50px;animation:scrollNews 20s linear infinite;}
 @keyframes scrollNews{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
@@ -78,7 +75,7 @@ function toggleDark(){
   document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
-// --- Login Admin con Apophis y Benja357 ---
+// Login Admin
 function loginAdmin(){
   const user=prompt("Usuario Admin:");
   const pass=prompt("Contraseña:");
@@ -91,32 +88,58 @@ function loginAdmin(){
   else{ alert("Usuario o contraseña incorrecta"); }
 }
 
+// Últimas noticias animadas
 async function cargarUltimas(){
-  try{
-    const res=await fetch(API+"/noticias");
-    const data=await res.json();
-    ultimasNoticias.innerHTML = data.map(n=>`<span onclick="ir('${n._id}')">${n.titulo}</span>`).join("");
-  }catch(e){console.error(e);}
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+  ultimasNoticias.innerHTML = data.map(n=>`<span onclick="ir('${n._id}')">${n.titulo}</span>`).join("");
 }
 
+// Cargar noticias con likes/dislikes por visitante
 async function cargar(){
-  try{
-    const res = await fetch(API+"/noticias");
-    const data = await res.json();
-    contenedor.innerHTML = data.map(n=>`
-      <div class="card" onclick="ir('${n._id}')">
-        <h2>${n.titulo}</h2>
-        <p>👁 ${n.vistas}</p>
-        <button onclick="event.stopPropagation();like('${n._id}')">👍 ${n.likes}</button>
-        <button onclick="event.stopPropagation();dislike('${n._id}')">👎 ${n.dislikes}</button>
-      </div>
-    `).join("");
-    cargarUltimas();
-  }catch(e){contenedor.innerHTML="<p>Error al cargar noticias.</p>";console.error(e);}
+  const res = await fetch(API+"/noticias");
+  const data = await res.json();
+  contenedor.innerHTML = data.map(n=>{
+    const liked = localStorage.getItem("like_"+n._id);
+    const disliked = localStorage.getItem("dislike_"+n._id);
+    return `<div class="card" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+      <p>👁 ${n.vistas}</p>
+      <button style="background:${liked?'green':'#111'};color:${liked?'white':'gold'};" onclick="toggleLike(event,'${n._id}')">👍 ${n.likes}</button>
+      <button style="background:${disliked?'red':'#111'};color:${disliked?'white':'gold'};" onclick="toggleDislike(event,'${n._id}')">👎 ${n.dislikes}</button>
+    </div>`;
+  }).join("");
+  cargarUltimas();
 }
 
-async function like(id){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
-async function dislike(id){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
+async function toggleLike(e,id){
+  e.stopPropagation();
+  const liked = localStorage.getItem("like_"+id);
+  if(liked){
+    await fetch(API+"/noticias/"+id+"/unlike",{method:"POST"});
+    localStorage.removeItem("like_"+id);
+  } else {
+    await fetch(API+"/noticias/"+id+"/like",{method:"POST"});
+    localStorage.setItem("like_"+id,true);
+    localStorage.removeItem("dislike_"+id);
+  }
+  cargar();
+}
+
+async function toggleDislike(e,id){
+  e.stopPropagation();
+  const disliked = localStorage.getItem("dislike_"+id);
+  if(disliked){
+    await fetch(API+"/noticias/"+id+"/undislike",{method:"POST"});
+    localStorage.removeItem("dislike_"+id);
+  } else {
+    await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});
+    localStorage.setItem("dislike_"+id,true);
+    localStorage.removeItem("like_"+id);
+  }
+  cargar();
+}
+
 function ir(id){location="noticia.html?id="+id;}
 function verCat(cat){location="categoria.html?cat="+cat;}
 
