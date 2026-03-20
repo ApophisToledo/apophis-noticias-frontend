@@ -86,7 +86,7 @@ APOPHIS NOTICIAS
 <input type="file" id="img">
 <input type="file" id="video">
 
-<!-- 🔥 EDITOR PROFESIONAL -->
+<!-- EDITOR -->
 <div class="editor-toolbar">
   <button onclick="document.execCommand('bold')">B</button>
   <button onclick="document.execCommand('italic')">I</button>
@@ -126,11 +126,15 @@ const API="https://apophis-noticias-backend.vercel.app";
 
 let token = localStorage.getItem("token");
 
-// 🔐 LOGIN REAL
-if(!token){
-  login();
+// 🔐 INIT CORREGIDO (FIX TOKEN)
+async function init(){
+  if(!token){
+    await login();
+  }
+  cargar();
 }
 
+// 🔐 LOGIN
 async function login(){
   const user = prompt("Usuario:");
   const pass = prompt("Contraseña:");
@@ -174,7 +178,7 @@ async function cargar(){
   `).join("");
 }
 
-// 🧠 CREAR NOTICIA (FIX 401)
+// 🧠 CREAR NOTICIA (FIX UPLOAD)
 async function crear(){
   try{
     const imgFile = document.getElementById("img").files[0];
@@ -182,11 +186,12 @@ async function crear(){
 
     let url="", vurl="";
 
-    // SUBIR ARCHIVOS
+    // SUBIR ARCHIVO (FIX)
     if(imgFile || videoFile){
       const fd = new FormData();
+
       if(imgFile) fd.append("file", imgFile);
-      if(videoFile) fd.append("video", videoFile);
+      else if(videoFile) fd.append("file", videoFile);
 
       const r = await fetch(API+"/upload",{
         method:"POST",
@@ -266,7 +271,8 @@ function cerrarAdmin(){
   location="index.html";
 }
 
-window.onload=cargar;
+// 🚀 START
+window.onload = init;
 </script>
 
 </body>
