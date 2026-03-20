@@ -2,109 +2,71 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Noticia - Apophis Noticias</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Noticia</title>
+
+<!-- ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID"
+crossorigin="anonymous"></script>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
-.header span.title{font-size:2rem;cursor:pointer;}
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
-.container{max-width:800px;margin:auto;padding:15px;}
-.card{background:#fff8dc;padding:15px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:15px;}
-.card.dark{background:#222;color:#f0e68c;border-left:5px solid gold;}
-h1{font-size:2rem;font-weight:bold;margin-bottom:10px;}
-.btn{padding:5px 10px;border-radius:5px;margin:3px;}
-.like{background:green;color:white;}
-.dislike{background:red;color:white;}
-.comentario{margin-top:10px;padding:5px;border:1px solid #ccc;border-radius:5px;}
-button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
-body.dark button.toggle-dark{background:#f0e68c;color:#111;}
-.admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
-.admin-btn:hover{opacity:1;}
-body.dark .admin-btn{background:#f0e68c;color:#111;}
+
+.container{max-width:900px;margin:auto;padding:15px;}
+.card{background:#fff8dc;padding:15px;border-radius:12px;}
+body.dark .card{background:#222;}
 </style>
 </head>
+
 <body>
 
-<div class="header">
-  <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
-  <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
-</div>
-
 <div class="container">
-  <button onclick="volverInicio()">← Inicio</button>
-  <div id="noticiaDiv" class="card"></div>
 
-  <h3>Comentarios:</h3>
-  <textarea id="comentarioInput" placeholder="Escribe un comentario" style="width:100%;padding:8px;margin:5px 0;border-radius:5px;"></textarea>
-  <button onclick="comentar()" style="padding:8px 12px;border-radius:5px;margin-bottom:10px;">Comentar</button>
-  <div id="comentarios"></div>
+<h3 id="visitas"></h3>
+
+<div id="noticia" class="card"></div>
+
+<!-- ADS -->
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-TU_ID"
+data-ad-slot="123456"
+data-ad-format="auto"></ins>
+
 </div>
-
-<button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const id = new URLSearchParams(location.search).get("id");
-const noticiaDiv=document.getElementById("noticiaDiv");
-const comentarios=document.getElementById("comentarios");
-const comentarioInput=document.getElementById("comentarioInput");
+const id=new URLSearchParams(location.search).get("id");
 
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  noticiaDiv.classList.toggle("dark");
-  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
-}
-
-// --- Login Admin ---
-function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  const usuarios=[
-    {usuario:"Apophis", password:"1234"},
-    {usuario:"Benja357", password:"abcd"}
-  ];
-  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
-  if(encontrado){ location="admin.html"; }
-  else{ alert("Usuario o contraseña incorrecta"); }
+// VISITAS
+async function visitas(){
+  const r=await fetch(API+"/visitas");
+  const d=await r.json();
+  document.getElementById("visitas").innerText="👁 "+d.visitas;
 }
 
 async function cargar(){
-  try{
-    const res = await fetch(API+"/noticias/"+id);
-    const n = await res.json();
-    noticiaDiv.innerHTML = `
-      <h1>${n.titulo}</h1>
-      ${n.imagen?`<img src="${n.imagen}" style="max-width:100%">`:''}
-      ${n.video?`<video src="${n.video}" controls style="max-width:100%"></video>`:''}
-      <p>${n.contenido}</p>
-      <p>👁 ${n.vistas}</p>
-      <button class="btn like" onclick="like()">👍 ${n.likes}</button>
-      <button class="btn dislike" onclick="dislike()">👎 ${n.dislikes}</button>
-    `;
-    mostrarComentarios(n.comentarios || []);
-  }catch(e){console.error(e);}
+  const r=await fetch(API+"/noticias/"+id);
+  const n=await r.json();
+
+  noticia.innerHTML=`
+    <h1>${n.titulo}</h1>
+    <p>${n.contenido}</p>
+    <p>👁 ${n.vistas}</p>
+  `;
+
+  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-async function like(){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
-async function dislike(){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
-async function comentar(){
-  const texto = comentarioInput.value;
-  if(!texto) return;
-  await fetch(API+"/noticias/"+id+"/comentario",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({texto})});
-  comentarioInput.value='';
+window.onload=()=>{
+  visitas();
   cargar();
-}
-function mostrarComentarios(coms){comentarios.innerHTML = coms.map(c=>`<div class="comentario">${c.texto}</div>`).join("");}
-function volverInicio(){location="index.html";}
-
-window.onload=cargar;
+};
 </script>
 
 </body>

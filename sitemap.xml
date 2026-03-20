@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://apophis-noticias-frontend.onrender.com/</loc>
+  </url>
+
+  <url>
+    <loc>https://apophis-noticias-frontend.onrender.com/index.html</loc>
+  </url>
+
+  <url>
+    <loc>https://apophis-noticias-frontend.onrender.com/categoria.html</loc>
+  </url>
+
+  <url>
+    <loc>https://apophis-noticias-frontend.onrender.com/noticia.html</loc>
+  </url>
+
+</urlset>

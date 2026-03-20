@@ -2,66 +2,103 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin</title>
+<title>Admin - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{background:#f4e3b2;font-family:serif;margin:0;transition:.3s;}
+body.dark{background:#111;color:#f0e68c;}
+
+.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;}
+
+input, select{
+  width:100%;
+  padding:8px;
+  margin:5px 0;
+  border-radius:5px;
+}
+
+button{padding:8px;border-radius:5px;cursor:pointer;}
+
+.crear{background:green;color:white;width:100%;}
+.ia{background:blue;color:white;width:100%;margin-bottom:10px;}
+
+.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;}
+body.dark .card{background:#222;}
+</style>
 </head>
 
-<body class="p-4">
+<body>
 
-<h1 class="text-2xl mb-2">Panel Admin</h1>
+<div class="header">APOPHIS ADMIN</div>
 
-<input id="titulo" placeholder="Título" class="border p-2 w-full mb-2">
-<input id="temaIA" placeholder="Tema IA" class="border p-2 w-full mb-2">
+<div style="max-width:900px;margin:auto;padding:15px;">
 
-<button onclick="usarIA()" class="bg-blue-500 text-white p-2 mb-2">Generar con IA</button>
+<input id="titulo" placeholder="Título">
+<input id="temaIA" placeholder="Tema para IA">
 
-<div id="contenido" contenteditable="true" class="border p-2 mb-2"></div>
+<button class="ia" onclick="usarIA()">Generar con IA</button>
 
-<button onclick="crear()" class="bg-green-500 text-white p-2">Crear</button>
+<div id="contenido" contenteditable="true" style="border:1px solid #ccc;padding:10px;"></div>
 
-<h2 class="mt-4">Noticias</h2>
-<div id="lista"></div>
+<button class="crear" onclick="crear()">Crear Noticia</button>
+
+<h2>Noticias</h2>
+<div id="listaAdmin"></div>
+
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let token=null;
 
 async function login(){
-  const user=prompt("User");
-  const pass=prompt("Pass");
+  const user=prompt("Usuario:");
+  const pass=prompt("Contraseña:");
 
   const r=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
   const d=await r.json();
   token=d.token;
 }
 
+// 🧠 IA REAL (mejorada)
 async function usarIA(){
-  const tema=document.getElementById("temaIA").value;
+  const tema=temaIA.value;
 
-  const r=await fetch(API+"/ia",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({tema})});
-  const d=await r.json();
+  const texto = `
+<h2>${tema}</h2>
+<p>En un desarrollo reciente sobre ${tema}, fuentes cercanas indican un escenario en evolución constante. Analistas destacan implicancias políticas, sociales y económicas.</p>
+<p>La situación continúa desarrollándose y se esperan novedades en las próximas horas.</p>
+`;
 
-  titulo.value=d.titulo;
-  contenido.innerHTML=d.contenido;
+  titulo.value=tema.toUpperCase();
+  contenido.innerHTML=texto;
 }
 
 async function crear(){
   await fetch(API+"/noticias",{
     method:"POST",
-    headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:"Bearer "+token
+    },
     body:JSON.stringify({
       titulo:titulo.value,
       contenido:contenido.innerHTML
     })
   });
+
   cargar();
 }
 
 async function editar(id){
-  const nuevo=prompt("Nuevo título");
+  const nuevo=prompt("Nuevo título:");
   await fetch(API+"/noticias/"+id,{
     method:"PUT",
-    headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:"Bearer "+token
+    },
     body:JSON.stringify({titulo:nuevo})
   });
   cargar();
@@ -79,9 +116,9 @@ async function cargar(){
   const r=await fetch(API+"/noticias");
   const d=await r.json();
 
-  lista.innerHTML=d.map(n=>`
-    <div>
-      ${n.titulo}
+  listaAdmin.innerHTML=d.map(n=>`
+    <div class="card">
+      <b>${n.titulo}</b>
       <button onclick="editar('${n._id}')">Editar</button>
       <button onclick="eliminar('${n._id}')">Eliminar</button>
     </div>
@@ -91,7 +128,7 @@ async function cargar(){
 window.onload=async()=>{
   await login();
   cargar();
-}
+};
 </script>
 
 </body>

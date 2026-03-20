@@ -2,93 +2,78 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Categoría - Apophis Noticias</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Categoría</title>
+
+<!-- ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID"
+crossorigin="anonymous"></script>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
-.header span.title{font-size:2rem;cursor:pointer;}
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-.container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
-.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;text-align:center;color:#111;transition:.3s;}
-.card h2{font-size:1.5rem;font-weight:bold;color:#111;}
-.card:hover{transform:translateY(-5px) scale(1.02);}
-.card button{margin:5px;padding:5px 8px;border:none;border-radius:6px;cursor:pointer;background:#111;color:gold;}
-.card button:hover{background:gold;color:black;}
-body.dark .card{background:#222;color:#f0e68c;border-left:5px solid gold;}
-body.dark .card button{background:#f0e68c;color:#111;}
-body.dark .card button:hover{background:#111;color:gold;}
-button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;background:gold;color:black;cursor:pointer;z-index:100;}
-body.dark button.toggle-dark{background:#f0e68c;color:#111;}
-.admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
-body.dark .admin-btn{background:#f0e68c;color:#111;}
+
+.container{max-width:900px;margin:auto;padding:15px;}
+
+.card{background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;}
+body.dark .card{background:#222;}
+
 </style>
 </head>
+
 <body>
 
-<div class="header">
-  <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
-  <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
-</div>
-
 <div class="container">
-  <button onclick="volverInicio()">← Inicio</button>
-  <h2 id="titulo"></h2>
-  <div id="contenedor" class="grid"></div>
-</div>
 
-<button class="toggle-dark" onclick="toggleDark()">🌙</button>
+<h3 id="visitas"></h3>
+
+<!-- ADS -->
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-TU_ID"
+data-ad-slot="123456"
+data-ad-format="auto"></ins>
+
+<h2 id="titulo"></h2>
+<div id="contenedor"></div>
+
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const contenedor=document.getElementById("contenedor");
-const catParam = new URLSearchParams(location.search).get("cat");
-document.getElementById("titulo").innerText="Categoría: "+catParam;
+const cat=new URLSearchParams(location.search).get("cat");
 
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
-  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
-}
+titulo.innerText="Categoría: "+cat;
 
-// --- Login Admin ---
-function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  const usuarios=[
-    {usuario:"Apophis", password:"1234"},
-    {usuario:"Benja357", password:"abcd"}
-  ];
-  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
-  if(encontrado){ location="admin.html"; }
-  else{ alert("Usuario o contraseña incorrecta"); }
+// VISITAS
+async function visitas(){
+  const r=await fetch(API+"/visitas");
+  const d=await r.json();
+  document.getElementById("visitas").innerText="👁 "+d.visitas;
 }
 
 async function cargar(){
-  const res = await fetch(API+"/noticias/categoria/"+catParam);
-  const data = await res.json();
-  contenedor.innerHTML = data.map(n=>`
+  const r=await fetch(API+"/noticias/categoria/"+cat);
+  const d=await r.json();
+
+  contenedor.innerHTML=d.map(n=>`
     <div class="card" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-      <p>👁 ${n.vistas}</p>
-      <button onclick="event.stopPropagation();like('${n._id}')">👍 ${n.likes}</button>
-      <button onclick="event.stopPropagation();dislike('${n._id}')">👎 ${n.dislikes}</button>
+      ${n.titulo}
     </div>
   `).join("");
+
+  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-async function like(id){await fetch(API+"/noticias/"+id+"/like",{method:"POST"});cargar();}
-async function dislike(id){await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});cargar();}
 function ir(id){location="noticia.html?id="+id;}
-function volverInicio(){location="index.html";}
 
-window.onload=cargar;
+window.onload=()=>{
+  visitas();
+  cargar();
+};
 </script>
 
 </body>

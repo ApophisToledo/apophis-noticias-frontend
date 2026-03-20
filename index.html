@@ -2,120 +2,76 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Apophis Noticias</title>
+
+<!-- 💰 ADSENSE -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID"
+crossorigin="anonymous"></script>
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{
-  margin:0;
-  font-family:Georgia;
-  background:#f4e3b2;
-  color:#111;
-  transition:.3s;
-}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body.dark{background:#111;color:#f0e68c;}
 
-/* 🌙 MODO OSCURO */
-body.dark{
-  background:#111;
-  color:#f5f5f5;
-}
-
-/* HEADER */
 .header{
-  background:black;
-  color:gold;
-  padding:20px;
-  text-align:center;
-  font-size:2rem;
+  background:black;color:gold;padding:25px;
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
 }
 
-/* CONTENEDOR */
+.title{font-size:2rem;cursor:pointer;}
+
+.admin-btn{
+  position:absolute;right:15px;
+  background:gold;color:black;padding:6px;border-radius:8px;
+}
+
 .container{
-  max-width:1200px;
-  margin:auto;
-  padding:15px;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:15px;
-}
-
-/* TITULOS GRANDES */
-.card h2{
-  font-size:1.5rem;
-  font-weight:bold;
-}
-
-/* CARDS */
-.card{
-  background:#fff8dc;
-  padding:15px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:scale(1.02);
-}
-
-body.dark .card{
-  background:#222;
-  color:#f5f5f5;
-}
-
-/* DESTACADAS */
-.destacadas{
-  display:grid;
-  gap:15px;
-  margin-bottom:20px;
+  max-width:900px;margin:auto;padding:15px;
 }
 
 .destacada{
-  background:black;
-  color:white;
-  padding:20px;
-  border-radius:12px;
-  font-size:1.6rem;
-  cursor:pointer;
+  background:black;color:white;padding:20px;
+  border-radius:12px;margin-bottom:15px;font-size:1.5rem;
 }
 
-/* MOBILE */
-@media(max-width:600px){
-  body{font-size:18px;}
-  .card h2{font-size:1.2rem;}
-  .destacada{font-size:1.3rem;}
+.card{
+  background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;
 }
+body.dark .card{background:#222;color:#f0e68c;}
 
-/* BOTON DARK */
 .toggle-dark{
-  position:fixed;
-  bottom:10px;
-  right:10px;
-  padding:10px;
-  border-radius:50%;
-  background:gold;
-  cursor:pointer;
+  position:fixed;bottom:10px;right:10px;
+  padding:10px;border-radius:50%;background:gold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">APOPHIS NOTICIAS</div>
+<div class="header">
+  <span class="title">APOPHIS NOTICIAS</span>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+</div>
 
 <div class="container">
 
 <h3 id="visitas"></h3>
 
-<!-- ⭐ TOP 3 -->
-<div id="top3" class="destacadas"></div>
+<div id="top3"></div>
+
+<!-- 💰 ANUNCIO -->
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-TU_ID"
+data-ad-slot="123456"
+data-ad-format="auto"></ins>
 
 <h2>Últimas Noticias</h2>
-<div id="contenedor" class="grid"></div>
+<div id="contenedor"></div>
 
 </div>
 
@@ -124,63 +80,50 @@ body.dark .card{
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-// 🌙 MODO OSCURO
 function toggleDark(){
   document.body.classList.toggle("dark");
 }
 
-// 🔔 NOTIFICACIONES
-async function activarNotificaciones(){
-  if(!("Notification" in window)) return;
-
-  if(Notification.permission === "granted") return;
-
-  if(Notification.permission !== "denied"){
-    const permiso = await Notification.requestPermission();
-    if(permiso === "granted"){
-      console.log("🔔 Notificaciones activadas");
-    }
-  }
+// ADMIN
+function loginAdmin(){
+  const user=prompt("Usuario");
+  const pass=prompt("Contraseña");
+  if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
+    location="admin.html";
+  } else alert("Error");
 }
 
-// 🌐 VISITAS
+// VISITAS
 async function visitas(){
-  const r = await fetch(API+"/visitas");
-  const d = await r.json();
-  document.getElementById("visitas").innerText="👁 Visitas del sitio: "+d.visitas;
+  const r=await fetch(API+"/visitas");
+  const d=await r.json();
+  document.getElementById("visitas").innerText="👁 "+d.visitas;
 }
 
-// 📰 CARGAR NOTICIAS
+// CARGAR
 async function cargar(){
-  const res = await fetch(API+"/noticias");
-  const data = await res.json();
+  const r=await fetch(API+"/noticias");
+  const d=await r.json();
 
-  // ⭐ TOP 3
-  top3.innerHTML = data.slice(0,3).map(n=>`
-    <div class="destacada" onclick="ir('${n._id}')">
-      ${n.titulo}
-    </div>
+  top3.innerHTML=d.slice(0,3).map(n=>`
+    <div class="destacada" onclick="ir('${n._id}')">${n.titulo}</div>
   `).join("");
 
-  // RESTO
-  contenedor.innerHTML = data.slice(3).map(n=>`
+  contenedor.innerHTML=d.slice(3).map(n=>`
     <div class="card" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
       <p>👁 ${n.vistas}</p>
     </div>
   `).join("");
+
+  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-// IR A NOTICIA
-function ir(id){
-  location="noticia.html?id="+id;
-}
+function ir(id){location="noticia.html?id="+id;}
 
-// INIT
 window.onload=()=>{
-  cargar();
   visitas();
-  activarNotificaciones();
+  cargar();
 };
 </script>
 
