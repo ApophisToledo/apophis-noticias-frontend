@@ -6,8 +6,8 @@
 
 <title>Apophis Noticias</title>
 
-<!-- 💰 ADSENSE -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID"
+<!-- ✅ TU ADSENSE REAL -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
 crossorigin="anonymous"></script>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -19,33 +19,74 @@ body.dark{background:#111;color:#f0e68c;}
 .header{
   background:black;color:gold;padding:25px;
   display:flex;justify-content:center;align-items:center;
-  position:relative;
+  gap:10px;position:relative;
 }
 
-.title{font-size:2rem;cursor:pointer;}
+.header span.title{font-size:2rem;cursor:pointer;}
 
 .admin-btn{
   position:absolute;right:15px;
-  background:gold;color:black;padding:6px;border-radius:8px;
+  background:gold;color:black;padding:6px 10px;
+  border-radius:8px;cursor:pointer;
 }
 
 .container{
-  max-width:900px;margin:auto;padding:15px;
+  max-width:1000px;
+  margin:auto;
+  padding:15px;
+  text-align:center;
 }
 
+/* ⭐ CATEGORIAS */
+.cat-btn{
+  margin:5px;
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+}
+
+.cat-btn:hover{
+  background:gold;
+  color:black;
+}
+
+/* ⭐ DESTACADAS */
 .destacada{
-  background:black;color:white;padding:20px;
-  border-radius:12px;margin-bottom:15px;font-size:1.5rem;
+  background:black;
+  color:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:15px;
+  font-size:1.5rem;
+  cursor:pointer;
 }
 
+/* 📰 NOTICIAS */
 .card{
-  background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;
+  background:#fff8dc;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:10px;
+  cursor:pointer;
 }
+
+.card h2{
+  font-size:1.4rem;
+  font-weight:bold;
+}
+
 body.dark .card{background:#222;color:#f0e68c;}
 
 .toggle-dark{
-  position:fixed;bottom:10px;right:10px;
-  padding:10px;border-radius:50%;background:gold;
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  padding:10px;
+  border-radius:50%;
+  background:gold;
 }
 </style>
 </head>
@@ -61,12 +102,23 @@ body.dark .card{background:#222;color:#f0e68c;}
 
 <h3 id="visitas"></h3>
 
+<!-- ✅ CATEGORÍAS RESTAURADAS + NUEVAS -->
+<div>
+  <button class="cat-btn" onclick="verCat('politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('show')">Show</button>
+  <button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
+  <button class="cat-btn" onclick="verCat('pais')">País</button>
+</div>
+
 <div id="top3"></div>
 
 <!-- 💰 ANUNCIO -->
 <ins class="adsbygoogle"
 style="display:block"
-data-ad-client="ca-pub-TU_ID"
+data-ad-client="ca-pub-6641245592697930"
 data-ad-slot="123456"
 data-ad-format="auto"></ins>
 
@@ -88,6 +140,7 @@ function toggleDark(){
 function loginAdmin(){
   const user=prompt("Usuario");
   const pass=prompt("Contraseña");
+
   if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
     location="admin.html";
   } else alert("Error");
@@ -119,7 +172,13 @@ async function cargar(){
   (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-function ir(id){location="noticia.html?id="+id;}
+function ir(id){
+  location="noticia.html?id="+id;
+}
+
+function verCat(cat){
+  location="categoria.html?cat="+cat;
+}
 
 window.onload=()=>{
   visitas();

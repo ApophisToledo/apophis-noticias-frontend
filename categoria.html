@@ -7,7 +7,7 @@
 <title>Categoría</title>
 
 <!-- ADSENSE -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
 crossorigin="anonymous"></script>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -16,24 +16,30 @@ crossorigin="anonymous"></script>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 body.dark{background:#111;color:#f0e68c;}
 
+.header{
+  background:black;color:gold;padding:25px;text-align:center;font-size:2rem;
+}
+
 .container{max-width:900px;margin:auto;padding:15px;}
 
-.card{background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;}
+.card{
+  background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;
+}
 body.dark .card{background:#222;}
-
 </style>
 </head>
 
 <body>
 
+<div class="header">APOPHIS NOTICIAS</div>
+
 <div class="container">
 
 <h3 id="visitas"></h3>
 
-<!-- ADS -->
 <ins class="adsbygoogle"
 style="display:block"
-data-ad-client="ca-pub-TU_ID"
+data-ad-client="ca-pub-6641245592697930"
 data-ad-slot="123456"
 data-ad-format="auto"></ins>
 
@@ -48,11 +54,10 @@ const cat=new URLSearchParams(location.search).get("cat");
 
 titulo.innerText="Categoría: "+cat;
 
-// VISITAS
 async function visitas(){
   const r=await fetch(API+"/visitas");
   const d=await r.json();
-  document.getElementById("visitas").innerText="👁 "+d.visitas;
+  visitas.innerText="👁 "+d.visitas;
 }
 
 async function cargar(){
@@ -60,9 +65,7 @@ async function cargar(){
   const d=await r.json();
 
   contenedor.innerHTML=d.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      ${n.titulo}
-    </div>
+    <div class="card" onclick="ir('${n._id}')">${n.titulo}</div>
   `).join("");
 
   (adsbygoogle = window.adsbygoogle || []).push({});
