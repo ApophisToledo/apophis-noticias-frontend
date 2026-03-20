@@ -4,146 +4,184 @@
 <meta charset="UTF-8">
 <title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
-.header span.title{font-size:2rem;cursor:pointer;}
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-.container{max-width:1200px;margin:auto;padding:15px;text-align:center;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;justify-items:center;}
-.card{background:#fff8dc;padding:15px;border-radius:12px;width:100%;max-width:300px;box-shadow:0 8px 20px rgba(0,0,0,0.2);cursor:pointer;text-align:center;color:#111;transition:.3s;}
-.card h2{font-size:1.5rem;font-weight:bold;color:#111;}
-.card button{margin:5px;padding:5px 8px;border:none;border-radius:6px;cursor:pointer;background:#111;color:gold;}
-.card button:hover{background:gold;color:black;}
-.card:hover{transform:translateY(-5px) scale(1.02);}
-body.dark .card{background:#222;color:#f0e68c;border-left:5px solid gold;}
-body.dark .card button{background:#f0e68c;color:#111;}
-body.dark .card button:hover{background:#111;color:gold;}
-button.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;}
-button.cat-btn:hover{background:gold;color:black;}
-body.dark button.cat-btn{background:#f0e68c;color:#111;}
-body.dark button.cat-btn:hover{background:#111;color:gold;}
-button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
-button.toggle-dark:hover{opacity:1;}
-body.dark button.toggle-dark{background:#f0e68c;color:#111;}
-.admin-btn{position:absolute;right:15px;top:50%;transform:translateY(-50%);background:gold;color:black;border:none;padding:6px 10px;border-radius:8px;font-size:0.9rem;cursor:pointer;opacity:0.8;}
-.admin-btn:hover{opacity:1;}
-body.dark .admin-btn{background:#f0e68c;color:#111;}
-#ultimasNoticias{background:red;color:white;padding:10px;overflow:hidden;white-space:nowrap;font-weight:bold;font-size:1.1rem;cursor:pointer;}
-#ultimasNoticias span{display:inline-block;margin-right:50px;animation:scrollNews 20s linear infinite;}
-@keyframes scrollNews{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
+body{
+  margin:0;
+  font-family:Georgia;
+  background:#f4e3b2;
+  color:#111;
+  transition:.3s;
+}
+
+/* 🌙 MODO OSCURO */
+body.dark{
+  background:#111;
+  color:#f5f5f5;
+}
+
+/* HEADER */
+.header{
+  background:black;
+  color:gold;
+  padding:20px;
+  text-align:center;
+  font-size:2rem;
+}
+
+/* CONTENEDOR */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:15px;
+}
+
+/* TITULOS GRANDES */
+.card h2{
+  font-size:1.5rem;
+  font-weight:bold;
+}
+
+/* CARDS */
+.card{
+  background:#fff8dc;
+  padding:15px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.02);
+}
+
+body.dark .card{
+  background:#222;
+  color:#f5f5f5;
+}
+
+/* DESTACADAS */
+.destacadas{
+  display:grid;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.destacada{
+  background:black;
+  color:white;
+  padding:20px;
+  border-radius:12px;
+  font-size:1.6rem;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  body{font-size:18px;}
+  .card h2{font-size:1.2rem;}
+  .destacada{font-size:1.3rem;}
+}
+
+/* BOTON DARK */
+.toggle-dark{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  padding:10px;
+  border-radius:50%;
+  background:gold;
+  cursor:pointer;
+}
 </style>
 </head>
+
 <body>
 
-<div class="header">
-  <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
-  <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
-</div>
-
-<div id="ultimasNoticias"></div>
+<div class="header">APOPHIS NOTICIAS</div>
 
 <div class="container">
-  <h2>Categorías</h2>
-  <div id="categorias">
-    <button class="cat-btn" onclick="verCat('politica')">Política</button>
-    <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
-    <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
-    <button class="cat-btn" onclick="verCat('arte')">Arte</button>
-    <button class="cat-btn" onclick="verCat('show')">Show</button>
-  </div>
 
-  <h2>Últimas Noticias</h2>
-  <div id="contenedor" class="grid"></div>
+<h3 id="visitas"></h3>
+
+<!-- ⭐ TOP 3 -->
+<div id="top3" class="destacadas"></div>
+
+<h2>Últimas Noticias</h2>
+<div id="contenedor" class="grid"></div>
+
 </div>
 
 <button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const contenedor=document.getElementById("contenedor");
-const ultimasNoticias=document.getElementById("ultimasNoticias");
 
+// 🌙 MODO OSCURO
 function toggleDark(){
   document.body.classList.toggle("dark");
-  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("dark"));
-  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
-// Login Admin
-function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  const usuarios=[
-    {usuario:"Apophis", password:"1234"},
-    {usuario:"Benja357", password:"abcd"}
-  ];
-  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
-  if(encontrado){ location="admin.html"; }
-  else{ alert("Usuario o contraseña incorrecta"); }
+// 🔔 NOTIFICACIONES
+async function activarNotificaciones(){
+  if(!("Notification" in window)) return;
+
+  if(Notification.permission === "granted") return;
+
+  if(Notification.permission !== "denied"){
+    const permiso = await Notification.requestPermission();
+    if(permiso === "granted"){
+      console.log("🔔 Notificaciones activadas");
+    }
+  }
 }
 
-// Últimas noticias animadas
-async function cargarUltimas(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
-  ultimasNoticias.innerHTML = data.map(n=>`<span onclick="ir('${n._id}')">${n.titulo}</span>`).join("");
+// 🌐 VISITAS
+async function visitas(){
+  const r = await fetch(API+"/visitas");
+  const d = await r.json();
+  document.getElementById("visitas").innerText="👁 Visitas del sitio: "+d.visitas;
 }
 
-// Cargar noticias con likes/dislikes por visitante
+// 📰 CARGAR NOTICIAS
 async function cargar(){
   const res = await fetch(API+"/noticias");
   const data = await res.json();
-  contenedor.innerHTML = data.map(n=>{
-    const liked = localStorage.getItem("like_"+n._id);
-    const disliked = localStorage.getItem("dislike_"+n._id);
-    return `<div class="card" onclick="ir('${n._id}')">
+
+  // ⭐ TOP 3
+  top3.innerHTML = data.slice(0,3).map(n=>`
+    <div class="destacada" onclick="ir('${n._id}')">
+      ${n.titulo}
+    </div>
+  `).join("");
+
+  // RESTO
+  contenedor.innerHTML = data.slice(3).map(n=>`
+    <div class="card" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
       <p>👁 ${n.vistas}</p>
-      <button style="background:${liked?'green':'#111'};color:${liked?'white':'gold'};" onclick="toggleLike(event,'${n._id}')">👍 ${n.likes}</button>
-      <button style="background:${disliked?'red':'#111'};color:${disliked?'white':'gold'};" onclick="toggleDislike(event,'${n._id}')">👎 ${n.dislikes}</button>
-    </div>`;
-  }).join("");
-  cargarUltimas();
+    </div>
+  `).join("");
 }
 
-async function toggleLike(e,id){
-  e.stopPropagation();
-  const liked = localStorage.getItem("like_"+id);
-  if(liked){
-    await fetch(API+"/noticias/"+id+"/unlike",{method:"POST"});
-    localStorage.removeItem("like_"+id);
-  } else {
-    await fetch(API+"/noticias/"+id+"/like",{method:"POST"});
-    localStorage.setItem("like_"+id,true);
-    localStorage.removeItem("dislike_"+id);
-  }
+// IR A NOTICIA
+function ir(id){
+  location="noticia.html?id="+id;
+}
+
+// INIT
+window.onload=()=>{
   cargar();
-}
-
-async function toggleDislike(e,id){
-  e.stopPropagation();
-  const disliked = localStorage.getItem("dislike_"+id);
-  if(disliked){
-    await fetch(API+"/noticias/"+id+"/undislike",{method:"POST"});
-    localStorage.removeItem("dislike_"+id);
-  } else {
-    await fetch(API+"/noticias/"+id+"/dislike",{method:"POST"});
-    localStorage.setItem("dislike_"+id,true);
-    localStorage.removeItem("like_"+id);
-  }
-  cargar();
-}
-
-function ir(id){location="noticia.html?id="+id;}
-function verCat(cat){location="categoria.html?cat="+cat;}
-
-window.onload=cargar;
+  visitas();
+  activarNotificaciones();
+};
 </script>
 
 </body>

@@ -2,170 +2,96 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Apophis Noticias</title>
+<title>Admin</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{background:#f4e3b2;font-family:serif;margin:0;padding:0;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
-h1{text-align:center;margin:15px;}
-input, select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
-button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;}
-.crear{background:green;color:white;width:100%;}
-.cerrar{background:red;color:white;width:100%;}
-.editar{background:gold;color:black;margin-right:5px;}
-.eliminar{background:red;color:white;}
-.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;}
-body.dark .card{background:#222;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;cursor:pointer;}
-.editor-toolbar{margin:10px 0;display:flex;flex-wrap:wrap;gap:5px;}
-#contenido{border:1px solid #ccc;border-radius:5px;padding:8px;min-height:150px;background:white;}
-body.dark #contenido{background:#222;color:#f0e68c;}
-</style>
 </head>
 
-<body>
+<body class="p-4">
 
-<div class="header" onclick="location='index.html'">
-APOPHIS NOTICIAS
-</div>
+<h1 class="text-2xl mb-2">Panel Admin</h1>
 
-<h1>Panel Admin</h1>
+<input id="titulo" placeholder="Título" class="border p-2 w-full mb-2">
+<input id="temaIA" placeholder="Tema IA" class="border p-2 w-full mb-2">
 
-<input id="titulo" placeholder="Título">
+<button onclick="usarIA()" class="bg-blue-500 text-white p-2 mb-2">Generar con IA</button>
 
-<select id="categoria">
-<option value="politica">Política</option>
-<option value="deportes">Deportes</option>
-<option value="policiales">Policiales</option>
-<option value="arte">Arte</option>
-<option value="show">Show</option>
-</select>
+<div id="contenido" contenteditable="true" class="border p-2 mb-2"></div>
 
-<input type="file" id="img">
-<input type="file" id="video">
+<button onclick="crear()" class="bg-green-500 text-white p-2">Crear</button>
 
-<div id="contenido" contenteditable="true"></div>
-
-<button class="crear" onclick="crear()">Crear Noticia</button>
-
-<h2 style="text-align:center">Noticias</h2>
-<div id="listaAdmin"></div>
-
-<button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
+<h2 class="mt-4">Noticias</h2>
+<div id="lista"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+let token=null;
 
-let token = null;
+async function login(){
+  const user=prompt("User");
+  const pass=prompt("Pass");
 
-// 🔥 INIT SEGURO
-async function init(){
-  localStorage.removeItem("token"); // LIMPIA TOKEN VIEJO SIEMPRE
-  await login();
+  const r=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
+  const d=await r.json();
+  token=d.token;
+}
+
+async function usarIA(){
+  const tema=document.getElementById("temaIA").value;
+
+  const r=await fetch(API+"/ia",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({tema})});
+  const d=await r.json();
+
+  titulo.value=d.titulo;
+  contenido.innerHTML=d.contenido;
+}
+
+async function crear(){
+  await fetch(API+"/noticias",{
+    method:"POST",
+    headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},
+    body:JSON.stringify({
+      titulo:titulo.value,
+      contenido:contenido.innerHTML
+    })
+  });
   cargar();
 }
 
-// 🔐 LOGIN
-async function login(){
-  const user = prompt("Usuario:");
-  const pass = prompt("Contraseña:");
-
-  const res = await fetch(API+"/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({user, pass})
+async function editar(id){
+  const nuevo=prompt("Nuevo título");
+  await fetch(API+"/noticias/"+id,{
+    method:"PUT",
+    headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},
+    body:JSON.stringify({titulo:nuevo})
   });
-
-  const data = await res.json();
-
-  if(data.token){
-    token = data.token;
-    localStorage.setItem("token", token);
-  } else {
-    alert("Login incorrecto");
-    location="index.html";
-  }
+  cargar();
 }
 
-// 📥 CARGAR
-async function cargar(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+async function eliminar(id){
+  await fetch(API+"/noticias/"+id,{
+    method:"DELETE",
+    headers:{Authorization:"Bearer "+token}
+  });
+  cargar();
+}
 
-  listaAdmin.innerHTML = data.map(n=>`
-    <div class="card">
-      <b>${n.titulo}</b>
+async function cargar(){
+  const r=await fetch(API+"/noticias");
+  const d=await r.json();
+
+  lista.innerHTML=d.map(n=>`
+    <div>
+      ${n.titulo}
+      <button onclick="editar('${n._id}')">Editar</button>
       <button onclick="eliminar('${n._id}')">Eliminar</button>
     </div>
   `).join("");
 }
 
-// 🧠 CREAR (TOKEN SIEMPRE OK)
-async function crear(){
-  const imgFile = document.getElementById("img").files[0];
-  const videoFile = document.getElementById("video").files[0];
-
-  let url="", vurl="";
-
-  if(imgFile || videoFile){
-    const fd = new FormData();
-    if(imgFile) fd.append("file", imgFile);
-    else if(videoFile) fd.append("file", videoFile);
-
-    const r = await fetch(API+"/upload",{
-      method:"POST",
-      headers:{ Authorization:"Bearer "+token },
-      body:fd
-    });
-
-    const d = await r.json();
-    url=d.url||'';
-    vurl=d.video||'';
-  }
-
-  const res = await fetch(API+"/noticias",{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization:"Bearer "+token
-    },
-    body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.innerHTML,
-      categoria:categoria.value,
-      imagen:url,
-      video:vurl
-    })
-  });
-
-  if(!res.ok){
-    alert("❌ Error 401: Token inválido");
-    return;
-  }
-
-  alert("✅ Noticia creada");
-  titulo.value="";
-  contenido.innerHTML="";
+window.onload=async()=>{
+  await login();
   cargar();
 }
-
-// ❌ ELIMINAR
-async function eliminar(id){
-  await fetch(API+"/noticias/"+id,{
-    method:"DELETE",
-    headers:{ Authorization:"Bearer "+token }
-  });
-  cargar();
-}
-
-// 🚪 SALIR
-function cerrarAdmin(){
-  localStorage.removeItem("token");
-  location="index.html";
-}
-
-window.onload = init;
 </script>
 
 </body>
