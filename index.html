@@ -6,6 +6,7 @@
 
 <title>Apophis Noticias</title>
 
+<!-- ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
 crossorigin="anonymous"></script>
 
@@ -16,22 +17,37 @@ body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
 .header{
-  background:black;color:gold;padding:25px;
-  display:flex;justify-content:center;align-items:center;
+  background:black;color:gold;
+  padding:25px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
   position:relative;
+  cursor:pointer;
 }
 
-.title{font-size:2rem;}
+.header span.title{font-size:2rem;}
 
 .admin-btn{
-  position:absolute;right:15px;
-  background:gold;color:black;padding:6px;border-radius:8px;
+  position:absolute;
+  right:15px;
+  background:gold;
+  color:black;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 .container{
-  max-width:1000px;margin:auto;padding:15px;text-align:center;
+  max-width:1100px;
+  margin:auto;
+  padding:15px;
+  text-align:center;
 }
 
+/* CATEGORIAS */
 .cat-btn{
   margin:5px;
   padding:8px 12px;
@@ -39,6 +55,7 @@ body.dark{background:#111;color:#f0e68c;}
   border:none;
   background:#111;
   color:gold;
+  cursor:pointer;
 }
 
 .cat-btn:hover{
@@ -46,25 +63,99 @@ body.dark{background:#111;color:#f0e68c;}
   color:black;
 }
 
-.card{
-  background:#fff8dc;padding:15px;border-radius:12px;margin-bottom:10px;
+/* NOTICIAS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
 }
-body.dark .card{background:#222;}
+
+.card{
+  background:#fff8dc;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  cursor:pointer;
+  text-align:center;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.03);
+}
+
+/* 🖼 IMAGEN */
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* TITULO GRANDE */
+.card h2{
+  font-size:1.5rem;
+  font-weight:bold;
+}
+
+body.dark .card{
+  background:#222;
+  color:#f0e68c;
+}
+
+/* DARK BOTON */
+.toggle-dark{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  padding:10px;
+  border-radius:50%;
+  background:gold;
+  cursor:pointer;
+}
+body.dark .toggle-dark{
+  background:#f0e68c;
+  color:#111;
+}
+
+/* ULTIMAS NOTICIAS */
+#ultimasNoticias{
+  background:red;
+  color:white;
+  padding:10px;
+  overflow:hidden;
+  white-space:nowrap;
+  font-weight:bold;
+}
+
+#ultimasNoticias span{
+  margin-right:40px;
+  cursor:pointer;
+}
+
+/* FOOTER */
+.footer{
+  margin-top:30px;
+  font-size:0.9rem;
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <span class="title">APOPHIS NOTICIAS</span>
+  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
   <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
+
+<div id="ultimasNoticias"></div>
 
 <div class="container">
 
 <h3 id="visitas"></h3>
 
-<!-- ✅ CATEGORÍAS -->
+<!-- CATEGORIAS -->
 <div>
   <button class="cat-btn" onclick="verCat('politica')">Política</button>
   <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
@@ -76,42 +167,80 @@ body.dark .card{background:#222;}
   <button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
 </div>
 
+<!-- ADS -->
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-6641245592697930"
+data-ad-slot="123456"
+data-ad-format="auto"></ins>
+
 <h2>Últimas Noticias</h2>
-<div id="contenedor"></div>
+
+<div id="contenedor" class="grid"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="privacidad.html">Privacidad</a> |
+  <a href="terminos.html">Términos</a> |
+  <a href="contacto.html">Contacto</a>
+</div>
 
 </div>
 
+<button class="toggle-dark" onclick="toggleDark()">🌙</button>
+
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+const contenedor=document.getElementById("contenedor");
+const ultimasNoticias=document.getElementById("ultimasNoticias");
 
-function loginAdmin(){
-  const user=prompt("Usuario");
-  const pass=prompt("Contraseña");
-
-  if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
-    location="admin.html";
-  }
+function toggleDark(){
+  document.body.classList.toggle("dark");
 }
 
+// ADMIN
+function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
+    location="admin.html";
+  } else alert("Incorrecto");
+}
+
+// VISITAS
 async function visitas(){
   const r=await fetch(API+"/visitas");
   const d=await r.json();
-  visitas.innerText="👁 "+d.visitas;
+  document.getElementById("visitas").innerText="👁 "+d.visitas;
 }
 
+// CARGAR NOTICIAS
 async function cargar(){
-  const r=await fetch(API+"/noticias");
-  const d=await r.json();
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
 
-  contenedor.innerHTML=d.map(n=>`
+  // SCROLL ROJO
+  ultimasNoticias.innerHTML = data.map(n=>`<span onclick="ir('${n._id}')">${n.titulo}</span>`).join("");
+
+  // CARDS CON IMAGEN
+  contenedor.innerHTML = data.map(n=>`
     <div class="card" onclick="ir('${n._id}')">
-      ${n.titulo} (${n.categoria || "sin categoría"})
+      ${n.imagen ? `<img src="${n.imagen}">` : ""}
+      <h2>${n.titulo}</h2>
+      <p>👁 ${n.vistas}</p>
     </div>
   `).join("");
+
+  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-function ir(id){location="noticia.html?id="+id;}
-function verCat(cat){location="categoria.html?cat="+cat;}
+function ir(id){
+  location="noticia.html?id="+id;
+}
+
+function verCat(cat){
+  location="categoria.html?cat="+cat;
+}
 
 window.onload=()=>{
   visitas();
