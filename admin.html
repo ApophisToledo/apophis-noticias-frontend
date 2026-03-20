@@ -2,40 +2,17 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Apophis Noticias</title>
+<title>Admin</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{background:#f4e3b2;font-family:serif;margin:0;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
-
-.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;}
-
-input, select{
-  width:100%;
-  padding:8px;
-  margin:5px 0;
-  border-radius:5px;
-}
-
-button{padding:8px;border-radius:5px;cursor:pointer;}
-
-.crear{background:green;color:white;width:100%;}
-
-.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;}
-body.dark .card{background:#222;}
-</style>
 </head>
 
-<body>
+<body style="background:#f4e3b2">
 
-<div class="header">APOPHIS ADMIN</div>
-
-<div style="max-width:900px;margin:auto;padding:15px;">
+<h1 style="text-align:center">Panel Admin</h1>
 
 <input id="titulo" placeholder="Título">
 
-<!-- ✅ CATEGORÍAS RESTAURADAS + NUEVAS -->
 <select id="categoria">
 <option value="politica">Política</option>
 <option value="deportes">Deportes</option>
@@ -47,94 +24,35 @@ body.dark .card{background:#222;}
 <option value="ciudad">Ciudad</option>
 </select>
 
-<div id="contenido" contenteditable="true" style="border:1px solid #ccc;padding:10px;"></div>
+<input type="file" id="img">
 
-<button class="crear" onclick="crear()">Crear Noticia</button>
+<div id="contenido" contenteditable="true" style="border:1px solid #ccc;height:150px;"></div>
 
-<h2>Noticias</h2>
-<div id="listaAdmin"></div>
-
-</div>
+<button onclick="crear()">Crear</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-let token=null;
-
-async function login(){
-  const user=prompt("Usuario:");
-  const pass=prompt("Contraseña:");
-
-  const r=await fetch(API+"/login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({user,pass})
-  });
-
-  const d=await r.json();
-  token=d.token;
-}
 
 async function crear(){
+  const fd=new FormData();
+  fd.append("file",img.files[0]);
+
+  const up=await fetch(API+"/upload",{method:"POST",body:fd});
+  const u=await up.json();
+
   await fetch(API+"/noticias",{
     method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization:"Bearer "+token
-    },
+    headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
       titulo:titulo.value,
       contenido:contenido.innerHTML,
-      categoria:categoria.value
+      categoria:categoria.value,
+      imagen:u.url
     })
   });
 
-  titulo.value="";
-  contenido.innerHTML="";
-  cargar();
+  alert("Creado");
 }
-
-async function editar(id){
-  const nuevo=prompt("Nuevo título:");
-  if(!nuevo) return;
-
-  await fetch(API+"/noticias/"+id,{
-    method:"PUT",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization:"Bearer "+token
-    },
-    body:JSON.stringify({titulo:nuevo})
-  });
-
-  cargar();
-}
-
-async function eliminar(id){
-  await fetch(API+"/noticias/"+id,{
-    method:"DELETE",
-    headers:{Authorization:"Bearer "+token}
-  });
-
-  cargar();
-}
-
-async function cargar(){
-  const r=await fetch(API+"/noticias");
-  const d=await r.json();
-
-  listaAdmin.innerHTML=d.map(n=>`
-    <div class="card">
-      <b>${n.titulo}</b> (${n.categoria || "sin categoría"})
-      <button onclick="editar('${n._id}')">Editar</button>
-      <button onclick="eliminar('${n._id}')">Eliminar</button>
-    </div>
-  `).join("");
-}
-
-window.onload=async()=>{
-  await login();
-  cargar();
-};
 </script>
 
 </body>

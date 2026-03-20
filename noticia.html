@@ -17,15 +17,17 @@ body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
 .header{
-  background:black;color:gold;
+  background:black;
+  color:gold;
   padding:25px;
   display:flex;
   justify-content:center;
   align-items:center;
+  gap:10px;
   position:relative;
 }
 
-.title{font-size:2rem;}
+.title{font-size:2rem;cursor:pointer;}
 
 .admin-btn{
   position:absolute;
@@ -34,6 +36,17 @@ body.dark{background:#111;color:#f0e68c;}
   color:black;
   padding:6px;
   border-radius:8px;
+  cursor:pointer;
+}
+
+/* 👁 OJOS */
+.eyes{
+  font-size:1.5rem;
+  animation:blink 4s infinite;
+}
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1);}
+  95%{transform:scaleY(0.1);}
 }
 
 .container{
@@ -42,7 +55,6 @@ body.dark{background:#111;color:#f0e68c;}
   padding:15px;
 }
 
-/* 📰 TARJETA */
 .card{
   background:#fff8dc;
   padding:20px;
@@ -51,50 +63,51 @@ body.dark{background:#111;color:#f0e68c;}
 
 body.dark .card{background:#222;}
 
-/* 🔥 TITULO */
+/* TITULO */
 .titulo-noticia{
   font-size:2.7rem;
   font-weight:900;
   line-height:1.2;
+}
+
+/* BAJADA */
+.bajada{
+  font-size:1.3rem;
+  margin:10px 0;
+}
+
+/* META */
+.meta{
+  font-size:0.9rem;
+  opacity:0.7;
   margin-bottom:10px;
 }
 
-/* 🧠 BAJADA */
-.bajada{
-  font-size:1.3rem;
-  font-weight:500;
-  margin-bottom:15px;
-  opacity:0.9;
-}
-
-/* ✍️ AUTOR */
-.meta{
-  font-size:0.9rem;
-  margin-bottom:15px;
-  opacity:0.7;
-}
-
-/* 🖼 IMAGEN */
-.card img{
-  width:100%;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-
-/* 📄 CONTENIDO */
+/* CONTENIDO */
 .contenido{
   font-size:1.15rem;
   line-height:1.7;
 }
 
-/* 📱 RESPONSIVE */
-@media(max-width:768px){
-  .titulo-noticia{font-size:2rem;}
-  .bajada{font-size:1.1rem;}
+.card img{
+  width:100%;
+  border-radius:10px;
+  margin:15px 0;
 }
 
-@media(max-width:480px){
-  .titulo-noticia{font-size:1.6rem;}
+.reacciones button{
+  margin:5px;
+  padding:5px 10px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.comentario{
+  border:1px solid #ccc;
+  padding:5px;
+  margin:5px 0;
+  border-radius:5px;
 }
 
 .toggle-dark{
@@ -104,6 +117,15 @@ body.dark .card{background:#222;}
   padding:10px;
   border-radius:50%;
   background:gold;
+  cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .titulo-noticia{font-size:2rem;}
+}
+@media(max-width:480px){
+  .titulo-noticia{font-size:1.6rem;}
 }
 </style>
 </head>
@@ -111,7 +133,11 @@ body.dark .card{background:#222;}
 <body>
 
 <div class="header">
+  <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
   <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
+  <span class="eyes">𓂀</span>
   <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
@@ -130,8 +156,13 @@ data-ad-format="auto"></ins>
 
 <div id="noticiaDiv" class="card"></div>
 
+<h3>Reacciones</h3>
+<div id="reacciones" class="reacciones"></div>
+
 <h3>Comentarios</h3>
-<textarea id="comentarioInput" style="width:100%;"></textarea>
+
+<input id="nombreInput" placeholder="Tu nombre" style="width:100%;padding:8px;margin:5px 0;">
+<textarea id="comentarioInput" placeholder="Escribe tu comentario" style="width:100%;padding:8px;"></textarea>
 <button onclick="comentar()">Comentar</button>
 
 <div id="comentarios"></div>
@@ -163,12 +194,29 @@ async function visitas(){
   document.getElementById("visitas").innerText="👁 "+d.visitas;
 }
 
-// GENERAR BAJADA AUTOMÁTICA
+// BAJADA
 function generarBajada(texto){
   const limpio = texto.replace(/<[^>]*>/g,'');
-  return limpio.substring(0,140) + "...";
+  return limpio.substring(0,140)+"...";
 }
 
+// REACCIONES
+function toggleReact(tipo){
+  const key = tipo+"_"+id;
+  const activo = localStorage.getItem(key);
+
+  if(activo){
+    fetch(API+"/noticias/"+id+"/unreaccion/"+tipo,{method:"POST"});
+    localStorage.removeItem(key);
+  }else{
+    fetch(API+"/noticias/"+id+"/reaccion/"+tipo,{method:"POST"});
+    localStorage.setItem(key,true);
+  }
+
+  cargar();
+}
+
+// CARGAR
 async function cargar(){
   const res = await fetch(API+"/noticias/"+id);
   const n = await res.json();
@@ -177,10 +225,8 @@ async function cargar(){
 
   noticiaDiv.innerHTML = `
     <div class="titulo-noticia">${n.titulo}</div>
-
     <div class="bajada">${generarBajada(n.contenido)}</div>
-
-    <div class="meta">✍️ Redacción Apophis | ${fecha}</div>
+    <div class="meta">🏷 ${n.categoria} | ✍️ Redacción Apophis | ${fecha}</div>
 
     ${n.imagen?`<img src="${n.imagen}">`:''}
     ${n.video?`<video src="${n.video}" controls style="width:100%"></video>`:''}
@@ -190,23 +236,37 @@ async function cargar(){
     <p>👁 ${n.vistas}</p>
   `;
 
+  // REACCIONES
+  reacciones.innerHTML = `
+    👍 ${n.likes} <button onclick="toggleReact('like')">👍</button>
+    👎 ${n.dislikes} <button onclick="toggleReact('dislike')">👎</button>
+    😲 ${n.sorpresa||0} <button onclick="toggleReact('sorpresa')">😲</button>
+    😢 ${n.tristeza||0} <button onclick="toggleReact('tristeza')">😢</button>
+    😡 ${n.enojo||0} <button onclick="toggleReact('enojo')">😡</button>
+  `;
+
+  // COMENTARIOS
   comentarios.innerHTML = (n.comentarios||[]).map(c=>`
-    <div style="border:1px solid #ccc;margin:5px;padding:5px;">${c.texto}</div>
+    <div class="comentario"><b>${c.nombre}</b>: ${c.texto}</div>
   `).join("");
 
   (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
+// COMENTAR
 async function comentar(){
-  const texto = comentarioInput.value;
-  if(!texto) return;
+  const nombre = document.getElementById("nombreInput").value;
+  const texto = document.getElementById("comentarioInput").value;
+
+  if(!nombre || !texto) return;
 
   await fetch(API+"/noticias/"+id+"/comentario",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({texto})
+    body:JSON.stringify({nombre,texto})
   });
 
+  nombreInput.value="";
   comentarioInput.value="";
   cargar();
 }

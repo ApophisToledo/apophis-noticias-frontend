@@ -13,7 +13,7 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 body.dark{background:#111;color:#f0e68c;}
 
 .header{
@@ -22,19 +22,46 @@ body.dark{background:#111;color:#f0e68c;}
   display:flex;
   justify-content:center;
   align-items:center;
+  gap:10px;
   position:relative;
 }
 
-.header span.title{font-size:2rem;cursor:pointer;}
+.title{font-size:2rem;cursor:pointer;}
 
 .admin-btn{
   position:absolute;
   right:15px;
   background:gold;
-  color:black;
-  padding:6px 10px;
+  padding:6px;
   border-radius:8px;
-  cursor:pointer;
+}
+
+/* OJOS */
+.eyes{
+  font-size:1.5rem;
+  animation:blink 4s infinite;
+}
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1);}
+  95%{transform:scaleY(0.1);}
+}
+
+/* FLEYER */
+#ultimasNoticias{
+  background:red;
+  color:white;
+  padding:10px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+#ultimasNoticias span{
+  display:inline-block;
+  margin-right:40px;
+  animation:scroll 20s linear infinite;
+}
+@keyframes scroll{
+  0%{transform:translateX(100%);}
+  100%{transform:translateX(-100%);}
 }
 
 .container{
@@ -47,93 +74,48 @@ body.dark{background:#111;color:#f0e68c;}
 /* CATEGORIAS */
 .cat-btn{
   margin:5px;
-  padding:8px 12px;
-  border-radius:8px;
-  border:none;
+  padding:8px;
   background:#111;
   color:gold;
-  cursor:pointer;
+  border-radius:8px;
 }
-.cat-btn:hover{background:gold;color:black;}
 
-/* GRID */
+/* CARDS */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:20px;
 }
 
-/* 🔥 CARD TIPO ROSARIO3 */
 .card{
   position:relative;
   height:220px;
   border-radius:12px;
   overflow:hidden;
-  cursor:pointer;
   display:flex;
   align-items:flex-end;
   color:white;
-  font-weight:bold;
 }
 
-/* IMAGEN FONDO */
 .card-bg{
   position:absolute;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
   background-size:cover;
   background-position:center;
-  transition:.4s;
 }
 
-/* OSCURECIDO */
 .card-overlay{
   position:absolute;
   width:100%;
   height:100%;
-  background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
 }
 
-/* TITULO */
 .card h2{
   position:relative;
   padding:10px;
   font-size:1.2rem;
-  text-align:left;
-  z-index:2;
-}
-
-/* HOVER */
-.card:hover .card-bg{
-  transform:scale(1.1);
-}
-
-/* DARK MODE */
-body.dark .card-overlay{
-  background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-}
-
-/* ULTIMAS */
-#ultimasNoticias{
-  background:red;
-  color:white;
-  padding:10px;
-  overflow:hidden;
-  white-space:nowrap;
-  font-weight:bold;
-}
-
-#ultimasNoticias span{
-  margin-right:40px;
-  cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:480px){
-  .card{height:180px;}
-  .card h2{font-size:1rem;}
 }
 </style>
 </head>
@@ -141,8 +123,10 @@ body.dark .card-overlay{
 <body>
 
 <div class="header">
-  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+<span class="eyes">𓂀</span>
+<span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
+<span class="eyes">𓂀</span>
+<button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
 <div id="ultimasNoticias"></div>
@@ -151,26 +135,16 @@ body.dark .card-overlay{
 
 <h3 id="visitas"></h3>
 
-<!-- CATEGORIAS -->
 <div>
-  <button class="cat-btn" onclick="verCat('politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('show')">Show</button>
-  <button class="cat-btn" onclick="verCat('pais')">País</button>
-  <button class="cat-btn" onclick="verCat('mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
+<button class="cat-btn" onclick="verCat('politica')">Política</button>
+<button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
+<button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
+<button class="cat-btn" onclick="verCat('arte')">Arte</button>
+<button class="cat-btn" onclick="verCat('show')">Show</button>
+<button class="cat-btn" onclick="verCat('pais')">País</button>
+<button class="cat-btn" onclick="verCat('mundo')">Mundo</button>
+<button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
 </div>
-
-<!-- ADS -->
-<ins class="adsbygoogle"
-style="display:block"
-data-ad-client="ca-pub-6641245592697930"
-data-ad-slot="123456"
-data-ad-format="auto"></ins>
-
-<h2>Últimas Noticias</h2>
 
 <div id="contenedor" class="grid"></div>
 
@@ -179,61 +153,36 @@ data-ad-format="auto"></ins>
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 const contenedor=document.getElementById("contenedor");
-const ultimasNoticias=document.getElementById("ultimasNoticias");
 
-// ADMIN
 function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
-    location="admin.html";
-  }
+  location="admin.html";
 }
 
-// VISITAS
 async function visitas(){
   const r=await fetch(API+"/visitas");
   const d=await r.json();
-  document.getElementById("visitas").innerText="👁 "+d.visitas;
+  visitas.innerText="👁 "+d.visitas;
 }
 
-// CARGAR
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
 
-  // SCROLL ROJO
-  ultimasNoticias.innerHTML = data.map(n=>`
-    <span onclick="ir('${n._id}')">${n.titulo}</span>
-  `).join("");
+  ultimasNoticias.innerHTML = data.map(n=>`<span>${n.titulo}</span>`).join("");
 
-  // CARDS TIPO ROSARIO3
   contenedor.innerHTML = data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      
-      <div class="card-bg" style="background-image:url('${n.imagen || ""}')"></div>
-      <div class="card-overlay"></div>
-
-      <h2>${n.titulo}</h2>
-
-    </div>
+  <div class="card" onclick="ir('${n._id}')">
+    <div class="card-bg" style="background-image:url('${n.imagen||""}')"></div>
+    <div class="card-overlay"></div>
+    <h2>${n.titulo}</h2>
+  </div>
   `).join("");
-
-  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-function ir(id){
-  location="noticia.html?id="+id;
-}
+function ir(id){location="noticia.html?id="+id;}
+function verCat(c){location="categoria.html?cat="+c;}
 
-function verCat(cat){
-  location="categoria.html?cat="+cat;
-}
-
-window.onload=()=>{
-  visitas();
-  cargar();
-};
+window.onload=()=>{visitas();cargar();}
 </script>
 
 </body>

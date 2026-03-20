@@ -2,165 +2,47 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width">
 
-<title>Categoría - Apophis Noticias</title>
-
-<!-- ADSENSE -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
-crossorigin="anonymous"></script>
+<title>Categoría</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
-
-.header{
-  background:black;color:gold;
-  padding:25px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-}
-
-.header span.title{font-size:2rem;cursor:pointer;}
-
-.admin-btn{
-  position:absolute;
-  right:15px;
-  background:gold;
-  color:black;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:15px;
-  text-align:center;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:#fff8dc;
-  padding:15px;
-  border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
-  cursor:pointer;
-  transition:.3s;
-}
-
-.card:hover{transform:scale(1.03);}
-
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-bottom:10px;
-}
-
-.card h2{font-size:1.4rem;font-weight:bold;}
-
-body.dark .card{background:#222;color:#f0e68c;}
-
-.toggle-dark{
-  position:fixed;
-  bottom:10px;
-  right:10px;
-  padding:10px;
-  border-radius:50%;
-  background:gold;
-}
+body{margin:0;background:#f4e3b2;}
+.header{background:black;color:gold;padding:20px;text-align:center;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:15px;}
+.card{height:200px;position:relative;border-radius:12px;overflow:hidden;color:white;}
+.card-bg{position:absolute;width:100%;height:100%;background-size:cover;}
+.card-overlay{position:absolute;width:100%;height:100%;background:linear-gradient(to top,black,transparent);}
+.card h2{position:absolute;bottom:10px;padding:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <span class="title" onclick="location='index.html'">APOPHIS NOTICIAS</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
-</div>
-
-<div class="container">
-
-<button onclick="location='index.html'">← Inicio</button>
-
-<h3 id="visitas"></h3>
-<h2 id="titulo"></h2>
-
-<!-- ADS -->
-<ins class="adsbygoogle"
-style="display:block"
-data-ad-client="ca-pub-6641245592697930"
-data-ad-slot="123456"
-data-ad-format="auto"></ins>
+<div class="header">APOPHIS NOTICIAS</div>
 
 <div id="contenedor" class="grid"></div>
 
-</div>
-
-<button class="toggle-dark" onclick="toggleDark()">🌙</button>
-
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-const contenedor=document.getElementById("contenedor");
-const catParam = new URLSearchParams(location.search).get("cat");
+const cat=new URLSearchParams(location.search).get("cat");
 
-document.getElementById("titulo").innerText="Categoría: "+catParam;
-
-function toggleDark(){
-  document.body.classList.toggle("dark");
-}
-
-function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  if((user==="Apophis"&&pass==="1234")||(user==="Benja357"&&pass==="abcd")){
-    location="admin.html";
-  }
-}
-
-// VISITAS
-async function visitas(){
-  const r=await fetch(API+"/visitas");
-  const d=await r.json();
-  document.getElementById("visitas").innerText="👁 "+d.visitas;
-}
-
-// CARGAR
 async function cargar(){
-  const res = await fetch(API+"/noticias/categoria/"+catParam);
-  const data = await res.json();
+  const r=await fetch(API+"/noticias/categoria/"+cat);
+  const d=await r.json();
 
-  contenedor.innerHTML = data.map(n=>`
-    <div class="card" onclick="ir('${n._id}')">
-      ${n.imagen ? `<img src="${n.imagen}">` : ""}
-      <h2>${n.titulo}</h2>
-      <p>👁 ${n.vistas}</p>
-    </div>
+  contenedor.innerHTML = d.map(n=>`
+  <div class="card" onclick="location='noticia.html?id=${n._id}'">
+    <div class="card-bg" style="background-image:url('${n.imagen||""}')"></div>
+    <div class="card-overlay"></div>
+    <h2>${n.titulo}</h2>
+  </div>
   `).join("");
-
-  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
-function ir(id){
-  location="noticia.html?id="+id;
-}
-
-window.onload=()=>{
-  visitas();
-  cargar();
-};
+cargar();
 </script>
 
 </body>
