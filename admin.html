@@ -21,7 +21,6 @@ input, select{
 button{padding:8px;border-radius:5px;cursor:pointer;}
 
 .crear{background:green;color:white;width:100%;}
-.ia{background:blue;color:white;width:100%;margin-bottom:10px;}
 
 .card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;}
 body.dark .card{background:#222;}
@@ -35,9 +34,18 @@ body.dark .card{background:#222;}
 <div style="max-width:900px;margin:auto;padding:15px;">
 
 <input id="titulo" placeholder="Título">
-<input id="temaIA" placeholder="Tema para IA">
 
-<button class="ia" onclick="usarIA()">Generar con IA</button>
+<!-- ✅ CATEGORÍAS RESTAURADAS + NUEVAS -->
+<select id="categoria">
+<option value="politica">Política</option>
+<option value="deportes">Deportes</option>
+<option value="policiales">Policiales</option>
+<option value="arte">Arte</option>
+<option value="show">Show</option>
+<option value="pais">País</option>
+<option value="mundo">Mundo</option>
+<option value="ciudad">Ciudad</option>
+</select>
 
 <div id="contenido" contenteditable="true" style="border:1px solid #ccc;padding:10px;"></div>
 
@@ -56,23 +64,14 @@ async function login(){
   const user=prompt("Usuario:");
   const pass=prompt("Contraseña:");
 
-  const r=await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
+  const r=await fetch(API+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user,pass})
+  });
+
   const d=await r.json();
   token=d.token;
-}
-
-// 🧠 IA REAL (mejorada)
-async function usarIA(){
-  const tema=temaIA.value;
-
-  const texto = `
-<h2>${tema}</h2>
-<p>En un desarrollo reciente sobre ${tema}, fuentes cercanas indican un escenario en evolución constante. Analistas destacan implicancias políticas, sociales y económicas.</p>
-<p>La situación continúa desarrollándose y se esperan novedades en las próximas horas.</p>
-`;
-
-  titulo.value=tema.toUpperCase();
-  contenido.innerHTML=texto;
 }
 
 async function crear(){
@@ -84,15 +83,20 @@ async function crear(){
     },
     body:JSON.stringify({
       titulo:titulo.value,
-      contenido:contenido.innerHTML
+      contenido:contenido.innerHTML,
+      categoria:categoria.value
     })
   });
 
+  titulo.value="";
+  contenido.innerHTML="";
   cargar();
 }
 
 async function editar(id){
   const nuevo=prompt("Nuevo título:");
+  if(!nuevo) return;
+
   await fetch(API+"/noticias/"+id,{
     method:"PUT",
     headers:{
@@ -101,6 +105,7 @@ async function editar(id){
     },
     body:JSON.stringify({titulo:nuevo})
   });
+
   cargar();
 }
 
@@ -109,6 +114,7 @@ async function eliminar(id){
     method:"DELETE",
     headers:{Authorization:"Bearer "+token}
   });
+
   cargar();
 }
 
@@ -118,7 +124,7 @@ async function cargar(){
 
   listaAdmin.innerHTML=d.map(n=>`
     <div class="card">
-      <b>${n.titulo}</b>
+      <b>${n.titulo}</b> (${n.categoria || "sin categoría"})
       <button onclick="editar('${n._id}')">Editar</button>
       <button onclick="eliminar('${n._id}')">Eliminar</button>
     </div>
