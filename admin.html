@@ -4,38 +4,77 @@
 <meta charset="UTF-8">
 <title>Admin - Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 body{background:#f4e3b2;font-family:serif;margin:0;padding:0;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-h1{font-size:2rem;text-align:center;margin:15px;}
-input, select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
-button{padding:8px 12px;border:none;border-radius:5px;cursor:pointer;}
-button.crear{background:green;color:white;width:100%;margin-top:5px;}
-button.cerrar{background:red;color:white;width:100%;margin-top:5px;}
-button.editar{background:gold;color:black;margin-right:5px;}
-button.eliminar{background:red;color:white;}
-.card{background:#fff8dc;padding:10px;margin:10px;border-radius:10px;border-left:5px solid gold;}
-.card.dark{background:#222;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;text-align:center;font-size:2rem;position:sticky;top:0;z-index:10;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:10px;}
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-#contenido{border:1px solid #ccc;border-radius:5px;padding:8px;min-height:150px;}
-.editor-toolbar{margin:10px 0;display:flex;gap:5px;flex-wrap:wrap;}
-.editor-toolbar button, .editor-toolbar select, .editor-toolbar input{padding:5px;border-radius:5px;}
+
+h1{text-align:center;margin:15px;}
+
+input, select{
+  width:100%;padding:8px;margin:5px 0;
+  border-radius:5px;border:1px solid #ccc;
+}
+
+button{
+  padding:8px 12px;border:none;border-radius:5px;cursor:pointer;
+}
+
+.crear{background:green;color:white;width:100%;}
+.cerrar{background:red;color:white;width:100%;}
+.editar{background:gold;color:black;margin-right:5px;}
+.eliminar{background:red;color:white;}
+
+.card{
+  background:#fff8dc;padding:10px;margin:10px;
+  border-radius:10px;border-left:5px solid gold;
+}
+body.dark .card{background:#222;color:#f0e68c;}
+
+.header{
+  background:black;color:gold;padding:25px;
+  text-align:center;font-size:2rem;
+  cursor:pointer;
+}
+
+.editor-toolbar{
+  margin:10px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
+.editor-toolbar button,
+.editor-toolbar select,
+.editor-toolbar input{
+  padding:5px;border-radius:5px;
+}
+
+#contenido{
+  border:1px solid #ccc;
+  border-radius:5px;
+  padding:8px;
+  min-height:150px;
+  background:white;
+}
+
+body.dark #contenido{
+  background:#222;
+  color:#f0e68c;
+}
 </style>
 </head>
+
 <body>
 
 <div class="header" onclick="location='index.html'">
-  <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span>APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
-  <span class="eyes">𓂀</span>
+APOPHIS NOTICIAS
 </div>
 
-<h1>Panel Admin - Apophis Noticias</h1>
+<h1>Panel Admin</h1>
 
 <input id="titulo" placeholder="Título">
+
 <select id="categoria">
   <option value="politica">Política</option>
   <option value="deportes">Deportes</option>
@@ -47,11 +86,12 @@ button.eliminar{background:red;color:white;}
 <input type="file" id="img">
 <input type="file" id="video">
 
-<!-- Editor Avanzado -->
+<!-- 🔥 EDITOR PROFESIONAL -->
 <div class="editor-toolbar">
-  <button onclick="document.execCommand('bold',false,null)">B</button>
-  <button onclick="document.execCommand('italic',false,null)">I</button>
-  <button onclick="document.execCommand('underline',false,null)">U</button>
+  <button onclick="document.execCommand('bold')">B</button>
+  <button onclick="document.execCommand('italic')">I</button>
+  <button onclick="document.execCommand('underline')">U</button>
+
   <select onchange="document.execCommand('fontSize',false,this.value)">
     <option value="1">Tamaño 1</option>
     <option value="2">Tamaño 2</option>
@@ -61,43 +101,54 @@ button.eliminar{background:red;color:white;}
     <option value="6">Tamaño 6</option>
     <option value="7">Tamaño 7</option>
   </select>
+
   <select onchange="document.execCommand('fontName',false,this.value)">
     <option value="Georgia">Georgia</option>
     <option value="Arial">Arial</option>
-    <option value="Courier New">Courier New</option>
     <option value="Verdana">Verdana</option>
+    <option value="Courier New">Courier</option>
   </select>
+
   <input type="color" onchange="document.execCommand('foreColor',false,this.value)">
 </div>
 
-<div id="contenido" contenteditable="true" placeholder="Contenido de la noticia"></div>
+<div id="contenido" contenteditable="true"></div>
 
 <button class="crear" onclick="crear()">Crear / Actualizar Noticia</button>
 
-<h2>Noticias Existentes</h2>
+<h2 style="text-align:center">Noticias</h2>
 <div id="listaAdmin"></div>
 
 <button class="cerrar" onclick="cerrarAdmin()">Cerrar Panel</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+
+// 🔐 LOGIN
 let token = localStorage.getItem("token");
-if(!token){ 
-  const user=prompt("Usuario Admin:");
+
+if(!token){
+  const user=prompt("Usuario:");
   const pass=prompt("Contraseña:");
-  if((user==="Apophis" && pass==="1234")||(user==="Benja357" && pass==="abcd")){
-    token=btoa(user+":"+pass);
+
+  if((user==="Apophis" && pass==="1234") || (user==="Benja357" && pass==="abcd")){
+    token = user + ":" + pass; // 🔥 IMPORTANTE (sin base64)
     localStorage.setItem("token", token);
-  } else{ alert("Usuario o contraseña incorrecta"); location="index.html"; }
+  } else {
+    alert("Datos incorrectos");
+    location="index.html";
+  }
 }
 
+// 📥 CARGAR NOTICIAS
 async function cargar(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
+
   listaAdmin.innerHTML = data.map(n=>`
     <div class="card">
       <b>${n.titulo}</b>
-      <div style="margin-top:5px;">
+      <div>
         <button class="editar" onclick="editar('${n._id}')">Editar</button>
         <button class="eliminar" onclick="eliminar('${n._id}')">Eliminar</button>
       </div>
@@ -105,42 +156,99 @@ async function cargar(){
   `).join("");
 }
 
+// 🧠 CREAR NOTICIA (ARREGLADO)
 async function crear(){
-  const imgFile = document.getElementById("img").files[0];
-  const videoFile = document.getElementById("video").files[0];
-  let url="", vurl="";
-  if(imgFile || videoFile){
-    const fd = new FormData();
-    if(imgFile) fd.append("file", imgFile);
-    if(videoFile) fd.append("video", videoFile);
-    const r = await fetch(API+"/upload",{method:"POST",headers:{Authorization:"Basic "+token},body:fd});
-    const d = await r.json();
-    url=d.url||''; vurl=d.video||'';
+  try{
+    const imgFile = document.getElementById("img").files[0];
+    const videoFile = document.getElementById("video").files[0];
+
+    let url="", vurl="";
+
+    if(imgFile || videoFile){
+      const fd = new FormData();
+      if(imgFile) fd.append("file", imgFile);
+      if(videoFile) fd.append("video", videoFile);
+
+      const r = await fetch(API+"/upload",{
+        method:"POST",
+        headers:{ Authorization: token },
+        body:fd
+      });
+
+      const d = await r.json();
+      url=d.url || '';
+      vurl=d.video || '';
+    }
+
+    const res = await fetch(API+"/noticias",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        Authorization: token
+      },
+      body:JSON.stringify({
+        titulo:titulo.value,
+        contenido:contenido.innerHTML,
+        categoria:categoria.value,
+        imagen:url,
+        video:vurl
+      })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok){
+      alert("Error: " + (data.error || "No se pudo crear"));
+      return;
+    }
+
+    alert("✅ Noticia creada correctamente");
+
+    titulo.value="";
+    contenido.innerHTML="";
+    cargar();
+
+  }catch(e){
+    console.error(e);
+    alert("Error real al crear noticia");
   }
-  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Basic "+token},
-    body:JSON.stringify({titulo:titulo.value,contenido:contenido.innerHTML,categoria:categoria.value,imagen:url,video:vurl})
-  });
-  alert("Noticia creada/actualizada");
-  cargar();
 }
 
+// ❌ ELIMINAR (ARREGLADO)
 async function eliminar(id){
   if(!confirm("Eliminar noticia?")) return;
-  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:"Basic "+token}});
+
+  const res = await fetch(API+"/noticias/"+id,{
+    method:"DELETE",
+    headers:{ Authorization: token }
+  });
+
+  if(!res.ok){
+    alert("Error al eliminar");
+    return;
+  }
+
   cargar();
 }
 
+// ✏️ EDITAR
 async function editar(id){
   const res=await fetch(API+"/noticias/"+id);
   const n=await res.json();
+
   titulo.value=n.titulo;
   contenido.innerHTML=n.contenido;
   categoria.value=n.categoria;
 }
 
-function cerrarAdmin(){ location="index.html"; }
+// 🚪 SALIR
+function cerrarAdmin(){
+  localStorage.removeItem("token");
+  location="index.html";
+}
 
 window.onload=cargar;
 </script>
+
 </body>
 </html>
