@@ -3,33 +3,32 @@
 <head>
 <meta charset="UTF-8">
 
+<!-- ✅ SEO AVANZADO -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Noticias actualizadas de Argentina y el mundo en Apophis Noticias. Política, deportes, policiales y más.">
+<meta name="description" content="Apophis Noticias - Información actualizada de Política, Deportes, Policiales, Arte, Show, Ciudad, País y Mundo.">
+<meta name="keywords" content="noticias argentina, noticias rosario, politica, deportes, policiales, actualidad">
 <meta name="robots" content="index, follow">
 
 <title>Apophis Noticias</title>
 
-<!-- SEO REDES -->
-<meta property="og:title" content="Noticia - Apophis Noticias">
-<meta property="og:description" content="Leé la noticia completa en Apophis Noticias">
-<meta property="og:type" content="article">
-<meta property="og:image" content="">
-<meta property="og:url" content="">
+<!-- ✅ OPEN GRAPH -->
+<meta property="og:title" content="Apophis Noticias">
+<meta property="og:description" content="Noticias actualizadas de Argentina y el mundo">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://TU-DOMINIO.vercel.app">
+<meta property="og:image" content="https://TU-DOMINIO.vercel.app/logo.png">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content="">
-<meta name="twitter:image" content="">
 
 <script type="application/ld+json" id="jsonld"></script>
 
-<!-- ADSENSE -->
+<!-- ✅ ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* CSS ORIGINAL + mejoras */
+/* 🔥 CSS ORIGINAL + mejoras */
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
@@ -41,8 +40,8 @@ body.dark{background:#111;color:#f0e68c;}
 .cat-btn:hover{background:gold;color:black;}
 
 .main-layout{display:flex;max-width:1200px;margin:auto;gap:20px;}
-.noticia-container{flex:3;padding:15px;background:#f4e3b2;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);}
-.sidebar-left, .sidebar-right{flex:1;}
+.noticia-container{flex:0 0 65%;padding:15px;background:#f4e3b2;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);}
+.sidebar-left, .sidebar-right{flex:0 0 17.5%;}
 .sidebar-left{display:flex;flex-direction:column;gap:20px;}
 .sidebar-right{display:flex;flex-direction:column;gap:10px;}
 
@@ -52,7 +51,8 @@ body.dark{background:#111;color:#f0e68c;}
 
 .info-noticia{text-align:center;font-size:0.9rem;margin-bottom:10px;opacity:0.8;}
 
-.reactions button{margin-right:5px;padding:6px 12px;border-radius:6px;background:#111;color:gold;cursor:pointer;transition:.3s;}
+.reactions{display:flex;gap:5px;margin-top:10px;}
+.reactions button{padding:6px 12px;border-radius:6px;background:#111;color:gold;cursor:pointer;transition:.3s;}
 .reactions button:hover{background:gold;color:black;}
 
 .comentario{background:rgba(255,255,255,0.8);border-radius:8px;padding:8px;margin-bottom:10px;}
@@ -66,41 +66,48 @@ body.dark{background:#111;color:#f0e68c;}
 .ad-box{margin:20px 0;text-align:center;}
 
 button.toggle-dark{position:fixed;bottom:10px;right:10px;background:gold;}
-
 footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
 footer a{color:gold;margin:0 10px;}
+
+@media(max-width:900px){
+  .main-layout{flex-direction:column;}
+  .sidebar-left, .sidebar-right, .noticia-container{flex:1;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER CON OJOS -->
+<!-- HEADER CON OJOS IGUALES AL INDEX -->
 <div class="header" onclick="location.href='index.html'">
-  <span class="title">
-    APOPHIS NOTICIAS <span class="eyes">👀</span>
-  </span>
+  <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
+  <span class="title">APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
+  <span class="eyes">𓂀</span>
 </div>
 
-<!-- BOTÓN VOLVER AL INICIO ARRIBA IZQUIERDA -->
+<!-- BOTÓN VOLVER AL INICIO -->
 <div style="margin:10px;">
   <button class="cat-btn" onclick="location.href='index.html'">🏠 Volver al Inicio</button>
 </div>
 
-<!-- CATEGORÍAS (IGUALES QUE HOME) -->
+<!-- CATEGORÍAS IGUALES AL INDEX -->
 <div style="text-align:center;margin:15px;">
-  <button class="cat-btn" onclick="verCat('politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('internacionales')">Internacionales</button>
-  <button class="cat-btn" onclick="verCat('tecnologia')">Tecnología</button>
-  <button class="cat-btn" onclick="verCat('cultura')">Cultura</button>
+  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('Show')">Show</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
+  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
 </div>
 
-<!-- CONTENIDO CENTRADO CON SIDEBARS -->
+<!-- CONTENIDO CON SIDEBARS Y NOTICIA CENTRADA -->
 <div class="main-layout">
   <div class="sidebar-left">
     <div class="ad-box">
-      <!-- Aquí se puede insertar AdSense u otro banner -->
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6641245592697930"
@@ -116,7 +123,7 @@ footer a{color:gold;margin:0 10px;}
   <div class="sidebar-right" id="relacionadas"></div>
 </div>
 
-<!-- COMENTARIOS ABAJO DE LA NOTICIA -->
+<!-- COMENTARIOS ABAJO -->
 <div style="max-width:900px;margin:auto;margin-top:20px;">
   <div class="titulo-comentarios">💬 Comentarios</div>
   <div id="comentarios"></div>
@@ -130,9 +137,11 @@ footer a{color:gold;margin:0 10px;}
 <!-- FOOTER -->
 <footer>
   <p>© 2026 Apophis Noticias</p>
-  <a href="privacidad.html">Privacidad</a> |
-  <a href="contacto.html">Contacto</a> |
-  <a href="sobre.html">Sobre Nosotros</a>
+  <div>
+    <a href="privacidad.html">Privacidad</a> |
+    <a href="contacto.html">Contacto</a> |
+    <a href="sobre.html">Sobre Nosotros</a>
+  </div>
 </footer>
 
 <script>
@@ -147,12 +156,10 @@ async function cargarNoticia(){
   if(!id) return;
 
   noticiaActual=id;
-
   const res = await fetch(API+"/noticias/"+id);
   const n = await res.json();
-
   const urlActual = window.location.href;
-  const fecha = new Date(n._id.substring(0,8)*1000);
+  const fecha = new Date(parseInt(n._id.substring(0,8),16)*1000);
   const fechaFormateada = fecha.toLocaleDateString() + " " + fecha.toLocaleTimeString();
 
   // SEO dinámico
@@ -161,10 +168,6 @@ async function cargarNoticia(){
   document.querySelector("meta[property='og:description']").content = n.titulo;
   document.querySelector("meta[property='og:image']").content = n.imagen;
   document.querySelector("meta[property='og:url']").content = urlActual;
-
-  document.querySelector("meta[name='twitter:title']").content = n.titulo;
-  document.querySelector("meta[name='twitter:description']").content = n.titulo;
-  document.querySelector("meta[name='twitter:image']").content = n.imagen;
 
   // JSON-LD
   document.getElementById("jsonld").textContent = JSON.stringify({
@@ -184,7 +187,6 @@ async function cargarNoticia(){
     <div class="info-noticia">✍️ Redacción Apophis | 🕒 ${fechaFormateada}</div>
     <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
     <div class="noticia-texto">${n.contenido}</div>
-
     <div class="reactions">
       <button onclick="reaccion('${id}','like')">👍 ${n.likes}</button>
       <button onclick="reaccion('${id}','dislike')">👎 ${n.dislikes}</button>
