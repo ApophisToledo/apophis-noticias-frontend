@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Apophis Noticias</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Apophis Noticias - Información actualizada de Política, Deportes, Policiales, Arte, Show, Ciudad, País y Mundo.">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
 .header span.title{font-size:2rem;cursor:pointer;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);} }
 .contenedor-home{max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
 .noticia-card{width:300px;height:200px;border-radius:12px;position:relative;color:white;cursor:pointer;background-size:cover;background-position:center;box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.5s;}
 .noticia-card:hover{transform:scale(1.05) rotate(-1deg); box-shadow:0 6px 12px rgba(0,0,0,0.4);}
@@ -21,11 +22,9 @@ body.dark{background:#111;color:#f0e68c;}
 .flayer-inner img{width:200px;height:120px;margin-right:10px;border-radius:8px;object-fit:cover;cursor:pointer;transition:.3s;}
 .flayer-inner img:hover{transform:scale(1.05);}
 @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
-button{margin:3px;padding:5px 8px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.3s;}
-button:hover{opacity:0.85;}
 .cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
-.cat-btn:hover{background:gold;color:black;}
 body.dark .cat-btn{background:#f0e68c;color:#111;}
+.cat-btn:hover{background:gold;color:black;}
 body.dark .cat-btn:hover{background:#111;color:gold;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
 body.dark button.toggle-dark{background:#f0e68c;color:#111;}
@@ -33,7 +32,6 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 .reactions button{background:rgba(0,0,0,0.6);color:white;}
 .reactions button:hover{background:gold;color:black;}
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -47,17 +45,16 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
 </div>
 
 <div style="text-align:center;margin:15px;">
-  <button class="cat-btn" onclick="verCat('politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('show')">Show</button>
-  <button class="cat-btn" onclick="verCat('pais')">País</button>
-  <button class="cat-btn" onclick="verCat('mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
+  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('Show')">Show</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
+  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
 </div>
 
-<!-- Flayer tipo Crónica -->
 <div class="flayer">
   <div class="flayer-inner" id="flayerInner"></div>
 </div>
@@ -91,6 +88,7 @@ async function cargarHome(){
   const data=await res.json();
   const contenedor=document.getElementById("contenedorHome");
   const flayer=document.getElementById("flayerInner");
+
   contenedor.innerHTML = data.map(n=>{
     let img=n.imagen? n.imagen : "https://via.placeholder.com/300x200.png?text=Sin+Imagen";
     return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
@@ -105,7 +103,6 @@ async function cargarHome(){
             </div>`;
   }).join("");
 
-  // Flayer tipo Crónica
   flayer.innerHTML = data.map(n=>{
     let img=n.imagen? n.imagen : "https://via.placeholder.com/200x120.png?text=Sin+Imagen";
     return `<img src="${img}" onclick="ir('${n._id}')" title="${n.titulo}">`;
@@ -114,8 +111,7 @@ async function cargarHome(){
 
 async function reaccion(e,tipo,id){
   e.stopPropagation();
-  await fetch(API+"/reaccion",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({tipo,id})});
-  alert("Reacción enviada: "+tipo);
+  await fetch(`${API}/noticias/${id}/reaccion/${tipo}`,{method:"POST"});
 }
 
 window.onload=cargarHome;

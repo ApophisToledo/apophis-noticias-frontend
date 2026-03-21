@@ -83,7 +83,7 @@ async function cargarNoticias(){
     div.className="news-card";
     div.style.backgroundImage=`url('${n.imagen}')`;
     div.innerHTML=`<div class="news-title">${n.titulo}</div>
-                     <button class="edit-btn" onclick="editarNoticia(${JSON.stringify(n).replace(/"/g,'&quot;')})">Editar</button>
+                     <button class="edit-btn" onclick='editarNoticia(${JSON.stringify(n)})'>Editar</button>
                      <button class="delete-btn" onclick="borrarNoticia('${n._id}')">Borrar</button>`;
     box.appendChild(div);
   });
@@ -99,7 +99,7 @@ function editarNoticia(n){
 
 async function borrarNoticia(id){
   if(confirm("¿Seguro que quieres borrar esta noticia?")){
-    await fetch(API+"/noticia/"+id,{method:"DELETE"});
+    await fetch(API+"/noticias/"+id,{method:"DELETE"});
     cargarNoticias();
   }
 }
@@ -113,9 +113,9 @@ async function guardarNoticia(){
   const imagen=imgTag?imgTag.src:"";
   const body={titulo,texto,categoria,imagen};
   if(id){
-    await fetch(API+"/noticia/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   }else{
-    await fetch(API+"/noticia",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   }
   document.getElementById("titulo").value="";
   document.getElementById("texto").value="";
