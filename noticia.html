@@ -21,7 +21,6 @@
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="">
 
-<!-- GOOGLE STRUCTURED DATA -->
 <script type="application/ld+json" id="jsonld"></script>
 
 <!-- ADSENSE -->
@@ -30,7 +29,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* TU CSS ORIGINAL + mejoras */
+/* CSS ORIGINAL + mejoras */
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
@@ -43,11 +42,13 @@ body.dark{background:#111;color:#f0e68c;}
 
 .main-layout{display:flex;max-width:1200px;margin:auto;gap:20px;}
 .noticia-container{flex:3;padding:15px;background:#f4e3b2;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);}
-.sidebar{flex:1;position:sticky;top:20px;height:fit-content;}
+.sidebar-left, .sidebar-right{flex:1;}
+.sidebar-left{display:flex;flex-direction:column;gap:20px;}
+.sidebar-right{display:flex;flex-direction:column;gap:10px;}
 
 .noticia-titulo{font-size:2.5rem;font-weight:bold;text-align:center;margin-bottom:10px;}
 .noticia-img{width:100%;height:400px;background-size:cover;background-position:center;border-radius:12px;margin-bottom:15px;}
-.noticia-texto{font-size:1.2rem;line-height:1.6;}
+.noticia-texto{font-size:1.2rem;line-height:1.6;text-align:justify;}
 
 .info-noticia{text-align:center;font-size:0.9rem;margin-bottom:10px;opacity:0.8;}
 
@@ -73,44 +74,57 @@ footer a{color:gold;margin:0 10px;}
 
 <body>
 
-<!-- HEADER CON OJOS ANIMADOS -->
+<!-- HEADER CON OJOS -->
 <div class="header" onclick="location.href='index.html'">
   <span class="title">
     APOPHIS NOTICIAS <span class="eyes">👀</span>
   </span>
 </div>
 
-<!-- CATEGORÍAS -->
+<!-- BOTÓN VOLVER AL INICIO ARRIBA IZQUIERDA -->
+<div style="margin:10px;">
+  <button class="cat-btn" onclick="location.href='index.html'">🏠 Volver al Inicio</button>
+</div>
+
+<!-- CATEGORÍAS (IGUALES QUE HOME) -->
 <div style="text-align:center;margin:15px;">
   <button class="cat-btn" onclick="verCat('politica')">Política</button>
   <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
   <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
   <button class="cat-btn" onclick="verCat('internacionales')">Internacionales</button>
+  <button class="cat-btn" onclick="verCat('tecnologia')">Tecnología</button>
+  <button class="cat-btn" onclick="verCat('cultura')">Cultura</button>
 </div>
 
-<!-- BOTÓN VOLVER AL INICIO -->
-<div style="text-align:center;margin:10px;">
-  <button class="cat-btn" onclick="location.href='index.html'">🏠 Volver al Inicio</button>
-</div>
-
-<!-- CONTENIDO -->
+<!-- CONTENIDO CENTRADO CON SIDEBARS -->
 <div class="main-layout">
-  <div class="noticia-container" id="noticiaContainer"></div>
-
-  <!-- COMENTARIOS -->
-  <div style="margin-top:15px;">
-    <div class="titulo-comentarios">💬 Comentarios</div>
-    <div id="comentarios"></div>
-
-    <div style="margin-top:10px;">
-      <input id="nombre" type="text" placeholder="Tu nombre" style="padding:6px;border-radius:6px;width:40%;margin-right:5px;">
-      <input id="textoComentario" type="text" placeholder="Escribe tu comentario..." style="padding:6px;border-radius:6px;width:45%;margin-right:5px;">
-      <button class="btn-comentar" onclick="enviarComentario()">Comentar</button>
+  <div class="sidebar-left">
+    <div class="ad-box">
+      <!-- Aquí se puede insertar AdSense u otro banner -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6641245592697930"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </div>
 
-  <!-- SIDEBAR -->
-  <div class="sidebar" id="relacionadas"></div>
+  <div class="noticia-container" id="noticiaContainer"></div>
+
+  <div class="sidebar-right" id="relacionadas"></div>
+</div>
+
+<!-- COMENTARIOS ABAJO DE LA NOTICIA -->
+<div style="max-width:900px;margin:auto;margin-top:20px;">
+  <div class="titulo-comentarios">💬 Comentarios</div>
+  <div id="comentarios"></div>
+  <div style="margin-top:10px;">
+    <input id="nombre" type="text" placeholder="Tu nombre" style="padding:6px;border-radius:6px;width:40%;margin-right:5px;">
+    <input id="textoComentario" type="text" placeholder="Escribe tu comentario..." style="padding:6px;border-radius:6px;width:45%;margin-right:5px;">
+    <button class="btn-comentar" onclick="enviarComentario()">Comentar</button>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -138,6 +152,8 @@ async function cargarNoticia(){
   const n = await res.json();
 
   const urlActual = window.location.href;
+  const fecha = new Date(n._id.substring(0,8)*1000);
+  const fechaFormateada = fecha.toLocaleDateString() + " " + fecha.toLocaleTimeString();
 
   // SEO dinámico
   document.title = n.titulo + " | Apophis Noticias";
@@ -152,22 +168,20 @@ async function cargarNoticia(){
 
   // JSON-LD
   document.getElementById("jsonld").textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": n.titulo,
-    "image": [n.imagen],
-    "datePublished": new Date().toISOString(),
-    "author": {"@type":"Organization","name":"Apophis Noticias"},
-    "publisher": {"@type":"Organization","name":"Apophis Noticias"},
+    "@context":"https://schema.org",
+    "@type":"NewsArticle",
+    "headline":n.titulo,
+    "image":[n.imagen],
+    "datePublished":fecha.toISOString(),
+    "author":{"@type":"Organization","name":"Apophis Noticias"},
+    "publisher":{"@type":"Organization","name":"Apophis Noticias"},
     "mainEntityOfPage":{"@type":"WebPage","@id":urlActual}
   });
-
-  const fecha = new Date(n._id.substring(0,8)*1000).toLocaleString();
 
   // Contenedor noticia
   document.getElementById("noticiaContainer").innerHTML = `
     <h1 class="noticia-titulo">${n.titulo}</h1>
-    <div class="info-noticia">✍️ Redacción Apophis | 🕒 ${fecha}</div>
+    <div class="info-noticia">✍️ Redacción Apophis | 🕒 ${fechaFormateada}</div>
     <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
     <div class="noticia-texto">${n.contenido}</div>
 
@@ -180,10 +194,6 @@ async function cargarNoticia(){
     </div>
   `;
 
-  // Comentarios
-  document.getElementById("comentarios").innerHTML =
-    n.comentarios.map(c=>`<div class="comentario"><strong>${c.nombre}</strong>: ${c.texto}</div>`).join("");
-
   // Relacionadas
   const resRel = await fetch(API+"/noticias/categoria/"+n.categoria);
   const dataRel = await resRel.json();
@@ -193,6 +203,10 @@ async function cargarNoticia(){
         <h4>${r.titulo}</h4>
       </div>
     `).join("");
+
+  // Comentarios
+  document.getElementById("comentarios").innerHTML =
+    n.comentarios.map(c=>`<div class="comentario"><strong>${c.nombre}</strong>: ${c.texto}</div>`).join("");
 }
 
 async function reaccion(id,tipo){
