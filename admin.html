@@ -2,68 +2,111 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin Apophis</title>
+<title>Admin - Apophis Noticias</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
-form{max-width:600px;margin:20px auto;padding:15px;background:#fff;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.2);}
-input,textarea,select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
-button{margin-top:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;font-weight:bold;}
-button:hover{background:gold;color:black;}
+body.dark{background:#111;color:#f0e68c;}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;}
+.header span.title{font-size:2rem;}
+.container{max-width:1000px;margin:20px auto;padding:20px;background:rgba(255,255,255,0.95);border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);transition:.5s;}
+.container.dark{background:rgba(0,0,0,0.85);color:#f0e68c;}
+input, select, textarea{width:100%;padding:8px;margin:5px 0;border-radius:6px;border:1px solid #111;}
+button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:#111;color:gold;cursor:pointer;font-weight:bold;box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.3s;}
+button:hover{opacity:0.85;}
+.news-box{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
+.news-card{width:220px;height:150px;background-size:cover;background-position:center;border-radius:8px;cursor:pointer;position:relative;transition:.3s;box-shadow:0 3px 6px rgba(0,0,0,0.2);}
+.news-card:hover{transform:scale(1.05);}
+.news-card .news-title{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:gold;text-align:center;font-weight:bold;border-bottom-left-radius:8px;border-bottom-right-radius:8px;padding:3px;}
+img.pasted{max-width:100%;border-radius:6px;margin-top:5px;}
+.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
+body.dark .toggle-dark{background:#f0e68c;color:#111;}
 </style>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 </head>
+
 <body>
+<div class="header">
+  <span class="title">ADMIN - APOPHIS NOTICIAS</span>
+  <button onclick="toggleDark()">🌙</button>
+</div>
 
-<h1 style="text-align:center;">Panel Admin Apophis Noticias</h1>
-
-<form id="formNoticia">
-  <input type="text" id="titulo" placeholder="Título de la noticia">
-  <textarea id="contenido" placeholder="Contenido de la noticia"></textarea>
+<div class="container">
+  <h2>Crear / Editar Noticia</h2>
+  <input type="hidden" id="noticiaId">
+  <label>Título:</label>
+  <input type="text" id="titulo">
+  <label>Texto:</label>
+  <textarea id="texto" rows="6"></textarea>
+  <label>Categoría:</label>
   <select id="categoria">
-    <option value="politica">Política</option>
-    <option value="deportes">Deportes</option>
-    <option value="policiales">Policiales</option>
-    <option value="arte">Arte</option>
-    <option value="show">Show</option>
-    <option value="pais">País</option>
-    <option value="mundo">Mundo</option>
-    <option value="ciudad">Ciudad</option>
+    <option value="Pais">Pais</option>
+    <option value="Ciudad">Ciudad</option>
+    <option value="Mundo">Mundo</option>
   </select>
+  <label>Imagen de portada (copiar y pegar):</label>
+  <div contenteditable="true" id="imagenEditor" style="border:1px solid #111;padding:5px;border-radius:6px;" placeholder="Pega la imagen aquí"></div>
+  <button onclick="guardarNoticia()">Guardar Noticia</button>
 
-  <input type="text" id="imagen" placeholder="URL de imagen (o pega aquí la imagen)">
-  <p style="font-size:0.9rem;color:#333;">Pega la imagen directamente desde tu portapapeles en este campo</p>
-
-  <button type="button" onclick="crearNoticia()">Crear Noticia</button>
-</form>
+  <h2>Noticias existentes</h2>
+  <div class="news-box" id="newsBox"></div>
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-// Permitir pegar imagen desde portapapeles
-document.getElementById("imagen").addEventListener("paste", async (e)=>{
-  const items = e.clipboardData.items;
-  for(let i=0;i<items.length;i++){
-    if(items[i].type.indexOf("image")!==-1){
-      const file=items[i].getAsFile();
-      const formData=new FormData();
-      formData.append("file",file);
-      formData.append("upload_preset","tu_upload_preset"); // reemplaza por tu preset
-      const res=await fetch("https://api.cloudinary.com/v1_1/alanwaltertoledo/image/upload",{method:"POST",body:formData});
-      const data=await res.json();
-      document.getElementById("imagen").value=data.secure_url;
-    }
-  }
-});
-
-async function crearNoticia(){
-  const titulo=document.getElementById("titulo").value;
-  const contenido=document.getElementById("contenido").value;
-  const categoria=document.getElementById("categoria").value;
-  const imagen=document.getElementById("imagen").value;
-  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({titulo,contenido,categoria,imagen})});
-  location.reload();
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  document.querySelector(".container").classList.toggle("dark");
+  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
+
+async function cargarNoticias(){
+  const res=await fetch(API+"/noticias");
+  const noticias=await res.json();
+  const box=document.getElementById("newsBox");
+  box.innerHTML="";
+  noticias.forEach(n=>{
+    const div=document.createElement("div");
+    div.className="news-card";
+    div.style.backgroundImage=`url('${n.imagen}')`;
+    div.innerHTML=`<div class="news-title">${n.titulo}</div>`;
+    div.onclick=()=>editarNoticia(n);
+    box.appendChild(div);
+  });
+}
+
+function editarNoticia(n){
+  document.getElementById("noticiaId").value=n._id;
+  document.getElementById("titulo").value=n.titulo;
+  document.getElementById("texto").value=n.texto;
+  document.getElementById("categoria").value=n.categoria;
+  document.getElementById("imagenEditor").innerHTML=`<img src="${n.imagen}" class="pasted">`;
+}
+
+async function guardarNoticia(){
+  const id=document.getElementById("noticiaId").value;
+  const titulo=document.getElementById("titulo").value;
+  const texto=document.getElementById("texto").value;
+  const categoria=document.getElementById("categoria").value;
+  const imgTag=document.querySelector("#imagenEditor img");
+  const imagen=imgTag?imgTag.src:"";
+  const body={titulo,texto,categoria,imagen};
+  if(id){
+    await fetch(API+"/noticia/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  }else{
+    await fetch(API+"/noticia",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  }
+  document.getElementById("titulo").value="";
+  document.getElementById("texto").value="";
+  document.getElementById("imagenEditor").innerHTML="";
+  document.getElementById("noticiaId").value="";
+  cargarNoticias();
+}
+
+window.onload=cargarNoticias;
 </script>
 </body>
 </html>
