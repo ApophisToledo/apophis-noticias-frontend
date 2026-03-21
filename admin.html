@@ -46,7 +46,6 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
   <input type="text" id="titulo">
 
   <label>Texto:</label>
-  <!-- Cambiado textarea por div editable para mantener formato -->
   <div contenteditable="true" id="texto" placeholder="Pega aquí el texto con formato"></div>
 
   <label>Categoría:</label>
@@ -113,11 +112,12 @@ async function borrarNoticia(id){
 async function guardarNoticia(){
   const id=document.getElementById("noticiaId").value;
   const titulo=document.getElementById("titulo").value;
-  const texto=document.getElementById("texto").innerHTML; // Guardar HTML
+  const texto=document.getElementById("texto").innerHTML;
   const categoria=document.getElementById("categoria").value;
   const imgTag=document.querySelector("#imagenEditor img");
   const imagen=imgTag?imgTag.src:"";
-  const body={titulo,contenido:texto,categoria,imagen}; // contenido con formato
+  const body={titulo,contenido:texto,categoria,imagen};
+
   if(id){
     await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   }else{
