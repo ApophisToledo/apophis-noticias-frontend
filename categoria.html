@@ -4,11 +4,19 @@
 <meta charset="UTF-8">
 <title>Categoría - Apophis Noticias</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-.cat-btn{padding:8px 12px;margin:5px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;font-weight:bold;}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
+.header span.title{font-size:2rem;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+.cat-btn{padding:8px 12px;margin:5px;border-radius:8px;border:none;background:#111;color:gold;cursor:pointer;font-weight:bold;transition:.3s;}
+.cat-btn:hover{background:gold;color:black;}
 body.dark .cat-btn{background:#333;color:#f0e68c;}
 .noticia-card{width:300px;height:200px;background-size:cover;background-position:center;margin:10px;border-radius:10px;cursor:pointer;position:relative;display:inline-block;vertical-align:top;}
 .noticia-card h2{position:absolute;bottom:0;background:rgba(0,0,0,0.6);color:gold;width:100%;margin:0;padding:5px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;}
@@ -16,12 +24,31 @@ body.dark .cat-btn{background:#333;color:#f0e68c;}
 #flayerInner img{width:150px;margin:5px;border-radius:8px;cursor:pointer;}
 .toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
 body.dark .toggle-dark{background:#f0e68c;color:#111;}
+@media(max-width:900px){
+  .noticia-card{width:90%;}
+  #flayerInner img{width:120px;}
+}
 </style>
 </head>
 <body>
 
+<!-- HEADER CON OJOS IGUALES AL HOME -->
+<div class="header" onclick="location.href='index.html'">
+  <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
+  <span class="title">APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
+  <span class="eyes">𓂀</span>
+</div>
+
+<!-- BOTÓN VOLVER AL INICIO -->
+<div style="margin:10px;">
+  <button class="cat-btn" onclick="location.href='index.html'">🏠 Volver al Inicio</button>
+</div>
+
+<!-- CATEGORÍAS IGUALES QUE HOME -->
 <div style="padding:10px;text-align:center;">
-  <button class="cat-btn" onclick="verCat('Pais')">Pais</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
   <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
   <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
   <button class="cat-btn" onclick="verCat('Politica')">Política</button>
@@ -29,12 +56,14 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
   <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
   <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
   <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button onclick="loginAdmin()">Admin</button>
 </div>
 
+<!-- CONTENEDOR NOTICIAS DE LA CATEGORÍA -->
 <div id="contenedorCat" style="padding:10px;"></div>
-<h3>Flayer</h3>
-<div id="flayerInner" style="white-space:nowrap;overflow-x:auto;"></div>
+
+<!-- FLAYER DE LA CATEGORÍA -->
+<h3 style="padding-left:10px;">Flayer</h3>
+<div id="flayerInner" style="white-space:nowrap;overflow-x:auto;padding:10px;"></div>
 
 <button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
@@ -56,19 +85,23 @@ function loginAdmin(){
   else{ alert("Usuario o contraseña incorrecta"); }
 }
 
-function verCat(cat){location="categoria.html?cat="+cat;}
+function verCat(cat){location.href="categoria.html?cat="+cat;}
 function ir(id){location="noticia.html?id="+id;}
 
 async function cargarCategoria(){
   const urlParams = new URLSearchParams(window.location.search);
   const cat = urlParams.get('cat') || 'Politica';
+
+  // Noticias de la categoría
   const res = await fetch(`${API}/noticias/categoria/${cat}`);
   const data = await res.json();
+
   const contenedor=document.getElementById("contenedorCat");
   const flayer=document.getElementById("flayerInner");
 
+  // Mostrar noticias
   contenedor.innerHTML = data.map(n=>{
-    let img=n.imagen? n.imagen : "https://via.placeholder.com/300x200.png?text=Sin+Imagen";
+    const img = n.imagen || "https://via.placeholder.com/300x200.png?text=Sin+Imagen";
     return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
               <h2>${n.titulo}</h2>
               <div class="reactions">
@@ -81,23 +114,21 @@ async function cargarCategoria(){
             </div>`;
   }).join("");
 
+  // Flayer
   flayer.innerHTML = data.map(n=>{
-    let img=n.imagen? n.imagen : "https://via.placeholder.com/200x120.png?text=Sin+Imagen";
+    const img = n.imagen || "https://via.placeholder.com/200x120.png?text=Sin+Imagen";
     return `<img src="${img}" onclick="ir('${n._id}')" title="${n.titulo}">`;
   }).join("");
 }
 
 async function reaccion(e,tipo,id){
   e.stopPropagation();
-  await fetch(`${API}/reaccion`,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({tipo,id})
-  });
-  alert("Reacción enviada: "+tipo);
+  await fetch(`${API}/noticias/${id}/reaccion/${tipo}`,{method:"POST"});
+  cargarCategoria(); // actualizar
 }
 
 window.onload=cargarCategoria;
 </script>
+
 </body>
 </html>
