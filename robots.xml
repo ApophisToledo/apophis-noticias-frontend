@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://apophis-noticias-backend.vercel.app/sitemap.xml
