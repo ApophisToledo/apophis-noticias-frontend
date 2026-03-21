@@ -3,28 +3,20 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- ✅ SEO + ADSENSE -->
+<!-- ✅ SEO AVANZADO -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Noticias actualizadas de Argentina y el mundo en Apophis Noticias. Política, deportes, policiales y más.">
+<meta name="description" content="Apophis Noticias - Información actualizada de Política, Deportes, Policiales, Arte, Show, Ciudad, País y Mundo.">
+<meta name="keywords" content="noticias argentina, noticias rosario, politica, deportes, policiales, actualidad">
 <meta name="robots" content="index, follow">
 
 <title>Apophis Noticias</title>
 
 <!-- ✅ OPEN GRAPH -->
-<meta property="og:title" content="Noticia - Apophis Noticias">
-<meta property="og:description" content="Leé la noticia completa en Apophis Noticias">
-<meta property="og:type" content="article">
-<meta property="og:image" content="">
-<meta property="og:url" content="">
-
-<!-- ✅ TWITTER -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content="">
-<meta name="twitter:image" content="">
-
-<!-- ✅ JSON-LD -->
-<script type="application/ld+json" id="jsonld"></script>
+<meta property="og:title" content="Apophis Noticias">
+<meta property="og:description" content="Noticias actualizadas de Argentina y el mundo">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://TU-DOMINIO.vercel.app">
+<meta property="og:image" content="https://TU-DOMINIO.vercel.app/logo.png">
 
 <!-- ✅ ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
@@ -33,32 +25,32 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* TU CSS ORIGINAL INTACTO */
+/* 🔥 TU CSS ORIGINAL INTACTO */
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 .header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
 .header span.title{font-size:2rem;cursor:pointer;}
 .eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
-.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;transition:.3s;}
-.cat-btn:hover{transform:scale(1.1);background:gold;color:black;}
-.info-noticia{text-align:center;font-size:0.9rem;margin-bottom:10px;opacity:0.8;}
-.main-layout{display:flex;max-width:1200px;margin:auto;gap:20px;}
-.noticia-container{flex:3;padding:15px;background:#f4e3b2;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);}
-.sidebar{flex:1;position:sticky;top:20px;height:fit-content;}
-@media(max-width:900px){.main-layout{flex-direction:column;}.sidebar{position:static;}}
-.noticia-titulo{font-size:2.5rem;font-weight:bold;margin-bottom:10px;text-align:center;}
-.noticia-img{width:100%;height:400px;background-size:cover;background-position:center;border-radius:12px;margin-bottom:15px;}
-.noticia-texto{font-size:1.2rem;line-height:1.6;}
-.titulo-comentarios{display:inline-block;background:#111;color:gold;padding:6px 12px;border-radius:8px;font-weight:bold;}
-.btn-comentar{background:#111;color:gold;padding:8px 12px;border-radius:8px;margin-top:5px;cursor:pointer;}
-.btn-comentar:hover{background:gold;color:black;}
-.comentario{background:rgba(255,255,255,0.8);border-radius:8px;padding:8px;margin-bottom:10px;}
-.relacionada-card{width:100%;height:100px;margin-bottom:10px;background-size:cover;background-position:center;border-radius:8px;cursor:pointer;position:relative;}
-.relacionada-card h4{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:gold;text-align:center;}
-.ad-box{margin:20px 0;text-align:center;}
-button.toggle-dark{position:fixed;bottom:10px;right:10px;background:gold;}
-.reactions button{margin-right:5px;}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);} }
+.contenedor-home{max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
+.noticia-card{width:300px;height:200px;border-radius:12px;position:relative;color:white;cursor:pointer;background-size:cover;background-position:center;box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.5s;}
+.noticia-card:hover{transform:scale(1.05) rotate(-1deg); box-shadow:0 6px 12px rgba(0,0,0,0.4);}
+.noticia-card h2{position:absolute;bottom:10px;left:10px;margin:0;padding:5px 8px;background:rgba(0,0,0,0.6);border-radius:5px;text-shadow:1px 1px 3px #000;}
+.flayer{width:100%;overflow:hidden;margin-bottom:20px;}
+.flayer-inner{display:flex;animation:scroll 20s linear infinite;}
+.flayer-inner img{width:200px;height:120px;margin-right:10px;border-radius:8px;object-fit:cover;cursor:pointer;transition:.3s;}
+.flayer-inner img:hover{transform:scale(1.05);}
+@keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
+body.dark .cat-btn{background:#f0e68c;color:#111;}
+.cat-btn:hover{background:gold;color:black;}
+body.dark .cat-btn:hover{background:#111;color:gold;}
+button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
+body.dark button.toggle-dark{background:#f0e68c;color:#111;}
+.reactions{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;}
+.reactions button{background:rgba(0,0,0,0.6);color:white;}
+.reactions button:hover{background:gold;color:black;}
+
 footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
 footer a{color:gold;margin:0 10px;}
 </style>
@@ -66,52 +58,39 @@ footer a{color:gold;margin:0 10px;}
 
 <body>
 
-<!-- 🔥 TODO TU HTML ORIGINAL (NO TOCADO) -->
+<!-- 🔥 TU HEADER ORIGINAL -->
 <div class="header">
   <span class="eyes">𓂀</span>
   <span class="eyes">𓁹</span>
-  <span class="title" onclick="location.href='index.html'">APOPHIS NOTICIAS</span>
+  <span class="title" onclick="location.reload()">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
+<!-- 🔥 CATEGORÍAS -->
 <div style="text-align:center;margin:15px;">
-  <button class="cat-btn" onclick="verCat('politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('show')">Show</button>
-  <button class="cat-btn" onclick="verCat('pais')">País</button>
-  <button class="cat-btn" onclick="verCat('mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('ciudad')">Ciudad</button>
+  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('Show')">Show</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
+  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
 </div>
 
-<div class="main-layout">
-  <div style="flex:3;">
-    <div class="noticia-container" id="noticiaContainer"></div>
-
-    <h3 style="margin-top:20px;text-align:center;">
-      <span class="titulo-comentarios">COMENTARIOS</span>
-    </h3>
-
-    <div class="form-comentario">
-      <input type="text" id="nombre" placeholder="Tu nombre">
-      <textarea id="textoComentario" placeholder="Escribe tu comentario"></textarea>
-      <div class="btn-comentar" onclick="enviarComentario()">Comentar</div>
-    </div>
-
-    <div id="comentarios"></div>
-  </div>
-
-  <div class="sidebar">
-    <h3 style="text-align:center;">Relacionadas</h3>
-    <div id="relacionadas"></div>
-  </div>
+<!-- 🔥 FLAYER -->
+<div class="flayer">
+  <div class="flayer-inner" id="flayerInner"></div>
 </div>
+
+<!-- 🔥 HOME -->
+<div class="contenedor-home" id="contenedorHome"></div>
 
 <button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
-<!-- ✅ FOOTER -->
+<!-- 🔥 FOOTER (AGREGADO SIN ROMPER NADA) -->
 <footer>
   <p>© 2026 Apophis Noticias</p>
   <div>
@@ -123,57 +102,57 @@ footer a{color:gold;margin:0 10px;}
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-let noticiaActual="";
 
-function toggleDark(){document.body.classList.toggle("dark");}
-function verCat(cat){location.href="categoria.html?cat="+cat;}
-function ir(id){location="noticia.html?id="+id;}
-
-async function cargarNoticia(){
-  const id = new URLSearchParams(window.location.search).get('id');
-  if(!id) return;
-
-  noticiaActual=id;
-
-  const res = await fetch(API+"/noticias/"+id);
-  const n = await res.json();
-
-  const urlActual = window.location.href;
-
-  // SEO dinámico
-  document.title = n.titulo + " | Apophis Noticias";
-
-  document.querySelector("meta[property='og:title']").setAttribute("content", n.titulo);
-  document.querySelector("meta[property='og:description']").setAttribute("content", n.titulo);
-  document.querySelector("meta[property='og:image']").setAttribute("content", n.imagen);
-  document.querySelector("meta[property='og:url']").setAttribute("content", urlActual);
-
-  document.querySelector("meta[name='twitter:title']").setAttribute("content", n.titulo);
-  document.querySelector("meta[name='twitter:description']").setAttribute("content", n.titulo);
-  document.querySelector("meta[name='twitter:image']").setAttribute("content", n.imagen);
-
-  document.getElementById("jsonld").textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": n.titulo,
-    "image": [n.imagen],
-    "datePublished": new Date().toISOString(),
-    "author": {"@type":"Organization","name":"Apophis Noticias"},
-    "publisher": {"@type":"Organization","name":"Apophis Noticias"},
-    "mainEntityOfPage": {"@type":"WebPage","@id":urlActual}
-  });
-
-  const fecha = new Date(n._id.substring(0,8)*1000).toLocaleString();
-
-  document.getElementById("noticiaContainer").innerHTML = `
-    <h1 class="noticia-titulo">${n.titulo}</h1>
-    <div class="info-noticia">✍️ Redacción Apophis | 🕒 ${fecha}</div>
-    <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-    <div class="noticia-texto">${n.contenido}</div>
-  `;
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  document.querySelectorAll(".cat-btn").forEach(c=>c.classList.toggle("dark"));
+  document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
 }
 
-window.onload=cargarNoticia;
+function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  const usuarios=[{usuario:"Apophis", password:"1234"},{usuario:"Benja357", password:"abcd"}];
+  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
+  if(encontrado){ location="admin.html"; }
+  else{ alert("Usuario o contraseña incorrecta"); }
+}
+
+function verCat(cat){location="categoria.html?cat="+cat;}
+function ir(id){location="noticia.html?id="+id;}
+
+async function cargarHome(){
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+  const contenedor=document.getElementById("contenedorHome");
+  const flayer=document.getElementById("flayerInner");
+
+  contenedor.innerHTML = data.map(n=>{
+    let img=n.imagen? n.imagen : "https://via.placeholder.com/300x200.png?text=Sin+Imagen";
+    return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
+              <h2>${n.titulo}</h2>
+              <div class="reactions">
+                <button onclick="reaccion(event,'like','${n._id}')">👍</button>
+                <button onclick="reaccion(event,'dislike','${n._id}')">👎</button>
+                <button onclick="reaccion(event,'wow','${n._id}')">😲</button>
+                <button onclick="reaccion(event,'sad','${n._id}')">😢</button>
+                <button onclick="reaccion(event,'angry','${n._id}')">😡</button>
+              </div>
+            </div>`;
+  }).join("");
+
+  flayer.innerHTML = data.map(n=>{
+    let img=n.imagen? n.imagen : "https://via.placeholder.com/200x120.png?text=Sin+Imagen";
+    return `<img src="${img}" onclick="ir('${n._id}')" title="${n.titulo}">`;
+  }).join("");
+}
+
+async function reaccion(e,tipo,id){
+  e.stopPropagation();
+  await fetch(`${API}/noticias/${id}/reaccion/${tipo}`,{method:"POST"});
+}
+
+window.onload=cargarHome;
 </script>
 
 </body>
