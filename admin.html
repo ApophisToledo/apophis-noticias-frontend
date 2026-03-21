@@ -27,8 +27,9 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
 .edit-btn:hover{opacity:0.85;}
 .delete-btn{background:red;color:white;}
 .delete-btn:hover{opacity:0.85;}
+#texto{min-height:150px;border:1px solid #111;padding:5px;border-radius:6px;overflow:auto;}
+#imagenEditor{border:1px solid #111;padding:5px;border-radius:6px;min-height:50px;}
 </style>
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 </head>
 
@@ -43,8 +44,11 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
   <input type="hidden" id="noticiaId">
   <label>Título:</label>
   <input type="text" id="titulo">
+
   <label>Texto:</label>
-  <textarea id="texto" rows="6"></textarea>
+  <!-- Cambiado textarea por div editable para mantener formato -->
+  <div contenteditable="true" id="texto" placeholder="Pega aquí el texto con formato"></div>
+
   <label>Categoría:</label>
   <select id="categoria">
     <option value="Pais">Pais</option>
@@ -56,8 +60,10 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
     <option value="Arte">Arte</option>
     <option value="Show">Show</option>
   </select>
+
   <label>Imagen de portada (copiar y pegar):</label>
-  <div contenteditable="true" id="imagenEditor" style="border:1px solid #111;padding:5px;border-radius:6px;" placeholder="Pega la imagen aquí"></div>
+  <div contenteditable="true" id="imagenEditor" placeholder="Pega la imagen aquí"></div>
+  
   <button onclick="guardarNoticia()">Guardar Noticia</button>
 
   <h2>Noticias existentes</h2>
@@ -83,7 +89,7 @@ async function cargarNoticias(){
     div.className="news-card";
     div.style.backgroundImage=`url('${n.imagen}')`;
     div.innerHTML=`<div class="news-title">${n.titulo}</div>
-                     <button class="edit-btn" onclick='editarNoticia(${JSON.stringify(n)})'>Editar</button>
+                     <button class="edit-btn" onclick="editarNoticia(${JSON.stringify(n).replace(/"/g,'&quot;')})">Editar</button>
                      <button class="delete-btn" onclick="borrarNoticia('${n._id}')">Borrar</button>`;
     box.appendChild(div);
   });
@@ -92,7 +98,7 @@ async function cargarNoticias(){
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
-  document.getElementById("texto").value=n.texto;
+  document.getElementById("texto").innerHTML=n.contenido; // Mantiene formato HTML
   document.getElementById("categoria").value=n.categoria;
   document.getElementById("imagenEditor").innerHTML=`<img src="${n.imagen}" class="pasted">`;
 }
@@ -107,18 +113,18 @@ async function borrarNoticia(id){
 async function guardarNoticia(){
   const id=document.getElementById("noticiaId").value;
   const titulo=document.getElementById("titulo").value;
-  const texto=document.getElementById("texto").value;
+  const texto=document.getElementById("texto").innerHTML; // Guardar HTML
   const categoria=document.getElementById("categoria").value;
   const imgTag=document.querySelector("#imagenEditor img");
   const imagen=imgTag?imgTag.src:"";
-  const body={titulo,texto,categoria,imagen};
+  const body={titulo,contenido:texto,categoria,imagen}; // contenido con formato
   if(id){
     await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   }else{
     await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   }
   document.getElementById("titulo").value="";
-  document.getElementById("texto").value="";
+  document.getElementById("texto").innerHTML="";
   document.getElementById("imagenEditor").innerHTML="";
   document.getElementById("noticiaId").value="";
   cargarNoticias();
