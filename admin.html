@@ -2,58 +2,68 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin</title>
-
+<title>Admin Apophis</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+form{max-width:600px;margin:20px auto;padding:15px;background:#fff;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.2);}
+input,textarea,select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
+button{margin-top:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;font-weight:bold;}
+button:hover{background:gold;color:black;}
+</style>
 </head>
+<body>
 
-<body style="background:#f4e3b2">
+<h1 style="text-align:center;">Panel Admin Apophis Noticias</h1>
 
-<h1 style="text-align:center">Panel Admin</h1>
+<form id="formNoticia">
+  <input type="text" id="titulo" placeholder="Título de la noticia">
+  <textarea id="contenido" placeholder="Contenido de la noticia"></textarea>
+  <select id="categoria">
+    <option value="politica">Política</option>
+    <option value="deportes">Deportes</option>
+    <option value="policiales">Policiales</option>
+    <option value="arte">Arte</option>
+    <option value="show">Show</option>
+    <option value="pais">País</option>
+    <option value="mundo">Mundo</option>
+    <option value="ciudad">Ciudad</option>
+  </select>
 
-<input id="titulo" placeholder="Título">
+  <input type="text" id="imagen" placeholder="URL de imagen (o pega aquí la imagen)">
+  <p style="font-size:0.9rem;color:#333;">Pega la imagen directamente desde tu portapapeles en este campo</p>
 
-<select id="categoria">
-<option value="politica">Política</option>
-<option value="deportes">Deportes</option>
-<option value="policiales">Policiales</option>
-<option value="arte">Arte</option>
-<option value="show">Show</option>
-<option value="pais">País</option>
-<option value="mundo">Mundo</option>
-<option value="ciudad">Ciudad</option>
-</select>
-
-<input type="file" id="img">
-
-<div id="contenido" contenteditable="true" style="border:1px solid #ccc;height:150px;"></div>
-
-<button onclick="crear()">Crear</button>
+  <button type="button" onclick="crearNoticia()">Crear Noticia</button>
+</form>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-async function crear(){
-  const fd=new FormData();
-  fd.append("file",img.files[0]);
+// Permitir pegar imagen desde portapapeles
+document.getElementById("imagen").addEventListener("paste", async (e)=>{
+  const items = e.clipboardData.items;
+  for(let i=0;i<items.length;i++){
+    if(items[i].type.indexOf("image")!==-1){
+      const file=items[i].getAsFile();
+      const formData=new FormData();
+      formData.append("file",file);
+      formData.append("upload_preset","tu_upload_preset"); // reemplaza por tu preset
+      const res=await fetch("https://api.cloudinary.com/v1_1/alanwaltertoledo/image/upload",{method:"POST",body:formData});
+      const data=await res.json();
+      document.getElementById("imagen").value=data.secure_url;
+    }
+  }
+});
 
-  const up=await fetch(API+"/upload",{method:"POST",body:fd});
-  const u=await up.json();
-
-  await fetch(API+"/noticias",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      titulo:titulo.value,
-      contenido:contenido.innerHTML,
-      categoria:categoria.value,
-      imagen:u.url
-    })
-  });
-
-  alert("Creado");
+async function crearNoticia(){
+  const titulo=document.getElementById("titulo").value;
+  const contenido=document.getElementById("contenido").value;
+  const categoria=document.getElementById("categoria").value;
+  const imagen=document.getElementById("imagen").value;
+  await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({titulo,contenido,categoria,imagen})});
+  location.reload();
 }
 </script>
-
 </body>
 </html>
