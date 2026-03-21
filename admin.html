@@ -27,10 +27,7 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
 .edit-btn:hover{opacity:0.85;}
 .delete-btn{background:red;color:white;}
 .delete-btn:hover{opacity:0.85;}
-#texto{min-height:150px;border:1px solid #111;padding:5px;border-radius:6px;overflow:auto;}
-#imagenEditor{border:1px solid #111;padding:5px;border-radius:6px;min-height:50px;}
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -44,10 +41,8 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
   <input type="hidden" id="noticiaId">
   <label>Título:</label>
   <input type="text" id="titulo">
-
   <label>Texto:</label>
-  <div contenteditable="true" id="texto" placeholder="Pega aquí el texto con formato"></div>
-
+  <div contenteditable="true" id="textoEditor" style="width:100%;min-height:150px;padding:8px;border:1px solid #111;border-radius:6px;" placeholder="Pega aquí tu noticia"></div>
   <label>Categoría:</label>
   <select id="categoria">
     <option value="Pais">Pais</option>
@@ -59,10 +54,8 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
     <option value="Arte">Arte</option>
     <option value="Show">Show</option>
   </select>
-
   <label>Imagen de portada (copiar y pegar):</label>
-  <div contenteditable="true" id="imagenEditor" placeholder="Pega la imagen aquí"></div>
-  
+  <div contenteditable="true" id="imagenEditor" style="border:1px solid #111;padding:5px;border-radius:6px;" placeholder="Pega la imagen aquí"></div>
   <button onclick="guardarNoticia()">Guardar Noticia</button>
 
   <h2>Noticias existentes</h2>
@@ -71,6 +64,18 @@ body.dark .toggle-dark{background:#f0e68c;color:#111;}
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
+let TOKEN="";
+
+// Login al abrir admin
+async function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  const res = await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
+  if(res.status!==200){ alert("Usuario o contraseña incorrecta"); return; }
+  const data = await res.json();
+  TOKEN = data.token;
+}
+loginAdmin();
 
 function toggleDark(){
   document.body.classList.toggle("dark");
@@ -97,14 +102,14 @@ async function cargarNoticias(){
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
-  document.getElementById("texto").innerHTML=n.contenido; // Mantiene formato HTML
+  document.getElementById("textoEditor").innerHTML=n.contenido;
   document.getElementById("categoria").value=n.categoria;
   document.getElementById("imagenEditor").innerHTML=`<img src="${n.imagen}" class="pasted">`;
 }
 
 async function borrarNoticia(id){
   if(confirm("¿Seguro que quieres borrar esta noticia?")){
-    await fetch(API+"/noticias/"+id,{method:"DELETE"});
+    await fetch(API+"/noticias/"+id,{method:"DELETE", headers:{Authorization:"Bearer "+TOKEN}});
     cargarNoticias();
   }
 }
@@ -112,19 +117,18 @@ async function borrarNoticia(id){
 async function guardarNoticia(){
   const id=document.getElementById("noticiaId").value;
   const titulo=document.getElementById("titulo").value;
-  const texto=document.getElementById("texto").innerHTML;
+  const contenido=document.getElementById("textoEditor").innerHTML;
   const categoria=document.getElementById("categoria").value;
   const imgTag=document.querySelector("#imagenEditor img");
   const imagen=imgTag?imgTag.src:"";
-  const body={titulo,contenido:texto,categoria,imagen};
-
+  const body={titulo,contenido,categoria,imagen};
   if(id){
-    await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify(body)});
   }else{
-    await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify(body)});
   }
   document.getElementById("titulo").value="";
-  document.getElementById("texto").innerHTML="";
+  document.getElementById("textoEditor").innerHTML="";
   document.getElementById("imagenEditor").innerHTML="";
   document.getElementById("noticiaId").value="";
   cargarNoticias();

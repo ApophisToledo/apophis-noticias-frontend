@@ -2,10 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Apophis Noticias - Noticia</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Detalle de noticia en Apophis Noticias">
+<title>Apophis Noticias</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<meta name="description" content="Detalle de noticia en Apophis Noticias">
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
@@ -18,17 +17,16 @@ body.dark{background:#111;color:#f0e68c;}
 .noticia-titulo{font-size:2.5rem;font-weight:bold;margin-bottom:15px;text-align:center;}
 .noticia-img{width:100%;height:400px;background-size:cover;background-position:center;border-radius:12px;margin-bottom:15px;}
 .noticia-texto{font-size:1.2rem;line-height:1.6;}
-.reactions{display:flex;gap:10px;margin:10px 0;}
-.reactions button{padding:5px 10px;border:none;border-radius:6px;background:#111;color:gold;font-weight:bold;cursor:pointer;transition:.3s;}
-.reactions button:hover{opacity:0.85;background:gold;color:#111;}
 .comentarios{margin-top:30px;}
-.comentario{background:rgba(255,255,255,0.8);padding:8px 12px;border-radius:8px;margin-bottom:10px;box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+.comentario{background:rgba(255,255,255,0.8);border-radius:8px;padding:8px;margin-bottom:10px;}
 .comentario strong{color:#111;}
-input,textarea{width:100%;padding:8px;margin:5px 0;border-radius:6px;border:1px solid #111;}
-button.enviar{padding:8px 12px;background:#111;color:gold;border:none;border-radius:6px;cursor:pointer;margin-top:5px;font-weight:bold;}
-button.enviar:hover{opacity:0.85;background:gold;color:#111;}
+.relacionadas{display:flex;flex-wrap:wrap;gap:15px;margin-top:30px;}
+.relacionada-card{width:200px;height:120px;background-size:cover;background-position:center;border-radius:8px;cursor:pointer;position:relative;transition:.3s;box-shadow:0 3px 6px rgba(0,0,0,0.2);}
+.relacionada-card:hover{transform:scale(1.05);}
+.relacionada-card h4{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:gold;text-align:center;padding:2px 5px;border-bottom-left-radius:8px;border-bottom-right-radius:8px;}
 button.toggle-dark{position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;cursor:pointer;z-index:100;font-size:1.2rem;border:none;transition:.3s;background:gold;color:black;opacity:0.9;}
 body.dark button.toggle-dark{background:#f0e68c;color:#111;}
+.reactions button{margin-right:5px;}
 </style>
 </head>
 <body>
@@ -38,41 +36,24 @@ body.dark button.toggle-dark{background:#f0e68c;color:#111;}
   <span class="title" onclick="location.href='index.html'">APOPHIS NOTICIAS</span>
   <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
 <div class="noticia-container" id="noticiaContainer"></div>
+<h3 style="margin-top:20px;">Comentarios</h3>
+<div class="comentarios" id="comentarios"></div>
 
-<div class="reactions" id="reaccionesContainer"></div>
-
-<div class="comentarios">
-  <h3>Comentarios</h3>
-  <div id="comentariosList"></div>
-  <input type="text" id="nombreComentario" placeholder="Tu nombre">
-  <textarea id="textoComentario" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
-  <button class="enviar" onclick="enviarComentario()">Enviar comentario</button>
-</div>
+<h3 style="text-align:center;margin-top:20px;">Noticias relacionadas</h3>
+<div class="relacionadas" id="relacionadas"></div>
 
 <button class="toggle-dark" onclick="toggleDark()">🌙</button>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-let noticiaActual=null;
-
 function toggleDark(){
   document.body.classList.toggle("dark");
   document.querySelector(".noticia-container").classList.toggle("dark");
   document.querySelector(".toggle-dark").textContent = document.body.classList.contains("dark")?"☀️":"🌙";
-}
-
-function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  const usuarios=[{usuario:"Apophis", password:"1234"},{usuario:"Benja357", password:"abcd"}];
-  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
-  if(encontrado){ location="admin.html"; }
-  else{ alert("Usuario o contraseña incorrecta"); }
 }
 
 function ir(id){location="noticia.html?id="+id;}
@@ -82,49 +63,38 @@ async function cargarNoticia(){
   const id = urlParams.get('id');
   if(!id) return;
 
-  const res = await fetch(`${API}/noticias/${id}`);
+  const res = await fetch(API+"/noticias/"+id);
+  if(res.status!==200){ alert("No se pudo cargar la noticia"); return; }
   const n = await res.json();
-  noticiaActual = n;
+
   const cont=document.getElementById("noticiaContainer");
   cont.innerHTML = `<h1 class="noticia-titulo">${n.titulo}</h1>
                     <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-                    <div class="noticia-texto">${n.contenido}</div>`;
-
-  // Reacciones
-  const reacCont=document.getElementById("reaccionesContainer");
-  reacCont.innerHTML = `
-    <button onclick="reaccion('like')">👍 ${n.likes}</button>
-    <button onclick="reaccion('dislike')">👎 ${n.dislikes}</button>
-    <button onclick="reaccion('sorpresa')">😲 ${n.sorpresa}</button>
-    <button onclick="reaccion('tristeza')">😢 ${n.tristeza}</button>
-    <button onclick="reaccion('enojo')">😡 ${n.enojo}</button>
-  `;
+                    <div class="noticia-texto">${n.contenido}</div>
+                    <div class="reactions">
+                      <button onclick="reaccion('${n._id}','like')">👍 ${n.likes}</button>
+                      <button onclick="reaccion('${n._id}','dislike')">👎 ${n.dislikes}</button>
+                      <button onclick="reaccion('${n._id}','sorpresa')">😲 ${n.sorpresa}</button>
+                      <button onclick="reaccion('${n._id}','tristeza')">😢 ${n.tristeza}</button>
+                      <button onclick="reaccion('${n._id}','enojo')">😡 ${n.enojo}</button>
+                    </div>`;
 
   // Comentarios
-  actualizarComentarios(n.comentarios || []);
+  const com=document.getElementById("comentarios");
+  com.innerHTML = n.comentarios.map(c=>`<div class="comentario"><strong>${c.nombre}:</strong> ${c.texto}</div>`).join("");
+
+  // Noticias relacionadas
+  const resRel=await fetch(API+"/noticias/categoria/"+n.categoria);
+  const dataRel=await resRel.json();
+  const rel=document.getElementById("relacionadas");
+  rel.innerHTML = dataRel.filter(r=>r._id!==n._id).map(r=>{
+    let img=r.imagen? r.imagen : "https://via.placeholder.com/200x120.png?text=Sin+Imagen";
+    return `<div class="relacionada-card" style="background-image:url('${img}')" onclick="ir('${r._id}')"><h4>${r.titulo}</h4></div>`;
+  }).join("");
 }
 
-function actualizarComentarios(comentarios){
-  const list=document.getElementById("comentariosList");
-  list.innerHTML = comentarios.map(c=>`<div class="comentario"><strong>${c.nombre}:</strong> ${c.texto}</div>`).join("");
-}
-
-async function reaccion(tipo){
-  await fetch(`${API}/noticias/${noticiaActual._id}/reaccion/${tipo}`,{method:"POST"});
-  cargarNoticia();
-}
-
-async function enviarComentario(){
-  const nombre=document.getElementById("nombreComentario").value;
-  const texto=document.getElementById("textoComentario").value;
-  if(!nombre || !texto) return alert("Completa nombre y comentario");
-  await fetch(`${API}/noticias/${noticiaActual._id}/comentario`,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({nombre,texto})
-  });
-  document.getElementById("nombreComentario").value="";
-  document.getElementById("textoComentario").value="";
+async function reaccion(id,tipo){
+  await fetch(API+"/noticias/"+id+"/reaccion/"+tipo,{method:"POST"});
   cargarNoticia();
 }
 
