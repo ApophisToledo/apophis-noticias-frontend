@@ -45,6 +45,55 @@ body.dark{background:#111;color:#f0e68c;}
   background:rgba(0,0,0,0.6);padding:5px;border-radius:5px;
 }
 
+/* 🔥 PORTADA PROFESIONAL (AGREGADO) */
+.portada{
+  max-width:1200px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:15px;
+}
+.portada-principal{
+  height:350px;
+  border-radius:12px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+}
+.portada-principal h1{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  background:rgba(0,0,0,0.7);
+  color:gold;
+  padding:10px;
+  border-radius:8px;
+  font-size:1.5rem;
+}
+.portada-secundarias{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.portada-sec{
+  height:110px;
+  border-radius:10px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+}
+.portada-sec h3{
+  position:absolute;
+  bottom:5px;
+  left:5px;
+  background:rgba(0,0,0,0.7);
+  color:gold;
+  padding:5px;
+  font-size:0.9rem;
+}
+
 /* 🔥 FLAYER MEJORADO */
 .flayer{width:100%;overflow:hidden;margin-bottom:20px;}
 .flayer-track{
@@ -56,7 +105,6 @@ body.dark{background:#111;color:#f0e68c;}
   width:200px;height:120px;margin-right:10px;border-radius:8px;
   object-fit:cover;cursor:pointer;
 }
-
 @keyframes scroll{
   0%{transform:translateX(0);}
   100%{transform:translateX(-50%);}
@@ -81,7 +129,7 @@ footer a{color:gold;margin:0 10px;}
 
 <body>
 
-<!-- 🔥 HEADER ORIGINAL (NO TOCADO) -->
+<!-- 🔥 HEADER ORIGINAL (INTOCADO + ADMIN OK) -->
 <div class="header">
   <span class="eyes">𓂀</span>
   <span class="eyes">𓁹</span>
@@ -91,7 +139,10 @@ footer a{color:gold;margin:0 10px;}
   <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
-<!-- 🔍 BUSCADOR (AGREGADO SIN ROMPER) -->
+<!-- 🔥 PORTADA (AGREGADA ARRIBA SIN ROMPER HOME) -->
+<div class="portada" id="portada"></div>
+
+<!-- 🔍 BUSCADOR -->
 <div style="text-align:center;margin:20px;">
   <input id="buscador" placeholder="🔍 Buscar noticias...">
 </div>
@@ -147,14 +198,35 @@ function loginAdmin(){
 function verCat(cat){location="categoria.html?cat="+cat;}
 function ir(id){location="noticia.html?id="+id;}
 
-/* 🔥 HOME */
+/* 🔥 HOME + PORTADA */
 async function cargarHome(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
 
   const contenedor=document.getElementById("contenedorHome");
   const flayer=document.getElementById("flayerInner");
+  const portada=document.getElementById("portada");
 
+  // 🔥 PORTADA
+  if(data.length>0){
+    const principal=data[0];
+    const secundarias=data.slice(1,5);
+
+    portada.innerHTML = `
+      <div class="portada-principal" style="background-image:url('${principal.imagen}')" onclick="ir('${principal._id}')">
+        <h1>${principal.titulo}</h1>
+      </div>
+      <div class="portada-secundarias">
+        ${secundarias.map(n=>`
+          <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+            <h3>${n.titulo}</h3>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  // 🔥 HOME NORMAL (NO TOCADO)
   contenedor.innerHTML = data.map(n=>{
     let img=n.imagen || "https://via.placeholder.com/300x200";
     return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
@@ -162,12 +234,8 @@ async function cargarHome(){
             </div>`;
   }).join("");
 
-  // 🔥 FLAYER LOOP LIMPIO
-  const html = data.map(n=>{
-    return `<img src="${n.imagen}" onclick="ir('${n._id}')">`;
-  }).join("");
-
-  // duplicamos contenido (clave del loop)
+  // 🔥 FLAYER LOOP PERFECTO
+  const html = data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
   flayer.innerHTML = html + html;
 }
 
