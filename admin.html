@@ -18,7 +18,6 @@ body.dark{background:#111;color:#f0e68c;}
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:10px;
 }
 
 .container{
@@ -29,20 +28,9 @@ body.dark{background:#111;color:#f0e68c;}
   border-radius:12px;
 }
 
-/* 🔥 EDITOR TOOLBAR */
-.toolbar{
-  display:flex;
-  gap:5px;
-  margin-bottom:5px;
-}
+.toolbar{display:flex;gap:5px;margin-bottom:5px;}
+.toolbar button{background:gold;color:black;font-size:12px;}
 
-.toolbar button{
-  background:gold;
-  color:black;
-  font-size:12px;
-}
-
-/* INPUTS */
 input, select{
   width:100%;
   padding:8px;
@@ -62,7 +50,6 @@ button{
   font-weight:bold;
 }
 
-/* NOTICIAS */
 .news-box{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
 .news-card{width:220px;height:150px;background-size:cover;background-position:center;border-radius:8px;}
 
@@ -89,15 +76,12 @@ button{
 
 <input type="text" id="titulo" placeholder="Título">
 
-<!-- 🔥 EDITOR TIPO WORD -->
 <div class="toolbar">
   <button onclick="format('bold')">B</button>
   <button onclick="format('italic')">I</button>
   <button onclick="format('underline')">U</button>
-  <button onclick="format('insertUnorderedList')">• Lista</button>
-  <button onclick="format('insertOrderedList')">1. Lista</button>
-  <button onclick="agregarLink()">🔗 Link</button>
-  <button onclick="format('h2')">H2</button>
+  <button onclick="format('insertUnorderedList')">•</button>
+  <button onclick="format('insertOrderedList')">1.</button>
 </div>
 
 <div contenteditable="true" id="textoEditor"
@@ -114,16 +98,11 @@ button{
   <option value="Ciudad">Ciudad</option>
 </select>
 
-<input type="text" id="imagen" placeholder="URL de imagen">
+<input type="text" id="imagen" placeholder="URL de imagen (auto si pegás imagen)">
 
-<!-- 🤖 IA -->
-<h3>🤖 IA Automática</h3>
-
+<h3>🤖 IA</h3>
 <input type="text" id="tituloIA" placeholder="Título IA">
-<input type="text" id="fuenteIA" placeholder="Fuente (opcional)">
-
 <button onclick="generarIA()">Generar con IA</button>
-<button onclick="generarIARapida()">⚡ IA automática</button>
 
 <button onclick="guardarNoticia()">Guardar</button>
 
@@ -136,103 +115,100 @@ button{
 const API="https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
 
-// 🔐 LOGIN ROBUSTO
+// LOGIN
 async function loginAdmin(){
-  try{
-    const user=prompt("Usuario:");
-    const pass=prompt("Pass:");
+  const user=prompt("Usuario:");
+  const pass=prompt("Pass:");
 
-    const res = await fetch(API+"/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({user,pass})
-    });
+  const res = await fetch(API+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user,pass})
+  });
 
-    const data=await res.json();
-
-    if(!data.token){
-      alert("❌ Login incorrecto");
-      return loginAdmin();
-    }
-
-    TOKEN=data.token;
-  }catch{
-    alert("Error conexión backend");
-  }
+  const data=await res.json();
+  TOKEN=data.token;
 }
-
 loginAdmin();
 
-// 🔥 EDITOR FUNCIONES
+// ✍️ EDITOR
 function format(cmd){
-  if(cmd==="h2"){
-    document.execCommand("formatBlock", false, "h2");
-  }else{
-    document.execCommand(cmd, false, null);
-  }
+  document.execCommand(cmd,false,null);
 }
 
-function agregarLink(){
-  const url=prompt("URL:");
-  document.execCommand("createLink", false, url);
-}
+// 🔥 PEGAR IMAGEN AUTOMÁTICO
+document.getElementById("textoEditor").addEventListener("paste", async (e)=>{
+  const items = e.clipboardData.items;
 
-// 🔄 CARGAR NOTICIAS (FIX)
-async function cargarNoticias(){
-  try{
-    const res=await fetch(API+"/noticias");
-    const noticias=await res.json();
+  for (let item of items){
+    if(item.type.indexOf("image") !== -1){
+      const file = item.getAsFile();
 
-    const box=document.getElementById("newsBox");
-    box.innerHTML="";
+      const formData = new FormData();
+      formData.append("file", file);
 
-    if(!noticias.length){
-      box.innerHTML="<p>No hay noticias aún</p>";
-      return;
+      const res = await fetch(API+"/upload",{
+        method:"POST",
+        headers:{Authorization:"Bearer "+TOKEN},
+        body:formData
+      });
+
+      const data = await res.json();
+
+      // insertar imagen en editor
+      document.execCommand("insertImage", false, data.url);
+
+      // 🔥 setear imagen principal automáticamente
+      document.getElementById("imagen").value = data.url;
     }
-
-    noticias.forEach(n=>{
-      const wrapper=document.createElement("div");
-      wrapper.className="news-wrapper";
-
-      const card=document.createElement("div");
-      card.className="news-card";
-      card.style.backgroundImage=`url('${n.imagen || ""}')`;
-
-      const title=document.createElement("div");
-      title.className="news-title";
-      title.textContent=n.titulo;
-
-      const actions=document.createElement("div");
-      actions.className="news-actions";
-
-      const editBtn=document.createElement("button");
-      editBtn.className="edit-btn";
-      editBtn.textContent="Editar";
-      editBtn.onclick=()=>editarNoticia(n);
-
-      const deleteBtn=document.createElement("button");
-      deleteBtn.className="delete-btn";
-      deleteBtn.textContent="Borrar";
-      deleteBtn.onclick=()=>borrarNoticia(n._id);
-
-      actions.appendChild(editBtn);
-      actions.appendChild(deleteBtn);
-
-      wrapper.appendChild(card);
-      wrapper.appendChild(title);
-      wrapper.appendChild(actions);
-
-      box.appendChild(wrapper);
-    });
-
-  }catch(err){
-    console.error(err);
-    alert("Error cargando noticias");
   }
+});
+
+// CARGAR
+async function cargarNoticias(){
+  const res=await fetch(API+"/noticias");
+  const noticias=await res.json();
+
+  const box=document.getElementById("newsBox");
+  box.innerHTML="";
+
+  noticias.forEach(n=>{
+    const wrapper=document.createElement("div");
+    wrapper.className="news-wrapper";
+
+    const card=document.createElement("div");
+    card.className="news-card";
+    card.style.backgroundImage=`url('${n.imagen || ""}')`;
+
+    const title=document.createElement("div");
+    title.className="news-title";
+    title.textContent=n.titulo;
+
+    const actions=document.createElement("div");
+    actions.className="news-actions";
+
+    const editBtn=document.createElement("button");
+    editBtn.className="edit-btn";
+    editBtn.textContent="Editar";
+    editBtn.onclick=()=>editarNoticia(n);
+
+    const deleteBtn=document.createElement("button");
+    deleteBtn.className="delete-btn";
+    deleteBtn.textContent="Borrar";
+    deleteBtn.onclick=()=>borrarNoticia(n._id);
+
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
+    wrapper.appendChild(card);
+    wrapper.appendChild(title);
+    wrapper.appendChild(actions);
+
+    box.appendChild(wrapper);
+  });
 }
 
-// ✏️ EDITAR
+// EDITAR
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
@@ -241,7 +217,7 @@ function editarNoticia(n){
   document.getElementById("imagen").value=n.imagen || "";
 }
 
-// ❌ BORRAR
+// BORRAR
 async function borrarNoticia(id){
   await fetch(API+"/noticias/"+id,{
     method:"DELETE",
@@ -250,19 +226,12 @@ async function borrarNoticia(id){
   cargarNoticias();
 }
 
-// 💾 GUARDAR
+// GUARDAR
 async function guardarNoticia(){
-  const titulo=document.getElementById("titulo").value;
-
-  if(!titulo){
-    alert("⚠️ Falta el título");
-    return;
-  }
-
   const id=document.getElementById("noticiaId").value;
 
   const body={
-    titulo,
+    titulo:document.getElementById("titulo").value,
     contenido:document.getElementById("textoEditor").innerHTML,
     categoria:document.getElementById("categoria").value,
     imagen:document.getElementById("imagen").value
@@ -292,15 +261,10 @@ async function guardarNoticia(){
   cargarNoticias();
 }
 
-// 🤖 IA
+// IA
 async function generarIA(){
   const titulo=document.getElementById("tituloIA").value;
 
-  if(!titulo){
-    alert("Falta título IA");
-    return;
-  }
-
   const res=await fetch(API+"/generar-noticia-ia",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
@@ -310,34 +274,7 @@ async function generarIA(){
   const data=await res.json();
 
   if(data.ok){
-    alert("✅ IA creó noticia");
-    cargarNoticias();
-  }else{
-    alert(data.msg || "Error IA");
-  }
-}
-
-// ⚡ IA AUTOMÁTICA
-async function generarIARapida(){
-  const temas=[
-    "Últimas noticias en Argentina",
-    "Impacto económico actual",
-    "Cambios políticos recientes",
-    "Avances tecnológicos"
-  ];
-
-  const titulo=temas[Math.floor(Math.random()*temas.length)];
-
-  const res=await fetch(API+"/generar-noticia-ia",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({titulo})
-  });
-
-  const data=await res.json();
-
-  if(data.ok){
-    alert("🚀 IA automática creada");
+    alert("IA creada");
     cargarNoticias();
   }
 }
