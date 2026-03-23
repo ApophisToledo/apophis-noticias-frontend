@@ -3,25 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- SEO -->
 <meta name="description" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
 
 <title>Apophis Noticias</title>
 
-<!-- GOOGLE ADSENSE -->
+<!-- 🔥 CMP de Google (3 opciones) -->
+<script type="text/javascript" src="https://www.gstatic.com/cmp/cmp.js"></script>
+<script>
+window.__cmp('init', {
+  'Language': 'es',
+  'NoticeAndConsentMode': 'gpc',
+  'ConsentScope': 'global',
+  'DisplayUI': true,
+  'UIOptions': {
+    'AcceptButton': true,
+    'RejectButton': true,
+    'CustomizeButton': true
+  }
+});
+</script>
+
+<!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
      crossorigin="anonymous"></script>
 
-<!-- TAILWIND -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
+/* HEADER */
 .header{
   background:black;
   color:gold;
@@ -32,14 +46,12 @@ body.dark{background:#111;color:#f0e68c;}
   gap:12px;
   position:relative;
 }
-
 .header span.title{
   font-size:3rem;
   font-weight:bold;
   text-shadow:2px 2px 6px black;
   cursor:pointer;
 }
-
 .eyes{font-size:1.5rem;animation:blink 4s infinite;}
 @keyframes blink{95%{transform:scaleY(0.1);}}
 
@@ -177,43 +189,36 @@ function loginAdmin(){
 function verCat(c){location="categoria.html?cat="+c;}
 function ir(id){location="noticia.html?id="+id;}
 
-// 🔥 HOME + PORTADA CORREGIDO PARA TODAS LAS NOTICIAS
+// HOME + PORTADA
 async function cargarHome(){
-  try{
-    const res=await fetch(API+"/noticias");
-    const data=await res.json();
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
 
-    if(!data || data.length===0) return;
+  if(!data || data.length===0) return;
 
-    // PORTADA
-    const p=data[0];
-    const sec=data.slice(1,5);
+  const p=data[0];
+  const sec=data.slice(1,5);
 
-    document.getElementById("portada").innerHTML=`
-      <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
-        <h1>${p.titulo}</h1>
-      </div>
-      <div>
-        ${sec.map(n=>`
-          <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-            <h3>${n.titulo}</h3>
-          </div>`).join("")}
-      </div>
-    `;
+  document.getElementById("portada").innerHTML=` 
+    <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
+      <h1>${p.titulo}</h1>
+    </div>
+    <div>
+      ${sec.map(n=>`
+        <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+          <h3>${n.titulo}</h3>
+        </div>`).join("")}
+    </div>
+  `;
 
-    // HOME: cargamos **todas las noticias**, sin límite
-    document.getElementById("contenedorHome").innerHTML=data.map(n=>`
-      <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-        <h2>${n.titulo}</h2>
-      </div>`).join("");
+  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
+    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+    </div>`).join("");
 
-    // FLAYER LOOP PERFECTO
-    const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
-    document.getElementById("flayerInner").innerHTML=html+html;
-  } catch(err){
-    console.error(err);
-    alert("Error cargando noticias");
-  }
+  // FLAYER LOOP PERFECTO
+  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
+  document.getElementById("flayerInner").innerHTML=html+html;
 }
 
 // BUSCADOR
