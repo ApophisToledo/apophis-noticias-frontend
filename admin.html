@@ -28,11 +28,6 @@ body.dark{background:#111;color:#f0e68c;}
   border-radius:12px;
 }
 
-.container.dark{
-  background:rgba(0,0,0,0.85);
-  color:#f0e68c;
-}
-
 input, select, textarea{
   width:100%;
   padding:8px;
@@ -52,30 +47,12 @@ button{
   font-weight:bold;
 }
 
-.news-box{
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  margin-top:20px;
-}
+.news-box{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
+.news-card{width:220px;height:150px;background-size:cover;background-position:center;border-radius:8px;}
 
-.news-card{
-  width:220px;
-  height:150px;
-  background-size:cover;
-  background-position:center;
-  border-radius:8px;
-}
-
-/* 🔥 FIX UI */
 .news-wrapper{width:220px;}
 .news-actions{display:flex;justify-content:space-between;margin-top:5px;}
-
-.news-title{
-  font-weight:bold;
-  text-align:center;
-  margin-top:5px;
-}
+.news-title{font-weight:bold;text-align:center;margin-top:5px;}
 
 .edit-btn{background:gold;color:black;}
 .delete-btn{background:red;color:white;}
@@ -89,17 +66,16 @@ button{
 </div>
 
 <div class="container">
+
   <h2>Crear / Editar Noticia</h2>
 
   <input type="hidden" id="noticiaId">
 
   <input type="text" id="titulo" placeholder="Título">
 
-  <!-- 🧠 EDITOR -->
   <div contenteditable="true" id="textoEditor"
        style="min-height:150px;border:1px solid #111;padding:10px;background:white;"></div>
 
-  <!-- 🔥 CATEGORÍAS RESTAURADAS -->
   <select id="categoria">
     <option value="Politica">Política</option>
     <option value="Deportes">Deportes</option>
@@ -111,23 +87,28 @@ button{
     <option value="Ciudad">Ciudad</option>
   </select>
 
-  <!-- 🖼 IMAGEN -->
   <input type="text" id="imagen" placeholder="URL de imagen">
 
-  <!-- 🤖 IA BOTÓN -->
-  <button onclick="generarIA()">🤖 Generar con IA</button>
+  <!-- 🔥 NUEVO NIVEL IA -->
+  <h3>🤖 IA Automática</h3>
+  <input type="text" id="tituloIA" placeholder="Título IA (opcional)">
+  <input type="text" id="fuenteIA" placeholder="Fuente (Ej: Infobae)">
+
+  <button onclick="generarIA()">Generar con IA</button>
+  <button onclick="generarIARapida()">⚡ IA automática sin escribir</button>
 
   <button onclick="guardarNoticia()">Guardar</button>
 
   <h2>Noticias existentes</h2>
   <div id="newsBox" class="news-box"></div>
+
 </div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
 
-// 🔐 LOGIN
+// LOGIN
 async function loginAdmin(){
   const user=prompt("Usuario:");
   const pass=prompt("Pass:");
@@ -143,7 +124,7 @@ async function loginAdmin(){
 }
 loginAdmin();
 
-// 🔄 CARGAR NOTICIAS
+// CARGAR
 async function cargarNoticias(){
   const res=await fetch(API+"/noticias");
   const noticias=await res.json();
@@ -186,7 +167,7 @@ async function cargarNoticias(){
   });
 }
 
-// ✏️ EDITAR
+// EDITAR
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
@@ -195,7 +176,7 @@ function editarNoticia(n){
   document.getElementById("imagen").value=n.imagen || "";
 }
 
-// ❌ BORRAR
+// BORRAR
 async function borrarNoticia(id){
   await fetch(API+"/noticias/"+id,{
     method:"DELETE",
@@ -204,12 +185,19 @@ async function borrarNoticia(id){
   cargarNoticias();
 }
 
-// 💾 GUARDAR
+// GUARDAR (🔥 VALIDADO)
 async function guardarNoticia(){
+  const titulo=document.getElementById("titulo").value;
+
+  if(!titulo){
+    alert("⚠️ Falta el título");
+    return;
+  }
+
   const id=document.getElementById("noticiaId").value;
 
   const body={
-    titulo:document.getElementById("titulo").value,
+    titulo,
     contenido:document.getElementById("textoEditor").innerHTML,
     categoria:document.getElementById("categoria").value,
     imagen:document.getElementById("imagen").value
@@ -235,14 +223,46 @@ async function guardarNoticia(){
     });
   }
 
+  alert("✅ Noticia guardada");
   cargarNoticias();
 }
 
-// 🤖 IA GENERADOR
+// 🤖 IA NORMAL (ARREGLADA)
 async function generarIA(){
-  const titulo=prompt("Título de la noticia:");
+  const titulo=document.getElementById("tituloIA").value;
+  const fuente=document.getElementById("fuenteIA").value;
 
-  if(!titulo) return;
+  if(!titulo){
+    alert("Falta título IA");
+    return;
+  }
+
+  const res=await fetch(API+"/generar-noticia-ia",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({titulo, fuente})
+  });
+
+  const data=await res.json();
+
+  if(data.ok){
+    alert("✅ IA generó noticia");
+    cargarNoticias();
+  }else{
+    alert(data.msg || "Error IA");
+  }
+}
+
+// ⚡ IA AUTOMÁTICA (NUEVO NIVEL)
+async function generarIARapida(){
+  const temas=[
+    "Últimas noticias en Argentina",
+    "Impacto económico actual",
+    "Cambios políticos recientes",
+    "Avances tecnológicos"
+  ];
+
+  const titulo=temas[Math.floor(Math.random()*temas.length)];
 
   const res=await fetch(API+"/generar-noticia-ia",{
     method:"POST",
@@ -252,8 +272,8 @@ async function generarIA(){
 
   const data=await res.json();
 
-  if(data.noticia){
-    alert("✅ Noticia creada automáticamente");
+  if(data.ok){
+    alert("🚀 IA automática creó noticia");
     cargarNoticias();
   }else{
     alert(data.msg || "Error IA");
