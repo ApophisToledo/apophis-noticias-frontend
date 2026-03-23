@@ -9,23 +9,65 @@
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;}
-.container{max-width:1000px;margin:20px auto;padding:20px;background:rgba(255,255,255,0.95);border-radius:12px;}
-.container.dark{background:rgba(0,0,0,0.85);color:#f0e68c;}
 
-input, select, textarea{width:100%;padding:8px;margin:5px 0;border-radius:6px;border:1px solid #111;}
+.header{
+  background:black;
+  color:gold;
+  padding:25px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
 
-button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:#111;color:gold;cursor:pointer;font-weight:bold;}
+.container{
+  max-width:1000px;
+  margin:20px auto;
+  padding:20px;
+  background:rgba(255,255,255,0.95);
+  border-radius:12px;
+}
 
-.news-box{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
+.container.dark{
+  background:rgba(0,0,0,0.85);
+  color:#f0e68c;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:8px;
+  margin:5px 0;
+  border-radius:6px;
+  border:1px solid #111;
+}
+
+button{
+  padding:8px 12px;
+  margin-top:5px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.news-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-top:20px;
+}
 
 .news-card{
-  width:220px;height:150px;
-  background-size:cover;background-position:center;
+  width:220px;
+  height:150px;
+  background-size:cover;
+  background-position:center;
   border-radius:8px;
 }
 
-/* ✅ NUEVO */
+/* 🔥 FIX UI */
 .news-wrapper{width:220px;}
 .news-actions{display:flex;justify-content:space-between;margin-top:5px;}
 
@@ -50,16 +92,30 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
   <h2>Crear / Editar Noticia</h2>
 
   <input type="hidden" id="noticiaId">
+
   <input type="text" id="titulo" placeholder="Título">
 
-  <div contenteditable="true" id="textoEditor" style="min-height:150px;border:1px solid #111;"></div>
+  <!-- 🧠 EDITOR -->
+  <div contenteditable="true" id="textoEditor"
+       style="min-height:150px;border:1px solid #111;padding:10px;background:white;"></div>
 
+  <!-- 🔥 CATEGORÍAS RESTAURADAS -->
   <select id="categoria">
     <option value="Politica">Política</option>
     <option value="Deportes">Deportes</option>
+    <option value="Policiales">Policiales</option>
+    <option value="Arte">Arte</option>
+    <option value="Show">Show</option>
+    <option value="Pais">País</option>
+    <option value="Mundo">Mundo</option>
+    <option value="Ciudad">Ciudad</option>
   </select>
 
-  <div contenteditable="true" id="imagenEditor"></div>
+  <!-- 🖼 IMAGEN -->
+  <input type="text" id="imagen" placeholder="URL de imagen">
+
+  <!-- 🤖 IA BOTÓN -->
+  <button onclick="generarIA()">🤖 Generar con IA</button>
 
   <button onclick="guardarNoticia()">Guardar</button>
 
@@ -71,15 +127,23 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 const API="https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
 
+// 🔐 LOGIN
 async function loginAdmin(){
   const user=prompt("Usuario:");
   const pass=prompt("Pass:");
-  const res = await fetch(API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user,pass})});
+
+  const res = await fetch(API+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user,pass})
+  });
+
   const data=await res.json();
   TOKEN=data.token;
 }
 loginAdmin();
 
+// 🔄 CARGAR NOTICIAS
 async function cargarNoticias(){
   const res=await fetch(API+"/noticias");
   const noticias=await res.json();
@@ -92,7 +156,7 @@ async function cargarNoticias(){
 
     const card=document.createElement("div");
     card.className="news-card";
-    card.style.backgroundImage=`url('${n.imagen}')`;
+    card.style.backgroundImage=`url('${n.imagen || ""}')`;
 
     const title=document.createElement("div");
     title.className="news-title";
@@ -122,31 +186,78 @@ async function cargarNoticias(){
   });
 }
 
+// ✏️ EDITAR
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
   document.getElementById("textoEditor").innerHTML=n.contenido;
+  document.getElementById("categoria").value=n.categoria || "Mundo";
+  document.getElementById("imagen").value=n.imagen || "";
 }
 
+// ❌ BORRAR
 async function borrarNoticia(id){
-  await fetch(API+"/noticias/"+id,{method:"DELETE",headers:{Authorization:"Bearer "+TOKEN}});
+  await fetch(API+"/noticias/"+id,{
+    method:"DELETE",
+    headers:{Authorization:"Bearer "+TOKEN}
+  });
   cargarNoticias();
 }
 
+// 💾 GUARDAR
 async function guardarNoticia(){
   const id=document.getElementById("noticiaId").value;
+
   const body={
     titulo:document.getElementById("titulo").value,
-    contenido:document.getElementById("textoEditor").innerHTML
+    contenido:document.getElementById("textoEditor").innerHTML,
+    categoria:document.getElementById("categoria").value,
+    imagen:document.getElementById("imagen").value
   };
 
   if(id){
-    await fetch(API+"/noticias/"+id,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify(body)});
+    await fetch(API+"/noticias/"+id,{
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+TOKEN
+      },
+      body:JSON.stringify(body)
+    });
   }else{
-    await fetch(API+"/noticias",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify(body)});
+    await fetch(API+"/noticias",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+TOKEN
+      },
+      body:JSON.stringify(body)
+    });
   }
 
   cargarNoticias();
+}
+
+// 🤖 IA GENERADOR
+async function generarIA(){
+  const titulo=prompt("Título de la noticia:");
+
+  if(!titulo) return;
+
+  const res=await fetch(API+"/generar-noticia-ia",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({titulo})
+  });
+
+  const data=await res.json();
+
+  if(data.noticia){
+    alert("✅ Noticia creada automáticamente");
+    cargarNoticias();
+  }else{
+    alert(data.msg || "Error IA");
+  }
 }
 
 window.onload=cargarNoticias;
