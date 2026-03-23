@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Página principal -->
   <url>
-    <loc>https://apophis-noticias-backend.vercel.app/</loc>
+    <loc>https://apophis-noticias-frontend.onrender.com/</loc>
     <priority>1.0</priority>
+    <changefreq>daily</changefreq>
   </url>
 
+  <!-- Contacto -->
   <url>
-    <loc>https://apophis-noticias-backend.vercel.app/contacto.html</loc>
+    <loc>https://apophis-noticias-frontend.onrender.com/contacto.html</loc>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Privacidad -->
   <url>
-    <loc>https://apophis-noticias-backend.vercel.app/privacidad.html</loc>
+    <loc>https://apophis-noticias-frontend.onrender.com/privacidad.html</loc>
     <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Sobre nosotros -->
   <url>
-    <loc>https://apophis-noticias-backend.vercel.app/sobre.html</loc>
+    <loc>https://apophis-noticias-frontend.onrender.com/sobre.html</loc>
     <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
   </url>
 
 </urlset>
