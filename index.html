@@ -177,36 +177,43 @@ function loginAdmin(){
 function verCat(c){location="categoria.html?cat="+c;}
 function ir(id){location="noticia.html?id="+id;}
 
-// HOME + PORTADA
+// 🔥 HOME + PORTADA CORREGIDO PARA TODAS LAS NOTICIAS
 async function cargarHome(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+  try{
+    const res=await fetch(API+"/noticias");
+    const data=await res.json();
 
-  if(!data || data.length===0) return;
+    if(!data || data.length===0) return;
 
-  const p=data[0];
-  const sec=data.slice(1,5);
+    // PORTADA
+    const p=data[0];
+    const sec=data.slice(1,5);
 
-  document.getElementById("portada").innerHTML=`
-    <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
-      <h1>${p.titulo}</h1>
-    </div>
-    <div>
-      ${sec.map(n=>`
-        <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-          <h3>${n.titulo}</h3>
-        </div>`).join("")}
-    </div>
-  `;
+    document.getElementById("portada").innerHTML=`
+      <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
+        <h1>${p.titulo}</h1>
+      </div>
+      <div>
+        ${sec.map(n=>`
+          <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+            <h3>${n.titulo}</h3>
+          </div>`).join("")}
+      </div>
+    `;
 
-  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
-    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-    </div>`).join("");
+    // HOME: cargamos **todas las noticias**, sin límite
+    document.getElementById("contenedorHome").innerHTML=data.map(n=>`
+      <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+        <h2>${n.titulo}</h2>
+      </div>`).join("");
 
-  // FLAYER LOOP PERFECTO
-  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
-  document.getElementById("flayerInner").innerHTML=html+html;
+    // FLAYER LOOP PERFECTO
+    const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
+    document.getElementById("flayerInner").innerHTML=html+html;
+  } catch(err){
+    console.error(err);
+    alert("Error cargando noticias");
+  }
 }
 
 // BUSCADOR
