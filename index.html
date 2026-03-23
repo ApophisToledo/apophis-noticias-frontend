@@ -3,262 +3,193 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- ✅ SEO AVANZADO -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Apophis Noticias - Información actualizada de Política, Deportes, Policiales, Arte, Show, Ciudad, País y Mundo.">
-<meta name="keywords" content="noticias argentina, noticias rosario, politica, deportes, policiales, actualidad">
+<meta name="description" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
 <meta name="robots" content="index, follow">
 
 <title>Apophis Noticias</title>
 
-<!-- ✅ OPEN GRAPH -->
-<meta property="og:title" content="Apophis Noticias">
-<meta property="og:description" content="Noticias actualizadas de Argentina y el mundo">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://TU-DOMINIO.vercel.app">
-<meta property="og:image" content="https://TU-DOMINIO.vercel.app/logo.png">
-
-<!-- ✅ ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* 🔥 TU CSS ORIGINAL INTACTO */
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
-.header span.title{font-size:2rem;cursor:pointer;}
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);} }
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;gap:10px;}
+.eyes{animation:blink 4s infinite;}
+@keyframes blink{95%{transform:scaleY(0.1);}}
 
-.contenedor-home{max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
+/* PORTADA */
+.portada{max-width:1200px;margin:20px auto;display:grid;grid-template-columns:2fr 1fr;gap:15px;}
+.portada-principal{height:350px;border-radius:12px;background-size:cover;position:relative;}
+.portada-principal h1{position:absolute;bottom:10px;left:10px;background:black;color:gold;padding:10px;}
+.portada-sec{height:110px;border-radius:10px;background-size:cover;position:relative;}
+.portada-sec h3{position:absolute;bottom:5px;left:5px;background:black;color:gold;padding:5px;font-size:0.8rem;}
 
-.noticia-card{
-  width:300px;height:200px;border-radius:12px;position:relative;color:white;
-  cursor:pointer;background-size:cover;background-position:center;
-  box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.5s;
-}
-.noticia-card:hover{transform:scale(1.05) rotate(-1deg);}
-.noticia-card h2{
-  position:absolute;bottom:10px;left:10px;
-  background:rgba(0,0,0,0.6);padding:5px;border-radius:5px;
-}
+.contenedor-home{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
+.noticia-card{width:300px;height:200px;border-radius:12px;background-size:cover;position:relative;cursor:pointer;}
+.noticia-card h2{position:absolute;bottom:10px;left:10px;background:black;color:white;padding:5px;}
 
-/* 🔥 PORTADA PROFESIONAL (AGREGADO) */
-.portada{
-  max-width:1200px;
-  margin:20px auto;
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:15px;
-}
-.portada-principal{
-  height:350px;
-  border-radius:12px;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  cursor:pointer;
-}
-.portada-principal h1{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  background:rgba(0,0,0,0.7);
-  color:gold;
-  padding:10px;
-  border-radius:8px;
-  font-size:1.5rem;
-}
-.portada-secundarias{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.portada-sec{
-  height:110px;
-  border-radius:10px;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  cursor:pointer;
-}
-.portada-sec h3{
-  position:absolute;
-  bottom:5px;
-  left:5px;
-  background:rgba(0,0,0,0.7);
-  color:gold;
-  padding:5px;
-  font-size:0.9rem;
-}
+/* FLAYER */
+.flayer{overflow:hidden;margin:20px;}
+.flayer-track{display:flex;animation:scroll 25s linear infinite;}
+.flayer-track img{width:200px;height:120px;margin-right:10px;border-radius:8px;}
+@keyframes scroll{100%{transform:translateX(-50%);}}
 
-/* 🔥 FLAYER MEJORADO */
-.flayer{width:100%;overflow:hidden;margin-bottom:20px;}
-.flayer-track{
-  display:flex;
-  width:max-content;
-  animation:scroll 25s linear infinite;
-}
-.flayer-track img{
-  width:200px;height:120px;margin-right:10px;border-radius:8px;
-  object-fit:cover;cursor:pointer;
-}
-@keyframes scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
+/* ADS */
+.ad{margin:20px auto;text-align:center;}
+.sticky-ad{position:fixed;bottom:0;width:100%;text-align:center;background:white;z-index:999;}
 
-/* 🔍 BUSCADOR */
-#buscador{
-  padding:10px;width:60%;border-radius:8px;
-}
-
-.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
-
-button.toggle-dark{
-  position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;
-  cursor:pointer;background:gold;color:black;
-}
-
-footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
-footer a{color:gold;margin:0 10px;}
+/* CONTADOR */
+.stats{position:fixed;top:10px;right:10px;background:black;color:gold;padding:10px;border-radius:8px;font-size:12px;}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 HEADER ORIGINAL (INTOCADO + ADMIN OK) -->
 <div class="header">
   <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span class="title" onclick="location.reload()">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
+  <span>APOPHIS NOTICIAS</span>
   <span class="eyes">𓂀</span>
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+  <button onclick="loginAdmin()">Admin</button>
 </div>
 
-<!-- 🔥 PORTADA (AGREGADA ARRIBA SIN ROMPER HOME) -->
-<div class="portada" id="portada"></div>
+<!-- 🔥 STATS -->
+<div class="stats">
+  👁 Visitas: <span id="visitas">0</span><br>
+  🔴 Online: <span id="online">0</span>
+</div>
 
 <!-- 🔍 BUSCADOR -->
 <div style="text-align:center;margin:20px;">
-  <input id="buscador" placeholder="🔍 Buscar noticias...">
+  <input id="buscador" placeholder="🔍 Buscar noticias..." style="padding:10px;width:60%;">
 </div>
 
-<!-- 🔥 CATEGORÍAS (INTOCADO) -->
-<div style="text-align:center;margin:15px;">
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button class="cat-btn" onclick="verCat('Pais')">País</button>
-  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+<!-- CATEGORÍAS -->
+<div style="text-align:center;">
+  <button onclick="verCat('Politica')">Política</button>
+  <button onclick="verCat('Deportes')">Deportes</button>
+  <button onclick="verCat('Policiales')">Policiales</button>
 </div>
 
-<!-- 🔥 FLAYER -->
+<!-- 🔥 ANUNCIO TOP (EL QUE MÁS PAGA) -->
+<div class="ad">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6641245592697930"
+       data-ad-slot="1111111111"
+       data-ad-format="auto"></ins>
+</div>
+
+<!-- PORTADA -->
+<div class="portada" id="portada"></div>
+
+<!-- FLAYER -->
 <div class="flayer">
   <div id="flayerInner" class="flayer-track"></div>
 </div>
 
-<!-- 🔥 HOME ORIGINAL -->
+<!-- HOME -->
 <div class="contenedor-home" id="contenedorHome"></div>
 
-<button class="toggle-dark" onclick="toggleDark()">🌙</button>
+<!-- 🔥 ANUNCIO MEDIO -->
+<div class="ad">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6641245592697930"
+       data-ad-slot="2222222222"
+       data-ad-format="rectangle"></ins>
+</div>
 
-<!-- 🔥 FOOTER -->
-<footer>
-  <p>© 2026 Apophis Noticias</p>
-  <div>
-    <a href="privacidad.html">Privacidad</a> |
-    <a href="contacto.html">Contacto</a> |
-    <a href="sobre.html">Sobre Nosotros</a>
-  </div>
-</footer>
+<!-- 🔥 STICKY AD -->
+<div class="sticky-ad">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6641245592697930"
+       data-ad-slot="3333333333"
+       data-ad-format="horizontal"></ins>
+</div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-function toggleDark(){
-  document.body.classList.toggle("dark");
-}
-
 function loginAdmin(){
-  const user=prompt("Usuario Admin:");
-  const pass=prompt("Contraseña:");
-  const usuarios=[{usuario:"Apophis", password:"1234"},{usuario:"Benja357", password:"abcd"}];
-  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
-  if(encontrado){ location="admin.html"; }
-  else{ alert("Usuario o contraseña incorrecta"); }
+  const u=prompt("Usuario");const p=prompt("Pass");
+  if(u==="Apophis"&&p==="1234") location="admin.html";
 }
 
-function verCat(cat){location="categoria.html?cat="+cat;}
+function verCat(c){location="categoria.html?cat="+c;}
 function ir(id){location="noticia.html?id="+id;}
 
-/* 🔥 HOME + PORTADA */
 async function cargarHome(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
 
-  const contenedor=document.getElementById("contenedorHome");
-  const flayer=document.getElementById("flayerInner");
-  const portada=document.getElementById("portada");
+  // PORTADA
+  const p=data[0];
+  const sec=data.slice(1,5);
 
-  // 🔥 PORTADA
-  if(data.length>0){
-    const principal=data[0];
-    const secundarias=data.slice(1,5);
+  document.getElementById("portada").innerHTML=`
+    <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
+      <h1>${p.titulo}</h1>
+    </div>
+    <div>
+      ${sec.map(n=>`
+        <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+          <h3>${n.titulo}</h3>
+        </div>`).join("")}
+    </div>
+  `;
 
-    portada.innerHTML = `
-      <div class="portada-principal" style="background-image:url('${principal.imagen}')" onclick="ir('${principal._id}')">
-        <h1>${principal.titulo}</h1>
-      </div>
-      <div class="portada-secundarias">
-        ${secundarias.map(n=>`
-          <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-            <h3>${n.titulo}</h3>
-          </div>
-        `).join("")}
-      </div>
-    `;
-  }
+  // HOME
+  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
+    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+    </div>`).join("");
 
-  // 🔥 HOME NORMAL (NO TOCADO)
-  contenedor.innerHTML = data.map(n=>{
-    let img=n.imagen || "https://via.placeholder.com/300x200";
-    return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
-              <h2>${n.titulo}</h2>
-            </div>`;
-  }).join("");
-
-  // 🔥 FLAYER LOOP PERFECTO
-  const html = data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
-  flayer.innerHTML = html + html;
+  // FLAYER LOOP PERFECTO
+  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
+  document.getElementById("flayerInner").innerHTML=html+html;
 }
 
-/* 🔍 BUSCADOR */
-document.getElementById("buscador").addEventListener("keyup", async function(e){
-  const texto=e.target.value;
+// 🔍 BUSCADOR
+document.getElementById("buscador").addEventListener("keyup",async e=>{
+  const t=e.target.value;
+  if(t.length<2)return cargarHome();
 
-  if(texto.length<2){
-    cargarHome();
-    return;
-  }
-
-  const res=await fetch(API+"/noticias/buscar/"+texto);
+  const res=await fetch(API+"/noticias/buscar/"+t);
   const data=await res.json();
 
-  document.getElementById("contenedorHome").innerHTML = data.map(n=>{
-    return `<div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-              <h2>${n.titulo}</h2>
-            </div>`;
-  }).join("");
+  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
+    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+      <h2>${n.titulo}</h2>
+    </div>`).join("");
 });
 
-window.onload=cargarHome;
+// 👁 VISITAS
+async function cargarVisitas(){
+  const res=await fetch(API+"/visitas");
+  const data=await res.json();
+  document.getElementById("visitas").innerText=data.visitas;
+}
+
+// 🔴 ONLINE (simulado PRO)
+function onlineFake(){
+  const base= Math.floor(Math.random()*20)+5;
+  setInterval(()=>{
+    document.getElementById("online").innerText=base+Math.floor(Math.random()*10);
+  },3000);
+}
+
+// ADS lazy
+setTimeout(()=>{
+  (adsbygoogle = window.adsbygoogle || []).push({});
+},2000);
+
+window.onload=()=>{
+  cargarHome();
+  cargarVisitas();
+  onlineFake();
+};
 </script>
 
 </body>
