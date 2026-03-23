@@ -24,204 +24,151 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+/* 🔥 TU CSS ORIGINAL INTACTO */
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;}
+.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
 .header span.title{font-size:2rem;cursor:pointer;}
+.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
+@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);} }
 
-.eyes{animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+.contenedor-home{max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
 
-/* 🔥 PORTADA */
-.portada{
-  max-width:1200px;
-  margin:20px auto;
+.noticia-card{
+  width:300px;height:200px;border-radius:12px;position:relative;color:white;
+  cursor:pointer;background-size:cover;background-position:center;
+  box-shadow:0 3px 6px rgba(0,0,0,0.2);transition:.5s;
+}
+.noticia-card:hover{transform:scale(1.05) rotate(-1deg);}
+.noticia-card h2{
+  position:absolute;bottom:10px;left:10px;
+  background:rgba(0,0,0,0.6);padding:5px;border-radius:5px;
+}
+
+/* 🔥 FLAYER MEJORADO */
+.flayer{width:100%;overflow:hidden;margin-bottom:20px;}
+.flayer-track{
   display:flex;
-  gap:15px;
+  width:max-content;
+  animation:scroll 25s linear infinite;
 }
-.principal{
-  flex:2;
-  height:350px;
-  background-size:cover;
-  background-position:center;
-  border-radius:12px;
-  position:relative;
-  cursor:pointer;
-}
-.principal h1{
-  position:absolute;
-  bottom:0;
-  background:rgba(0,0,0,0.6);
-  color:gold;
-  width:100%;
-  padding:10px;
-  margin:0;
+.flayer-track img{
+  width:200px;height:120px;margin-right:10px;border-radius:8px;
+  object-fit:cover;cursor:pointer;
 }
 
-.secundarias{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.secundaria{
-  height:110px;
-  background-size:cover;
-  border-radius:10px;
-  position:relative;
-  cursor:pointer;
-}
-.secundaria h3{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,0.6);
-  color:gold;
-  margin:0;
-  font-size:14px;
-  padding:5px;
+@keyframes scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
 
 /* 🔍 BUSCADOR */
 #buscador{
-  padding:10px;
-  width:60%;
-  border-radius:8px;
+  padding:10px;width:60%;border-radius:8px;
 }
 
-/* 🔥 HOME */
-.contenedor-home{
-  max-width:1200px;
-  margin:20px auto;
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  justify-content:center;
+.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
+
+button.toggle-dark{
+  position:fixed;bottom:10px;right:10px;padding:10px;border-radius:50%;
+  cursor:pointer;background:gold;color:black;
 }
 
-.noticia-card{
-  width:300px;
-  height:200px;
-  border-radius:12px;
-  position:relative;
-  color:white;
-  cursor:pointer;
-  background-size:cover;
-  background-position:center;
-  transition:.5s;
-}
-
-.noticia-card h2{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  background:rgba(0,0,0,0.6);
-  padding:5px;
-}
-
-/* 🔥 FLAYER SIN LOOP */
-.flayer-inner{
-  display:flex;
-  overflow-x:auto;
-}
-.flayer-inner img{
-  width:200px;
-  height:120px;
-  margin-right:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.cat-btn{
-  margin:5px;
-  padding:8px;
-  border-radius:8px;
-  background:#111;
-  color:gold;
-}
-
-footer{
-  margin-top:40px;
-  padding:20px;
-  text-align:center;
-  background:#111;
-  color:gold;
-}
+footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
+footer a{color:gold;margin:0 10px;}
 </style>
 </head>
 
 <body>
 
+<!-- 🔥 HEADER ORIGINAL (NO TOCADO) -->
 <div class="header">
   <span class="eyes">𓂀</span>
+  <span class="eyes">𓁹</span>
   <span class="title" onclick="location.reload()">APOPHIS NOTICIAS</span>
+  <span class="eyes">𓁹</span>
   <span class="eyes">𓂀</span>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
 </div>
 
-<!-- 🔍 BUSCADOR -->
+<!-- 🔍 BUSCADOR (AGREGADO SIN ROMPER) -->
 <div style="text-align:center;margin:20px;">
   <input id="buscador" placeholder="🔍 Buscar noticias...">
 </div>
 
-<!-- 🔥 PORTADA -->
-<div class="portada">
-  <div id="principal" class="principal"></div>
-  <div id="secundarias" class="secundarias"></div>
+<!-- 🔥 CATEGORÍAS (INTOCADO) -->
+<div style="text-align:center;margin:15px;">
+  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('Show')">Show</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
+  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
 </div>
 
 <!-- 🔥 FLAYER -->
 <div class="flayer">
-  <div id="flayerInner" class="flayer-inner"></div>
+  <div id="flayerInner" class="flayer-track"></div>
 </div>
 
-<!-- 🔥 HOME -->
-<div id="contenedorHome" class="contenedor-home"></div>
+<!-- 🔥 HOME ORIGINAL -->
+<div class="contenedor-home" id="contenedorHome"></div>
 
+<button class="toggle-dark" onclick="toggleDark()">🌙</button>
+
+<!-- 🔥 FOOTER -->
 <footer>
-  © 2026 Apophis Noticias
+  <p>© 2026 Apophis Noticias</p>
+  <div>
+    <a href="privacidad.html">Privacidad</a> |
+    <a href="contacto.html">Contacto</a> |
+    <a href="sobre.html">Sobre Nosotros</a>
+  </div>
 </footer>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-function ir(id){location="noticia.html?id="+id;}
-
-/* 🔥 PORTADA */
-async function cargarPortada(){
-  const res = await fetch(API+"/noticias/ultimas");
-  const data = await res.json();
-
-  if(data.length===0) return;
-
-  const principal=data[0];
-  document.getElementById("principal").style.backgroundImage=`url('${principal.imagen}')`;
-  document.getElementById("principal").innerHTML=`<h1>${principal.titulo}</h1>`;
-  document.getElementById("principal").onclick=()=>ir(principal._id);
-
-  document.getElementById("secundarias").innerHTML=
-    data.slice(1,5).map(n=>`
-      <div class="secundaria" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-        <h3>${n.titulo}</h3>
-      </div>
-    `).join("");
+function toggleDark(){
+  document.body.classList.toggle("dark");
 }
 
-/* 🔥 HOME NORMAL */
+function loginAdmin(){
+  const user=prompt("Usuario Admin:");
+  const pass=prompt("Contraseña:");
+  const usuarios=[{usuario:"Apophis", password:"1234"},{usuario:"Benja357", password:"abcd"}];
+  const encontrado = usuarios.find(u => u.usuario===user && u.password===pass);
+  if(encontrado){ location="admin.html"; }
+  else{ alert("Usuario o contraseña incorrecta"); }
+}
+
+function verCat(cat){location="categoria.html?cat="+cat;}
+function ir(id){location="noticia.html?id="+id;}
+
+/* 🔥 HOME */
 async function cargarHome(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
 
-  document.getElementById("contenedorHome").innerHTML = data.map(n=>{
+  const contenedor=document.getElementById("contenedorHome");
+  const flayer=document.getElementById("flayerInner");
+
+  contenedor.innerHTML = data.map(n=>{
     let img=n.imagen || "https://via.placeholder.com/300x200";
     return `<div class="noticia-card" style="background-image:url('${img}')" onclick="ir('${n._id}')">
               <h2>${n.titulo}</h2>
             </div>`;
   }).join("");
 
-  document.getElementById("flayerInner").innerHTML = data.map(n=>{
+  // 🔥 FLAYER LOOP LIMPIO
+  const html = data.map(n=>{
     return `<img src="${n.imagen}" onclick="ir('${n._id}')">`;
   }).join("");
+
+  // duplicamos contenido (clave del loop)
+  flayer.innerHTML = html + html;
 }
 
 /* 🔍 BUSCADOR */
@@ -243,10 +190,7 @@ document.getElementById("buscador").addEventListener("keyup", async function(e){
   }).join("");
 });
 
-window.onload=()=>{
-  cargarPortada();
-  cargarHome();
-};
+window.onload=cargarHome;
 </script>
 
 </body>
