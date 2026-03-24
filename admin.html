@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Admin - Apophis Noticias</title>
+<title>Admin - Apophis Noticias PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +16,7 @@ body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 .toolbar button{background:gold;color:black;font-size:12px;}
 
 input, select{width:100%;padding:8px;margin:5px 0;border-radius:6px;border:1px solid #111;}
-button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:#111;color:gold;cursor:pointer;}
+button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:#111;color:gold;cursor:pointer;font-weight:bold;}
 
 .news-box{display:flex;flex-wrap:wrap;gap:15px;margin-top:20px;}
 .news-card{width:220px;height:150px;background-size:cover;border-radius:8px;}
@@ -37,13 +37,16 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 
 .edit-btn{background:gold;color:black;}
 .delete-btn{background:red;color:white;}
+
+.gallery{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+.gallery img{width:100px;height:70px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #111;}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <span>ADMIN - APOPHIS NOTICIAS</span>
+  <span>ADMIN - APOPHIS NOTICIAS PRO</span>
 </div>
 
 <div class="container">
@@ -75,13 +78,16 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
   <option value="Ciudad">Ciudad</option>
 </select>
 
-<input type="text" id="imagen" placeholder="Pegá o subí imagen aquí">
+<input type="text" id="imagen" placeholder="URL o pegar imagen">
 
 <div id="dropZone" class="drop-zone">
 📸 Arrastrá, pegá (CTRL+V), o hacé click
 </div>
 
-<input type="file" id="fileInput" style="display:none;">
+<input type="file" id="fileInput" multiple style="display:none;">
+
+<h3>Galería</h3>
+<div class="gallery" id="gallery"></div>
 
 <button onclick="guardarNoticia()">Guardar</button>
 
@@ -93,6 +99,7 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
+let galeriaArray=[];
 
 // LOGIN
 async function loginAdmin(){
@@ -106,31 +113,26 @@ async function loginAdmin(){
   });
 
   const data=await res.json();
-
-  if(!data.token){
-    alert("❌ Login incorrecto");
-    return loginAdmin();
-  }
-
+  if(!data.token){alert("❌ Login incorrecto"); return loginAdmin();}
   TOKEN=data.token;
   cargarNoticias();
 }
 loginAdmin();
 
 // EDITOR
-function format(cmd){
-  document.execCommand(cmd,false,null);
-}
+function format(cmd){document.execCommand(cmd,false,null);}
 
-// NUEVA
+// NUEVA NOTICIA
 function nuevaNoticia(){
   document.getElementById("noticiaId").value="";
   document.getElementById("titulo").value="";
   document.getElementById("textoEditor").innerHTML="";
   document.getElementById("imagen").value="";
+  galeriaArray=[];
+  actualizarGaleria();
 }
 
-// 🔥 SUBIR IMAGEN
+// SUBIR IMAGEN
 async function subirImagen(file){
   const formData = new FormData();
   formData.append("file", file);
@@ -142,99 +144,79 @@ async function subirImagen(file){
   });
 
   const data = await res.json();
-
   if(data.url){
+    galeriaArray.push(data.url);
     document.getElementById("imagen").value = data.url;
+    actualizarGaleria();
 
     const imgHTML = `<img src="${data.url}" style="max-width:100%;margin:10px 0;">`;
     document.execCommand("insertHTML", false, imgHTML);
   }
 }
 
-// 🔥 PEGADO PRO TOTAL
-async function manejarPaste(e){
-  const items = e.clipboardData?.items;
-  const texto = e.clipboardData?.getData("text");
+// ACTUALIZAR GALERÍA
+function actualizarGaleria(){
+  const g = document.getElementById("gallery");
+  g.innerHTML = galeriaArray.map(u=>`<img src="${u}" onclick="removerImagen('${u}')">`).join("");
+}
 
-  // 🔹 Imagen directa (captura / WhatsApp)
-  if(items){
-    for (let item of items){
-      if(item.type.includes("image")){
+function removerImagen(u){
+  galeriaArray = galeriaArray.filter(i=>i!==u);
+  actualizarGaleria();
+}
+
+// PEGADO UNIVERSAL (clipboard + URL)
+async function manejarPaste(e){
+  if(e.clipboardData){
+    for (let item of e.clipboardData.items){
+      if(item.type.indexOf("image")!==-1){
         e.preventDefault();
-        const file = item.getAsFile();
-        if(file){
-          subirImagen(file);
-          return;
-        }
+        subirImagen(item.getAsFile());
+        return;
       }
     }
-  }
-
-  // 🔹 URL (Google imágenes)
-  if(texto && texto.startsWith("http")){
-    e.preventDefault();
-
-    try{
-      const res = await fetch(texto);
-      const blob = await res.blob();
-
-      if(blob.type.startsWith("image")){
-        const file = new File([blob], "imagen.jpg", { type: blob.type });
+    // URL
+    const text = e.clipboardData.getData("text");
+    if(text && text.match(/\.(jpeg|jpg|gif|png|webp)$/i)){
+      e.preventDefault();
+      try{
+        const res = await fetch(text);
+        const blob = await res.blob();
+        const file = new File([blob],"imagen.jpg",{type:blob.type});
         subirImagen(file);
-      }else{
-        alert("⚠️ Ese link no es una imagen directa");
-      }
-    }catch{
-      alert("❌ No se pudo obtener la imagen (bloqueo CORS)");
+      }catch(err){alert("⚠️ No se pudo subir la imagen desde URL");}
     }
   }
 }
 
-// EVENTOS
+// EVENTOS PEGADO
 document.addEventListener("paste", manejarPaste);
 document.getElementById("imagen").addEventListener("paste", manejarPaste);
 document.getElementById("textoEditor").addEventListener("paste", manejarPaste);
 
 // DRAG & DROP
 const dropZone = document.getElementById("dropZone");
-
-dropZone.addEventListener("dragover", e=>{
-  e.preventDefault();
-  dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", ()=>{
-  dropZone.classList.remove("dragover");
-});
-
+dropZone.addEventListener("dragover", e=>{e.preventDefault(); dropZone.classList.add("dragover");});
+dropZone.addEventListener("dragleave", ()=>{dropZone.classList.remove("dragover");});
 dropZone.addEventListener("drop", e=>{
-  e.preventDefault();
-  dropZone.classList.remove("dragover");
-
-  const file = e.dataTransfer.files[0];
-  if(file) subirImagen(file);
+  e.preventDefault(); dropZone.classList.remove("dragover");
+  for(const file of e.dataTransfer.files) subirImagen(file);
 });
-
-// CLICK
 dropZone.onclick = ()=> document.getElementById("fileInput").click();
-
 document.getElementById("fileInput").addEventListener("change", e=>{
-  const file = e.target.files[0];
-  if(file) subirImagen(file);
+  for(const file of e.target.files) subirImagen(file);
 });
 
 // CARGAR NOTICIAS
 async function cargarNoticias(){
-  const res=await fetch(API+"/noticias");
-  const noticias=await res.json();
-
-  const box=document.getElementById("newsBox");
+  const res = await fetch(API+"/noticias");
+  const noticias = await res.json();
+  const box = document.getElementById("newsBox");
   box.innerHTML="";
 
   noticias.forEach(n=>{
-    const wrapper=document.createElement("div");
+    const wrapper = document.createElement("div");
     wrapper.className="news-wrapper";
-
     wrapper.innerHTML=`
       <div class="news-card" style="background-image:url('${n.imagen}')"></div>
       <div class="news-title">${n.titulo}</div>
@@ -243,7 +225,6 @@ async function cargarNoticias(){
         <button class="delete-btn" onclick="borrarNoticia('${n._id}')">Borrar</button>
       </div>
     `;
-
     box.appendChild(wrapper);
   });
 }
@@ -255,6 +236,8 @@ function editarNoticia(n){
   document.getElementById("textoEditor").innerHTML=n.contenido;
   document.getElementById("categoria").value=n.categoria;
   document.getElementById("imagen").value=n.imagen;
+  galeriaArray = n.galeria || [];
+  actualizarGaleria();
 }
 
 // BORRAR
@@ -268,13 +251,13 @@ async function borrarNoticia(id){
 
 // GUARDAR
 async function guardarNoticia(){
-  const id=document.getElementById("noticiaId").value;
-
-  const body={
-    titulo:document.getElementById("titulo").value,
-    contenido:document.getElementById("textoEditor").innerHTML,
-    categoria:document.getElementById("categoria").value,
-    imagen:document.getElementById("imagen").value
+  const id = document.getElementById("noticiaId").value;
+  const body = {
+    titulo: document.getElementById("titulo").value,
+    contenido: document.getElementById("textoEditor").innerHTML,
+    categoria: document.getElementById("categoria").value,
+    imagen: document.getElementById("imagen").value,
+    galeria: galeriaArray
   };
 
   if(id){
@@ -298,6 +281,7 @@ async function guardarNoticia(){
   }
 
   alert("✅ Guardado");
+  nuevaNoticia();
   cargarNoticias();
 }
 </script>
