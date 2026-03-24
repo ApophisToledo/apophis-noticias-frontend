@@ -24,6 +24,20 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 .news-actions{display:flex;justify-content:space-between;margin-top:5px;}
 .news-title{text-align:center;font-weight:bold;margin-top:5px;}
 
+/* 🔥 DROP ZONE */
+.drop-zone{
+  border:2px dashed #111;
+  padding:20px;
+  text-align:center;
+  margin:10px 0;
+  border-radius:10px;
+  background:#fafafa;
+  cursor:pointer;
+}
+.drop-zone.dragover{
+  background:#ffe;
+}
+
 .edit-btn{background:gold;color:black;}
 .delete-btn{background:red;color:white;}
 </style>
@@ -66,6 +80,13 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
 
 <input type="text" id="imagen" placeholder="URL de imagen">
 
+<!-- 🔥 DROP ZONE -->
+<div id="dropZone" class="drop-zone">
+  📸 Arrastrá una imagen o pegá (CTRL + V) o hacé click
+</div>
+
+<input type="file" id="fileInput" style="display:none;">
+
 <button onclick="guardarNoticia()">Guardar</button>
 
 <h2>Noticias existentes</h2>
@@ -77,7 +98,7 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
 const API="https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
 
-// 🔐 LOGIN (FIX CLAVE)
+// LOGIN
 async function loginAdmin(){
   const user=prompt("Usuario:");
   const pass=prompt("Pass:");
@@ -96,11 +117,8 @@ async function loginAdmin(){
   }
 
   TOKEN=data.token;
-
-  // 🔥 IMPORTANTE → cargar después de login
   cargarNoticias();
 }
-
 loginAdmin();
 
 // EDITOR
@@ -115,6 +133,64 @@ function nuevaNoticia(){
   document.getElementById("textoEditor").innerHTML="";
   document.getElementById("imagen").value="";
 }
+
+// 🔥 SUBIR IMAGEN
+async function subirImagen(file){
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(API + "/upload", {
+    method: "POST",
+    headers: { Authorization: "Bearer " + TOKEN },
+    body: formData
+  });
+
+  const data = await res.json();
+
+  if(data.url){
+    document.getElementById("imagen").value = data.url;
+
+    const imgHTML = `<img src="${data.url}" style="max-width:100%;margin:10px 0;">`;
+    document.execCommand("insertHTML", false, imgHTML);
+  }
+}
+
+// 🔥 PEGAR
+document.addEventListener("paste", async (e)=>{
+  for (let item of e.clipboardData.items){
+    if(item.type.includes("image")){
+      subirImagen(item.getAsFile());
+    }
+  }
+});
+
+// 🔥 DRAG & DROP
+const dropZone = document.getElementById("dropZone");
+
+dropZone.addEventListener("dragover", e=>{
+  e.preventDefault();
+  dropZone.classList.add("dragover");
+});
+
+dropZone.addEventListener("dragleave", ()=>{
+  dropZone.classList.remove("dragover");
+});
+
+dropZone.addEventListener("drop", e=>{
+  e.preventDefault();
+  dropZone.classList.remove("dragover");
+
+  const file = e.dataTransfer.files[0];
+  if(file) subirImagen(file);
+});
+
+// CLICK SUBIR
+dropZone.onclick = ()=> document.getElementById("fileInput").click();
+
+document.getElementById("fileInput").addEventListener("change", e=>{
+  const file = e.target.files[0];
+  if(file) subirImagen(file);
+});
 
 // CARGAR NOTICIAS
 async function cargarNoticias(){
