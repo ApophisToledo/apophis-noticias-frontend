@@ -2,188 +2,71 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-
-<!-- ✅ SEO AVANZADO -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Apophis Noticias - Información actualizada de Política, Deportes, Policiales, Arte, Show, Ciudad, País y Mundo.">
-<meta name="keywords" content="noticias argentina, noticias rosario, politica, deportes, policiales, actualidad">
-<meta name="robots" content="index, follow">
 
-<title>Apophis Noticias</title>
+<title>Categoría - Apophis</title>
 
-<!-- ✅ OPEN GRAPH -->
-<meta property="og:title" content="Apophis Noticias">
-<meta property="og:description" content="Noticias actualizadas de Argentina y el mundo">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://TU-DOMINIO.vercel.app">
-<meta property="og:image" content="https://TU-DOMINIO.vercel.app/logo.png">
-
-<meta name="twitter:card" content="summary_large_image">
-
-<script type="application/ld+json" id="jsonld"></script>
-
-<!-- ✅ ADSENSE -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
 body.dark{background:#111;color:#f0e68c;}
 
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;cursor:pointer;}
-.header span.title{font-size:2rem;cursor:pointer;display:flex;align-items:center;gap:10px;}
+.header{background:black;color:gold;padding:20px;text-align:center;}
 
-.eyes{display:inline-block;font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{0%,90%,100%{transform:scaleY(1);}95%{transform:scaleY(0.1);}}
+.grid{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin:20px;}
 
-.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;transition:.3s;}
-.cat-btn:hover{background:gold;color:black;}
-
-.main-layout{display:flex;max-width:1200px;margin:auto;gap:20px;}
-.noticia-container{flex:0 0 65%;padding:15px;background:#f4e3b2;border-radius:12px;box-shadow:0 3px 6px rgba(0,0,0,0.3);}
-.sidebar-left, .sidebar-right{flex:0 0 17.5%;}
-.sidebar-left{display:flex;flex-direction:column;gap:20px;}
-.sidebar-right{display:flex;flex-direction:column;gap:10px;}
-
-.noticia-titulo{font-size:2.5rem;font-weight:bold;text-align:center;margin-bottom:10px;}
-.noticia-img{width:100%;height:400px;background-size:cover;background-position:center;border-radius:12px;margin-bottom:15px;}
-.noticia-texto{font-size:1.2rem;line-height:1.6;text-align:justify;}
-
-.info-noticia{text-align:center;font-size:0.9rem;margin-bottom:10px;opacity:0.8;}
-
-.reactions{display:flex;gap:5px;margin-top:10px;}
-.reactions button{padding:6px 12px;border-radius:6px;background:#111;color:gold;cursor:pointer;transition:.3s;}
-.reactions button:hover{background:gold;color:black;}
-
-.comentario{background:rgba(255,255,255,0.8);border-radius:8px;padding:8px;margin-bottom:10px;}
-.titulo-comentarios{display:inline-block;background:#111;color:gold;padding:6px 12px;border-radius:8px;font-weight:bold;margin-bottom:5px;}
-.btn-comentar{background:#111;color:gold;padding:8px 12px;border-radius:8px;margin-top:5px;cursor:pointer;}
-.btn-comentar:hover{background:gold;color:black;}
-
-.relacionada-card{width:100%;height:100px;margin-bottom:10px;background-size:cover;background-position:center;border-radius:8px;cursor:pointer;position:relative;}
-.relacionada-card h4{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:gold;text-align:center;padding:2px;}
-
-.ad-box{margin:20px 0;text-align:center;}
-
-footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
-footer a{color:gold;margin:0 10px;}
-
-@media(max-width:900px){
-  .main-layout{flex-direction:column;}
-  .sidebar-left, .sidebar-right, .noticia-container{flex:1;}
+.card{
+  width:280px;
+  height:180px;
+  background-size:cover;
+  border-radius:10px;
+  position:relative;
+  cursor:pointer;
+}
+.card h3{
+  position:absolute;
+  bottom:0;
+  background:black;
+  color:gold;
+  width:100%;
+  padding:5px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header" onclick="location.href='index.html'">
-  <span class="eyes">𓂀</span>
-  <span class="eyes">𓁹</span>
-  <span class="title">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓁹</span>
-  <span class="eyes">𓂀</span>
-</div>
+<div class="header">APOPHIS NOTICIAS</div>
 
-<!-- 🔥 TEXTO REAL PARA ADSENSE -->
-<div style="max-width:900px;margin:20px auto;padding:10px;text-align:center;">
-  <h1 style="font-size:1.8rem;">Noticias de Apophis</h1>
-  <p>
-    En esta sección encontrarás noticias actualizadas de política, deportes, policiales, sociedad y actualidad de Argentina y el mundo.
-    Nuestro contenido es original y se actualiza constantemente para brindar información confiable.
-  </p>
-</div>
-
-<!-- VOLVER -->
-<div style="margin:10px;">
-  <button class="cat-btn" onclick="location.href='index.html'">🏠 Volver al Inicio</button>
-</div>
-
-<!-- CATEGORÍAS -->
-<div style="text-align:center;margin:15px;">
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button class="cat-btn" onclick="verCat('Pais')">País</button>
-  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
-</div>
-
-<!-- LAYOUT -->
-<div class="main-layout">
-  <div class="sidebar-left">
-    <div class="ad-box">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6641245592697930"
-           data-ad-slot="1234567890"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-  </div>
-
-  <div class="noticia-container" id="noticiaContainer"></div>
-
-  <div class="sidebar-right" id="relacionadas"></div>
-</div>
-
-<!-- COMENTARIOS -->
-<div style="max-width:900px;margin:auto;margin-top:20px;">
-  <div class="titulo-comentarios">💬 Comentarios</div>
-  <div id="comentarios"></div>
-  <div style="margin-top:10px;">
-    <input id="nombre" type="text" placeholder="Tu nombre" style="padding:6px;border-radius:6px;width:40%;margin-right:5px;">
-    <input id="textoComentario" type="text" placeholder="Escribe tu comentario..." style="padding:6px;border-radius:6px;width:45%;margin-right:5px;">
-    <button class="btn-comentar" onclick="enviarComentario()">Comentar</button>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 Apophis Noticias</p>
-  <div>
-    <a href="privacidad.html">Privacidad</a> |
-    <a href="contacto.html">Contacto</a> |
-    <a href="sobre.html">Sobre Nosotros</a>
-  </div>
-</footer>
+<div id="contenedor" class="grid"></div>
 
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
-let noticiaActual="";
 
-function verCat(cat){location.href="categoria.html?cat="+cat;}
 function ir(id){location="noticia.html?id="+id;}
 
-async function cargarNoticia(){
-  const id = new URLSearchParams(window.location.search).get('id');
-  if(!id) return;
+async function cargarCategoria(){
+  const cat=new URLSearchParams(location.search).get("cat");
+  if(!cat) return;
 
-  noticiaActual=id;
-  const res = await fetch(API+"/noticias/"+id);
-  const n = await res.json();
+  const res=await fetch(API+"/noticias/categoria/"+cat);
+  const data=await res.json();
 
-  document.getElementById("noticiaContainer").innerHTML = `
-    <h1 class="noticia-titulo">${n.titulo}</h1>
-    <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-    <div class="noticia-texto">${n.contenido}</div>
-  `;
+  document.getElementById("contenedor").innerHTML=data.map(n=>`
+    <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+      <h3>${n.titulo}</h3>
+    </div>
+  `).join("");
 }
 
-window.onload=()=>{
-  cargarNoticia();
+cargarCategoria();
 
-  // 🔥 ADS SEGURO
-  setTimeout(()=>{
-    try{
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    }catch(e){}
-  },1500);
-};
+// dark mode
+if(localStorage.getItem("darkMode")==="true"){
+  document.body.classList.add("dark");
+}
 </script>
 
 </body>
