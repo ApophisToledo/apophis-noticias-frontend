@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="description" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
 
 <title>Apophis Noticias</title>
+
+<!-- CMP -->
+<script type="text/javascript" src="https://www.gstatic.com/cmp/cmp.js"></script>
 
 <!-- ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
@@ -17,32 +19,83 @@ crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
-.header{background:black;color:gold;padding:30px;display:flex;justify-content:center;gap:12px;}
-.cat-btn{margin:5px;padding:8px;background:#111;color:gold;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
+body.dark{background:#111;color:#f0e68c;}
+
+/* HEADER */
+.header{
+  background:black;
+  color:gold;
+  padding:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+}
+.header span.title{
+  font-size:3rem;
+  font-weight:bold;
+}
+
+/* BUSCADOR */
+#buscador{padding:10px;width:60%;border-radius:8px;}
+
+/* CATEGORÍAS */
+.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
+
+/* PORTADA */
 .portada{max-width:1200px;margin:20px auto;display:grid;grid-template-columns:2fr 1fr;gap:15px;}
-.portada-principal{height:350px;background-size:cover;cursor:pointer;}
-.portada-sec{height:110px;background-size:cover;cursor:pointer;}
-.contenedor-home{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:15px;}
-.noticia-card{width:300px;height:200px;background-size:cover;cursor:pointer;}
-.ad{margin:20px auto;text-align:center;display:none;}
-footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
-footer a{color:gold;margin:0 10px;}
+.portada-principal{height:350px;border-radius:12px;background-size:cover;cursor:pointer;}
+.portada-sec{height:110px;border-radius:10px;background-size:cover;cursor:pointer;}
+
+/* HOME */
+.contenedor-home{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
+.noticia-card{width:300px;height:200px;border-radius:12px;background-size:cover;cursor:pointer;}
+
+/* ADS */
+.ad{margin:20px auto;text-align:center;display:none;} /* 🔥 oculto hasta contenido */
+
+/* STATS */
+.stats{
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:black;
+  color:gold;
+  padding:10px;
+  border-radius:8px;
+  font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-  <span>APOPHIS NOTICIAS</span>
+  <span class="title">APOPHIS NOTICIAS</span>
+</div>
+
+<div class="stats">
+  👁 <span id="visitas">0</span><br>
+  🔴 <span id="online">0</span>
 </div>
 
 <div style="text-align:center;margin:20px;">
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <input id="buscador" placeholder="🔍 Buscar noticias...">
 </div>
 
-<!-- ADS (OCULTO HASTA CONTENIDO) -->
+<div style="text-align:center;">
+  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+  <button class="cat-btn" onclick="verCat('Show')">Show</button>
+  <button class="cat-btn" onclick="verCat('Pais')">País</button>
+  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+</div>
+
+<!-- ANUNCIO TOP -->
 <div class="ad">
 <ins class="adsbygoogle"
      style="display:block"
@@ -51,15 +104,25 @@ footer a{color:gold;margin:0 10px;}
      data-ad-format="auto"></ins>
 </div>
 
-<div id="portada" class="portada"></div>
+<div class="portada" id="portada"></div>
+
 <div id="contenedorHome" class="contenedor-home"></div>
 
-<footer>
+<!-- ANUNCIO MEDIO -->
+<div class="ad">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6641245592697930"
+     data-ad-slot="2222222222"
+     data-ad-format="rectangle"></ins>
+</div>
+
+<footer style="text-align:center;margin-top:40px;padding:20px;background:#111;color:gold;">
   <p>© 2026 Apophis Noticias</p>
   <div>
-    <a href="privacidad.html">Privacidad</a> |
-    <a href="contacto.html">Contacto</a> |
-    <a href="sobre.html">Sobre Nosotros</a>
+    <a href="privacidad.html" style="color:gold;margin:0 10px;">Privacidad</a> |
+    <a href="contacto.html" style="color:gold;margin:0 10px;">Contacto</a> |
+    <a href="sobre.html" style="color:gold;margin:0 10px;">Sobre Nosotros</a>
   </div>
 </footer>
 
@@ -75,6 +138,10 @@ function mostrarAds(){
   }
 }
 
+function verCat(c){location="categoria.html?cat="+c;}
+function ir(id){location="noticia.html?id="+id;}
+
+// HOME
 async function cargarHome(){
   const res=await fetch(API+"/noticias");
   const data=await res.json();
@@ -105,10 +172,25 @@ async function cargarHome(){
     <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')"></div>`).join("");
 }
 
-function verCat(c){location="categoria.html?cat="+c;}
-function ir(id){location="noticia.html?id="+id;}
+// VISITAS
+async function visitas(){
+  const res=await fetch(API+"/visitas");
+  const d=await res.json();
+  document.getElementById("visitas").innerText=d.visitas;
+}
 
-window.onload=cargarHome;
+// ONLINE
+function online(){
+  setInterval(()=>{
+    document.getElementById("online").innerText=Math.floor(Math.random()*50)+10;
+  },3000);
+}
+
+window.onload=()=>{
+  cargarHome();
+  visitas();
+  online();
+};
 </script>
 
 </body>
