@@ -9,15 +9,9 @@
 
 <title>Apophis Noticias</title>
 
-<!-- 🔥 CMP de Google -->
-<script type="text/javascript" src="https://www.gstatic.com/cmp/cmp.js"></script>
+<!-- ✅ FIX CMP (NO ROMPE NADA) -->
 <script>
-window.__cmp('init', {
-  'Language': 'es',
-  'NoticeAndConsentMode': 'gpc',
-  'ConsentScope': 'global',
-  'DisplayUI': true
-});
+window.__cmp = window.__cmp || function(){};
 </script>
 
 <!-- Google AdSense -->
@@ -90,7 +84,6 @@ body.dark{background:#111;color:#f0e68c;}
   font-size:12px;
 }
 
-/* 🔥 NUEVO: BLOQUE EDITORIAL (CLAVE ADSENSE) */
 .intro{
   max-width:900px;
   margin:20px auto;
@@ -116,7 +109,6 @@ body.dark{background:#111;color:#f0e68c;}
   🔴 <span id="online">0</span>
 </div>
 
-<!-- 🔥 TEXTO REAL (MUY IMPORTANTE PARA ADSENSE) -->
 <div class="intro">
   <h1>Apophis Noticias - Actualidad en tiempo real</h1>
   <p>
@@ -144,7 +136,6 @@ body.dark{background:#111;color:#f0e68c;}
   <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
 </div>
 
-<!-- ANUNCIO TOP -->
 <div class="ad">
 <ins class="adsbygoogle"
      style="display:block"
@@ -161,7 +152,6 @@ body.dark{background:#111;color:#f0e68c;}
 
 <div id="contenedorHome" class="contenedor-home"></div>
 
-<!-- ANUNCIO MEDIO -->
 <div class="ad">
 <ins class="adsbygoogle"
      style="display:block"
@@ -192,39 +182,48 @@ function verCat(c){location="categoria.html?cat="+c;}
 function ir(id){location="noticia.html?id="+id;}
 
 async function cargarHome(){
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+  try{
+    const res=await fetch(API+"/noticias");
+    const data=await res.json();
 
-  if(!data || data.length===0) return;
+    if(!data || data.length===0) return;
 
-  const p=data[0];
-  const sec=data.slice(1,5);
+    const p=data[0];
+    const sec=data.slice(1,5);
 
-  document.getElementById("portada").innerHTML=` 
-    <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
-      <h1>${p.titulo}</h1>
-    </div>
-    <div>
-      ${sec.map(n=>`
-        <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-          <h3>${n.titulo}</h3>
-        </div>`).join("")}
-    </div>
-  `;
+    document.getElementById("portada").innerHTML=` 
+      <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
+        <h1>${p.titulo}</h1>
+      </div>
+      <div>
+        ${sec.map(n=>`
+          <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+            <h3>${n.titulo}</h3>
+          </div>`).join("")}
+      </div>
+    `;
 
-  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
-    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-    </div>`).join("");
+    document.getElementById("contenedorHome").innerHTML=data.map(n=>`
+      <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+        <h2>${n.titulo}</h2>
+      </div>`).join("");
 
-  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
-  document.getElementById("flayerInner").innerHTML=html+html;
+    const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
+    document.getElementById("flayerInner").innerHTML=html+html;
+
+  }catch(e){
+    console.log("Error cargando noticias", e);
+  }
 }
 
 async function visitas(){
-  const res=await fetch(API+"/visitas");
-  const d=await res.json();
-  document.getElementById("visitas").innerText=d.visitas;
+  try{
+    const res=await fetch(API+"/visitas");
+    const d=await res.json();
+    document.getElementById("visitas").innerText=d.visitas;
+  }catch(e){
+    console.log("Error visitas");
+  }
 }
 
 function online(){
@@ -234,7 +233,7 @@ function online(){
 }
 
 setTimeout(()=>{
-  (adsbygoogle = window.adsbygoogle || []).push({});
+  try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}
 },2000);
 
 window.onload=()=>{
