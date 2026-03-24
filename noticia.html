@@ -9,14 +9,14 @@
 <meta name="keywords" content="noticias argentina, noticias rosario, politica, deportes, policiales, actualidad">
 <meta name="robots" content="index, follow">
 
-<title>Apophis Noticias</title>
+<title id="metaTitle">Apophis Noticias</title>
 
-<!-- OPEN GRAPH -->
-<meta property="og:title" content="Apophis Noticias">
-<meta property="og:description" content="Noticias actualizadas de Argentina y el mundo">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://TU-DOMINIO.vercel.app">
-<meta property="og:image" content="https://TU-DOMINIO.vercel.app/logo.png">
+<!-- OPEN GRAPH DINÁMICO -->
+<meta property="og:title" id="ogTitle" content="Apophis Noticias">
+<meta property="og:description" id="ogDesc" content="Noticias actualizadas de Argentina y el mundo">
+<meta property="og:type" content="article">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:image" id="ogImg" content="">
 
 <script type="application/ld+json" id="jsonld"></script>
 
@@ -28,7 +28,21 @@
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
-.header{background:black;color:gold;padding:25px;display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;}
+
+.header{
+  background:black;
+  color:gold;
+  padding:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+}
+.header span.title{
+  font-size:2.5rem;
+  font-weight:bold;
+  cursor:pointer;
+}
 
 .main-layout{display:flex;max-width:1200px;margin:auto;gap:20px;}
 .noticia-container{flex:0 0 65%;padding:15px;}
@@ -42,7 +56,6 @@ body.dark{background:#111;color:#f0e68c;}
 
 footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold;}
 
-/* 🔥 NUEVO: fallback */
 .fallback{
   text-align:center;
   padding:40px;
@@ -52,11 +65,12 @@ footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold
 
 <body>
 
-<div class="header" onclick="location.href='index.html'">
-  <span>APOPHIS NOTICIAS</span>
+<!-- ✅ HEADER IGUAL A TU HOME -->
+<div class="header">
+  <span class="title" onclick="location.href='index.html'">APOPHIS NOTICIAS</span>
 </div>
 
-<!-- 🔥 CONTENIDO -->
+<!-- CONTENIDO -->
 <div class="main-layout">
 
   <div class="sidebar-left">
@@ -69,7 +83,7 @@ footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold
 
   <div class="noticia-container" id="noticiaContainer">
 
-    <!-- 🔥 FALLBACK IMPORTANTE -->
+    <!-- FALLBACK -->
     <div class="fallback" id="fallback">
       <h1>Noticias actualizadas</h1>
       <p>Seleccioná una noticia desde la página principal para ver el contenido completo.</p>
@@ -81,7 +95,7 @@ footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold
 
 </div>
 
-<!-- 🔥 TEXTO EDITORIAL (CLAVE ADSENSE) -->
+<!-- TEXTO EDITORIAL (CLAVE ADSENSE) -->
 <div style="max-width:900px;margin:30px auto;font-size:14px;line-height:1.6;">
   <p>
     Apophis Noticias es un portal informativo independiente que ofrece contenido actualizado sobre actualidad,
@@ -89,8 +103,14 @@ footer{margin-top:40px;padding:20px;text-align:center;background:#111;color:gold
   </p>
 </div>
 
+<!-- ✅ FOOTER RESTAURADO -->
 <footer>
   <p>© 2026 Apophis Noticias</p>
+  <div>
+    <a href="privacidad.html" style="color:gold;margin:0 10px;">Privacidad</a> |
+    <a href="contacto.html" style="color:gold;margin:0 10px;">Contacto</a> |
+    <a href="sobre.html" style="color:gold;margin:0 10px;">Sobre Nosotros</a>
+  </div>
 </footer>
 
 <script>
@@ -99,35 +119,69 @@ const API="https://apophis-noticias-backend.vercel.app";
 function ir(id){location="noticia.html?id="+id;}
 
 async function cargarNoticia(){
-  const id = new URLSearchParams(window.location.search).get('id');
+  try{
 
-  // 🔥 SI NO HAY ID → NO QUEDA VACÍA
-  if(!id){
-    document.getElementById("fallback").style.display="block";
-    return;
+    const id = new URLSearchParams(window.location.search).get('id');
+
+    if(!id){
+      document.getElementById("fallback").style.display="block";
+      return;
+    }
+
+    const res = await fetch(API+"/noticias/"+id);
+
+    if(!res.ok){
+      console.log("Error servidor");
+      return;
+    }
+
+    const n = await res.json();
+
+    document.getElementById("fallback").style.display="none";
+
+    document.getElementById("noticiaContainer").innerHTML = `
+      <h1 class="noticia-titulo">${n.titulo}</h1>
+      <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
+      <div class="noticia-texto">${n.contenido}</div>
+    `;
+
+    // ✅ SEO DINÁMICO
+    document.title = n.titulo;
+    document.getElementById("metaTitle").innerText = n.titulo;
+
+    document.getElementById("ogTitle").content = n.titulo;
+    document.getElementById("ogDesc").content = n.titulo;
+    document.getElementById("ogUrl").content = window.location.href;
+    document.getElementById("ogImg").content = n.imagen;
+
+    // ✅ JSON-LD (MUY IMPORTANTE PARA GOOGLE)
+    document.getElementById("jsonld").textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": n.titulo,
+      "image": [n.imagen],
+      "datePublished": new Date().toISOString(),
+      "author": {
+        "@type": "Organization",
+        "name": "Apophis Noticias"
+      }
+    });
+
+    // relacionadas
+    const resRel = await fetch(API+"/noticias/categoria/"+n.categoria);
+    const dataRel = await resRel.json();
+
+    document.getElementById("relacionadas").innerHTML =
+      dataRel.filter(r=>r._id!==n._id).map(r=>`
+        <div class="relacionada-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')"></div>
+      `).join("");
+
+    // ADS
+    try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+
+  }catch(e){
+    console.log("Error cargando noticia", e);
   }
-
-  const res = await fetch(API+"/noticias/"+id);
-  const n = await res.json();
-
-  document.getElementById("fallback").style.display="none";
-
-  document.getElementById("noticiaContainer").innerHTML = `
-    <h1 class="noticia-titulo">${n.titulo}</h1>
-    <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-    <div class="noticia-texto">${n.contenido}</div>
-  `;
-
-  // relacionadas
-  const resRel = await fetch(API+"/noticias/categoria/"+n.categoria);
-  const dataRel = await resRel.json();
-
-  document.getElementById("relacionadas").innerHTML =
-    dataRel.filter(r=>r._id!==n._id).map(r=>`
-      <div class="relacionada-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')"></div>
-    `).join("");
-
-  (adsbygoogle = window.adsbygoogle || []).push({});
 }
 
 window.onload=cargarNoticia;
