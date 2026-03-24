@@ -151,30 +151,51 @@ async function subirImagen(file){
   }
 }
 
-// 🔥 FUNCIÓN UNIVERSAL PEGADO
+// 🔥 PEGADO PRO TOTAL
 async function manejarPaste(e){
   const items = e.clipboardData?.items;
-  if(!items) return;
+  const texto = e.clipboardData?.getData("text");
 
-  for (let item of items){
-    if(item.type.indexOf("image") !== -1){
-      e.preventDefault();
-      const file = item.getAsFile();
-      if(file) subirImagen(file);
+  // 🔹 Imagen directa (captura / WhatsApp)
+  if(items){
+    for (let item of items){
+      if(item.type.includes("image")){
+        e.preventDefault();
+        const file = item.getAsFile();
+        if(file){
+          subirImagen(file);
+          return;
+        }
+      }
+    }
+  }
+
+  // 🔹 URL (Google imágenes)
+  if(texto && texto.startsWith("http")){
+    e.preventDefault();
+
+    try{
+      const res = await fetch(texto);
+      const blob = await res.blob();
+
+      if(blob.type.startsWith("image")){
+        const file = new File([blob], "imagen.jpg", { type: blob.type });
+        subirImagen(file);
+      }else{
+        alert("⚠️ Ese link no es una imagen directa");
+      }
+    }catch{
+      alert("❌ No se pudo obtener la imagen (bloqueo CORS)");
     }
   }
 }
 
-// 🔥 PEGAR EN TODO EL DOCUMENTO
+// EVENTOS
 document.addEventListener("paste", manejarPaste);
-
-// 🔥 PEGAR EN INPUT IMAGEN
 document.getElementById("imagen").addEventListener("paste", manejarPaste);
-
-// 🔥 PEGAR EN EDITOR
 document.getElementById("textoEditor").addEventListener("paste", manejarPaste);
 
-// 🔥 DRAG & DROP
+// DRAG & DROP
 const dropZone = document.getElementById("dropZone");
 
 dropZone.addEventListener("dragover", e=>{
