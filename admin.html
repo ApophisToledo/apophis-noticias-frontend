@@ -24,19 +24,8 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 .news-actions{display:flex;justify-content:space-between;margin-top:5px;}
 .news-title{text-align:center;font-weight:bold;margin-top:5px;}
 
-.drop-zone{
-  border:2px dashed #111;
-  padding:20px;
-  text-align:center;
-  margin:10px 0;
-  border-radius:10px;
-  background:#fafafa;
-  cursor:pointer;
-}
+.drop-zone{border:2px dashed #111;padding:20px;text-align:center;margin:10px 0;border-radius:10px;background:#fafafa;cursor:pointer;}
 .drop-zone.dragover{background:#ffe;}
-
-.edit-btn{background:gold;color:black;}
-.delete-btn{background:red;color:white;}
 
 .gallery{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
 .gallery img{width:100px;height:70px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #111;}
@@ -68,14 +57,14 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></div>
 
 <select id="categoria">
-  <option value="Politica">Política</option>
-  <option value="Deportes">Deportes</option>
-  <option value="Policiales">Policiales</option>
-  <option value="Arte">Arte</option>
-  <option value="Show">Show</option>
-  <option value="Pais">País</option>
-  <option value="Mundo">Mundo</option>
-  <option value="Ciudad">Ciudad</option>
+<option value="Politica">Política</option>
+<option value="Deportes">Deportes</option>
+<option value="Policiales">Policiales</option>
+<option value="Arte">Arte</option>
+<option value="Show">Show</option>
+<option value="Pais">País</option>
+<option value="Mundo">Mundo</option>
+<option value="Ciudad">Ciudad</option>
 </select>
 
 <input type="text" id="imagen" placeholder="URL o pegar imagen">
@@ -86,7 +75,6 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
 
 <input type="file" id="fileInput" multiple style="display:none;">
 
-<h3>Galería</h3>
 <div class="gallery" id="gallery"></div>
 
 <button onclick="guardarNoticia()">Guardar</button>
@@ -122,7 +110,7 @@ loginAdmin();
 // EDITOR
 function format(cmd){document.execCommand(cmd,false,null);}
 
-// NUEVA NOTICIA
+// NUEVA
 function nuevaNoticia(){
   document.getElementById("noticiaId").value="";
   document.getElementById("titulo").value="";
@@ -132,115 +120,106 @@ function nuevaNoticia(){
   actualizarGaleria();
 }
 
-// SUBIR IMAGEN
+// 🔥 SUBIR IMAGEN FIX
 async function subirImagen(file){
-  const formData = new FormData();
-  formData.append("file", file);
+  if(!TOKEN){alert("Logueate primero"); return;}
 
-  const res = await fetch(API + "/upload", {
-    method: "POST",
-    headers: { Authorization: "Bearer " + TOKEN },
-    body: formData
-  });
+  try{
+    const formData = new FormData();
+    formData.append("file", file);
 
-  const data = await res.json();
-  if(data.url){
-    galeriaArray.push(data.url);
-    document.getElementById("imagen").value = data.url;
-    actualizarGaleria();
+    const res = await fetch(API + "/upload", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + TOKEN },
+      body: formData
+    });
 
-    const imgHTML = `<img src="${data.url}" style="max-width:100%;margin:10px 0;">`;
-    document.execCommand("insertHTML", false, imgHTML);
+    if(!res.ok){
+      const text = await res.text();
+      console.error(text);
+      alert("❌ Error upload");
+      return;
+    }
+
+    const data = await res.json();
+
+    if(data.url){
+      galeriaArray.push(data.url);
+      document.getElementById("imagen").value=data.url;
+      actualizarGaleria();
+
+      document.execCommand("insertHTML", false, `<img src="${data.url}" style="max-width:100%">`);
+    }
+
+  }catch(err){
+    console.error(err);
+    alert("❌ Fallo subida");
   }
 }
 
-// ACTUALIZAR GALERÍA
-function actualizarGaleria(){
-  const g = document.getElementById("gallery");
-  g.innerHTML = galeriaArray.map(u=>`<img src="${u}" onclick="removerImagen('${u}')">`).join("");
-}
+// PEGADO REAL
+document.addEventListener("paste", e=>{
+  const items=e.clipboardData?.items;
+  if(!items) return;
 
-function removerImagen(u){
-  galeriaArray = galeriaArray.filter(i=>i!==u);
-  actualizarGaleria();
-}
-
-// PEGADO UNIVERSAL (clipboard + URL)
-async function manejarPaste(e){
-  if(e.clipboardData){
-    for (let item of e.clipboardData.items){
-      if(item.type.indexOf("image")!==-1){
-        e.preventDefault();
-        subirImagen(item.getAsFile());
-        return;
-      }
-    }
-    // URL
-    const text = e.clipboardData.getData("text");
-    if(text && text.match(/\.(jpeg|jpg|gif|png|webp)$/i)){
+  for(const item of items){
+    if(item.type.includes("image")){
       e.preventDefault();
-      try{
-        const res = await fetch(text);
-        const blob = await res.blob();
-        const file = new File([blob],"imagen.jpg",{type:blob.type});
-        subirImagen(file);
-      }catch(err){alert("⚠️ No se pudo subir la imagen desde URL");}
+      subirImagen(item.getAsFile());
     }
   }
+});
+
+// DRAG
+const dropZone=document.getElementById("dropZone");
+dropZone.ondrop=e=>{
+  e.preventDefault();
+  for(const file of e.dataTransfer.files) subirImagen(file);
+};
+dropZone.ondragover=e=>e.preventDefault();
+
+// FILE
+document.getElementById("fileInput").onchange=e=>{
+  for(const file of e.target.files) subirImagen(file);
+};
+
+dropZone.onclick=()=>document.getElementById("fileInput").click();
+
+// GALERIA
+function actualizarGaleria(){
+  document.getElementById("gallery").innerHTML=
+    galeriaArray.map(u=>`<img src="${u}">`).join("");
 }
 
-// EVENTOS PEGADO
-document.addEventListener("paste", manejarPaste);
-document.getElementById("imagen").addEventListener("paste", manejarPaste);
-document.getElementById("textoEditor").addEventListener("paste", manejarPaste);
-
-// DRAG & DROP
-const dropZone = document.getElementById("dropZone");
-dropZone.addEventListener("dragover", e=>{e.preventDefault(); dropZone.classList.add("dragover");});
-dropZone.addEventListener("dragleave", ()=>{dropZone.classList.remove("dragover");});
-dropZone.addEventListener("drop", e=>{
-  e.preventDefault(); dropZone.classList.remove("dragover");
-  for(const file of e.dataTransfer.files) subirImagen(file);
-});
-dropZone.onclick = ()=> document.getElementById("fileInput").click();
-document.getElementById("fileInput").addEventListener("change", e=>{
-  for(const file of e.target.files) subirImagen(file);
-});
-
-// CARGAR NOTICIAS
+// CRUD
 async function cargarNoticias(){
-  const res = await fetch(API+"/noticias");
-  const noticias = await res.json();
-  const box = document.getElementById("newsBox");
+  const res=await fetch(API+"/noticias");
+  const data=await res.json();
+
+  const box=document.getElementById("newsBox");
   box.innerHTML="";
 
-  noticias.forEach(n=>{
-    const wrapper = document.createElement("div");
-    wrapper.className="news-wrapper";
-    wrapper.innerHTML=`
+  data.forEach(n=>{
+    box.innerHTML+=`
+    <div class="news-wrapper">
       <div class="news-card" style="background-image:url('${n.imagen}')"></div>
       <div class="news-title">${n.titulo}</div>
       <div class="news-actions">
-        <button class="edit-btn" onclick='editarNoticia(${JSON.stringify(n)})'>Editar</button>
-        <button class="delete-btn" onclick="borrarNoticia('${n._id}')">Borrar</button>
+        <button onclick='editarNoticia(${JSON.stringify(n)})'>Editar</button>
+        <button onclick="borrarNoticia('${n._id}')">Borrar</button>
       </div>
-    `;
-    box.appendChild(wrapper);
+    </div>`;
   });
 }
 
-// EDITAR
 function editarNoticia(n){
   document.getElementById("noticiaId").value=n._id;
   document.getElementById("titulo").value=n.titulo;
   document.getElementById("textoEditor").innerHTML=n.contenido;
   document.getElementById("categoria").value=n.categoria;
   document.getElementById("imagen").value=n.imagen;
-  galeriaArray = n.galeria || [];
-  actualizarGaleria();
 }
 
-// BORRAR
 async function borrarNoticia(id){
   await fetch(API+"/noticias/"+id,{
     method:"DELETE",
@@ -249,15 +228,15 @@ async function borrarNoticia(id){
   cargarNoticias();
 }
 
-// GUARDAR
 async function guardarNoticia(){
-  const id = document.getElementById("noticiaId").value;
-  const body = {
-    titulo: document.getElementById("titulo").value,
-    contenido: document.getElementById("textoEditor").innerHTML,
-    categoria: document.getElementById("categoria").value,
-    imagen: document.getElementById("imagen").value,
-    galeria: galeriaArray
+  const id=document.getElementById("noticiaId").value;
+
+  const body={
+    titulo:titulo.value,
+    contenido:textoEditor.innerHTML,
+    categoria:categoria.value,
+    imagen:imagen.value,
+    imagenes:galeriaArray
   };
 
   if(id){
@@ -265,7 +244,7 @@ async function guardarNoticia(){
       method:"PUT",
       headers:{
         "Content-Type":"application/json",
-        "Authorization":"Bearer "+TOKEN
+        Authorization:"Bearer "+TOKEN
       },
       body:JSON.stringify(body)
     });
@@ -274,7 +253,7 @@ async function guardarNoticia(){
       method:"POST",
       headers:{
         "Content-Type":"application/json",
-        "Authorization":"Bearer "+TOKEN
+        Authorization:"Bearer "+TOKEN
       },
       body:JSON.stringify(body)
     });
