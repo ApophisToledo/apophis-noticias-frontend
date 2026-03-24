@@ -24,7 +24,6 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
 .news-actions{display:flex;justify-content:space-between;margin-top:5px;}
 .news-title{text-align:center;font-weight:bold;margin-top:5px;}
 
-/* 🔥 DROP ZONE */
 .drop-zone{
   border:2px dashed #111;
   padding:20px;
@@ -34,9 +33,7 @@ button{padding:8px 12px;margin-top:5px;border:none;border-radius:8px;background:
   background:#fafafa;
   cursor:pointer;
 }
-.drop-zone.dragover{
-  background:#ffe;
-}
+.drop-zone.dragover{background:#ffe;}
 
 .edit-btn{background:gold;color:black;}
 .delete-btn{background:red;color:white;}
@@ -78,11 +75,10 @@ style="min-height:200px;border:1px solid #111;padding:10px;background:white;"></
   <option value="Ciudad">Ciudad</option>
 </select>
 
-<input type="text" id="imagen" placeholder="URL de imagen">
+<input type="text" id="imagen" placeholder="Pegá o subí imagen aquí">
 
-<!-- 🔥 DROP ZONE -->
 <div id="dropZone" class="drop-zone">
-  📸 Arrastrá una imagen o pegá (CTRL + V) o hacé click
+📸 Arrastrá, pegá (CTRL+V), o hacé click
 </div>
 
 <input type="file" id="fileInput" style="display:none;">
@@ -155,14 +151,28 @@ async function subirImagen(file){
   }
 }
 
-// 🔥 PEGAR
-document.addEventListener("paste", async (e)=>{
-  for (let item of e.clipboardData.items){
-    if(item.type.includes("image")){
-      subirImagen(item.getAsFile());
+// 🔥 FUNCIÓN UNIVERSAL PEGADO
+async function manejarPaste(e){
+  const items = e.clipboardData?.items;
+  if(!items) return;
+
+  for (let item of items){
+    if(item.type.indexOf("image") !== -1){
+      e.preventDefault();
+      const file = item.getAsFile();
+      if(file) subirImagen(file);
     }
   }
-});
+}
+
+// 🔥 PEGAR EN TODO EL DOCUMENTO
+document.addEventListener("paste", manejarPaste);
+
+// 🔥 PEGAR EN INPUT IMAGEN
+document.getElementById("imagen").addEventListener("paste", manejarPaste);
+
+// 🔥 PEGAR EN EDITOR
+document.getElementById("textoEditor").addEventListener("paste", manejarPaste);
 
 // 🔥 DRAG & DROP
 const dropZone = document.getElementById("dropZone");
@@ -184,7 +194,7 @@ dropZone.addEventListener("drop", e=>{
   if(file) subirImagen(file);
 });
 
-// CLICK SUBIR
+// CLICK
 dropZone.onclick = ()=> document.getElementById("fileInput").click();
 
 document.getElementById("fileInput").addEventListener("change", e=>{
