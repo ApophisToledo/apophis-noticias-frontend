@@ -63,6 +63,14 @@ body.dark{background:#111;color:#f0e68c;}
   font-size:0.9rem;
 }
 
+/* 🔥 NUEVA MEJORA VISUAL (NO ROMPE NADA) */
+.titulo-cat{
+  text-align:center;
+  font-size:2rem;
+  margin-top:15px;
+  font-weight:bold;
+}
+
 /* MOBILE */
 @media(max-width:600px){
   .card{width:95%;}
@@ -75,6 +83,9 @@ body.dark{background:#111;color:#f0e68c;}
 <div class="header" onclick="location.href='index.html'">
 APOPHIS NOTICIAS
 </div>
+
+<!-- 🔥 TITULO DINAMICO (AGREGADO SIN ROMPER) -->
+<div id="tituloCategoria" class="titulo-cat"></div>
 
 <!-- ADS -->
 <div style="text-align:center;margin:20px;">
@@ -93,24 +104,58 @@ const API="https://apophis-noticias-backend.vercel.app";
 
 function ir(id){location="noticia.html?id="+id;}
 
+// 🔥 NORMALIZADOR (NO ROMPE BACKEND)
+function normalizar(cat){
+  return cat
+    .trim()
+    .toLowerCase()
+    .replace("á","a")
+    .replace("é","e")
+    .replace("í","i")
+    .replace("ó","o")
+    .replace("ú","u");
+}
+
 async function cargarCategoria(){
   try{
-    const cat = new URLSearchParams(location.search).get("cat");
+    const catOriginal = new URLSearchParams(location.search).get("cat");
 
-    if(!cat){
+    if(!catOriginal){
       document.getElementById("contenedor").innerHTML="<p>No hay categoría</p>";
       return;
     }
 
-    // 🔥 FIX CLAVE
-    const res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(cat));
+    // 🔥 MOSTRAR TITULO
+    document.getElementById("tituloCategoria").innerText = "Categoría: " + catOriginal;
 
-    if(!res.ok){
-      document.getElementById("contenedor").innerHTML="<p>Error cargando noticias</p>";
-      return;
+    let data = [];
+
+    // 🔥 INTENTO 1 (como lo tenías)
+    let res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catOriginal));
+
+    if(res.ok){
+      data = await res.json();
     }
 
-    const data = await res.json();
+    // 🔥 INTENTO 2 (normalizado)
+    if(!data.length){
+      const catFix = normalizar(catOriginal);
+      res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catFix));
+
+      if(res.ok){
+        data = await res.json();
+      }
+    }
+
+    // 🔥 INTENTO 3 (fallback total)
+    if(!data.length){
+      const resAll = await fetch(API + "/noticias");
+      const all = await resAll.json();
+
+      data = all.filter(n =>
+        normalizar(n.categoria || "") === normalizar(catOriginal)
+      );
+    }
 
     if(!data.length){
       document.getElementById("contenedor").innerHTML="<p>No hay noticias en esta categoría</p>";
@@ -124,10 +169,10 @@ async function cargarCategoria(){
     `).join("");
 
     // SEO dinámico
-    document.title = "Categoría: " + cat;
-    document.getElementById("metaTitle").innerText = "Categoría: " + cat;
-    ogTitle.content = "Noticias de " + cat;
-    ogDesc.content = "Últimas noticias de " + cat;
+    document.title = "Categoría: " + catOriginal;
+    document.getElementById("metaTitle").innerText = "Categoría: " + catOriginal;
+    ogTitle.content = "Noticias de " + catOriginal;
+    ogDesc.content = "Últimas noticias de " + catOriginal;
     ogUrl.content = location.href;
 
   }catch(e){

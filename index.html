@@ -162,8 +162,14 @@ body.dark .intro{background:#1a1a1a;}
 
 <div id="contenedorHome" class="contenedor-home"></div>
 
+<!-- ✅ FOOTER RESTAURADO (NO SE TOCA MÁS) -->
 <footer style="text-align:center;margin-top:40px;padding:20px;background:#111;color:gold;">
   <p>© 2026 Apophis Noticias</p>
+  <div>
+    <a href="privacidad.html" style="color:gold;margin:0 10px;">Privacidad</a> |
+    <a href="contacto.html" style="color:gold;margin:0 10px;">Contacto</a> |
+    <a href="sobre.html" style="color:gold;margin:0 10px;">Sobre Nosotros</a>
+  </div>
 </footer>
 
 <script>
@@ -187,7 +193,7 @@ function toggleDark(){
   document.getElementById("darkBtn").innerText = activo ? "☀️" : "🌙";
 }
 
-// 🔥 CACHE (5 minutos)
+// 🚀 CACHE
 const CACHE_TIME = 5 * 60 * 1000;
 
 async function cargarHome(){
@@ -214,6 +220,8 @@ async function cargarHome(){
 }
 
 function render(data){
+  if(!data || data.length===0) return;
+
   const p=data[0];
   const sec=data.slice(1,5);
 
@@ -233,34 +241,43 @@ function render(data){
     <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
       <h2>${n.titulo}</h2>
     </div>`).join("");
+
+  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
+  document.getElementById("flayerInner").innerHTML=html+html;
 }
 
 // 👁 VISITAS
 async function visitas(){
-  const res=await fetch(API+"/visitas");
-  const d=await res.json();
-  document.getElementById("visitas").innerText=d.visitas;
+  try{
+    const res=await fetch(API+"/visitas");
+    const d=await res.json();
+    document.getElementById("visitas").innerText=d.visitas;
+  }catch(e){}
 }
 
-// 🟢 ONLINE REAL (multi pestañas)
+// 🟢 ONLINE (sin fake random)
 function onlineReal(){
   const key="usuarios_activos";
   let usuarios = JSON.parse(localStorage.getItem(key) || "[]");
-
   const ahora = Date.now();
 
   usuarios = usuarios.filter(t => ahora - t < 10000);
   usuarios.push(ahora);
 
   localStorage.setItem(key, JSON.stringify(usuarios));
-
   document.getElementById("online").innerText = usuarios.length;
 
-  setInterval(onlineReal, 5000);
+  setTimeout(onlineReal, 5000);
 }
 
 function ir(id){location="noticia.html?id="+id;}
 function verCat(c){location="categoria.html?cat="+c;}
+
+function loginAdmin(){
+  const u=prompt("Usuario");
+  const p=prompt("Pass");
+  if(u==="Apophis"&&p==="1234") location="admin.html";
+}
 
 window.onload=()=>{
   aplicarDarkMode();
