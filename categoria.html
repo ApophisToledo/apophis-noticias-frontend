@@ -4,41 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Categoría - Apophis</title>
+<title id="metaTitle">Categoría - Apophis Noticias</title>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"></script>
+<!-- SEO -->
+<meta name="description" content="Noticias por categoría en Apophis Noticias">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" id="ogTitle" content="Categoría - Apophis Noticias">
+<meta property="og:description" content="Explora noticias por categoría">
+<meta property="og:type" content="website">
+<meta property="og:url" id="ogUrl">
+<meta property="og:image" id="ogImg">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;}
+body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
-.header{background:black;color:gold;padding:20px;text-align:center;}
+.header{
+  background:black;
+  color:gold;
+  padding:20px;
+  text-align:center;
+  font-size:2rem;
+  cursor:pointer;
+}
 
-.grid{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin:20px;}
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
+  margin:20px;
+}
 
 .card{
   width:280px;
   height:180px;
   background-size:cover;
+  background-position:center;
   border-radius:10px;
   position:relative;
   cursor:pointer;
+  transition:.3s;
 }
+.card:hover{transform:scale(1.03);}
+
 .card h3{
   position:absolute;
   bottom:0;
-  background:black;
+  background:rgba(0,0,0,0.7);
   color:gold;
   width:100%;
   padding:5px;
+  font-size:0.9rem;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .card{width:95%;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">APOPHIS NOTICIAS</div>
+<div class="header" onclick="location.href='index.html'">
+APOPHIS NOTICIAS
+</div>
+
+<!-- ADS -->
+<div style="text-align:center;margin:20px;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6641245592697930"
+       data-ad-slot="3333333333"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
 
 <div id="contenedor" class="grid"></div>
 
@@ -48,25 +94,59 @@ const API="https://apophis-noticias-backend.vercel.app";
 function ir(id){location="noticia.html?id="+id;}
 
 async function cargarCategoria(){
-  const cat=new URLSearchParams(location.search).get("cat");
-  if(!cat) return;
+  try{
+    const cat = new URLSearchParams(location.search).get("cat");
 
-  const res=await fetch(API+"/noticias/categoria/"+cat);
-  const data=await res.json();
+    if(!cat){
+      document.getElementById("contenedor").innerHTML="<p>No hay categoría</p>";
+      return;
+    }
 
-  document.getElementById("contenedor").innerHTML=data.map(n=>`
-    <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h3>${n.titulo}</h3>
-    </div>
-  `).join("");
+    // 🔥 FIX CLAVE
+    const res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(cat));
+
+    if(!res.ok){
+      document.getElementById("contenedor").innerHTML="<p>Error cargando noticias</p>";
+      return;
+    }
+
+    const data = await res.json();
+
+    if(!data.length){
+      document.getElementById("contenedor").innerHTML="<p>No hay noticias en esta categoría</p>";
+      return;
+    }
+
+    document.getElementById("contenedor").innerHTML = data.map(n=>`
+      <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+        <h3>${n.titulo}</h3>
+      </div>
+    `).join("");
+
+    // SEO dinámico
+    document.title = "Categoría: " + cat;
+    document.getElementById("metaTitle").innerText = "Categoría: " + cat;
+    ogTitle.content = "Noticias de " + cat;
+    ogDesc.content = "Últimas noticias de " + cat;
+    ogUrl.content = location.href;
+
+  }catch(e){
+    console.log("Error:", e);
+    document.getElementById("contenedor").innerHTML="<p>Error cargando</p>";
+  }
 }
 
 cargarCategoria();
 
-// dark mode
+// 🌙 DARK MODE (RESPETADO)
 if(localStorage.getItem("darkMode")==="true"){
   document.body.classList.add("dark");
 }
+
+// ADS
+setTimeout(()=>{
+  try{ (adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+},1500);
 </script>
 
 </body>
