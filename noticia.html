@@ -22,7 +22,6 @@ window.__cmp = window.__cmp || function(){};
 </script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -86,6 +85,65 @@ body.dark{background:#111;color:#f0e68c;}
   z-index:9999;
 }
 
+.top-nav-row{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 12px 8px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+
+.top-nav-left{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+}
+
+.top-nav-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.volver-btn,
+.cat-btn{
+  padding:8px 12px;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  border:none;
+  font-family:Georgia;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
+
+.cat-btn{ margin:3px; }
+
+.volver-btn:hover,
+.cat-btn:hover{
+  opacity:.92;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.buscador-box{text-align:center;margin:20px;}
+#buscador{
+  padding:10px;
+  width:60%;
+  border-radius:8px;
+  border:1px solid #b99c49;
+}
+body.dark #buscador{
+  background:#1b1b1b;
+  color:#f0e68c;
+  border-color:#7c6420;
+}
+
 .layout{
   display:flex;
   max-width:1200px;
@@ -134,6 +192,27 @@ body.dark .noticia-box{
   margin-bottom:15px;
   font-size:.98rem;
   opacity:.95;
+}
+
+.meta-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(0,0,0,.05);
+  padding:6px 10px;
+  border-radius:999px;
+}
+body.dark .meta-pill{
+  background:rgba(255,255,255,.06);
+}
+
+.categoria-link{
+  color:inherit;
+  text-decoration:none;
+  font-weight:bold;
+}
+.categoria-link:hover{
+  text-decoration:underline;
 }
 
 .noticia-imagen{
@@ -229,32 +308,17 @@ body.dark .rel-vacio{
   border-radius:6px;
   border:none;
   cursor:pointer;
+  transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 .reactions button:hover{
   opacity:.92;
+  transform:translateY(-1px);
 }
-
-.buscador-box{text-align:center;margin:20px;}
-#buscador{
-  padding:10px;
-  width:60%;
-  border-radius:8px;
-  border:1px solid #b99c49;
-}
-body.dark #buscador{
-  background:#1b1b1b;
-  color:#f0e68c;
-  border-color:#7c6420;
-}
-
-.volver{text-align:center;margin:18px 10px 10px;}
-.volver button{
-  padding:8px 12px;
-  border-radius:8px;
-  background:#111;
-  color:gold;
-  cursor:pointer;
-  border:none;
+.reactions button:disabled,
+.reactions button.bloqueada{
+  opacity:.55;
+  cursor:not-allowed;
+  transform:none;
 }
 
 .comentarios{
@@ -435,6 +499,18 @@ footer a{color:gold;margin:0 10px;}
   .logo-img{
     width:min(94vw, 440px);
   }
+  .top-nav-row{
+    grid-template-columns:1fr;
+    justify-items:center;
+  }
+  .top-nav-left{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .top-nav-center{
+    width:100%;
+    justify-content:center;
+  }
 }
 </style>
 </head>
@@ -449,8 +525,23 @@ footer a{color:gold;margin:0 10px;}
   <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
 </div>
 
-<div class="volver">
-  <button onclick="location.href='index.html'">🏠 Volver al inicio</button>
+<div class="top-nav-row">
+  <div class="top-nav-left">
+    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
+  </div>
+
+  <div class="top-nav-center">
+    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+    <button class="cat-btn" onclick="verCat('Show')">Show</button>
+    <button class="cat-btn" onclick="verCat('Pais')">País</button>
+    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+  </div>
+
+  <div></div>
 </div>
 
 <div class="buscador-box">
@@ -458,7 +549,6 @@ footer a{color:gold;margin:0 10px;}
 </div>
 
 <div class="layout">
-
   <div class="noticia-container" id="noticiaContainer"></div>
 
   <div class="relacionadas-lateral">
@@ -467,7 +557,6 @@ footer a{color:gold;margin:0 10px;}
       <div id="relacionadas"></div>
     </div>
   </div>
-
 </div>
 
 <div class="ad">
@@ -480,11 +569,11 @@ footer a{color:gold;margin:0 10px;}
 </div>
 
 <div class="reactions">
-  <button onclick="reaccion('likes')">👍 <span id="likes">0</span></button>
-  <button onclick="reaccion('dislikes')">👎 <span id="dislikes">0</span></button>
-  <button onclick="reaccion('sorpresa')">😲 <span id="sorpresa">0</span></button>
-  <button onclick="reaccion('tristeza')">😢 <span id="tristeza">0</span></button>
-  <button onclick="reaccion('enojo')">😡 <span id="enojo">0</span></button>
+  <button onclick="reaccion('likes')" id="btnLikes">👍 <span id="likes">0</span></button>
+  <button onclick="reaccion('dislikes')" id="btnDislikes">👎 <span id="dislikes">0</span></button>
+  <button onclick="reaccion('sorpresa')" id="btnSorpresa">😲 <span id="sorpresa">0</span></button>
+  <button onclick="reaccion('tristeza')" id="btnTristeza">😢 <span id="tristeza">0</span></button>
+  <button onclick="reaccion('enojo')" id="btnEnojo">😡 <span id="enojo">0</span></button>
 </div>
 
 <div class="comentarios">
@@ -513,6 +602,7 @@ footer a{color:gold;margin:0 10px;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 let noticiaId="";
+let noticiaActual=null;
 
 function aplicarDarkMode(){
   let dark = localStorage.getItem("darkMode");
@@ -531,6 +621,10 @@ function toggleDark(){
   localStorage.setItem("darkMode", activo);
   const btn = document.getElementById("darkBtn");
   if(btn) btn.innerText = activo ? "☀️" : "🌙";
+}
+
+function verCat(c){
+  location="categoria.html?cat="+encodeURIComponent(c);
 }
 
 function parseFechaSegura(fecha){
@@ -646,10 +740,30 @@ function actualizarContadoresReacciones(n){
   document.getElementById("enojo").innerText = n.enojo || 0;
 }
 
+function actualizarEstadoBotonesReaccion(){
+  const key = "react_" + noticiaId;
+  const yaReacciono = !!localStorage.getItem(key);
+
+  const botones = [
+    document.getElementById("btnLikes"),
+    document.getElementById("btnDislikes"),
+    document.getElementById("btnSorpresa"),
+    document.getElementById("btnTristeza"),
+    document.getElementById("btnEnojo")
+  ];
+
+  botones.forEach(btn=>{
+    if(!btn) return;
+    btn.disabled = yaReacciono;
+    btn.classList.toggle("bloqueada", yaReacciono);
+  });
+}
+
 async function buscarNoticias(texto){
   const res = await fetch(API + "/noticias");
-  const data = await res.json();
+  if(!res.ok) throw new Error("Error de búsqueda");
 
+  const data = await res.json();
   const q = texto.trim().toLowerCase();
   if(!q) return null;
 
@@ -660,6 +774,104 @@ async function buscarNoticias(texto){
   );
 
   return exacta || null;
+}
+
+function renderComentarios(comentarios){
+  const lista = document.getElementById("listaComentarios");
+
+  if(!comentarios.length){
+    lista.innerHTML = `<div class="sin-comentarios">Todavía no hay comentarios. Sé el primero en participar.</div>`;
+    return;
+  }
+
+  lista.innerHTML = comentarios.map((c,i)=>`
+    <div class="comentario">
+      <div class="comentario-head">
+        <strong>${escaparHTML(c.nombre || "Anónimo")}</strong>
+        <span class="comentario-fecha">${escaparHTML(formatearFechaHora(c.fecha))}</span>
+      </div>
+
+      <div class="comentario-texto">${nl2brSeguro(c.texto || "")}</div>
+
+      <div class="responder-box">
+        <input id="respNombre${i}" placeholder="Tu nombre">
+        <input id="respTexto${i}" placeholder="Responder...">
+        <button onclick="responder(${i})">Responder</button>
+      </div>
+
+      ${Array.isArray(c.respuestas) && c.respuestas.length ? c.respuestas.map(r=>`
+        <div class="respuesta">
+          <strong>${escaparHTML(r.nombre || "Anónimo")}</strong>
+          ${r.fecha ? `<span style="opacity:.75"> · ${escaparHTML(formatearFechaHora(r.fecha))}</span>` : ""}
+          <div style="margin-top:4px;">${nl2brSeguro(r.texto || "")}</div>
+        </div>
+      `).join("") : ""}
+    </div>
+  `).join("");
+}
+
+function renderNoticia(n){
+  noticiaActual = n;
+
+  actualizarSEO(n);
+
+  const autor = n.autor ? n.autor : "Redacción Apophis";
+  const fechaMostrada = formatearFecha(n.fecha || n.createdAt);
+  const categoria = n.categoria ? n.categoria : "General";
+  const contenidoSeguro = String(n.contenido || "");
+
+  document.getElementById("noticiaContainer").innerHTML = `
+    <div class="noticia-box">
+      <h1 class="noticia-titulo">${escaparHTML(n.titulo || "Sin título")}</h1>
+
+      <div class="noticia-meta">
+        <span class="meta-pill">🗓 ${escaparHTML(fechaMostrada)}</span>
+        <span class="meta-pill">✍️ ${escaparHTML(autor)}</span>
+        <span class="meta-pill">📰 <a class="categoria-link" href="categoria.html?cat=${encodeURIComponent(categoria)}">${escaparHTML(categoria)}</a></span>
+      </div>
+
+      ${n.imagen ? `<img src="${escaparHTML(n.imagen)}" alt="${escaparHTML(n.titulo || "Imagen de la noticia")}" class="noticia-imagen">` : ""}
+
+      <div class="noticia-contenido">${contenidoSeguro}</div>
+    </div>
+  `;
+
+  actualizarContadoresReacciones(n);
+  actualizarEstadoBotonesReaccion();
+
+  const comentarios = Array.isArray(n.comentarios) ? [...n.comentarios] : [];
+  comentarios.sort((a,b)=>{
+    const fa = parseFechaSegura(a && a.fecha);
+    const fb = parseFechaSegura(b && b.fecha);
+    return (fb ? fb.getTime() : 0) - (fa ? fa.getTime() : 0);
+  });
+
+  renderComentarios(comentarios);
+}
+
+async function cargarRelacionadas(n){
+  try{
+    const rel = await fetch(API + "/noticias/categoria/" + encodeURIComponent(n.categoria || ""));
+    if(!rel.ok) throw new Error("Error relacionadas");
+
+    const dataRel = await rel.json();
+
+    const relacionadasFiltradas = Array.isArray(dataRel)
+      ? dataRel.filter(r => r && r._id !== n._id).slice(0, 8)
+      : [];
+
+    if(!relacionadasFiltradas.length){
+      document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No hay noticias relacionadas disponibles.</div>`;
+    }else{
+      document.getElementById("relacionadas").innerHTML = relacionadasFiltradas.map(r=>`
+        <div class="rel-card" style="background-image:url('${escaparHTML(r.imagen || "")}')" onclick="ir('${r._id}')">
+          <span>${escaparHTML(r.titulo || "Sin título")}</span>
+        </div>
+      `).join("");
+    }
+  }catch(e){
+    document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No se pudieron cargar las relacionadas.</div>`;
+  }
 }
 
 async function cargarNoticia(){
@@ -681,91 +893,12 @@ async function cargarNoticia(){
     }
 
     const res = await fetch(API + "/noticias/" + id);
+    if(!res.ok) throw new Error("No se pudo cargar la noticia");
+
     const n = await res.json();
 
-    actualizarSEO(n);
-
-    const autor = n.autor ? n.autor : "Redacción Apophis";
-    const fechaMostrada = formatearFecha(n.fecha);
-    const categoria = n.categoria ? n.categoria : "General";
-    const contenidoSeguro = String(n.contenido || "");
-
-    document.getElementById("noticiaContainer").innerHTML = `
-      <div class="noticia-box">
-        <h1 class="noticia-titulo">${escaparHTML(n.titulo || "Sin título")}</h1>
-
-        <div class="noticia-meta">
-          <span>🗓 ${escaparHTML(fechaMostrada)}</span>
-          <span>✍️ ${escaparHTML(autor)}</span>
-          <span>📰 ${escaparHTML(categoria)}</span>
-        </div>
-
-        ${n.imagen ? `<img src="${escaparHTML(n.imagen)}" alt="${escaparHTML(n.titulo || "Imagen de la noticia")}" class="noticia-imagen">` : ""}
-
-        <div class="noticia-contenido">${contenidoSeguro}</div>
-      </div>
-    `;
-
-    actualizarContadoresReacciones(n);
-
-    try{
-      const rel = await fetch(API + "/noticias/categoria/" + encodeURIComponent(n.categoria || ""));
-      const dataRel = await rel.json();
-
-      const relacionadasFiltradas = Array.isArray(dataRel)
-        ? dataRel.filter(r => r && r._id !== n._id).slice(0, 8)
-        : [];
-
-      if(!relacionadasFiltradas.length){
-        document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No hay noticias relacionadas disponibles.</div>`;
-      }else{
-        document.getElementById("relacionadas").innerHTML = relacionadasFiltradas.map(r=>`
-          <div class="rel-card" style="background-image:url('${escaparHTML(r.imagen || "")}')" onclick="ir('${r._id}')">
-            <span>${escaparHTML(r.titulo || "Sin título")}</span>
-          </div>
-        `).join("");
-      }
-    }catch(e){
-      document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No se pudieron cargar las relacionadas.</div>`;
-    }
-
-    const comentarios = Array.isArray(n.comentarios) ? [...n.comentarios] : [];
-
-    comentarios.sort((a,b)=>{
-      const fa = parseFechaSegura(a && a.fecha);
-      const fb = parseFechaSegura(b && b.fecha);
-      return (fb ? fb.getTime() : 0) - (fa ? fa.getTime() : 0);
-    });
-
-    if(!comentarios.length){
-      document.getElementById("listaComentarios").innerHTML = `<div class="sin-comentarios">Todavía no hay comentarios. Sé el primero en participar.</div>`;
-    }else{
-      document.getElementById("listaComentarios").innerHTML = comentarios.map((c,i)=>`
-        <div class="comentario">
-          <div class="comentario-head">
-            <strong>${escaparHTML(c.nombre || "Anónimo")}</strong>
-            <span class="comentario-fecha">${escaparHTML(formatearFechaHora(c.fecha))}</span>
-          </div>
-
-          <div class="comentario-texto">${nl2brSeguro(c.texto || "")}</div>
-
-          <div class="responder-box">
-            <input id="respNombre${i}" placeholder="Tu nombre">
-            <input id="respTexto${i}" placeholder="Responder...">
-            <button onclick="responder(${i})">Responder</button>
-          </div>
-
-          ${Array.isArray(c.respuestas) && c.respuestas.length ? c.respuestas.map(r=>`
-            <div class="respuesta">
-              <strong>${escaparHTML(r.nombre || "Anónimo")}</strong>
-              ${r.fecha ? `<span style="opacity:.75"> · ${escaparHTML(formatearFechaHora(r.fecha))}</span>` : ""}
-              <div style="margin-top:4px;">${nl2brSeguro(r.texto || "")}</div>
-            </div>
-          `).join("") : ""}
-        </div>
-      `).join("");
-    }
-
+    renderNoticia(n);
+    await cargarRelacionadas(n);
     activarAds();
 
   }catch(e){
@@ -782,7 +915,7 @@ async function cargarNoticia(){
 }
 
 async function reaccion(tipo){
-  if(!noticiaId){
+  if(!noticiaId || !noticiaActual){
     alert("No se pudo identificar la noticia.");
     return;
   }
@@ -794,7 +927,15 @@ async function reaccion(tipo){
     return;
   }
 
+  const respaldo = { ...noticiaActual };
+
   try{
+    noticiaActual[tipo] = Number(noticiaActual[tipo] || 0) + 1;
+    actualizarContadoresReacciones(noticiaActual);
+
+    localStorage.setItem(key, "true");
+    actualizarEstadoBotonesReaccion();
+
     const res = await fetch(API + "/noticias/" + noticiaId,{
       method:"PUT",
       headers:{"Content-Type":"application/json"},
@@ -805,9 +946,16 @@ async function reaccion(tipo){
       throw new Error("Error al guardar reacción");
     }
 
-    localStorage.setItem(key, "true");
-    await cargarNoticia();
+    const actualizada = await res.json();
+    noticiaActual = actualizada;
+    actualizarContadoresReacciones(actualizada);
+    actualizarEstadoBotonesReaccion();
+
   }catch(e){
+    noticiaActual = respaldo;
+    actualizarContadoresReacciones(respaldo);
+    localStorage.removeItem(key);
+    actualizarEstadoBotonesReaccion();
     alert("No se pudo registrar la reacción.");
   }
 }
@@ -832,11 +980,15 @@ async function enviarComentario(){
   }
 
   try{
-    await fetch(API + "/comentario/" + noticiaId,{
+    const res = await fetch(API + "/comentario/" + noticiaId,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({nombre,texto})
     });
+
+    if(!res.ok){
+      throw new Error("No se pudo enviar");
+    }
 
     document.getElementById("textoComentario").value = "";
     await cargarNoticia();
@@ -865,11 +1017,15 @@ async function responder(i){
   }
 
   try{
-    await fetch(API + "/respuesta/" + noticiaId + "/" + i,{
+    const res = await fetch(API + "/respuesta/" + noticiaId + "/" + i,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({nombre,texto})
     });
+
+    if(!res.ok){
+      throw new Error("No se pudo responder");
+    }
 
     await cargarNoticia();
   }catch(e){
