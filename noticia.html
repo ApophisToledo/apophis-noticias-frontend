@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title id="metaTitle">Categoría - Apophis Noticias</title>
+<title id="metaTitle">Noticia - Apophis Noticias</title>
 
-<meta name="description" id="metaDesc" content="Noticias por categoría en Apophis Noticias">
+<meta name="description" id="metaDesc">
 <meta name="robots" content="index, follow">
 
 <meta property="og:title" id="ogTitle">
 <meta property="og:description" id="ogDesc">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:url" id="ogUrl">
 <meta property="og:image" id="ogImg">
 
@@ -19,6 +19,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+
+/* BASE */
 body{
   margin:0;
   font-family:Georgia;
@@ -33,22 +35,16 @@ body.dark{
 /* HEADER */
 .header{
   background:black;
-  color:gold;
   padding:18px;
-  text-align:center;
+  display:flex;
+  justify-content:center;
   position:relative;
 }
-
 .logo{
-  max-width:90%;
-  height:auto;
-  border-radius:10px;
-  transition:.3s;
+  width:min(90vw,420px);
+  border-radius:12px;
+  cursor:pointer;
 }
-.logo:hover{
-  transform:scale(1.05);
-}
-
 .dark-btn{
   position:absolute;
   right:10px;
@@ -56,154 +52,147 @@ body.dark{
   background:#111;
   color:gold;
   border:none;
-  padding:6px 10px;
-  border-radius:8px;
-}
-
-/* NAV */
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  padding:10px;
-}
-
-.cat-btn, .volver-btn{
-  background:#111;
-  color:gold;
-  border:none;
   padding:8px 12px;
   border-radius:10px;
-  cursor:pointer;
 }
 
-/* FLAYER */
-.flayer{
-  overflow:hidden;
-  margin:15px;
+/* CONTENEDOR */
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:15px;
 }
-.track{
+
+/* TITULO */
+h1{
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+/* META */
+.meta{
+  font-size:14px;
+  opacity:.8;
+  margin-bottom:15px;
+}
+
+/* IMAGEN */
+.imagen{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+/* CONTENIDO */
+.contenido{
+  line-height:1.7;
+  font-size:17px;
+}
+
+/* REACCIONES */
+.reacciones{
+  margin-top:20px;
   display:flex;
   gap:10px;
-  animation:scroll 30s linear infinite;
 }
-.item{
-  min-width:200px;
-  height:120px;
-  border-radius:10px;
-  overflow:hidden;
-  position:relative;
-  cursor:pointer;
-}
-.item img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.item span{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,.8);
+.reacciones button{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:#111;
   color:gold;
-  font-size:12px;
-  padding:5px;
 }
 
-@keyframes scroll{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
+/* COMENTARIOS */
+.comentarios{
+  margin-top:30px;
 }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:12px;
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:8px;
+  border:1px solid #111;
+}
+
+/* RELACIONADAS */
+.relacionadas{
+  margin-top:40px;
 }
 
 .card{
-  height:220px;
-  border-radius:12px;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  cursor:pointer;
-}
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.8), transparent);
-}
-.card h3{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  right:10px;
+  background:#000;
   color:gold;
-  background:rgba(0,0,0,.7);
-  padding:6px;
-  border-radius:6px;
-  font-size:14px;
+  padding:10px;
+  border-radius:10px;
+  margin:5px 0;
+  cursor:pointer;
 }
 
 /* MOBILE */
-@media(max-width:700px){
-  .grid{grid-template-columns:1fr;}
+@media(max-width:600px){
+  h1{font-size:1.5rem;}
+  .contenido{font-size:15px;}
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <img src="658175444_25680405581633658_3668668824201018733_n.jpg" class="logo" onclick="location.href='index.html'">
   <button class="dark-btn" onclick="toggleDark()">🌙</button>
+  <img src="658175444_25680405581633658_3668668824201018733_n.jpg" class="logo" onclick="location.href='index.html'">
 </div>
 
-<!-- NAV -->
-<div class="nav">
-  <button class="volver-btn" onclick="location.href='index.html'">🏠</button>
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button class="cat-btn" onclick="verCat('Pais')">País</button>
-  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+<div class="container">
+
+  <h1 id="titulo"></h1>
+  <div class="meta" id="meta"></div>
+
+  <img id="imagen" class="imagen">
+
+  <div id="contenido" class="contenido"></div>
+
+  <!-- REACCIONES -->
+  <div class="reacciones">
+    <button onclick="reaccion('like')">👍</button>
+    <button onclick="reaccion('dislike')">👎</button>
+    <button onclick="reaccion('wow')">😲</button>
+    <button onclick="reaccion('sad')">😢</button>
+    <button onclick="reaccion('angry')">😡</button>
+  </div>
+
+  <!-- COMENTARIOS -->
+  <div class="comentarios">
+    <h3>Comentarios</h3>
+    <input id="nombre" placeholder="Tu nombre">
+    <textarea id="comentario" placeholder="Escribí tu comentario"></textarea>
+    <button onclick="comentar()">Enviar</button>
+
+    <div id="listaComentarios"></div>
+  </div>
+
+  <!-- RELACIONADAS -->
+  <div class="relacionadas">
+    <h3>Noticias relacionadas</h3>
+    <div id="relacionadas"></div>
+  </div>
+
 </div>
-
-<h1 id="titulo" style="text-align:center;"></h1>
-
-<!-- FLAYER -->
-<div class="flayer">
-  <div id="track" class="track"></div>
-</div>
-
-<!-- GRID -->
-<div id="contenedor" class="grid"></div>
 
 <footer style="text-align:center;background:#111;color:gold;padding:20px;">
-  © 2026 Apophis Noticias |
-  <a href="privacidad.html">Privacidad</a> |
-  <a href="contacto.html">Contacto</a> |
-  <a href="sobre.html">Sobre</a>
+  © 2026 Apophis Noticias
 </footer>
 
 <script>
+
 const API="https://apophis-noticias-backend.vercel.app";
+const id=new URLSearchParams(location.search).get("id");
 
 function toggleDark(){
   document.body.classList.toggle("dark");
-}
-
-function verCat(c){
-  location="categoria.html?cat="+c;
 }
 
 function ir(id){
@@ -211,31 +200,38 @@ function ir(id){
 }
 
 async function cargar(){
-  const cat=new URLSearchParams(location.search).get("cat");
-  document.getElementById("titulo").innerText=cat;
+  const res=await fetch(API+"/noticias/"+id);
+  const n=await res.json();
 
+  document.getElementById("titulo").innerText=n.titulo;
+  document.getElementById("meta").innerText=n.fecha+" - "+n.autor+" - "+n.categoria;
+  document.getElementById("imagen").src=n.imagen;
+  document.getElementById("contenido").innerHTML=n.contenido;
+
+  // SEO dinámico
+  document.title=n.titulo;
+  document.getElementById("metaDesc").setAttribute("content", n.titulo);
+  document.getElementById("ogTitle").setAttribute("content", n.titulo);
+  document.getElementById("ogDesc").setAttribute("content", n.titulo);
+  document.getElementById("ogImg").setAttribute("content", n.imagen);
+  document.getElementById("ogUrl").setAttribute("content", location.href);
+
+  cargarRelacionadas(n.categoria);
+}
+
+async function cargarRelacionadas(cat){
   const res=await fetch(API+"/noticias/categoria/"+cat);
   const data=await res.json();
 
-  // GRID SOLO CATEGORIA
-  document.getElementById("contenedor").innerHTML=data.map(n=>`
-    <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h3>${n.titulo}</h3>
-    </div>
-  `).join("");
-
-  // FLAYER SOLO CATEGORIA
-  const flayer=data.map(n=>`
-    <div class="item" onclick="ir('${n._id}')">
-      <img src="${n.imagen}">
-      <span>${n.titulo}</span>
-    </div>
-  `).join("");
-
-  document.getElementById("track").innerHTML=flayer+flayer;
+  document.getElementById("relacionadas").innerHTML=data
+    .filter(n=>n._id!==id)
+    .slice(0,4)
+    .map(n=>`<div class="card" onclick="ir('${n._id}')">${n.titulo}</div>`)
+    .join("");
 }
 
 cargar();
+
 </script>
 
 </body>
