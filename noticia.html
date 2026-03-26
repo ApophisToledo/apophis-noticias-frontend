@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
+<meta name="description" id="metaDesc" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
 <meta name="robots" content="index, follow">
 
 <title id="metaTitle">Apophis Noticias</title>
@@ -15,47 +15,148 @@
 <meta property="og:url" id="ogUrl">
 <meta property="og:image" id="ogImg">
 
+<meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
+
+<script>
+window.__cmp = window.__cmp || function(){};
+</script>
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
+
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
+
+*{box-sizing:border-box;}
 
 .layout{
   display:flex;
   max-width:1200px;
   margin:auto;
   gap:20px;
+  align-items:flex-start;
+  padding:0 12px;
 }
 
 .noticia-container{
   flex:3;
   background:#fdf5d7;
-  padding:20px;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  animation:aparecer .45s ease;
+}
+body.dark .noticia-container{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.noticia-box{
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(0,0,0,.08);
+  padding:18px;
   border-radius:12px;
 }
-body.dark .noticia-container{background:#1a1a1a;}
+body.dark .noticia-box{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,215,0,.12);
+}
+
+.noticia-titulo{
+  font-size:2.3rem;
+  line-height:1.15;
+  margin:0 0 14px 0;
+  font-weight:bold;
+  text-shadow:1px 1px 2px rgba(0,0,0,.08);
+}
+
+.noticia-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:15px;
+  font-size:.98rem;
+  opacity:.95;
+}
+
+.noticia-imagen{
+  width:100%;
+  border-radius:12px;
+  display:block;
+  margin:12px 0 18px;
+  max-height:520px;
+  object-fit:cover;
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
+}
+
+.noticia-contenido{
+  font-size:1.12rem;
+  line-height:1.8;
+  word-wrap:break-word;
+}
+
+.noticia-contenido p{
+  margin-bottom:1.1em;
+}
 
 .relacionadas-lateral{
   flex:1;
+  animation:aparecer .55s ease;
+}
+
+.relacionadas-box{
+  background:#fdf5d7;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+body.dark .relacionadas-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.relacionadas-box h3{
+  margin-top:0;
+  margin-bottom:12px;
+  text-align:center;
 }
 
 .rel-card{
   height:100px;
   background-size:cover;
+  background-position:center;
   border-radius:8px;
   margin-bottom:10px;
   cursor:pointer;
   position:relative;
+  overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.rel-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(0,0,0,.22);
 }
 .rel-card span{
   position:absolute;
   bottom:0;
-  background:black;
+  left:0;
+  background:rgba(0,0,0,.88);
   color:gold;
   width:100%;
   font-size:12px;
-  padding:3px;
+  padding:6px;
+}
+
+.rel-vacio{
+  text-align:center;
+  padding:12px;
+  border-radius:8px;
+  background:rgba(0,0,0,.05);
+}
+body.dark .rel-vacio{
+  background:rgba(255,255,255,.05);
 }
 
 .reactions{
@@ -64,12 +165,18 @@ body.dark .noticia-container{background:#1a1a1a;}
   margin-top:15px;
   justify-content:center;
   flex-wrap:wrap;
+  padding:0 12px;
 }
 .reactions button{
   background:#111;
   color:gold;
-  padding:6px 10px;
+  padding:8px 12px;
   border-radius:6px;
+  border:none;
+  cursor:pointer;
+}
+.reactions button:hover{
+  opacity:.92;
 }
 
 .dark-toggle{
@@ -81,24 +188,180 @@ body.dark .noticia-container{background:#1a1a1a;}
   padding:6px 10px;
   border-radius:6px;
   cursor:pointer;
+  z-index:9999;
+  border:none;
 }
 
 .buscador-box{text-align:center;margin:20px;}
-#buscador{padding:10px;width:60%;border-radius:8px;}
+#buscador{
+  padding:10px;
+  width:60%;
+  border-radius:8px;
+  border:1px solid #b99c49;
+}
+body.dark #buscador{
+  background:#1b1b1b;
+  color:#f0e68c;
+  border-color:#7c6420;
+}
 
-.volver{text-align:center;margin:10px;}
+.volver{text-align:center;margin:18px 10px 10px;}
 .volver button{
   padding:8px 12px;
   border-radius:8px;
   background:#111;
   color:gold;
   cursor:pointer;
+  border:none;
 }
 
-/* 💬 */
-.comentarios{max-width:900px;margin:auto;margin-top:20px;}
-.comentario{border-bottom:1px solid #ccc;margin:10px 0;padding:5px;}
-.respuesta{margin-left:20px;font-size:0.9rem;}
+.comentarios{
+  max-width:900px;
+  margin:auto;
+  margin-top:25px;
+  background:#fff7df;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  animation:aparecer .65s ease;
+}
+body.dark .comentarios{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.comentarios h3{
+  margin-top:0;
+  margin-bottom:15px;
+}
+
+.comentario-form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.comentario-form input,
+.comentario-form textarea,
+.comentario input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #cbb06b;
+  font-family:Georgia;
+}
+body.dark .comentario-form input,
+body.dark .comentario-form textarea,
+body.dark .comentario input{
+  background:#111;
+  color:#f0e68c;
+  border-color:#6f5b28;
+}
+
+.comentario-form textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.comentario-form button,
+.comentario button{
+  background:#111;
+  color:gold;
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+}
+
+.comentarios-info{
+  font-size:.92rem;
+  opacity:.85;
+  margin-bottom:12px;
+}
+
+.comentario{
+  border:1px solid #d4c08b;
+  border-radius:10px;
+  margin:12px 0;
+  padding:14px;
+  background:#fffdf5;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+body.dark .comentario{
+  background:#222;
+  border-color:#444;
+  box-shadow:none;
+}
+
+.comentario-head{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.comentario-fecha{
+  font-size:.85rem;
+  opacity:.8;
+}
+
+.comentario-texto{
+  margin:8px 0 12px;
+  line-height:1.6;
+}
+
+.responder-box{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed #c8b37b;
+}
+body.dark .responder-box{
+  border-top-color:#555;
+}
+
+.respuesta{
+  margin-left:20px;
+  margin-top:8px;
+  padding:8px 10px;
+  border-left:3px solid gold;
+  font-size:0.94rem;
+  background:rgba(0,0,0,.03);
+  border-radius:6px;
+}
+body.dark .respuesta{
+  background:rgba(255,255,255,.04);
+}
+
+.sin-comentarios{
+  text-align:center;
+  padding:15px;
+  border-radius:10px;
+  background:rgba(0,0,0,.05);
+}
+body.dark .sin-comentarios{
+  background:rgba(255,255,255,.05);
+}
+
+.mensaje-estado{
+  text-align:center;
+  padding:14px;
+  border-radius:10px;
+  margin-top:10px;
+  background:rgba(0,0,0,.06);
+}
+body.dark .mensaje-estado{
+  background:rgba(255,255,255,.05);
+}
+
+.ad{
+  margin:25px auto;
+  text-align:center;
+  max-width:900px;
+  padding:0 12px;
+}
 
 footer{
   margin-top:40px;
@@ -108,12 +371,32 @@ footer{
   color:gold;
 }
 footer a{color:gold;margin:0 10px;}
+
+@keyframes aparecer{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:950px){
+  .layout{
+    flex-direction:column;
+  }
+  .relacionadas-lateral{
+    width:100%;
+  }
+  #buscador{
+    width:90%;
+  }
+  .noticia-titulo{
+    font-size:1.8rem;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="dark-toggle" onclick="toggleDark()">🌙</div>
+<button class="dark-toggle" onclick="toggleDark()" id="darkBtn">🌙</button>
 
 <div class="volver">
   <button onclick="location.href='index.html'">🏠 Volver al inicio</button>
@@ -125,10 +408,24 @@ footer a{color:gold;margin:0 10px;}
 
 <div class="layout">
 
-<div class="noticia-container" id="noticiaContainer"></div>
+  <div class="noticia-container" id="noticiaContainer"></div>
 
-<div class="relacionadas-lateral" id="relacionadas"></div>
+  <div class="relacionadas-lateral">
+    <div class="relacionadas-box">
+      <h3>Noticias relacionadas</h3>
+      <div id="relacionadas"></div>
+    </div>
+  </div>
 
+</div>
+
+<div class="ad">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6641245592697930"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
 </div>
 
 <div class="reactions">
@@ -139,13 +436,18 @@ footer a{color:gold;margin:0 10px;}
   <button onclick="reaccion('enojo')">😡 <span id="enojo">0</span></button>
 </div>
 
-<!-- 💬 COMENTARIOS -->
 <div class="comentarios">
   <h3>Comentarios</h3>
 
-  <input id="nombreComentario" placeholder="Tu nombre">
-  <textarea id="textoComentario" placeholder="Escribí tu comentario..."></textarea>
-  <button onclick="enviarComentario()">Enviar</button>
+  <div class="comentarios-info">
+    Participá con respeto. Para evitar spam, el sistema limita envíos repetidos en poco tiempo.
+  </div>
+
+  <div class="comentario-form">
+    <input id="nombreComentario" placeholder="Tu nombre">
+    <textarea id="textoComentario" placeholder="Escribí tu comentario..."></textarea>
+    <button onclick="enviarComentario()">Enviar</button>
+  </div>
 
   <div id="listaComentarios"></div>
 </div>
@@ -161,118 +463,344 @@ footer a{color:gold;margin:0 10px;}
 const API="https://apophis-noticias-backend.vercel.app";
 let noticiaId="";
 
-function toggleDark(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+function aplicarDarkMode(){
+  let dark = localStorage.getItem("darkMode");
+  if(dark === null){
+    dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }else{
+    dark = dark === "true";
+  }
+  document.body.classList.toggle("dark", dark);
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = dark ? "☀️" : "🌙";
 }
-if(localStorage.getItem("darkMode")==="true"){
-  document.body.classList.add("dark");
+
+function toggleDark(){
+  const activo = document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", activo);
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = activo ? "☀️" : "🌙";
 }
 
 function formatearFecha(fecha){
-  const f = fecha ? new Date(fecha) : new Date();
+  if(!fecha) return "";
+  const f = new Date(fecha);
+  if(isNaN(f.getTime())) return "";
   return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"});
 }
 
+function formatearFechaHora(fecha){
+  if(!fecha) return "Hace instantes";
+  const f = new Date(fecha);
+  if(isNaN(f.getTime())) return "Hace instantes";
+  return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"}) + " · " +
+         f.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+}
+
+function escaparHTML(texto){
+  if(texto === undefined || texto === null) return "";
+  return String(texto)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function nl2brSeguro(texto){
+  return escaparHTML(texto).replace(/\n/g,"<br>");
+}
+
+function actualizarSEO(n){
+  const titulo = n && n.titulo ? n.titulo + " | Apophis Noticias" : "Apophis Noticias";
+  const descripcionBase = n && n.contenido ? String(n.contenido).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim() : "Noticias actualizadas";
+  const descripcion = descripcionBase.slice(0, 160) || "Noticias actualizadas";
+  const url = location.href;
+  const imagen = n && n.imagen ? n.imagen : "";
+
+  document.getElementById("metaTitle").innerText = titulo;
+  document.title = titulo;
+  document.getElementById("metaDesc").setAttribute("content", descripcion);
+  document.getElementById("ogTitle").setAttribute("content", titulo);
+  document.getElementById("ogDesc").setAttribute("content", descripcion);
+  document.getElementById("ogUrl").setAttribute("content", url);
+  document.getElementById("ogImg").setAttribute("content", imagen);
+}
+
+function activarAds(){
+  try{
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }catch(e){}
+}
+
+function ir(id){
+  location="noticia.html?id="+id;
+}
+
+function antiSpamPermitido(claveBase, segundos){
+  const ahora = Date.now();
+  const ultima = Number(localStorage.getItem(claveBase) || 0);
+  if(ahora - ultima < (segundos * 1000)){
+    return false;
+  }
+  localStorage.setItem(claveBase, ahora);
+  return true;
+}
+
+async function buscarNoticias(texto){
+  const res = await fetch(API + "/noticias");
+  const data = await res.json();
+
+  const q = texto.trim().toLowerCase();
+  if(!q) return null;
+
+  const exacta = data.find(n =>
+    (n.titulo || "").toLowerCase().includes(q) ||
+    (n.categoria || "").toLowerCase().includes(q) ||
+    String(n.contenido || "").toLowerCase().includes(q)
+  );
+
+  return exacta || null;
+}
+
 async function cargarNoticia(){
-  const id=new URLSearchParams(location.search).get("id");
-  noticiaId=id;
+  try{
+    const id = new URLSearchParams(location.search).get("id");
+    noticiaId = id;
 
-  const res=await fetch(API+"/noticias/"+id);
-  const n=await res.json();
+    if(!id){
+      document.getElementById("noticiaContainer").innerHTML = `
+        <div class="mensaje-estado">No se encontró la noticia solicitada.</div>
+      `;
+      document.getElementById("relacionadas").innerHTML = `
+        <div class="rel-vacio">No hay noticias relacionadas.</div>
+      `;
+      document.getElementById("listaComentarios").innerHTML = `
+        <div class="sin-comentarios">Todavía no hay comentarios.</div>
+      `;
+      return;
+    }
 
-  document.getElementById("noticiaContainer").innerHTML=`
-    <h1>${n.titulo}</h1>
-    <p>🗓 ${formatearFecha(n.fecha)}</p>
-    <img src="${n.imagen}" style="width:100%">
-    <div>${n.contenido}</div>
-  `;
+    const res = await fetch(API + "/noticias/" + id);
+    const n = await res.json();
 
-  likes.innerText=n.likes||0;
-  dislikes.innerText=n.dislikes||0;
-  sorpresa.innerText=n.sorpresa||0;
-  tristeza.innerText=n.tristeza||0;
-  enojo.innerText=n.enojo||0;
+    actualizarSEO(n);
 
-  // relacionadas
-  const rel=await fetch(API+"/noticias/categoria/"+n.categoria);
-  const dataRel=await rel.json();
+    const autor = n.autor ? n.autor : "Redacción Apophis";
+    const fechaMostrada = n.fecha ? formatearFecha(n.fecha) : "Fecha no disponible";
+    const categoria = n.categoria ? n.categoria : "General";
+    const contenidoSeguro = String(n.contenido || "");
 
-  relacionadas.innerHTML=dataRel
-    .filter(r=>r._id!==n._id)
-    .map(r=>`
-      <div class="rel-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')">
-        <span>${r.titulo}</span>
-      </div>
-    `).join("");
+    document.getElementById("noticiaContainer").innerHTML = `
+      <div class="noticia-box">
+        <h1 class="noticia-titulo">${escaparHTML(n.titulo || "Sin título")}</h1>
 
-  // comentarios
-  listaComentarios.innerHTML=(n.comentarios||[]).map((c,i)=>`
-    <div class="comentario">
-      <strong>${c.nombre}</strong>
-      <p>${c.texto}</p>
-
-      <input id="respNombre${i}" placeholder="Tu nombre">
-      <input id="respTexto${i}" placeholder="Responder...">
-      <button onclick="responder(${i})">Responder</button>
-
-      ${(c.respuestas||[]).map(r=>`
-        <div class="respuesta">
-          <strong>${r.nombre}</strong>: ${r.texto}
+        <div class="noticia-meta">
+          <span>🗓 ${escaparHTML(fechaMostrada)}</span>
+          <span>✍️ ${escaparHTML(autor)}</span>
+          <span>📰 ${escaparHTML(categoria)}</span>
         </div>
-      `).join("")}
-    </div>
-  `).join("");
+
+        ${n.imagen ? `<img src="${escaparHTML(n.imagen)}" alt="${escaparHTML(n.titulo || "Imagen de la noticia")}" class="noticia-imagen">` : ""}
+
+        <div class="noticia-contenido">${contenidoSeguro}</div>
+      </div>
+    `;
+
+    likes.innerText = n.likes || 0;
+    dislikes.innerText = n.dislikes || 0;
+    sorpresa.innerText = n.sorpresa || 0;
+    tristeza.innerText = n.tristeza || 0;
+    enojo.innerText = n.enojo || 0;
+
+    try{
+      const rel = await fetch(API + "/noticias/categoria/" + encodeURIComponent(n.categoria || ""));
+      const dataRel = await rel.json();
+
+      const relacionadasFiltradas = Array.isArray(dataRel)
+        ? dataRel.filter(r => r && r._id !== n._id).slice(0, 8)
+        : [];
+
+      if(!relacionadasFiltradas.length){
+        relacionadas.innerHTML = `<div class="rel-vacio">No hay noticias relacionadas disponibles.</div>`;
+      }else{
+        relacionadas.innerHTML = relacionadasFiltradas.map(r=>`
+          <div class="rel-card" style="background-image:url('${escaparHTML(r.imagen || "")}')" onclick="ir('${r._id}')">
+            <span>${escaparHTML(r.titulo || "Sin título")}</span>
+          </div>
+        `).join("");
+      }
+    }catch(e){
+      relacionadas.innerHTML = `<div class="rel-vacio">No se pudieron cargar las relacionadas.</div>`;
+    }
+
+    const comentarios = Array.isArray(n.comentarios) ? [...n.comentarios] : [];
+
+    comentarios.sort((a,b)=>{
+      const fa = a && a.fecha ? new Date(a.fecha).getTime() : 0;
+      const fb = b && b.fecha ? new Date(b.fecha).getTime() : 0;
+      return fb - fa;
+    });
+
+    if(!comentarios.length){
+      listaComentarios.innerHTML = `<div class="sin-comentarios">Todavía no hay comentarios. Sé el primero en participar.</div>`;
+    }else{
+      listaComentarios.innerHTML = comentarios.map((c,i)=>`
+        <div class="comentario">
+          <div class="comentario-head">
+            <strong>${escaparHTML(c.nombre || "Anónimo")}</strong>
+            <span class="comentario-fecha">${escaparHTML(formatearFechaHora(c.fecha))}</span>
+          </div>
+
+          <div class="comentario-texto">${nl2brSeguro(c.texto || "")}</div>
+
+          <div class="responder-box">
+            <input id="respNombre${i}" placeholder="Tu nombre">
+            <input id="respTexto${i}" placeholder="Responder...">
+            <button onclick="responder(${i})">Responder</button>
+          </div>
+
+          ${Array.isArray(c.respuestas) && c.respuestas.length ? c.respuestas.map(r=>`
+            <div class="respuesta">
+              <strong>${escaparHTML(r.nombre || "Anónimo")}</strong>
+              ${r.fecha ? `<span style="opacity:.75"> · ${escaparHTML(formatearFechaHora(r.fecha))}</span>` : ""}
+              <div style="margin-top:4px;">${nl2brSeguro(r.texto || "")}</div>
+            </div>
+          `).join("") : ""}
+        </div>
+      `).join("");
+    }
+
+    activarAds();
+
+  }catch(e){
+    document.getElementById("noticiaContainer").innerHTML = `
+      <div class="mensaje-estado">No se pudo cargar la noticia en este momento.</div>
+    `;
+    document.getElementById("relacionadas").innerHTML = `
+      <div class="rel-vacio">No hay noticias relacionadas.</div>
+    `;
+    document.getElementById("listaComentarios").innerHTML = `
+      <div class="sin-comentarios">No se pudieron cargar los comentarios.</div>
+    `;
+  }
 }
 
 async function reaccion(tipo){
-  const key="react_"+noticiaId;
+  const key = "react_" + noticiaId;
 
   if(localStorage.getItem(key)){
     alert("Ya reaccionaste");
     return;
   }
 
-  await fetch(API+"/noticias/"+noticiaId,{
-    method:"PUT",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({[tipo]:1})
-  });
+  try{
+    await fetch(API + "/noticias/" + noticiaId,{
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({[tipo]:1})
+    });
 
-  localStorage.setItem(key,true);
-  cargarNoticia();
+    localStorage.setItem(key, true);
+    cargarNoticia();
+  }catch(e){
+    alert("No se pudo registrar la reacción.");
+  }
 }
 
 async function enviarComentario(){
-  const nombre = nombreComentario.value;
-  const texto = textoComentario.value;
+  const nombre = nombreComentario.value.trim();
+  const texto = textoComentario.value.trim();
 
-  await fetch(API+"/comentario/"+noticiaId,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({nombre,texto})
-  });
+  if(!nombre || !texto){
+    alert("Completá nombre y comentario.");
+    return;
+  }
 
-  textoComentario.value="";
-  cargarNoticia();
+  if(texto.length < 3){
+    alert("El comentario es demasiado corto.");
+    return;
+  }
+
+  if(!antiSpamPermitido("comentario_antispam_" + noticiaId, 20)){
+    alert("Esperá unos segundos antes de volver a comentar.");
+    return;
+  }
+
+  try{
+    await fetch(API + "/comentario/" + noticiaId,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({nombre,texto})
+    });
+
+    textoComentario.value = "";
+    cargarNoticia();
+  }catch(e){
+    alert("No se pudo enviar el comentario.");
+  }
 }
 
 async function responder(i){
-  const nombre = document.getElementById("respNombre"+i).value;
-  const texto = document.getElementById("respTexto"+i).value;
+  const nombre = document.getElementById("respNombre"+i).value.trim();
+  const texto = document.getElementById("respTexto"+i).value.trim();
 
-  await fetch(API+"/respuesta/"+noticiaId+"/"+i,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({nombre,texto})
-  });
+  if(!nombre || !texto){
+    alert("Completá nombre y respuesta.");
+    return;
+  }
 
-  cargarNoticia();
+  if(texto.length < 2){
+    alert("La respuesta es demasiado corta.");
+    return;
+  }
+
+  if(!antiSpamPermitido("respuesta_antispam_" + noticiaId + "_" + i, 15)){
+    alert("Esperá unos segundos antes de volver a responder.");
+    return;
+  }
+
+  try{
+    await fetch(API + "/respuesta/" + noticiaId + "/" + i,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({nombre,texto})
+    });
+
+    cargarNoticia();
+  }catch(e){
+    alert("No se pudo enviar la respuesta.");
+  }
 }
 
-function ir(id){location="noticia.html?id="+id;}
+function activarBuscador(){
+  const buscador = document.getElementById("buscador");
+  if(!buscador) return;
 
-window.onload=cargarNoticia;
+  buscador.addEventListener("keydown", async function(e){
+    if(e.key === "Enter"){
+      const valor = buscador.value.trim();
+      if(!valor) return;
+
+      try{
+        const encontrada = await buscarNoticias(valor);
+        if(encontrada && encontrada._id){
+          ir(encontrada._id);
+        }else{
+          alert("No se encontraron noticias con esa búsqueda.");
+        }
+      }catch(err){
+        alert("No se pudo realizar la búsqueda.");
+      }
+    }
+  });
+}
+
+window.onload = () => {
+  aplicarDarkMode();
+  activarBuscador();
+  cargarNoticia();
+};
 </script>
 
 </body>
