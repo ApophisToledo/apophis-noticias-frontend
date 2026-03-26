@@ -1,238 +1,168 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title id="metaTitle">Noticia - Apophis Noticias</title>
-
-<meta name="description" id="metaDesc">
-<meta name="robots" content="index, follow">
-
-<meta property="og:title" id="ogTitle">
-<meta property="og:description" id="ogDesc">
-<meta property="og:type" content="article">
-<meta property="og:url" id="ogUrl">
-<meta property="og:image" id="ogImg">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
 
-/* BASE */
-body{
-  margin:0;
-  font-family:Georgia;
-  background:#f4e3b2;
-  color:#111;
-}
-body.dark{
-  background:#111;
-  color:#f0e68c;
+/* 🔥 MOBILE FIRST MEJORADO */
+
+/* FIX GLOBAL MOBILE */
+@media(max-width:768px){
+
+  body{
+    font-size:15px;
+  }
+
+  .header{
+    padding:60px 10px 15px;
+  }
+
+  .logo-img{
+    width:95%;
+    max-width:360px;
+  }
+
+  .dark-btn{
+    top:8px;
+    right:8px;
+    font-size:13px;
+    padding:6px 10px;
+  }
+
+  /* NAV */
+  .top-nav-row{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:10px;
+  }
+
+  .top-nav-left{
+    justify-content:center;
+  }
+
+  .top-nav-center{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    width:100%;
+  }
+
+  .volver-btn,
+  .cat-btn{
+    width:100%;
+    min-height:42px;
+    font-size:14px;
+    border-radius:10px;
+  }
+
+  /* BUSCADOR */
+  #buscador{
+    width:100%;
+    font-size:16px; /* evita zoom */
+    padding:12px;
+  }
+
+  /* CONTENEDOR */
+  .layout{
+    flex-direction:column;
+    gap:15px;
+    padding:0 10px;
+  }
+
+  .noticia-container{
+    padding:16px;
+  }
+
+  .noticia-box{
+    padding:14px;
+  }
+
+  /* TITULO */
+  .noticia-titulo{
+    font-size:1.5rem;
+    line-height:1.2;
+  }
+
+  /* META */
+  .noticia-meta{
+    gap:6px;
+    font-size:13px;
+  }
+
+  .meta-pill{
+    font-size:12px;
+    padding:5px 8px;
+  }
+
+  /* IMAGEN */
+  .noticia-imagen{
+    max-height:300px;
+  }
+
+  /* TEXTO */
+  .noticia-contenido{
+    font-size:15px;
+    line-height:1.7;
+  }
+
+  /* RELACIONADAS */
+  .relacionadas-box{
+    padding:12px;
+  }
+
+  .rel-card{
+    height:90px;
+  }
+
+  /* REACCIONES */
+  .reactions{
+    gap:6px;
+    padding:10px;
+  }
+
+  .reactions button{
+    flex:1;
+    min-width:60px;
+    font-size:13px;
+    padding:8px;
+  }
+
+  /* COMENTARIOS */
+  .comentarios{
+    margin:15px 10px;
+    padding:15px;
+  }
+
+  .comentario-form input,
+  .comentario-form textarea{
+    font-size:16px; /* evita zoom */
+  }
+
+  .comentario{
+    padding:12px;
+  }
+
+  .comentario-texto{
+    font-size:14px;
+  }
+
 }
 
-/* HEADER */
-.header{
-  background:black;
-  padding:18px;
-  display:flex;
-  justify-content:center;
-  position:relative;
-}
-.logo{
-  width:min(90vw,420px);
-  border-radius:12px;
-  cursor:pointer;
-}
-.dark-btn{
-  position:absolute;
-  right:10px;
-  top:10px;
-  background:#111;
-  color:gold;
-  border:none;
-  padding:8px 12px;
-  border-radius:10px;
-}
+/* 📱 MOBILE CHICO */
+@media(max-width:480px){
 
-/* CONTENEDOR */
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:15px;
-}
+  .noticia-titulo{
+    font-size:1.35rem;
+  }
 
-/* TITULO */
-h1{
-  font-size:2rem;
-  margin-bottom:10px;
-}
+  .noticia-contenido{
+    font-size:14px;
+  }
 
-/* META */
-.meta{
-  font-size:14px;
-  opacity:.8;
-  margin-bottom:15px;
-}
+  .rel-card{
+    height:80px;
+  }
 
-/* IMAGEN */
-.imagen{
-  width:100%;
-  border-radius:12px;
-  margin-bottom:15px;
-}
+  .logo-img{
+    max-width:300px;
+  }
 
-/* CONTENIDO */
-.contenido{
-  line-height:1.7;
-  font-size:17px;
-}
-
-/* REACCIONES */
-.reacciones{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
-}
-.reacciones button{
-  padding:8px 12px;
-  border:none;
-  border-radius:8px;
-  background:#111;
-  color:gold;
-}
-
-/* COMENTARIOS */
-.comentarios{
-  margin-top:30px;
-}
-
-input, textarea{
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border-radius:8px;
-  border:1px solid #111;
-}
-
-/* RELACIONADAS */
-.relacionadas{
-  margin-top:40px;
-}
-
-.card{
-  background:#000;
-  color:gold;
-  padding:10px;
-  border-radius:10px;
-  margin:5px 0;
-  cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  h1{font-size:1.5rem;}
-  .contenido{font-size:15px;}
 }
 
 </style>
-</head>
-
-<body>
-
-<div class="header">
-  <button class="dark-btn" onclick="toggleDark()">🌙</button>
-  <img src="658175444_25680405581633658_3668668824201018733_n.jpg" class="logo" onclick="location.href='index.html'">
-</div>
-
-<div class="container">
-
-  <h1 id="titulo"></h1>
-  <div class="meta" id="meta"></div>
-
-  <img id="imagen" class="imagen">
-
-  <div id="contenido" class="contenido"></div>
-
-  <!-- REACCIONES -->
-  <div class="reacciones">
-    <button onclick="reaccion('like')">👍</button>
-    <button onclick="reaccion('dislike')">👎</button>
-    <button onclick="reaccion('wow')">😲</button>
-    <button onclick="reaccion('sad')">😢</button>
-    <button onclick="reaccion('angry')">😡</button>
-  </div>
-
-  <!-- COMENTARIOS -->
-  <div class="comentarios">
-    <h3>Comentarios</h3>
-    <input id="nombre" placeholder="Tu nombre">
-    <textarea id="comentario" placeholder="Escribí tu comentario"></textarea>
-    <button onclick="comentar()">Enviar</button>
-
-    <div id="listaComentarios"></div>
-  </div>
-
-  <!-- RELACIONADAS -->
-  <div class="relacionadas">
-    <h3>Noticias relacionadas</h3>
-    <div id="relacionadas"></div>
-  </div>
-
-</div>
-
-<footer style="text-align:center;background:#111;color:gold;padding:20px;">
-  © 2026 Apophis Noticias
-</footer>
-
-<script>
-
-const API="https://apophis-noticias-backend.vercel.app";
-const id=new URLSearchParams(location.search).get("id");
-
-function toggleDark(){
-  document.body.classList.toggle("dark");
-}
-
-function ir(id){
-  location="noticia.html?id="+id;
-}
-
-async function cargar(){
-  const res=await fetch(API+"/noticias/"+id);
-  const n=await res.json();
-
-  document.getElementById("titulo").innerText=n.titulo;
-  document.getElementById("meta").innerText=n.fecha+" - "+n.autor+" - "+n.categoria;
-  document.getElementById("imagen").src=n.imagen;
-  document.getElementById("contenido").innerHTML=n.contenido;
-
-  // SEO dinámico
-  document.title=n.titulo;
-  document.getElementById("metaDesc").setAttribute("content", n.titulo);
-  document.getElementById("ogTitle").setAttribute("content", n.titulo);
-  document.getElementById("ogDesc").setAttribute("content", n.titulo);
-  document.getElementById("ogImg").setAttribute("content", n.imagen);
-  document.getElementById("ogUrl").setAttribute("content", location.href);
-
-  cargarRelacionadas(n.categoria);
-}
-
-async function cargarRelacionadas(cat){
-  const res=await fetch(API+"/noticias/categoria/"+cat);
-  const data=await res.json();
-
-  document.getElementById("relacionadas").innerHTML=data
-    .filter(n=>n._id!==id)
-    .slice(0,4)
-    .map(n=>`<div class="card" onclick="ir('${n._id}')">${n.titulo}</div>`)
-    .join("");
-}
-
-cargar();
-
-</script>
-
-</body>
-</html>

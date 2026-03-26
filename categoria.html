@@ -6,24 +6,24 @@
 
 <title id="metaTitle">Categoría - Apophis Noticias</title>
 
+<!-- SEO -->
 <meta name="description" id="metaDesc" content="Noticias por categoría en Apophis Noticias">
 <meta name="robots" content="index, follow">
 
-<meta property="og:title" id="ogTitle">
-<meta property="og:description" id="ogDesc">
+<!-- Open Graph -->
+<meta property="og:title" id="ogTitle" content="Categoría - Apophis Noticias">
+<meta property="og:description" id="ogDesc" content="Explora noticias por categoría">
 <meta property="og:type" content="website">
-<meta property="og:url" id="ogUrl">
-<meta property="og:image" id="ogImg">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:image" id="ogImg" content="">
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-
-/* BASE */
 body{
   margin:0;
-  font-family:Georgia;
+  font-family:Georgia, serif;
   background:#f4e3b2;
   color:#111;
   transition:.3s;
@@ -35,39 +35,53 @@ body.dark{
 
 *{box-sizing:border-box;}
 
-/* 🔥 HEADER PRO */
+img{
+  max-width:100%;
+}
+
 .header{
   background:black;
-  padding:18px 10px;
+  color:gold;
+  padding:22px 20px;
   display:flex;
   justify-content:center;
   align-items:center;
+  gap:12px;
   position:relative;
-  box-shadow:0 6px 20px rgba(0,0,0,.3);
+  flex-wrap:wrap;
+  border-bottom:2px solid rgba(255,215,0,.18);
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
 }
 
-/* LOGO PREMIUM */
-.logo{
-  width:min(92vw,420px);
-  border-radius:14px;
+.logo-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
   cursor:pointer;
-  transition:all .35s ease;
+  max-width:100%;
+}
+
+.logo-img{
+  max-width:520px;
+  width:min(92vw, 520px);
+  height:auto;
+  display:block;
+  border-radius:12px;
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
   box-shadow:0 0 0 rgba(255,215,0,0);
 }
 
-.logo:hover{
-  transform:scale(1.04) translateY(-2px);
-  box-shadow:
-    0 0 20px rgba(255,215,0,.25),
-    0 0 40px rgba(255,215,0,.15);
+.logo-link:hover .logo-img{
+  transform:scale(1.03) translateY(-2px);
+  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
   filter:brightness(1.08);
 }
 
-.logo:active{
-  transform:scale(.98);
+.logo-link:active .logo-img{
+  transform:scale(.99);
 }
 
-/* BOTONES HEADER */
 .dark-btn{
   position:absolute;
   right:10px;
@@ -76,283 +90,717 @@ body.dark{
   color:gold;
   border:none;
   padding:8px 12px;
-  border-radius:10px;
+  border-radius:8px;
   cursor:pointer;
-  font-size:14px;
-  transition:.2s;
+  z-index:9999;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+  min-height:42px;
 }
 
 .dark-btn:hover{
+  opacity:.92;
   transform:translateY(-1px);
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 
-/* NAV */
-.nav{
+.top-nav-row{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 12px 8px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:start;
+  gap:10px;
+}
+
+.top-nav-left{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  padding:12px;
+  justify-content:flex-start;
+  align-items:center;
 }
 
-.cat-btn, .volver-btn{
+.top-nav-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.volver-btn{
+  padding:10px 14px;
+  border-radius:10px;
   background:#111;
   color:gold;
-  border:none;
-  padding:10px 14px;
-  border-radius:999px;
   cursor:pointer;
-  font-size:14px;
+  border:none;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
   min-height:42px;
-  transition:.2s;
+  white-space:nowrap;
 }
 
-.cat-btn:hover, .volver-btn:hover{
+.cat-btn{
+  margin:0;
+  padding:10px 14px;
+  border-radius:10px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  border:none;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+  min-height:42px;
+  white-space:nowrap;
+}
+
+.cat-btn:hover,
+.volver-btn:hover{
+  opacity:.92;
   transform:translateY(-1px);
-  opacity:.9;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* TITULO */
-#titulo{
-  text-align:center;
-  margin:12px 0 6px;
-  font-size:1.7rem;
-  letter-spacing:.5px;
-}
-
-/* CONTENEDOR */
-.wrapper{
+.layout{
+  display:flex;
   max-width:1200px;
   margin:auto;
-  padding:12px;
+  gap:20px;
+  align-items:flex-start;
+  padding:0 12px 20px;
 }
 
-/* FLAYER */
-.flayer{
-  overflow:hidden;
-  margin-bottom:15px;
+.main{
+  flex:3;
+  min-width:0;
 }
 
-.track{
-  display:flex;
-  gap:10px;
-  width:max-content;
-  animation:scroll 28s linear infinite;
+.side{
+  flex:1;
+  min-width:280px;
 }
 
-.item{
-  width:230px;
-  height:135px;
-  border-radius:12px;
-  overflow:hidden;
-  position:relative;
-  cursor:pointer;
-  flex-shrink:0;
-  box-shadow:0 6px 16px rgba(0,0,0,.15);
+.box{
+  background:#fdf5d7;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  animation:aparecer .45s ease;
+}
+body.dark .box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
 }
 
-.item img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.titulo-cat{
+  text-align:center;
+  font-size:2rem;
+  margin:0 0 10px;
+  font-weight:bold;
+  line-height:1.2;
+  word-break:break-word;
 }
 
-.item span{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,.88);
-  color:gold;
-  font-size:12px;
-  padding:6px;
+.subtitulo-cat{
+  text-align:center;
+  margin:0;
+  line-height:1.6;
+  font-size:1rem;
 }
 
-/* GRID PRO */
+.ads-box{
+  margin-top:20px;
+}
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:16px;
+  margin-top:20px;
 }
 
-/* CARD */
 .card{
-  height:260px;
-  border-radius:16px;
+  min-height:250px;
   background-size:cover;
   background-position:center;
+  border-radius:14px;
   position:relative;
   cursor:pointer;
   overflow:hidden;
-  transition:.3s;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  transition:transform .25s ease, box-shadow .25s ease;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
 }
-
 .card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
 }
-
 .card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.9), transparent);
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.16));
 }
 
 .card h3{
   position:absolute;
-  bottom:10px;
-  left:10px;
-  right:10px;
+  bottom:12px;
+  left:12px;
+  right:12px;
+  background:rgba(0,0,0,.82);
   color:gold;
-  background:rgba(0,0,0,.85);
-  padding:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:1rem;
+  line-height:1.32;
+  z-index:2;
+  margin:0;
+}
+
+.mensaje-estado{
+  text-align:center;
+  padding:14px;
   border-radius:10px;
-  font-size:15px;
+  background:rgba(0,0,0,.06);
+  margin-top:20px;
+}
+body.dark .mensaje-estado{
+  background:rgba(255,255,255,.05);
+}
+
+.side-box{
+  background:#fdf5d7;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  padding:16px;
+  margin-bottom:20px;
+}
+body.dark .side-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.side-title{
+  margin:0 0 14px;
+  font-size:1.1rem;
+  border-bottom:2px solid rgba(255,215,0,.35);
+  padding-bottom:8px;
+}
+
+.mini-lista{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.mini-item{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  cursor:pointer;
+  transition:transform .2s ease, opacity .2s ease;
+}
+.mini-item:hover{
+  transform:translateY(-1px);
+  opacity:.93;
+}
+
+.mini-item img{
+  width:92px;
+  height:66px;
+  object-fit:cover;
+  border-radius:8px;
+  flex-shrink:0;
+}
+
+.mini-item span{
+  font-size:.95rem;
   line-height:1.35;
 }
 
-/* FOOTER */
 footer{
+  margin-top:40px;
+  padding:20px 14px 24px;
   text-align:center;
   background:#111;
   color:gold;
-  padding:20px;
-  margin-top:25px;
+  line-height:1.8;
+}
+footer a{
+  color:gold;
+  margin:0 8px;
+  display:inline-block;
 }
 
-/* 📱 MOBILE */
-@media(max-width:768px){
+@keyframes aparecer{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
 
-  .logo{
-    width:95%;
+@media(max-width:1080px){
+  .layout{
+    flex-direction:column;
+  }
+  .side{
+    width:100%;
+    min-width:0;
+  }
+}
+
+@media(max-width:950px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+  .logo-img{
+    width:min(94vw, 440px);
+  }
+  .top-nav-row{
+    grid-template-columns:1fr;
+    justify-items:center;
+    padding-top:12px;
+  }
+  .top-nav-left{
+    width:100%;
+    justify-content:center;
+  }
+  .top-nav-center{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+@media(max-width:760px){
+  .header{
+    padding:62px 12px 16px;
   }
 
-  #titulo{
-    font-size:1.3rem;
+  .logo-img{
+    width:min(96vw, 360px);
+    border-radius:10px;
   }
 
-  .item{
-    width:180px;
-    height:110px;
+  .dark-btn{
+    right:8px;
+    top:8px;
+    font-size:.92rem;
+    padding:6px 10px;
+  }
+
+  .top-nav-row{
+    padding:10px 10px 4px;
+    gap:8px;
+  }
+
+  .top-nav-left{
+    justify-content:center;
+  }
+
+  .top-nav-center{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:8px;
+  }
+
+  .volver-btn,
+  .cat-btn{
+    width:100%;
+    min-height:42px;
+    border-radius:12px;
+    text-align:center;
+    font-size:.95rem;
+    padding:10px 8px;
+  }
+
+  .layout{
+    gap:16px;
+    padding:0 10px 18px;
+  }
+
+  .box,
+  .side-box{
+    border-radius:12px;
+  }
+
+  .box{
+    padding:16px;
+  }
+
+  .titulo-cat{
+    font-size:1.5rem;
+    margin-bottom:8px;
+  }
+
+  .subtitulo-cat{
+    font-size:.96rem;
+    line-height:1.55;
+  }
+
+  .grid{
+    gap:14px;
+    margin-top:16px;
   }
 
   .card{
-    height:220px;
+    min-height:220px;
+  }
+
+  .card h3{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    font-size:.96rem;
+    padding:9px 10px;
+  }
+
+  .mini-item img{
+    width:84px;
+    height:60px;
+  }
+
+  .mini-item span{
+    font-size:.92rem;
   }
 }
 
 @media(max-width:480px){
+  .header{
+    padding:60px 8px 14px;
+  }
 
-  .nav{
-    display:grid;
+  .logo-img{
+    width:min(96vw, 300px);
+  }
+
+  .dark-btn{
+    right:8px;
+    top:8px;
+  }
+
+  .top-nav-row{
+    padding-left:8px;
+    padding-right:8px;
+  }
+
+  .top-nav-center{
     grid-template-columns:1fr 1fr;
   }
 
-  .cat-btn, .volver-btn{
-    width:100%;
+  .layout{
+    padding:0 8px 16px;
   }
 
-  .item{
-    width:150px;
-    height:95px;
+  .box{
+    padding:14px;
+  }
+
+  .titulo-cat{
+    font-size:1.32rem;
+  }
+
+  .subtitulo-cat{
+    font-size:.92rem;
   }
 
   .card{
-    height:200px;
+    min-height:200px;
+  }
+
+  .card h3{
+    font-size:.9rem;
+    line-height:1.25;
+  }
+
+  .side-box{
+    padding:12px;
+  }
+
+  .mini-item{
+    gap:8px;
+  }
+
+  .mini-item img{
+    width:78px;
+    height:56px;
+  }
+
+  .mini-item span{
+    font-size:.88rem;
+    line-height:1.25;
+  }
+
+  footer{
+    font-size:.95rem;
   }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
+  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
+    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+  </a>
 
-  <button class="dark-btn" onclick="toggleDark()">🌙</button>
-
-  <img src="658175444_25680405581633658_3668668824201018733_n.jpg"
-       class="logo"
-       onclick="location.href='index.html'">
-
+  <button class="dark-btn" onclick="toggleDark(event)" id="darkBtn">🌙</button>
 </div>
 
-<!-- NAV -->
-<div class="nav">
-  <button class="volver-btn" onclick="location.href='index.html'">🏠</button>
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button class="cat-btn" onclick="verCat('Pais')">País</button>
-  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
-</div>
-
-<h1 id="titulo"></h1>
-
-<div class="wrapper">
-
-  <!-- FLAYER -->
-  <div class="flayer">
-    <div id="track" class="track"></div>
+<div class="top-nav-row">
+  <div class="top-nav-left">
+    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
   </div>
 
-  <!-- GRID -->
-  <div id="contenedor" class="grid"></div>
+  <div class="top-nav-center">
+    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+    <button class="cat-btn" onclick="verCat('Show')">Show</button>
+    <button class="cat-btn" onclick="verCat('Pais')">País</button>
+    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+  </div>
 
+  <div></div>
+</div>
+
+<div class="layout">
+  <main class="main">
+    <div class="box">
+      <div id="tituloCategoria" class="titulo-cat"></div>
+      <p id="subtituloCategoria" class="subtitulo-cat"></p>
+
+      <div class="ads-box" style="text-align:center;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6641245592697930"
+             data-ad-slot="3333333333"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+
+      <div id="contenedor" class="grid"></div>
+    </div>
+  </main>
+
+  <aside class="side">
+    <div class="side-box">
+      <h3 class="side-title">Otras destacadas</h3>
+      <div id="destacadasSide" class="mini-lista">
+        <div class="mensaje-estado" style="margin-top:0;">Cargando noticias...</div>
+      </div>
+    </div>
+  </aside>
 </div>
 
 <footer>
-  © 2026 Apophis Noticias |
-  <a href="privacidad.html">Privacidad</a> |
-  <a href="contacto.html">Contacto</a> |
-  <a href="sobre.html">Sobre</a>
+  <p>© 2026 Apophis Noticias</p>
+  <div>
+    <a href="privacidad.html">Privacidad</a> |
+    <a href="contacto.html">Contacto</a> |
+    <a href="sobre.html">Sobre Nosotros</a>
+  </div>
 </footer>
 
 <script>
-const API="https://apophis-noticias-backend.vercel.app";
+const API = "https://apophis-noticias-backend.vercel.app";
 
-function toggleDark(){
-  const d=document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode",d);
+function ir(id){
+  location = "noticia.html?id=" + id;
 }
 
 function verCat(c){
-  location="categoria.html?cat="+c;
+  location = "categoria.html?cat=" + encodeURIComponent(c);
 }
 
-function ir(id){
-  location="noticia.html?id="+id;
+// 🌙 DARK MODE
+function aplicarDarkMode(){
+  let dark = localStorage.getItem("darkMode");
+  if(dark === null){
+    dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }else{
+    dark = dark === "true";
+  }
+
+  document.body.classList.toggle("dark", dark);
+
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = dark ? "☀️" : "🌙";
 }
 
-async function cargar(){
-  const cat=new URLSearchParams(location.search).get("cat");
-  document.getElementById("titulo").innerText=cat;
-
-  const res=await fetch(API+"/noticias/categoria/"+cat);
-  const data=await res.json();
-
-  document.getElementById("contenedor").innerHTML=data.map(n=>`
-    <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h3>${n.titulo}</h3>
-    </div>
-  `).join("");
-
-  const flayer=data.map(n=>`
-    <div class="item" onclick="ir('${n._id}')">
-      <img src="${n.imagen}">
-      <span>${n.titulo}</span>
-    </div>
-  `).join("");
-
-  document.getElementById("track").innerHTML=flayer+flayer;
+function toggleDark(e){
+  if(e) e.stopPropagation();
+  const activo = document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", activo);
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = activo ? "☀️" : "🌙";
 }
 
-cargar();
+// 🔥 NORMALIZADOR
+function normalizar(cat){
+  return String(cat || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function escaparHTML(texto){
+  if(texto === undefined || texto === null) return "";
+  return String(texto)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function urlImagenSegura(url){
+  return escaparHTML(url || "");
+}
+
+function actualizarSEO(catOriginal, data){
+  const titulo = "Categoría: " + catOriginal + " - Apophis Noticias";
+  const descripcion = "Últimas noticias de " + catOriginal + " en Apophis Noticias.";
+  const imagen = Array.isArray(data) && data.length ? (data[0].imagen || "") : "";
+
+  document.title = titulo;
+
+  const metaTitle = document.getElementById("metaTitle");
+  if(metaTitle) metaTitle.innerText = titulo;
+
+  const metaDesc = document.getElementById("metaDesc");
+  if(metaDesc) metaDesc.setAttribute("content", descripcion);
+
+  const ogTitle = document.getElementById("ogTitle");
+  if(ogTitle) ogTitle.setAttribute("content", "Noticias de " + catOriginal);
+
+  const ogDesc = document.getElementById("ogDesc");
+  if(ogDesc) ogDesc.setAttribute("content", descripcion);
+
+  const ogUrl = document.getElementById("ogUrl");
+  if(ogUrl) ogUrl.setAttribute("content", location.href);
+
+  const ogImg = document.getElementById("ogImg");
+  if(ogImg) ogImg.setAttribute("content", imagen);
+}
+
+function activarAds(){
+  try{
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }catch(e){}
+}
+
+async function cargarDestacadasLaterales(catOriginal){
+  try{
+    const res = await fetch(API + "/noticias");
+    if(!res.ok) throw new Error("No se pudieron cargar destacadas");
+
+    const all = await res.json();
+
+    const otras = all.filter(n =>
+      normalizar(n.categoria || "") !== normalizar(catOriginal)
+    ).slice(0, 5);
+
+    if(!otras.length){
+      document.getElementById("destacadasSide").innerHTML = `
+        <div class="mensaje-estado" style="margin-top:0;">No hay destacadas disponibles.</div>
+      `;
+      return;
+    }
+
+    document.getElementById("destacadasSide").innerHTML = otras.map(n => `
+      <div class="mini-item" onclick="ir('${n._id}')">
+        <img src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
+        <span>${escaparHTML(n.titulo || "Sin título")}</span>
+      </div>
+    `).join("");
+  }catch(e){
+    document.getElementById("destacadasSide").innerHTML = `
+      <div class="mensaje-estado" style="margin-top:0;">No se pudieron cargar las destacadas.</div>
+    `;
+  }
+}
+
+async function cargarCategoria(){
+  try{
+    const catOriginal = new URLSearchParams(location.search).get("cat");
+
+    if(!catOriginal){
+      document.getElementById("tituloCategoria").innerText = "Categoría no especificada";
+      document.getElementById("subtituloCategoria").innerText = "No se recibió ninguna categoría para mostrar.";
+      document.getElementById("contenedor").innerHTML = `<div class="mensaje-estado" style="grid-column:1/-1;">No hay categoría</div>`;
+      return;
+    }
+
+    document.getElementById("tituloCategoria").innerText = "Categoría: " + catOriginal;
+    document.getElementById("subtituloCategoria").innerText = "Explorá las últimas noticias publicadas en " + catOriginal + ".";
+
+    let data = [];
+
+    let res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catOriginal));
+
+    if(res.ok){
+      data = await res.json();
+    }
+
+    if(!data.length){
+      const catFix = normalizar(catOriginal);
+      res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catFix));
+
+      if(res.ok){
+        data = await res.json();
+      }
+    }
+
+    if(!data.length){
+      const resAll = await fetch(API + "/noticias");
+      if(!resAll.ok) throw new Error("No se pudieron cargar todas las noticias");
+      const all = await resAll.json();
+
+      data = all.filter(n =>
+        normalizar(n.categoria || "") === normalizar(catOriginal)
+      );
+    }
+
+    if(!data.length){
+      actualizarSEO(catOriginal, []);
+      document.getElementById("contenedor").innerHTML = `
+        <div class="mensaje-estado" style="grid-column:1/-1;">No hay noticias en esta categoría.</div>
+      `;
+      await cargarDestacadasLaterales(catOriginal);
+      activarAds();
+      return;
+    }
+
+    document.getElementById("contenedor").innerHTML = data.map(n => `
+      <div class="card" style="background-image:url('${urlImagenSegura(n.imagen)}')" onclick="ir('${n._id}')">
+        <h3>${escaparHTML(n.titulo || "Sin título")}</h3>
+      </div>
+    `).join("");
+
+    actualizarSEO(catOriginal, data);
+    await cargarDestacadasLaterales(catOriginal);
+    activarAds();
+
+  }catch(e){
+    console.log("Error:", e);
+    document.getElementById("tituloCategoria").innerText = "Error";
+    document.getElementById("subtituloCategoria").innerText = "No se pudo cargar la categoría en este momento.";
+    document.getElementById("contenedor").innerHTML = `
+      <div class="mensaje-estado" style="grid-column:1/-1;">Error cargando</div>
+    `;
+    document.getElementById("destacadasSide").innerHTML = `
+      <div class="mensaje-estado" style="margin-top:0;">No se pudieron cargar las destacadas.</div>
+    `;
+  }
+}
+
+window.onload = () => {
+  aplicarDarkMode();
+  cargarCategoria();
+};
 </script>
 
 </body>
