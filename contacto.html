@@ -2,20 +2,306 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Contacto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto | Apophis Noticias</title>
+<meta name="description" content="Canales de contacto de Apophis Noticias para consultas generales, publicidad y comunicaciones editoriales.">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Contacto | Apophis Noticias">
+<meta property="og:description" content="Contactate con Apophis Noticias para consultas generales, editoriales o comerciales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:Georgia, serif;
+  background:#f4e3b2;
+  color:#111;
+  transition:.3s;
+}
+body.dark{
+  background:#111;
+  color:#f0e68c;
+}
+*{box-sizing:border-box;}
+
+.header{
+  background:black;
+  color:gold;
+  padding:22px 20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  position:relative;
+  flex-wrap:wrap;
+  border-bottom:2px solid rgba(255,215,0,.18);
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.logo-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.logo-img{
+  max-width:520px;
+  width:min(92vw, 520px);
+  height:auto;
+  display:block;
+  border-radius:12px;
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
+}
+
+.logo-link:hover .logo-img{
+  transform:scale(1.03) translateY(-2px);
+  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
+  filter:brightness(1.08);
+}
+
+.dark-btn{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:#111;
+  color:gold;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:9999;
+}
+
+.top-nav-row{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 12px 8px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+
+.top-nav-left{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+}
+
+.top-nav-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.volver-btn,
+.cat-btn{
+  padding:8px 12px;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  border:none;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
+
+.cat-btn{margin:3px;}
+
+.volver-btn:hover,
+.cat-btn:hover{
+  opacity:.92;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.page-wrap{
+  max-width:1100px;
+  margin:20px auto;
+  padding:0 12px;
+}
+
+.content-box{
+  background:#fdf5d7;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  line-height:1.75;
+}
+body.dark .content-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+h1{
+  margin-top:0;
+  font-size:2rem;
+}
+
+h2{
+  margin-top:26px;
+  font-size:1.25rem;
+  border-bottom:2px solid rgba(255,215,0,.35);
+  padding-bottom:6px;
+}
+
+p, li{
+  font-size:1.02rem;
+}
+
+ul{
+  padding-left:20px;
+}
+
+.info{
+  background:rgba(0,0,0,.05);
+  padding:12px 14px;
+  border-radius:10px;
+  margin:16px 0;
+}
+body.dark .info{
+  background:rgba(255,255,255,.05);
+}
+
+footer{
+  margin-top:40px;
+  padding:20px;
+  text-align:center;
+  background:#111;
+  color:gold;
+}
+footer a{
+  color:gold;
+  margin:0 10px;
+}
+
+@media(max-width:950px){
+  .logo-img{
+    width:min(94vw, 440px);
+  }
+  .top-nav-row{
+    grid-template-columns:1fr;
+    justify-items:center;
+  }
+  .top-nav-left{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .top-nav-center{
+    width:100%;
+    justify-content:center;
+  }
+}
+</style>
 </head>
-<body style="font-family:Georgia;background:#f4e3b2;padding:20px;">
+<body>
 
-<h1>Contacto</h1>
+<div class="header">
+  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
+    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+  </a>
 
-<p>Podés comunicarte con Apophis Noticias:</p>
+  <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+</div>
 
-<ul>
-  <li>Email: alanwaltetoledo@gmail.com</li>
-  <li>Ubicación: Rosario, Argentina</li>
-</ul>
+<div class="top-nav-row">
+  <div class="top-nav-left">
+    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
+  </div>
 
-<p>Respondemos dentro de 24 a 48 horas.</p>
+  <div class="top-nav-center">
+    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+    <button class="cat-btn" onclick="verCat('Show')">Show</button>
+    <button class="cat-btn" onclick="verCat('Pais')">País</button>
+    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+  </div>
+
+  <div></div>
+</div>
+
+<div class="page-wrap">
+  <div class="content-box">
+    <h1>Contacto</h1>
+
+    <div class="info">
+      Si querés comunicarte con Apophis Noticias por consultas generales, información editorial o temas relacionados con el sitio, podés hacerlo a través de los siguientes medios.
+    </div>
+
+    <h2>Canales de contacto</h2>
+    <ul>
+      <li><strong>Email:</strong> alanwaltetoledo@gmail.com</li>
+      <li><strong>Ubicación de referencia:</strong> Rosario, Argentina</li>
+    </ul>
+
+    <h2>Consultas que podés realizar</h2>
+    <p>
+      Este canal está disponible para consultas sobre publicaciones, errores en el sitio, información general, colaboración, correcciones, cuestiones editoriales y otros temas vinculados con Apophis Noticias.
+    </p>
+
+    <h2>Tiempo estimado de respuesta</h2>
+    <p>
+      Intentamos responder los mensajes dentro de un plazo aproximado de <strong>24 a 48 horas hábiles</strong>, según el volumen de consultas recibido.
+    </p>
+
+    <h2>Importante</h2>
+    <p>
+      Para facilitar una respuesta más rápida, se recomienda enviar los mensajes con una descripción clara del motivo del contacto y, si corresponde, incluir el enlace de la publicación relacionada.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Apophis Noticias</p>
+  <div>
+    <a href="privacidad.html">Privacidad</a> |
+    <a href="contacto.html">Contacto</a> |
+    <a href="sobre.html">Sobre Nosotros</a>
+  </div>
+</footer>
+
+<script>
+function aplicarDarkMode(){
+  let dark = localStorage.getItem("darkMode");
+  if(dark === null){
+    dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }else{
+    dark = dark === "true";
+  }
+  document.body.classList.toggle("dark", dark);
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = dark ? "☀️" : "🌙";
+}
+
+function toggleDark(){
+  const activo = document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", activo);
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = activo ? "☀️" : "🌙";
+}
+
+function verCat(c){
+  location = "categoria.html?cat=" + encodeURIComponent(c);
+}
+
+window.onload = () => {
+  aplicarDarkMode();
+};
+</script>
 
 </body>
 </html>
