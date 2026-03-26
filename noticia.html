@@ -15,91 +15,31 @@
 <meta property="og:url" id="ogUrl">
 <meta property="og:image" id="ogImg">
 
-<script type="application/ld+json" id="jsonld"></script>
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-
-<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
-.header{
-  background:black;
-  color:gold;
-  padding:25px;
+.layout{
   display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-}
-
-.eyes{font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{95%{transform:scaleY(0.1);}}
-
-/* 🔥 CAJA NOTICIA (RECUPERADA) */
-.noticia-container{
-  max-width:900px;
+  max-width:1200px;
   margin:auto;
-  padding:20px;
+  gap:20px;
+}
+
+.noticia-container{
+  flex:3;
   background:#fdf5d7;
+  padding:20px;
   border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
-body.dark .noticia-container{
-  background:#1a1a1a;
+body.dark .noticia-container{background:#1a1a1a;}
+
+.relacionadas-lateral{
+  flex:1;
 }
 
-/* 🔥 TITULO PRO */
-.noticia-container h1{
-  font-size:2.8rem;
-  font-weight:900;
-  text-align:center;
-  margin-bottom:10px;
-}
-
-/* 🔥 INFO (autor + fecha) */
-.info-noticia{
-  text-align:center;
-  font-size:0.9rem;
-  margin-bottom:15px;
-  opacity:0.8;
-}
-.info-noticia span{margin:0 5px;}
-
-.noticia-img{
-  width:100%;
-  height:400px;
-  background-size:cover;
-  background-position:center;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
-.noticia-texto{
-  font-size:1.2rem;
-  line-height:1.6;
-  text-align:justify;
-}
-
-/* 🔥 REACCIONES */
-.reactions{
-  display:flex;
-  gap:5px;
-  margin-top:15px;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-.reactions button{
-  background:#111;
-  color:gold;
-  padding:6px 10px;
-  border-radius:6px;
-}
-
-/* 🔥 RELACIONADAS */
-.relacionadas{max-width:900px;margin:20px auto;}
 .rel-card{
   height:100px;
   background-size:cover;
@@ -118,18 +58,18 @@ body.dark .noticia-container{
   padding:3px;
 }
 
-/* 🔍 */
-.buscador-box{text-align:center;margin:20px;}
-#buscador{padding:10px;width:60%;border-radius:8px;}
-
-/* 🔙 */
-.volver{text-align:center;margin:10px;}
-.volver button{
-  padding:8px 12px;
-  border-radius:8px;
+.reactions{
+  display:flex;
+  gap:5px;
+  margin-top:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.reactions button{
   background:#111;
   color:gold;
-  cursor:pointer;
+  padding:6px 10px;
+  border-radius:6px;
 }
 
 .dark-toggle{
@@ -143,6 +83,23 @@ body.dark .noticia-container{
   cursor:pointer;
 }
 
+.buscador-box{text-align:center;margin:20px;}
+#buscador{padding:10px;width:60%;border-radius:8px;}
+
+.volver{text-align:center;margin:10px;}
+.volver button{
+  padding:8px 12px;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+}
+
+/* 💬 */
+.comentarios{max-width:900px;margin:auto;margin-top:20px;}
+.comentario{border-bottom:1px solid #ccc;margin:10px 0;padding:5px;}
+.respuesta{margin-left:20px;font-size:0.9rem;}
+
 footer{
   margin-top:40px;
   padding:20px;
@@ -151,23 +108,12 @@ footer{
   color:gold;
 }
 footer a{color:gold;margin:0 10px;}
-
-/* 💬 COMENTARIOS */
-.comentarios{max-width:900px;margin:auto;margin-top:20px;}
-.comentario{border-bottom:1px solid #ccc;margin:10px 0;padding:5px;}
-.respuesta{margin-left:20px;font-size:0.9rem;}
 </style>
 </head>
 
 <body>
 
 <div class="dark-toggle" onclick="toggleDark()">🌙</div>
-
-<div class="header">
-  <span class="eyes">𓂀</span>
-  <span onclick="location.href='index.html'" style="cursor:pointer;font-size:2rem;">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓂀</span>
-</div>
 
 <div class="volver">
   <button onclick="location.href='index.html'">🏠 Volver al inicio</button>
@@ -177,7 +123,13 @@ footer a{color:gold;margin:0 10px;}
   <input id="buscador" placeholder="🔍 Buscar noticias...">
 </div>
 
+<div class="layout">
+
 <div class="noticia-container" id="noticiaContainer"></div>
+
+<div class="relacionadas-lateral" id="relacionadas"></div>
+
+</div>
 
 <div class="reactions">
   <button onclick="reaccion('likes')">👍 <span id="likes">0</span></button>
@@ -186,8 +138,6 @@ footer a{color:gold;margin:0 10px;}
   <button onclick="reaccion('tristeza')">😢 <span id="tristeza">0</span></button>
   <button onclick="reaccion('enojo')">😡 <span id="enojo">0</span></button>
 </div>
-
-<div class="relacionadas" id="relacionadas"></div>
 
 <!-- 💬 COMENTARIOS -->
 <div class="comentarios">
@@ -233,9 +183,9 @@ async function cargarNoticia(){
 
   document.getElementById("noticiaContainer").innerHTML=`
     <h1>${n.titulo}</h1>
-    <div class="info-noticia">🗓 ${formatearFecha(n.fecha)}</div>
-    <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-    <div class="noticia-texto">${n.contenido}</div>
+    <p>🗓 ${formatearFecha(n.fecha)}</p>
+    <img src="${n.imagen}" style="width:100%">
+    <div>${n.contenido}</div>
   `;
 
   likes.innerText=n.likes||0;
@@ -244,40 +194,35 @@ async function cargarNoticia(){
   tristeza.innerText=n.tristeza||0;
   enojo.innerText=n.enojo||0;
 
-  // 💬 COMENTARIOS + RESPUESTAS
-  document.getElementById("listaComentarios").innerHTML =
-    (n.comentarios||[]).map((c,i)=>`
-      <div class="comentario">
-        <strong>${c.nombre}</strong>
-        <p>${c.texto}</p>
-
-        <input id="respNombre${i}" placeholder="Tu nombre">
-        <input id="respTexto${i}" placeholder="Responder...">
-        <button onclick="responder(${i})">Responder</button>
-
-        ${(c.respuestas||[]).map(r=>`
-          <div class="respuesta">
-            <strong>${r.nombre}</strong>: ${r.texto}
-          </div>
-        `).join("")}
-      </div>
-    `).join("");
-
+  // relacionadas
   const rel=await fetch(API+"/noticias/categoria/"+n.categoria);
   const dataRel=await rel.json();
 
-  document.getElementById("relacionadas").innerHTML=
-    dataRel.filter(r=>r._id!==n._id).map(r=>`
+  relacionadas.innerHTML=dataRel
+    .filter(r=>r._id!==n._id)
+    .map(r=>`
       <div class="rel-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')">
         <span>${r.titulo}</span>
       </div>
     `).join("");
 
-  document.title=n.titulo;
-  ogTitle.content=n.titulo;
-  ogDesc.content=n.titulo;
-  ogUrl.content=location.href;
-  ogImg.content=n.imagen;
+  // comentarios
+  listaComentarios.innerHTML=(n.comentarios||[]).map((c,i)=>`
+    <div class="comentario">
+      <strong>${c.nombre}</strong>
+      <p>${c.texto}</p>
+
+      <input id="respNombre${i}" placeholder="Tu nombre">
+      <input id="respTexto${i}" placeholder="Responder...">
+      <button onclick="responder(${i})">Responder</button>
+
+      ${(c.respuestas||[]).map(r=>`
+        <div class="respuesta">
+          <strong>${r.nombre}</strong>: ${r.texto}
+        </div>
+      `).join("")}
+    </div>
+  `).join("");
 }
 
 async function reaccion(tipo){

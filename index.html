@@ -44,7 +44,7 @@ body.dark{background:#111;color:#f0e68c;}
 .eyes{font-size:1.5rem;animation:blink 4s infinite;}
 @keyframes blink{95%{transform:scaleY(0.1);}}
 
-/* 🌙 YA EXISTÍA → SOLO LO USAMOS */
+/* 🔥 FIX REAL DARK BUTTON */
 .dark-btn{
   position:absolute;
   right:10px;
@@ -55,6 +55,7 @@ body.dark{background:#111;color:#f0e68c;}
   padding:6px 10px;
   border-radius:6px;
   cursor:pointer;
+  z-index:9999; /* 👈 SOLUCIÓN */
 }
 
 #buscador{padding:10px;width:60%;border-radius:8px;}
@@ -96,6 +97,7 @@ body.dark{background:#111;color:#f0e68c;}
   padding:10px;
   border-radius:8px;
   font-size:12px;
+  z-index:1000;
 }
 
 .intro{
@@ -123,7 +125,6 @@ body.dark .intro{background:#1a1a1a;}
   <span class="title" onclick="location.reload()">APOPHIS NOTICIAS</span>
   <span class="eyes">𓂀</span>
 
-  <!-- 🌙 BOTÓN YA EXISTÍA → AHORA FUNCIONA PERFECTO -->
   <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
 
   <button onclick="loginAdmin()">Admin</button>
@@ -176,7 +177,7 @@ body.dark .intro{background:#1a1a1a;}
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
-// 🌙 DARK MODE (YA TENÍAS → MEJORADO VISUAL)
+// 🌙 DARK MODE
 function aplicarDarkMode(){
   let dark = localStorage.getItem("darkMode");
   if(dark === null){
@@ -194,7 +195,7 @@ function toggleDark(){
   document.getElementById("darkBtn").innerText = activo ? "☀️" : "🌙";
 }
 
-// ⚡ CACHE TIPO APP
+// ⚡ CACHE
 const CACHE_TIME = 5 * 60 * 1000;
 
 async function cargarHome(){
@@ -245,9 +246,6 @@ function render(data){
 
   const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
   document.getElementById("flayerInner").innerHTML=html+html;
-
-  // 🧠 SEO AUTOMÁTICO HOME
-  document.title = "Apophis Noticias - Últimas noticias";
 }
 
 // 👁 VISITAS

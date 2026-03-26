@@ -7,7 +7,7 @@
 <title id="metaTitle">Categoría - Apophis Noticias</title>
 
 <!-- SEO -->
-<meta name="description" id="metaDesc" content="Noticias por categoría en Apophis Noticias">
+<meta name="description" content="Noticias por categoría en Apophis Noticias">
 <meta name="robots" content="index, follow">
 
 <!-- Open Graph -->
@@ -31,6 +31,21 @@ body.dark{background:#111;color:#f0e68c;}
   text-align:center;
   font-size:2rem;
   cursor:pointer;
+  position:relative;
+}
+
+/* 🌙 BOTÓN DARK */
+.dark-btn{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:#111;
+  color:gold;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:9999;
 }
 
 .grid{
@@ -63,7 +78,6 @@ body.dark{background:#111;color:#f0e68c;}
   font-size:0.9rem;
 }
 
-/* 🔥 MEJORA VISUAL */
 .titulo-cat{
   text-align:center;
   font-size:2rem;
@@ -71,19 +85,6 @@ body.dark{background:#111;color:#f0e68c;}
   font-weight:bold;
 }
 
-/* 🌙 BOTÓN DARK */
-.dark-btn{
-  position:fixed;
-  top:10px;
-  right:10px;
-  background:#111;
-  color:gold;
-  padding:6px 10px;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-/* MOBILE */
 @media(max-width:600px){
   .card{width:95%;}
 }
@@ -92,13 +93,20 @@ body.dark{background:#111;color:#f0e68c;}
 
 <body>
 
-<!-- 🌙 DARK MODE -->
-<button class="dark-btn" onclick="toggleDark()">🌙</button>
+<!-- 🔙 VOLVER -->
+<div style="text-align:center;margin-top:10px;">
+  <button onclick="location.href='index.html'" style="padding:8px 12px;background:#111;color:gold;border-radius:8px;">
+    🏠 Volver al inicio
+  </button>
+</div>
 
 <div class="header" onclick="location.href='index.html'">
 APOPHIS NOTICIAS
+
+<button class="dark-btn" onclick="toggleDark(event)">🌙</button>
 </div>
 
+<!-- 🔥 TITULO -->
 <div id="tituloCategoria" class="titulo-cat"></div>
 
 <!-- ADS -->
@@ -116,18 +124,20 @@ APOPHIS NOTICIAS
 <script>
 const API="https://apophis-noticias-backend.vercel.app";
 
+function ir(id){location="noticia.html?id="+id;}
+
 // 🌙 DARK MODE
-function toggleDark(){
+function toggleDark(e){
+  e.stopPropagation();
   document.body.classList.toggle("dark");
   localStorage.setItem("darkMode", document.body.classList.contains("dark"));
 }
+
 if(localStorage.getItem("darkMode")==="true"){
   document.body.classList.add("dark");
 }
 
-function ir(id){location="noticia.html?id="+id;}
-
-// NORMALIZADOR
+// 🔥 NORMALIZADOR
 function normalizar(cat){
   return cat
     .trim()
@@ -139,82 +149,65 @@ function normalizar(cat){
     .replace("ú","u");
 }
 
-// ⚡ CACHE TIPO APP
-const CACHE_KEY = "cache_categoria";
-const CACHE_TIME = 5 * 60 * 1000;
-
 async function cargarCategoria(){
   try{
     const catOriginal = new URLSearchParams(location.search).get("cat");
 
     if(!catOriginal){
-      contenedor.innerHTML="<p>No hay categoría</p>";
+      document.getElementById("contenedor").innerHTML="<p>No hay categoría</p>";
       return;
     }
 
-    tituloCategoria.innerText = "Categoría: " + catOriginal;
-
-    // 🔥 CACHE
-    const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}");
-    const now = Date.now();
-
-    if(cache[catOriginal] && (now - cache[catOriginal].time < CACHE_TIME)){
-      render(cache[catOriginal].data);
-      return;
-    }
+    document.getElementById("tituloCategoria").innerText = "Categoría: " + catOriginal;
 
     let data = [];
 
-    // INTENTO 1
     let res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catOriginal));
-    if(res.ok) data = await res.json();
 
-    // INTENTO 2
+    if(res.ok){
+      data = await res.json();
+    }
+
     if(!data.length){
       const catFix = normalizar(catOriginal);
-      res = await fetch(API + "/noticias/categoria/" + catFix);
-      if(res.ok) data = await res.json();
-    }
+      res = await fetch(API + "/noticias/categoria/" + encodeURIComponent(catFix));
 
-    // INTENTO 3
-    if(!data.length){
-      const all = await fetch(API+"/noticias").then(r=>r.json());
-      data = all.filter(n => normalizar(n.categoria||"") === normalizar(catOriginal));
+      if(res.ok){
+        data = await res.json();
+      }
     }
 
     if(!data.length){
-      contenedor.innerHTML="<p>No hay noticias en esta categoría</p>";
+      const resAll = await fetch(API + "/noticias");
+      const all = await resAll.json();
+
+      data = all.filter(n =>
+        normalizar(n.categoria || "") === normalizar(catOriginal)
+      );
+    }
+
+    if(!data.length){
+      document.getElementById("contenedor").innerHTML="<p>No hay noticias en esta categoría</p>";
       return;
     }
 
-    // GUARDAR CACHE
-    cache[catOriginal] = {data, time: now};
-    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    document.getElementById("contenedor").innerHTML = data.map(n=>`
+      <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
+        <h3>${n.titulo}</h3>
+      </div>
+    `).join("");
 
-    render(data);
+    // SEO dinámico
+    document.title = "Categoría: " + catOriginal;
+    document.getElementById("metaTitle").innerText = "Categoría: " + catOriginal;
+    ogTitle.content = "Noticias de " + catOriginal;
+    ogDesc.content = "Últimas noticias de " + catOriginal;
+    ogUrl.content = location.href;
 
   }catch(e){
-    console.log(e);
-    contenedor.innerHTML="<p>Error cargando</p>";
+    console.log("Error:", e);
+    document.getElementById("contenedor").innerHTML="<p>Error cargando</p>";
   }
-}
-
-function render(data){
-  contenedor.innerHTML = data.map(n=>`
-    <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h3>${n.titulo}</h3>
-    </div>
-  `).join("");
-
-  // 🧠 SEO AUTOMÁTICO
-  const cat = tituloCategoria.innerText.replace("Categoría: ","");
-
-  document.title = "Noticias de " + cat;
-  metaDesc.content = "Últimas noticias de " + cat + " en Apophis Noticias";
-  ogTitle.content = "Noticias de " + cat;
-  ogDesc.content = "Explorá todo sobre " + cat;
-  ogUrl.content = location.href;
-  ogImg.content = data[0]?.imagen || "";
 }
 
 cargarCategoria();
