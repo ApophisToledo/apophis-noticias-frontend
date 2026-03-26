@@ -66,11 +66,7 @@ body.dark .noticia-container{
   margin-bottom:15px;
   opacity:0.8;
 }
-
-/* 🔥 EXTRA MEJORA VISUAL (NO ROMPE NADA) */
-.info-noticia span{
-  margin:0 5px;
-}
+.info-noticia span{margin:0 5px;}
 
 .noticia-img{
   width:100%;
@@ -155,6 +151,11 @@ footer{
   color:gold;
 }
 footer a{color:gold;margin:0 10px;}
+
+/* 💬 COMENTARIOS */
+.comentarios{max-width:900px;margin:auto;margin-top:20px;}
+.comentario{border-bottom:1px solid #ccc;margin:10px 0;padding:5px;}
+.respuesta{margin-left:20px;font-size:0.9rem;}
 </style>
 </head>
 
@@ -168,19 +169,16 @@ footer a{color:gold;margin:0 10px;}
   <span class="eyes">𓂀</span>
 </div>
 
-<!-- 🔙 VOLVER -->
 <div class="volver">
   <button onclick="location.href='index.html'">🏠 Volver al inicio</button>
 </div>
 
-<!-- 🔎 BUSCADOR -->
 <div class="buscador-box">
   <input id="buscador" placeholder="🔍 Buscar noticias...">
 </div>
 
 <div class="noticia-container" id="noticiaContainer"></div>
 
-<!-- 👍 REACCIONES -->
 <div class="reactions">
   <button onclick="reaccion('likes')">👍 <span id="likes">0</span></button>
   <button onclick="reaccion('dislikes')">👎 <span id="dislikes">0</span></button>
@@ -189,8 +187,18 @@ footer a{color:gold;margin:0 10px;}
   <button onclick="reaccion('enojo')">😡 <span id="enojo">0</span></button>
 </div>
 
-<!-- 📰 RELACIONADAS -->
 <div class="relacionadas" id="relacionadas"></div>
+
+<!-- 💬 COMENTARIOS -->
+<div class="comentarios">
+  <h3>Comentarios</h3>
+
+  <input id="nombreComentario" placeholder="Tu nombre">
+  <textarea id="textoComentario" placeholder="Escribí tu comentario..."></textarea>
+  <button onclick="enviarComentario()">Enviar</button>
+
+  <div id="listaComentarios"></div>
+</div>
 
 <footer>
   © 2026 Apophis Noticias |
@@ -203,7 +211,6 @@ footer a{color:gold;margin:0 10px;}
 const API="https://apophis-noticias-backend.vercel.app";
 let noticiaId="";
 
-// 🌙 DARK MODE
 function toggleDark(){
   document.body.classList.toggle("dark");
   localStorage.setItem("darkMode", document.body.classList.contains("dark"));
@@ -212,70 +219,67 @@ if(localStorage.getItem("darkMode")==="true"){
   document.body.classList.add("dark");
 }
 
-// 🔥 FORMATO FECHA (MEJORADO: usa fecha real si existe)
 function formatearFecha(fecha){
   const f = fecha ? new Date(fecha) : new Date();
   return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"});
 }
 
-// 🔥 CARGAR NOTICIA
 async function cargarNoticia(){
-  try{
-    const id=new URLSearchParams(location.search).get("id");
-    if(!id){
-      noticiaContainer.innerHTML="<h2>No hay noticia seleccionada</h2>";
-      return;
-    }
+  const id=new URLSearchParams(location.search).get("id");
+  noticiaId=id;
 
-    noticiaId=id;
+  const res=await fetch(API+"/noticias/"+id);
+  const n=await res.json();
 
-    const res=await fetch(API+"/noticias/"+id);
-    const n=await res.json();
+  document.getElementById("noticiaContainer").innerHTML=`
+    <h1>${n.titulo}</h1>
+    <div class="info-noticia">🗓 ${formatearFecha(n.fecha)}</div>
+    <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
+    <div class="noticia-texto">${n.contenido}</div>
+  `;
 
-    // 🔥 AUTOR Y FECHA REALES (SIN ROMPER NADA)
-    const autor = n.autor || "Apophis Noticias";
-    const fecha = formatearFecha(n.fecha);
+  likes.innerText=n.likes||0;
+  dislikes.innerText=n.dislikes||0;
+  sorpresa.innerText=n.sorpresa||0;
+  tristeza.innerText=n.tristeza||0;
+  enojo.innerText=n.enojo||0;
 
-    document.getElementById("noticiaContainer").innerHTML=`
-      <h1>${n.titulo}</h1>
-      <div class="info-noticia">
-        🗓 ${fecha} <span>|</span> ✍ ${autor}
+  // 💬 COMENTARIOS + RESPUESTAS
+  document.getElementById("listaComentarios").innerHTML =
+    (n.comentarios||[]).map((c,i)=>`
+      <div class="comentario">
+        <strong>${c.nombre}</strong>
+        <p>${c.texto}</p>
+
+        <input id="respNombre${i}" placeholder="Tu nombre">
+        <input id="respTexto${i}" placeholder="Responder...">
+        <button onclick="responder(${i})">Responder</button>
+
+        ${(c.respuestas||[]).map(r=>`
+          <div class="respuesta">
+            <strong>${r.nombre}</strong>: ${r.texto}
+          </div>
+        `).join("")}
       </div>
-      <div class="noticia-img" style="background-image:url('${n.imagen}')"></div>
-      <div class="noticia-texto">${n.contenido}</div>
-    `;
+    `).join("");
 
-    // contadores
-    likes.innerText=n.likes||0;
-    dislikes.innerText=n.dislikes||0;
-    sorpresa.innerText=n.sorpresa||0;
-    tristeza.innerText=n.tristeza||0;
-    enojo.innerText=n.enojo||0;
+  const rel=await fetch(API+"/noticias/categoria/"+n.categoria);
+  const dataRel=await rel.json();
 
-    // relacionadas
-    const rel=await fetch(API+"/noticias/categoria/"+n.categoria);
-    const dataRel=await rel.json();
+  document.getElementById("relacionadas").innerHTML=
+    dataRel.filter(r=>r._id!==n._id).map(r=>`
+      <div class="rel-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')">
+        <span>${r.titulo}</span>
+      </div>
+    `).join("");
 
-    document.getElementById("relacionadas").innerHTML=
-      dataRel.filter(r=>r._id!==n._id).map(r=>`
-        <div class="rel-card" style="background-image:url('${r.imagen}')" onclick="ir('${r._id}')">
-          <span>${r.titulo}</span>
-        </div>
-      `).join("");
-
-    // SEO
-    document.title=n.titulo;
-    ogTitle.content=n.titulo;
-    ogDesc.content=n.titulo;
-    ogUrl.content=location.href;
-    ogImg.content=n.imagen;
-
-  }catch(e){
-    noticiaContainer.innerHTML="<h2>Error cargando noticia</h2>";
-  }
+  document.title=n.titulo;
+  ogTitle.content=n.titulo;
+  ogDesc.content=n.titulo;
+  ogUrl.content=location.href;
+  ogImg.content=n.imagen;
 }
 
-// 👍 SOLO 1 REACCIÓN
 async function reaccion(tipo){
   const key="react_"+noticiaId;
 
@@ -294,21 +298,32 @@ async function reaccion(tipo){
   cargarNoticia();
 }
 
-// 🔎 BUSCADOR
-document.getElementById("buscador").addEventListener("input",async(e)=>{
-  const q=e.target.value.toLowerCase();
-  const res=await fetch(API+"/noticias");
-  const data=await res.json();
+async function enviarComentario(){
+  const nombre = nombreComentario.value;
+  const texto = textoComentario.value;
 
-  const filtradas=data.filter(n=>n.titulo.toLowerCase().includes(q));
+  await fetch(API+"/comentario/"+noticiaId,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({nombre,texto})
+  });
 
-  document.getElementById("relacionadas").innerHTML=
-    filtradas.map(n=>`
-      <div class="rel-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-        <span>${n.titulo}</span>
-      </div>
-    `).join("");
-});
+  textoComentario.value="";
+  cargarNoticia();
+}
+
+async function responder(i){
+  const nombre = document.getElementById("respNombre"+i).value;
+  const texto = document.getElementById("respTexto"+i).value;
+
+  await fetch(API+"/respuesta/"+noticiaId+"/"+i,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({nombre,texto})
+  });
+
+  cargarNoticia();
+}
 
 function ir(id){location="noticia.html?id="+id;}
 
