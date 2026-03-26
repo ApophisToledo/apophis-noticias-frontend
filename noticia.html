@@ -15,7 +15,7 @@
 <meta property="og:url" id="ogUrl">
 <meta property="og:image" id="ogImg">
 
-<meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
+<meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJhOFpgenFldmc6TcWZe5eE28" />
 
 <script>
 window.__cmp = window.__cmp || function(){};
@@ -30,6 +30,61 @@ body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
 body.dark{background:#111;color:#f0e68c;}
 
 *{box-sizing:border-box;}
+
+.header{
+  background:black;
+  color:gold;
+  padding:22px 20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  position:relative;
+  flex-wrap:wrap;
+  border-bottom:2px solid rgba(255,215,0,.18);
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.logo-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.logo-img{
+  max-width:520px;
+  width:min(92vw, 520px);
+  height:auto;
+  display:block;
+  border-radius:12px;
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
+  box-shadow:0 0 0 rgba(255,215,0,0);
+}
+
+.logo-link:hover .logo-img{
+  transform:scale(1.03) translateY(-2px);
+  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
+  filter:brightness(1.08);
+}
+
+.logo-link:active .logo-img{
+  transform:scale(.99);
+}
+
+.dark-btn{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:#111;
+  color:gold;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:9999;
+}
 
 .layout{
   display:flex;
@@ -177,19 +232,6 @@ body.dark .rel-vacio{
 }
 .reactions button:hover{
   opacity:.92;
-}
-
-.dark-toggle{
-  position:fixed;
-  top:10px;
-  left:10px;
-  background:#111;
-  color:gold;
-  padding:6px 10px;
-  border-radius:6px;
-  cursor:pointer;
-  z-index:9999;
-  border:none;
 }
 
 .buscador-box{text-align:center;margin:20px;}
@@ -390,13 +432,22 @@ footer a{color:gold;margin:0 10px;}
   .noticia-titulo{
     font-size:1.8rem;
   }
+  .logo-img{
+    width:min(94vw, 440px);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<button class="dark-toggle" onclick="toggleDark()" id="darkBtn">🌙</button>
+<div class="header">
+  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
+    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+  </a>
+
+  <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+</div>
 
 <div class="volver">
   <button onclick="location.href='index.html'">🏠 Volver al inicio</button>
@@ -482,19 +533,59 @@ function toggleDark(){
   if(btn) btn.innerText = activo ? "☀️" : "🌙";
 }
 
+function parseFechaSegura(fecha){
+  if(!fecha) return null;
+
+  if(fecha instanceof Date && !isNaN(fecha.getTime())){
+    return fecha;
+  }
+
+  if(typeof fecha === "string"){
+    const limpia = fecha.trim();
+
+    const soloFecha = /^(\d{4})-(\d{2})-(\d{2})$/;
+    const matchSoloFecha = limpia.match(soloFecha);
+    if(matchSoloFecha){
+      const anio = Number(matchSoloFecha[1]);
+      const mes = Number(matchSoloFecha[2]) - 1;
+      const dia = Number(matchSoloFecha[3]);
+      return new Date(anio, mes, dia, 12, 0, 0);
+    }
+
+    const parseada = new Date(limpia);
+    if(!isNaN(parseada.getTime())){
+      return parseada;
+    }
+  }
+
+  return null;
+}
+
 function formatearFecha(fecha){
-  if(!fecha) return "";
-  const f = new Date(fecha);
-  if(isNaN(f.getTime())) return "";
-  return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"});
+  const f = parseFechaSegura(fecha);
+  if(f){
+    return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"});
+  }
+
+  if(typeof fecha === "string" && fecha.trim()){
+    return fecha;
+  }
+
+  return "Fecha no disponible";
 }
 
 function formatearFechaHora(fecha){
-  if(!fecha) return "Hace instantes";
-  const f = new Date(fecha);
-  if(isNaN(f.getTime())) return "Hace instantes";
-  return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"}) + " · " +
-         f.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+  const f = parseFechaSegura(fecha);
+  if(f){
+    return f.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"}) + " · " +
+           f.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+  }
+
+  if(typeof fecha === "string" && fecha.trim()){
+    return fecha;
+  }
+
+  return "Hace instantes";
 }
 
 function escaparHTML(texto){
@@ -547,6 +638,14 @@ function antiSpamPermitido(claveBase, segundos){
   return true;
 }
 
+function actualizarContadoresReacciones(n){
+  document.getElementById("likes").innerText = n.likes || 0;
+  document.getElementById("dislikes").innerText = n.dislikes || 0;
+  document.getElementById("sorpresa").innerText = n.sorpresa || 0;
+  document.getElementById("tristeza").innerText = n.tristeza || 0;
+  document.getElementById("enojo").innerText = n.enojo || 0;
+}
+
 async function buscarNoticias(texto){
   const res = await fetch(API + "/noticias");
   const data = await res.json();
@@ -587,7 +686,7 @@ async function cargarNoticia(){
     actualizarSEO(n);
 
     const autor = n.autor ? n.autor : "Redacción Apophis";
-    const fechaMostrada = n.fecha ? formatearFecha(n.fecha) : "Fecha no disponible";
+    const fechaMostrada = formatearFecha(n.fecha);
     const categoria = n.categoria ? n.categoria : "General";
     const contenidoSeguro = String(n.contenido || "");
 
@@ -607,11 +706,7 @@ async function cargarNoticia(){
       </div>
     `;
 
-    likes.innerText = n.likes || 0;
-    dislikes.innerText = n.dislikes || 0;
-    sorpresa.innerText = n.sorpresa || 0;
-    tristeza.innerText = n.tristeza || 0;
-    enojo.innerText = n.enojo || 0;
+    actualizarContadoresReacciones(n);
 
     try{
       const rel = await fetch(API + "/noticias/categoria/" + encodeURIComponent(n.categoria || ""));
@@ -622,30 +717,30 @@ async function cargarNoticia(){
         : [];
 
       if(!relacionadasFiltradas.length){
-        relacionadas.innerHTML = `<div class="rel-vacio">No hay noticias relacionadas disponibles.</div>`;
+        document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No hay noticias relacionadas disponibles.</div>`;
       }else{
-        relacionadas.innerHTML = relacionadasFiltradas.map(r=>`
+        document.getElementById("relacionadas").innerHTML = relacionadasFiltradas.map(r=>`
           <div class="rel-card" style="background-image:url('${escaparHTML(r.imagen || "")}')" onclick="ir('${r._id}')">
             <span>${escaparHTML(r.titulo || "Sin título")}</span>
           </div>
         `).join("");
       }
     }catch(e){
-      relacionadas.innerHTML = `<div class="rel-vacio">No se pudieron cargar las relacionadas.</div>`;
+      document.getElementById("relacionadas").innerHTML = `<div class="rel-vacio">No se pudieron cargar las relacionadas.</div>`;
     }
 
     const comentarios = Array.isArray(n.comentarios) ? [...n.comentarios] : [];
 
     comentarios.sort((a,b)=>{
-      const fa = a && a.fecha ? new Date(a.fecha).getTime() : 0;
-      const fb = b && b.fecha ? new Date(b.fecha).getTime() : 0;
-      return fb - fa;
+      const fa = parseFechaSegura(a && a.fecha);
+      const fb = parseFechaSegura(b && b.fecha);
+      return (fb ? fb.getTime() : 0) - (fa ? fa.getTime() : 0);
     });
 
     if(!comentarios.length){
-      listaComentarios.innerHTML = `<div class="sin-comentarios">Todavía no hay comentarios. Sé el primero en participar.</div>`;
+      document.getElementById("listaComentarios").innerHTML = `<div class="sin-comentarios">Todavía no hay comentarios. Sé el primero en participar.</div>`;
     }else{
-      listaComentarios.innerHTML = comentarios.map((c,i)=>`
+      document.getElementById("listaComentarios").innerHTML = comentarios.map((c,i)=>`
         <div class="comentario">
           <div class="comentario-head">
             <strong>${escaparHTML(c.nombre || "Anónimo")}</strong>
@@ -687,6 +782,11 @@ async function cargarNoticia(){
 }
 
 async function reaccion(tipo){
+  if(!noticiaId){
+    alert("No se pudo identificar la noticia.");
+    return;
+  }
+
   const key = "react_" + noticiaId;
 
   if(localStorage.getItem(key)){
@@ -695,22 +795,26 @@ async function reaccion(tipo){
   }
 
   try{
-    await fetch(API + "/noticias/" + noticiaId,{
+    const res = await fetch(API + "/noticias/" + noticiaId,{
       method:"PUT",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({[tipo]:1})
     });
 
-    localStorage.setItem(key, true);
-    cargarNoticia();
+    if(!res.ok){
+      throw new Error("Error al guardar reacción");
+    }
+
+    localStorage.setItem(key, "true");
+    await cargarNoticia();
   }catch(e){
     alert("No se pudo registrar la reacción.");
   }
 }
 
 async function enviarComentario(){
-  const nombre = nombreComentario.value.trim();
-  const texto = textoComentario.value.trim();
+  const nombre = document.getElementById("nombreComentario").value.trim();
+  const texto = document.getElementById("textoComentario").value.trim();
 
   if(!nombre || !texto){
     alert("Completá nombre y comentario.");
@@ -734,8 +838,8 @@ async function enviarComentario(){
       body:JSON.stringify({nombre,texto})
     });
 
-    textoComentario.value = "";
-    cargarNoticia();
+    document.getElementById("textoComentario").value = "";
+    await cargarNoticia();
   }catch(e){
     alert("No se pudo enviar el comentario.");
   }
@@ -767,7 +871,7 @@ async function responder(i){
       body:JSON.stringify({nombre,texto})
     });
 
-    cargarNoticia();
+    await cargarNoticia();
   }catch(e){
     alert("No se pudo enviar la respuesta.");
   }
