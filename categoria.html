@@ -6,7 +6,7 @@
 
 <title id="metaTitle">Categoría - Apophis Noticias</title>
 
-<meta name="description" id="metaDesc" content="Noticias por categoría en Apophis Noticias">
+<meta name="description" id="metaDesc">
 <meta name="robots" content="index, follow">
 
 <meta property="og:title" id="ogTitle">
@@ -24,6 +24,7 @@ body{
   font-family:Georgia;
   background:#f4e3b2;
   color:#111;
+  transition:.3s;
 }
 body.dark{
   background:#111;
@@ -34,20 +35,18 @@ body.dark{
 .header{
   background:black;
   color:gold;
-  padding:18px;
+  padding:20px;
   text-align:center;
   position:relative;
 }
 
 .logo{
-  max-width:90%;
-  height:auto;
+  max-width:95%;
   border-radius:10px;
+  cursor:pointer;
   transition:.3s;
 }
-.logo:hover{
-  transform:scale(1.05);
-}
+.logo:hover{transform:scale(1.05);}
 
 .dark-btn{
   position:absolute;
@@ -56,8 +55,8 @@ body.dark{
   background:#111;
   color:gold;
   border:none;
-  padding:6px 10px;
-  border-radius:8px;
+  padding:8px 12px;
+  border-radius:10px;
 }
 
 /* NAV */
@@ -66,22 +65,40 @@ body.dark{
   flex-wrap:wrap;
   justify-content:center;
   gap:8px;
-  padding:10px;
+  padding:12px;
 }
 
 .cat-btn, .volver-btn{
   background:#111;
   color:gold;
   border:none;
-  padding:8px 12px;
-  border-radius:10px;
+  padding:10px 14px;
+  border-radius:999px;
   cursor:pointer;
+  min-height:42px;
+}
+
+/* LAYOUT */
+.layout{
+  display:flex;
+  max-width:1200px;
+  margin:auto;
+  gap:20px;
+  padding:12px;
+}
+
+.main{
+  flex:3;
+}
+
+.side{
+  flex:1;
 }
 
 /* FLAYER */
 .flayer{
   overflow:hidden;
-  margin:15px;
+  margin-bottom:15px;
 }
 .track{
   display:flex;
@@ -89,9 +106,9 @@ body.dark{
   animation:scroll 30s linear infinite;
 }
 .item{
-  min-width:200px;
-  height:120px;
-  border-radius:10px;
+  min-width:220px;
+  height:140px;
+  border-radius:12px;
   overflow:hidden;
   position:relative;
   cursor:pointer;
@@ -105,10 +122,10 @@ body.dark{
   position:absolute;
   bottom:0;
   width:100%;
-  background:rgba(0,0,0,.8);
+  background:rgba(0,0,0,.85);
   color:gold;
-  font-size:12px;
-  padding:5px;
+  padding:6px;
+  font-size:13px;
 }
 
 @keyframes scroll{
@@ -120,13 +137,12 @@ body.dark{
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:12px;
+  gap:14px;
 }
 
 .card{
-  height:220px;
-  border-radius:12px;
+  height:240px;
+  border-radius:14px;
   background-size:cover;
   background-position:center;
   position:relative;
@@ -136,7 +152,7 @@ body.dark{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.8), transparent);
+  background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
 }
 .card h3{
   position:absolute;
@@ -144,14 +160,25 @@ body.dark{
   left:10px;
   right:10px;
   color:gold;
-  background:rgba(0,0,0,.7);
-  padding:6px;
-  border-radius:6px;
-  font-size:14px;
+  background:rgba(0,0,0,.8);
+  padding:8px;
+  border-radius:8px;
+}
+
+/* SIDEBAR */
+.side-box{
+  background:#fff3c4;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+body.dark .side-box{
+  background:#1a1a1a;
 }
 
 /* MOBILE */
-@media(max-width:700px){
+@media(max-width:900px){
+  .layout{flex-direction:column;}
   .grid{grid-template-columns:1fr;}
 }
 </style>
@@ -159,15 +186,13 @@ body.dark{
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <img src="658175444_25680405581633658_3668668824201018733_n.jpg" class="logo" onclick="location.href='index.html'">
   <button class="dark-btn" onclick="toggleDark()">🌙</button>
 </div>
 
-<!-- NAV -->
 <div class="nav">
-  <button class="volver-btn" onclick="location.href='index.html'">🏠</button>
+  <button class="volver-btn" onclick="location.href='index.html'">🏠 Inicio</button>
   <button class="cat-btn" onclick="verCat('Politica')">Política</button>
   <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
   <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
@@ -180,13 +205,38 @@ body.dark{
 
 <h1 id="titulo" style="text-align:center;"></h1>
 
-<!-- FLAYER -->
-<div class="flayer">
-  <div id="track" class="track"></div>
-</div>
+<div class="layout">
 
-<!-- GRID -->
-<div id="contenedor" class="grid"></div>
+  <div class="main">
+
+    <!-- FLAYER -->
+    <div class="flayer">
+      <div id="track" class="track"></div>
+    </div>
+
+    <!-- GRID -->
+    <div id="contenedor" class="grid"></div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="side">
+    <div class="side-box">
+      <h3>Más vistas</h3>
+      <div id="side"></div>
+    </div>
+
+    <div class="side-box">
+      <h3>Publicidad</h3>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6641245592697930"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"></ins>
+    </div>
+  </div>
+
+</div>
 
 <footer style="text-align:center;background:#111;color:gold;padding:20px;">
   © 2026 Apophis Noticias |
@@ -199,7 +249,8 @@ body.dark{
 const API="https://apophis-noticias-backend.vercel.app";
 
 function toggleDark(){
-  document.body.classList.toggle("dark");
+  const d=document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode",d);
 }
 
 function verCat(c){
@@ -212,19 +263,20 @@ function ir(id){
 
 async function cargar(){
   const cat=new URLSearchParams(location.search).get("cat");
+
   document.getElementById("titulo").innerText=cat;
 
   const res=await fetch(API+"/noticias/categoria/"+cat);
   const data=await res.json();
 
-  // GRID SOLO CATEGORIA
+  // GRID
   document.getElementById("contenedor").innerHTML=data.map(n=>`
     <div class="card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
       <h3>${n.titulo}</h3>
     </div>
   `).join("");
 
-  // FLAYER SOLO CATEGORIA
+  // FLAYER
   const flayer=data.map(n=>`
     <div class="item" onclick="ir('${n._id}')">
       <img src="${n.imagen}">
@@ -233,6 +285,15 @@ async function cargar(){
   `).join("");
 
   document.getElementById("track").innerHTML=flayer+flayer;
+
+  // SIDEBAR
+  document.getElementById("side").innerHTML=data.slice(0,5).map(n=>`
+    <div onclick="ir('${n._id}')" style="margin-bottom:10px;cursor:pointer;">
+      ${n.titulo}
+    </div>
+  `).join("");
+
+  try{(adsbygoogle = window.adsbygoogle || []).push({});}catch(e){}
 }
 
 cargar();
