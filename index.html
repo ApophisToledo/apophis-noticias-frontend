@@ -3,48 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
+<meta name="description" id="metaDesc" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
 
-<title>Apophis Noticias</title>
+<title id="metaTitle">Apophis Noticias</title>
+
+<meta property="og:title" id="ogTitle" content="Apophis Noticias">
+<meta property="og:description" id="ogDesc" content="Noticias actualizadas">
+<meta property="og:type" content="website">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:image" id="ogImg" content="">
 
 <script>
 window.__cmp = window.__cmp || function(){};
 </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930"
-crossorigin="anonymous"></script>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{margin:0;font-family:Georgia;background:#f4e3b2;color:#111;transition:.3s;}
-body.dark{background:#111;color:#f0e68c;}
+body{
+  margin:0;
+  font-family:Georgia, serif;
+  background:#f4e3b2;
+  color:#111;
+  transition:.3s;
+}
+body.dark{
+  background:#111;
+  color:#f0e68c;
+}
+
+*{box-sizing:border-box;}
 
 .header{
   background:black;
   color:gold;
-  padding:30px;
+  padding:22px 20px;
   display:flex;
   justify-content:center;
   align-items:center;
   gap:12px;
   position:relative;
   flex-wrap:wrap;
+  border-bottom:2px solid rgba(255,215,0,.18);
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
 }
 
-.header span.title{
-  font-size:3rem;
-  font-weight:bold;
-  text-shadow:2px 2px 6px black;
+.logo-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
   cursor:pointer;
 }
 
-.eyes{font-size:1.5rem;animation:blink 4s infinite;}
-@keyframes blink{95%{transform:scaleY(0.1);}}
+.logo-img{
+  max-width:520px;
+  width:min(92vw, 520px);
+  height:auto;
+  display:block;
+  border-radius:12px;
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
+  box-shadow:0 0 0 rgba(255,215,0,0);
+}
 
-/* 🔥 FIX REAL DARK BUTTON */
+.logo-link:hover .logo-img{
+  transform:scale(1.03) translateY(-2px);
+  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
+  filter:brightness(1.08);
+}
+
+.logo-link:active .logo-img{
+  transform:scale(.99);
+}
+
 .dark-btn{
   position:absolute;
   right:10px;
@@ -55,42 +89,90 @@ body.dark{background:#111;color:#f0e68c;}
   padding:6px 10px;
   border-radius:6px;
   cursor:pointer;
-  z-index:9999; /* 👈 SOLUCIÓN */
+  z-index:9999;
+  font-family:Georgia, serif;
 }
 
-#buscador{padding:10px;width:60%;border-radius:8px;}
+.admin-btn{
+  position:absolute;
+  left:10px;
+  top:10px;
+  background:#111;
+  color:gold;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:9999;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
 
-.cat-btn{margin:5px;padding:8px 12px;border-radius:8px;background:#111;color:gold;cursor:pointer;}
+.admin-btn:hover,
+.dark-btn:hover{
+  opacity:.92;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
 
-.portada{max-width:1200px;margin:20px auto;display:grid;grid-template-columns:2fr 1fr;gap:15px;}
-.portada-principal{height:350px;border-radius:12px;background-size:cover;position:relative;cursor:pointer;}
-.portada-principal h1{position:absolute;bottom:10px;left:10px;background:black;color:gold;padding:10px;}
-.portada-sec{height:110px;border-radius:10px;background-size:cover;position:relative;cursor:pointer;}
-.portada-sec h3{position:absolute;bottom:5px;left:5px;background:black;color:gold;padding:5px;font-size:0.8rem;}
+.top-nav-row{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 12px 8px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
 
-.contenedor-home{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;}
-.noticia-card{width:300px;height:200px;border-radius:12px;background-size:cover;position:relative;cursor:pointer;}
-.noticia-card h2{position:absolute;bottom:10px;left:10px;background:black;color:white;padding:5px;}
-
-.flayer{overflow:hidden;margin:20px;}
-.flayer-track{
+.top-nav-left{
   display:flex;
-  width:max-content;
-  animation:scroll 25s linear infinite;
-}
-.flayer-track img{
-  width:200px;height:120px;margin-right:10px;border-radius:8px;
-}
-@keyframes scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
+  justify-content:flex-start;
+  align-items:center;
 }
 
-.ad{margin:20px auto;text-align:center;}
+.top-nav-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.volver-btn{
+  padding:8px 12px;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  border:none;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
+
+.cat-btn{
+  margin:3px;
+  padding:8px 12px;
+  border-radius:8px;
+  background:#111;
+  color:gold;
+  cursor:pointer;
+  border:none;
+  font-family:Georgia, serif;
+  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+}
+
+.cat-btn:hover,
+.volver-btn:hover{
+  opacity:.92;
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
 
 .stats{
   position:fixed;
-  top:10px;
+  top:78px;
   right:10px;
   background:black;
   color:gold;
@@ -98,22 +180,451 @@ body.dark{background:#111;color:#f0e68c;}
   border-radius:8px;
   font-size:12px;
   z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
 }
 
 .intro{
-  max-width:900px;
-  margin:20px auto;
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  line-height:1.6;
+  max-width:1200px;
+  margin:18px auto 0;
+  padding:0 12px;
 }
-body.dark .intro{background:#1a1a1a;}
 
-@media(max-width:900px){
-  .portada{grid-template-columns:1fr;}
-  #buscador{width:90%;}
-  .noticia-card{width:90%;}
+.intro-box{
+  background:#fdf5d7;
+  padding:22px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  animation:aparecer .45s ease;
+}
+body.dark .intro-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.intro h1{
+  margin:0 0 10px;
+  font-size:2rem;
+  line-height:1.2;
+}
+
+.intro p{
+  margin:0;
+  line-height:1.7;
+  font-size:1.02rem;
+}
+
+.buscador-box{
+  max-width:1200px;
+  margin:18px auto;
+  padding:0 12px;
+}
+
+.buscador-wrap{
+  background:#fdf5d7;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+body.dark .buscador-wrap{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+#buscador{
+  padding:12px 14px;
+  width:100%;
+  border-radius:10px;
+  border:1px solid #b99c49;
+  font-family:Georgia, serif;
+  font-size:1rem;
+  outline:none;
+}
+body.dark #buscador{
+  background:#111;
+  color:#f0e68c;
+  border-color:#7c6420;
+}
+
+.home-layout{
+  display:flex;
+  max-width:1200px;
+  margin:auto;
+  gap:20px;
+  align-items:flex-start;
+  padding:0 12px;
+}
+
+.home-main{
+  flex:3;
+  min-width:0;
+}
+
+.home-side{
+  flex:1;
+  min-width:280px;
+}
+
+.side-box{
+  background:#fdf5d7;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  padding:16px;
+  margin-bottom:20px;
+}
+body.dark .side-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.side-title{
+  margin:0 0 14px;
+  font-size:1.1rem;
+  border-bottom:2px solid rgba(255,215,0,.35);
+  padding-bottom:8px;
+}
+
+.mini-lista{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.mini-item{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  cursor:pointer;
+  transition:transform .2s ease, opacity .2s ease;
+}
+.mini-item:hover{
+  transform:translateY(-1px);
+  opacity:.93;
+}
+
+.mini-item img{
+  width:92px;
+  height:66px;
+  object-fit:cover;
+  border-radius:8px;
+  flex-shrink:0;
+}
+
+.mini-item span{
+  font-size:.95rem;
+  line-height:1.35;
+}
+
+.portada-box{
+  background:#fdf5d7;
+  padding:18px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  animation:aparecer .45s ease;
+}
+body.dark .portada-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.portada{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:15px;
+}
+
+.portada-principal{
+  min-height:390px;
+  border-radius:12px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.portada-principal:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+}
+.portada-principal::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.18), rgba(0,0,0,.03));
+}
+.portada-principal h1{
+  position:absolute;
+  bottom:14px;
+  left:14px;
+  right:14px;
+  background:rgba(0,0,0,.82);
+  color:gold;
+  padding:14px;
+  border-radius:10px;
+  z-index:2;
+  margin:0;
+  font-size:1.8rem;
+  line-height:1.2;
+}
+
+.portada-sec-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.portada-sec{
+  min-height:116px;
+  border-radius:10px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.portada-sec:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(0,0,0,.18);
+}
+.portada-sec::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.76), rgba(0,0,0,.14));
+}
+.portada-sec h3{
+  position:absolute;
+  bottom:8px;
+  left:8px;
+  right:8px;
+  background:rgba(0,0,0,.82);
+  color:gold;
+  padding:8px;
+  font-size:.92rem;
+  line-height:1.28;
+  border-radius:8px;
+  z-index:2;
+  margin:0;
+}
+
+.flayer-box{
+  background:#fdf5d7;
+  margin-top:20px;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+body.dark .flayer-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.flayer{
+  overflow:hidden;
+}
+
+.flayer-track{
+  display:flex;
+  width:max-content;
+  animation:scroll 28s linear infinite;
+}
+
+.flayer-item{
+  position:relative;
+  flex:0 0 auto;
+  width:220px;
+  height:132px;
+  margin-right:10px;
+  border-radius:10px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+}
+
+.flayer-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.flayer-item span{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,.84);
+  color:gold;
+  font-size:12px;
+  padding:7px;
+  line-height:1.3;
+}
+
+@keyframes scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+.lista-box{
+  background:#fdf5d7;
+  margin-top:20px;
+  padding:18px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+body.dark .lista-box{
+  background:#1a1a1a;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+
+.seccion-titulo{
+  margin:0 0 16px;
+  font-size:1.25rem;
+  border-bottom:2px solid rgba(255,215,0,.35);
+  padding-bottom:8px;
+}
+
+.contenedor-home{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:16px;
+}
+
+.noticia-card{
+  min-height:250px;
+  border-radius:12px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.noticia-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+}
+.noticia-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.16));
+}
+.noticia-card h2{
+  position:absolute;
+  bottom:12px;
+  left:12px;
+  right:12px;
+  background:rgba(0,0,0,.82);
+  color:white;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:1.03rem;
+  line-height:1.32;
+  z-index:2;
+  margin:0;
+}
+
+.mensaje-estado{
+  text-align:center;
+  padding:14px;
+  border-radius:10px;
+  background:rgba(0,0,0,.06);
+}
+body.dark .mensaje-estado{
+  background:rgba(255,255,255,.05);
+}
+
+.ad{
+  margin:25px auto;
+  text-align:center;
+  max-width:900px;
+  padding:0 12px;
+}
+
+footer{
+  margin-top:40px;
+  padding:20px;
+  text-align:center;
+  background:#111;
+  color:gold;
+}
+footer a{
+  color:gold;
+  margin:0 10px;
+}
+
+@keyframes aparecer{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:1080px){
+  .home-layout{
+    flex-direction:column;
+  }
+  .home-side{
+    width:100%;
+    min-width:0;
+  }
+}
+
+@media(max-width:950px){
+  .portada{
+    grid-template-columns:1fr;
+  }
+  .contenedor-home{
+    grid-template-columns:1fr;
+  }
+  .logo-img{
+    width:min(94vw, 440px);
+  }
+  .top-nav-row{
+    grid-template-columns:1fr;
+    justify-items:center;
+  }
+  .top-nav-left{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .top-nav-center{
+    width:100%;
+    justify-content:center;
+  }
+  .stats{
+    position:static;
+    margin:0 auto 16px;
+    width:max-content;
+  }
+}
+
+@media(max-width:620px){
+  .header{
+    padding-top:56px;
+    padding-bottom:18px;
+  }
+  .admin-btn{
+    left:8px;
+    top:8px;
+    padding:6px 10px;
+  }
+  .dark-btn{
+    right:8px;
+    top:8px;
+  }
+  .intro h1{
+    font-size:1.65rem;
+  }
+  .portada-principal{
+    min-height:310px;
+  }
+  .portada-principal h1{
+    font-size:1.35rem;
+  }
 }
 </style>
 </head>
@@ -121,13 +632,32 @@ body.dark .intro{background:#1a1a1a;}
 <body>
 
 <div class="header">
-  <span class="eyes">𓂀</span>
-  <span class="title" onclick="location.reload()">APOPHIS NOTICIAS</span>
-  <span class="eyes">𓂀</span>
+  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+
+  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
+    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+  </a>
 
   <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+</div>
 
-  <button onclick="loginAdmin()">Admin</button>
+<div class="top-nav-row">
+  <div class="top-nav-left">
+    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
+  </div>
+
+  <div class="top-nav-center">
+    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
+    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
+    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
+    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
+    <button class="cat-btn" onclick="verCat('Show')">Show</button>
+    <button class="cat-btn" onclick="verCat('Pais')">País</button>
+    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
+    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+  </div>
+
+  <div></div>
 </div>
 
 <div class="stats">
@@ -136,46 +666,72 @@ body.dark .intro{background:#1a1a1a;}
 </div>
 
 <div class="intro">
-  <h1>Apophis Noticias - Actualidad en tiempo real</h1>
-  <p>
-    Apophis Noticias es un medio digital independiente que cubre los hechos más importantes de Argentina y el mundo.
-  </p>
+  <div class="intro-box">
+    <h1>Apophis Noticias - Actualidad en tiempo real</h1>
+    <p>
+      Apophis Noticias es un medio digital independiente que cubre los hechos más importantes de Argentina y el mundo.
+    </p>
+  </div>
 </div>
 
-<div style="text-align:center;margin:20px;">
-  <input id="buscador" placeholder="🔍 Buscar noticias...">
+<div class="buscador-box">
+  <div class="buscador-wrap">
+    <input id="buscador" placeholder="🔍 Buscar noticias...">
+  </div>
 </div>
 
-<div style="text-align:center;">
-  <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-  <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-  <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-  <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-  <button class="cat-btn" onclick="verCat('Show')">Show</button>
-  <button class="cat-btn" onclick="verCat('Pais')">País</button>
-  <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-  <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
+<div class="home-layout">
+  <main class="home-main">
+    <div class="portada-box">
+      <div class="portada" id="portada"></div>
+    </div>
+
+    <div class="flayer-box">
+      <div class="flayer">
+        <div id="flayerInner" class="flayer-track"></div>
+      </div>
+    </div>
+
+    <div class="lista-box">
+      <h2 class="seccion-titulo">Últimas noticias</h2>
+      <div id="contenedorHome" class="contenedor-home"></div>
+    </div>
+  </main>
+
+  <aside class="home-side">
+    <div class="side-box">
+      <h3 class="side-title">Destacadas</h3>
+      <div id="destacadasSide" class="mini-lista">
+        <div class="mensaje-estado">Cargando noticias...</div>
+      </div>
+    </div>
+
+    <div class="side-box">
+      <h3 class="side-title">Publicidad</h3>
+      <div class="ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6641245592697930"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </div>
+  </aside>
 </div>
 
-<div class="portada" id="portada"></div>
-
-<div class="flayer">
-  <div id="flayerInner" class="flayer-track"></div>
-</div>
-
-<div id="contenedorHome" class="contenedor-home"></div>
-
-<footer style="text-align:center;margin-top:40px;padding:20px;background:#111;color:gold;">
+<footer>
   <p>© 2026 Apophis Noticias</p>
   <div>
-    <a href="privacidad.html" style="color:gold;margin:0 10px;">Privacidad</a> |
-    <a href="contacto.html" style="color:gold;margin:0 10px;">Contacto</a> |
-    <a href="sobre.html" style="color:gold;margin:0 10px;">Sobre Nosotros</a>
+    <a href="privacidad.html">Privacidad</a> |
+    <a href="contacto.html">Contacto</a> |
+    <a href="sobre.html">Sobre Nosotros</a>
   </div>
 </footer>
 
 <script>
-const API="https://apophis-noticias-backend.vercel.app";
+const API = "https://apophis-noticias-backend.vercel.app";
+const CACHE_TIME = 5 * 60 * 1000;
 
 // 🌙 DARK MODE
 function aplicarDarkMode(){
@@ -186,80 +742,170 @@ function aplicarDarkMode(){
     dark = dark === "true";
   }
   document.body.classList.toggle("dark", dark);
-  document.getElementById("darkBtn").innerText = dark ? "☀️" : "🌙";
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = dark ? "☀️" : "🌙";
 }
 
 function toggleDark(){
   const activo = document.body.classList.toggle("dark");
   localStorage.setItem("darkMode", activo);
-  document.getElementById("darkBtn").innerText = activo ? "☀️" : "🌙";
+  const btn = document.getElementById("darkBtn");
+  if(btn) btn.innerText = activo ? "☀️" : "🌙";
 }
 
-// ⚡ CACHE
-const CACHE_TIME = 5 * 60 * 1000;
+// SEO HOME
+function actualizarSEOHogar(){
+  const titulo = "Apophis Noticias";
+  const descripcion = "Apophis Noticias - Información actualizada de Argentina y el mundo";
+  const url = location.href;
+
+  document.title = titulo;
+
+  const metaTitle = document.getElementById("metaTitle");
+  if(metaTitle) metaTitle.innerText = titulo;
+
+  const metaDesc = document.getElementById("metaDesc");
+  if(metaDesc) metaDesc.setAttribute("content", descripcion);
+
+  const ogTitle = document.getElementById("ogTitle");
+  if(ogTitle) ogTitle.setAttribute("content", titulo);
+
+  const ogDesc = document.getElementById("ogDesc");
+  if(ogDesc) ogDesc.setAttribute("content", descripcion);
+
+  const ogUrl = document.getElementById("ogUrl");
+  if(ogUrl) ogUrl.setAttribute("content", url);
+
+  const ogImg = document.getElementById("ogImg");
+  if(ogImg) ogImg.setAttribute("content", "");
+}
+
+function activarAds(){
+  try{
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }catch(e){}
+}
+
+function escaparHTML(texto){
+  if(texto === undefined || texto === null) return "";
+  return String(texto)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function urlImagenSegura(url){
+  return escaparHTML(url || "");
+}
 
 async function cargarHome(){
   try{
     const cache = localStorage.getItem("noticias_cache");
-    const time = localStorage.getItem("noticias_time");
+    const time = Number(localStorage.getItem("noticias_time") || 0);
 
     if(cache && time && (Date.now() - time < CACHE_TIME)){
       render(JSON.parse(cache));
       return;
     }
 
-    const res=await fetch(API+"/noticias");
-    const data=await res.json();
+    const res = await fetch(API + "/noticias");
+    if(!res.ok) throw new Error("No se pudieron cargar las noticias");
+
+    const data = await res.json();
 
     localStorage.setItem("noticias_cache", JSON.stringify(data));
-    localStorage.setItem("noticias_time", Date.now());
+    localStorage.setItem("noticias_time", String(Date.now()));
 
     render(data);
 
   }catch(e){
     console.log(e);
+    document.getElementById("portada").innerHTML = `
+      <div class="mensaje-estado" style="grid-column:1/-1;">No se pudieron cargar las noticias destacadas.</div>
+    `;
+    document.getElementById("contenedorHome").innerHTML = `
+      <div class="mensaje-estado">No se pudo cargar la portada en este momento.</div>
+    `;
+    document.getElementById("flayerInner").innerHTML = "";
+    document.getElementById("destacadasSide").innerHTML = `
+      <div class="mensaje-estado">No se pudieron cargar las destacadas.</div>
+    `;
   }
 }
 
 function render(data){
-  if(!data || data.length===0) return;
+  if(!Array.isArray(data) || data.length === 0){
+    document.getElementById("portada").innerHTML = `
+      <div class="mensaje-estado" style="grid-column:1/-1;">No hay noticias disponibles por el momento.</div>
+    `;
+    document.getElementById("contenedorHome").innerHTML = `
+      <div class="mensaje-estado">Todavía no se publicaron noticias.</div>
+    `;
+    document.getElementById("flayerInner").innerHTML = "";
+    document.getElementById("destacadasSide").innerHTML = `
+      <div class="mensaje-estado">No hay noticias destacadas.</div>
+    `;
+    return;
+  }
 
-  const p=data[0];
-  const sec=data.slice(1,5);
+  const p = data[0];
+  const sec = data.slice(1, 5);
+  const side = data.slice(0, 5);
 
-  document.getElementById("portada").innerHTML=` 
-    <div class="portada-principal" style="background-image:url('${p.imagen}')" onclick="ir('${p._id}')">
-      <h1>${p.titulo}</h1>
+  document.getElementById("portada").innerHTML = `
+    <div class="portada-principal" style="background-image:url('${urlImagenSegura(p.imagen)}')" onclick="ir('${p._id}')">
+      <h1>${escaparHTML(p.titulo || "Sin título")}</h1>
     </div>
-    <div>
-      ${sec.map(n=>`
-        <div class="portada-sec" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-          <h3>${n.titulo}</h3>
-        </div>`).join("")}
+
+    <div class="portada-sec-wrap">
+      ${sec.map(n => `
+        <div class="portada-sec" style="background-image:url('${urlImagenSegura(n.imagen)}')" onclick="ir('${n._id}')">
+          <h3>${escaparHTML(n.titulo || "Sin título")}</h3>
+        </div>
+      `).join("")}
     </div>
   `;
 
-  document.getElementById("contenedorHome").innerHTML=data.map(n=>`
-    <div class="noticia-card" style="background-image:url('${n.imagen}')" onclick="ir('${n._id}')">
-      <h2>${n.titulo}</h2>
-    </div>`).join("");
+  document.getElementById("contenedorHome").innerHTML = data.map(n => `
+    <div class="noticia-card" style="background-image:url('${urlImagenSegura(n.imagen)}')" onclick="ir('${n._id}')">
+      <h2>${escaparHTML(n.titulo || "Sin título")}</h2>
+    </div>
+  `).join("");
 
-  const html=data.map(n=>`<img src="${n.imagen}" onclick="ir('${n._id}')">`).join("");
-  document.getElementById("flayerInner").innerHTML=html+html;
+  const flayerHtml = data.map(n => `
+    <div class="flayer-item" onclick="ir('${n._id}')">
+      <img src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
+      <span>${escaparHTML(n.titulo || "Sin título")}</span>
+    </div>
+  `).join("");
+
+  document.getElementById("flayerInner").innerHTML = flayerHtml + flayerHtml;
+
+  document.getElementById("destacadasSide").innerHTML = side.map(n => `
+    <div class="mini-item" onclick="ir('${n._id}')">
+      <img src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
+      <span>${escaparHTML(n.titulo || "Sin título")}</span>
+    </div>
+  `).join("");
+
+  activarAds();
 }
 
 // 👁 VISITAS
 async function visitas(){
   try{
-    const res=await fetch(API+"/visitas");
-    const d=await res.json();
-    document.getElementById("visitas").innerText=d.visitas;
+    const res = await fetch(API + "/visitas");
+    if(!res.ok) throw new Error("Error visitas");
+    const d = await res.json();
+    document.getElementById("visitas").innerText = d.visitas || 0;
   }catch(e){}
 }
 
 // 🟢 ONLINE
 function onlineReal(){
-  const key="usuarios_activos";
+  const key = "usuarios_activos";
   let usuarios = JSON.parse(localStorage.getItem(key) || "[]");
   const ahora = Date.now();
 
@@ -272,17 +918,66 @@ function onlineReal(){
   setTimeout(onlineReal, 5000);
 }
 
-function ir(id){location="noticia.html?id="+id;}
-function verCat(c){location="categoria.html?cat="+c;}
-
-function loginAdmin(){
-  const u=prompt("Usuario");
-  const p=prompt("Pass");
-  if(u==="Apophis"&&p==="1234") location="admin.html";
+function ir(id){
+  location = "noticia.html?id=" + id;
 }
 
-window.onload=()=>{
+function verCat(c){
+  location = "categoria.html?cat=" + encodeURIComponent(c);
+}
+
+function loginAdmin(){
+  const u = prompt("Usuario");
+  const p = prompt("Pass");
+  if(u === "Apophis" && p === "1234"){
+    location = "admin.html";
+  }
+}
+
+async function buscarNoticias(texto){
+  const res = await fetch(API + "/noticias");
+  if(!res.ok) throw new Error("Error en búsqueda");
+
+  const data = await res.json();
+  const q = texto.trim().toLowerCase();
+  if(!q) return null;
+
+  const exacta = data.find(n =>
+    (n.titulo || "").toLowerCase().includes(q) ||
+    (n.categoria || "").toLowerCase().includes(q) ||
+    String(n.contenido || "").toLowerCase().includes(q)
+  );
+
+  return exacta || null;
+}
+
+function activarBuscador(){
+  const buscador = document.getElementById("buscador");
+  if(!buscador) return;
+
+  buscador.addEventListener("keydown", async function(e){
+    if(e.key === "Enter"){
+      const valor = buscador.value.trim();
+      if(!valor) return;
+
+      try{
+        const encontrada = await buscarNoticias(valor);
+        if(encontrada && encontrada._id){
+          ir(encontrada._id);
+        }else{
+          alert("No se encontraron noticias con esa búsqueda.");
+        }
+      }catch(err){
+        alert("No se pudo realizar la búsqueda.");
+      }
+    }
+  });
+}
+
+window.onload = () => {
+  actualizarSEOHogar();
   aplicarDarkMode();
+  activarBuscador();
   cargarHome();
   visitas();
   onlineReal();
