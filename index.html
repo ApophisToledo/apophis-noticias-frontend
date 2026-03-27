@@ -495,27 +495,36 @@ body.dark .lista-box{
 
 .noticia-card{
   width:100%;
-  min-height:250px;
-  border-radius:14px;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
   position:relative;
   cursor:pointer;
   overflow:hidden;
+  border-radius:14px;
   box-shadow:0 6px 18px rgba(0,0,0,.10);
   transition:transform .25s ease, box-shadow .25s ease;
+  aspect-ratio:16/9;
+  background:#222;
 }
 .noticia-card:hover{
   transform:translateY(-2px);
   box-shadow:var(--shadow-strong);
 }
+
+.noticia-card-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
 .noticia-card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.16));
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.12));
+  pointer-events:none;
 }
+
 .noticia-card h2{
   position:absolute;
   bottom:10px;
@@ -768,12 +777,8 @@ footer a{
   }
 
   .noticia-card{
-    height:156px;
-    min-height:156px;
-    max-height:156px;
     border-radius:12px;
-    background-size:cover;
-    background-position:center center;
+    aspect-ratio:16/8.7;
   }
 
   .noticia-card h2{
@@ -913,9 +918,7 @@ footer a{
   }
 
   .noticia-card{
-    height:136px;
-    min-height:136px;
-    max-height:136px;
+    aspect-ratio:16/9.2;
   }
 
   .noticia-card h2{
@@ -1194,7 +1197,8 @@ function render(data){
   `;
 
   document.getElementById("contenedorHome").innerHTML = data.map(n => `
-    <div class="noticia-card" style="background-image:url('${urlImagenSegura(n.imagen)}')" onclick="ir('${n._id}')">
+    <div class="noticia-card" onclick="ir('${n._id}')">
+      <img class="noticia-card-img" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
       <h2>${escaparHTML(n.titulo || "Sin título")}</h2>
     </div>
   `).join("");
