@@ -489,13 +489,17 @@ body.dark .lista-box{
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:16px;
+  width:100%;
+  padding:0;
 }
 
 .noticia-card{
+  width:100%;
   min-height:250px;
   border-radius:14px;
   background-size:cover;
   background-position:center;
+  background-repeat:no-repeat;
   position:relative;
   cursor:pointer;
   overflow:hidden;
@@ -514,17 +518,21 @@ body.dark .lista-box{
 }
 .noticia-card h2{
   position:absolute;
-  bottom:12px;
-  left:12px;
-  right:12px;
+  bottom:10px;
+  left:10px;
+  right:10px;
   background:rgba(0,0,0,.82);
   color:white;
-  padding:10px 12px;
+  padding:9px 10px;
   border-radius:8px;
-  font-size:1.03rem;
-  line-height:1.32;
+  font-size:1rem;
+  line-height:1.24;
   z-index:2;
   margin:0;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
 }
 
 .mensaje-estado{
@@ -635,6 +643,7 @@ footer a{
     display:grid;
     grid-template-columns:repeat(2, minmax(0, 1fr));
     gap:8px;
+    width:100%;
   }
 
   .volver-btn,
@@ -695,23 +704,25 @@ footer a{
   }
 
   .flayer-box{
-    padding:8px 10px;
-  }
-
-  .lista-box{
     padding:10px;
   }
 
+  .lista-box{
+    padding:12px;
+  }
+
   .portada-principal{
-    min-height:255px;
+    min-height:250px;
+    border-radius:12px;
   }
 
   .portada-principal h1{
     left:10px;
     right:10px;
     bottom:10px;
-    font-size:1.14rem;
+    font-size:1.12rem;
     padding:10px;
+    border-radius:8px;
   }
 
   .portada-sec-wrap{
@@ -719,16 +730,13 @@ footer a{
   }
 
   .portada-sec{
-    min-height:96px;
+    min-height:94px;
+    border-radius:12px;
   }
 
   .portada-sec h3{
-    font-size:.84rem;
-    padding:7px;
-  }
-
-  .flayer{
-    margin:0 -2px;
+    font-size:.83rem;
+    padding:6px 7px;
   }
 
   .flayer-track{
@@ -736,15 +744,15 @@ footer a{
   }
 
   .flayer-item{
-    width:158px;
-    height:96px;
+    width:152px;
+    height:92px;
     border-radius:10px;
   }
 
   .flayer-item span{
-    font-size:11px;
-    padding:6px;
-    line-height:1.2;
+    font-size:10.8px;
+    padding:5px 6px;
+    line-height:1.15;
   }
 
   .seccion-titulo,
@@ -755,24 +763,28 @@ footer a{
 
   .contenedor-home{
     grid-template-columns:1fr;
-    gap:10px;
+    gap:12px;
+    padding:0 2px;
   }
 
   .noticia-card{
-    min-height:148px;
-    max-height:148px;
+    height:156px;
+    min-height:156px;
+    max-height:156px;
     border-radius:12px;
+    background-size:cover;
     background-position:center center;
   }
 
   .noticia-card h2{
-    left:8px;
-    right:8px;
-    bottom:8px;
+    left:9px;
+    right:9px;
+    bottom:9px;
     font-size:.86rem;
-    line-height:1.18;
+    line-height:1.16;
     padding:7px 8px;
     border-radius:8px;
+    -webkit-line-clamp:2;
   }
 
   .side-box{
@@ -844,11 +856,11 @@ footer a{
   }
 
   .flayer-box{
-    padding:7px 8px;
+    padding:8px;
   }
 
   .lista-box{
-    padding:8px;
+    padding:10px;
   }
 
   .portada{
@@ -856,12 +868,12 @@ footer a{
   }
 
   .portada-principal{
-    min-height:225px;
+    min-height:220px;
   }
 
   .portada-principal h1{
     font-size:1rem;
-    line-height:1.18;
+    line-height:1.16;
     left:8px;
     right:8px;
     bottom:8px;
@@ -869,16 +881,16 @@ footer a{
   }
 
   .portada-sec{
-    min-height:84px;
+    min-height:82px;
   }
 
   .portada-sec h3{
-    font-size:.79rem;
-    line-height:1.15;
+    font-size:.78rem;
+    line-height:1.12;
     left:7px;
     right:7px;
     bottom:7px;
-    padding:6px 7px;
+    padding:6px;
   }
 
   .flayer-track{
@@ -886,31 +898,34 @@ footer a{
   }
 
   .flayer-item{
-    width:146px;
-    height:90px;
+    width:138px;
+    height:84px;
   }
 
   .flayer-item span{
-    font-size:10.5px;
-    padding:5px 6px;
+    font-size:10px;
+    padding:5px;
   }
 
   .contenedor-home{
-    gap:8px;
+    gap:10px;
+    padding:0 1px;
   }
 
   .noticia-card{
-    min-height:126px;
-    max-height:126px;
+    height:136px;
+    min-height:136px;
+    max-height:136px;
   }
 
   .noticia-card h2{
-    font-size:.8rem;
-    line-height:1.14;
-    left:7px;
-    right:7px;
-    bottom:7px;
+    font-size:.79rem;
+    line-height:1.1;
+    left:8px;
+    right:8px;
+    bottom:8px;
     padding:6px 7px;
+    -webkit-line-clamp:2;
   }
 
   .side-box{
