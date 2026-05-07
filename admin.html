@@ -584,10 +584,28 @@ async function loginAdmin(){
 }
 
 // intentar restaurar token guardado
-function restaurarToken(){
+async function restaurarToken(){
   const saved = localStorage.getItem("admin_token_apophis");
-  if(saved){
-    TOKEN = saved;
+
+  if(!saved){
+    return;
+  }
+
+  try{
+
+    const res = await fetch(API + "/health");
+
+    if(res.ok){
+      TOKEN = saved;
+    }else{
+      localStorage.removeItem("admin_token_apophis");
+    }
+
+  }catch(e){
+
+    console.error("❌ Error restaurando token:", e);
+
+    localStorage.removeItem("admin_token_apophis");
   }
 }
 
