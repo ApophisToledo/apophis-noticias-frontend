@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
 
-Disallow: /admin/
-
 Sitemap: https://apophis.com.ar/sitemap.xml

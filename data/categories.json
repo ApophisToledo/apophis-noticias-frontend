@@ -2,14 +2,15 @@
   {
     "slug": "motos",
     "title": "Motos",
-    "description": "Comparativas, mantenimiento, consumo y guías de compra de motos en Argentina.",
+    "icon": "🏍️",
+    "description": "Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.",
     "subcategories": [
       "110cc",
       "150cc",
       "200cc",
       "250cc",
       "400cc",
-      "trabajo",
+      "delivery",
       "viajes",
       "enduro"
     ]
@@ -17,39 +18,43 @@
   {
     "slug": "autos",
     "title": "Autos",
-    "description": "Guías de compra, autos usados, primer auto, mantenimiento y consumo.",
+    "icon": "🚗",
+    "description": "Guías de autos usados y nuevos según consumo, seguridad, confort, reventa, mantenimiento y necesidad real.",
     "subcategories": [
-      "usados",
       "primer-auto",
-      "economicos",
+      "usados",
+      "económicos",
       "sedanes",
-      "suv",
+      "SUV",
       "mantenimiento"
     ]
   },
   {
     "slug": "tecnologia",
     "title": "Tecnología",
-    "description": "Hardware, notebooks, SSD, RAM, Windows y optimización.",
+    "icon": "💻",
+    "description": "Tecnología útil: notebooks, SSD, RAM, celulares, periféricos y rendimiento real para comprar mejor.",
     "subcategories": [
-      "ssd",
-      "ram",
       "notebooks",
-      "windows",
+      "SSD",
+      "RAM",
+      "Windows",
       "gaming",
-      "perifericos"
+      "celulares"
     ]
   },
   {
     "slug": "supermercados",
     "title": "Supermercados",
-    "description": "Ahorro, comparativas de supermercados, promociones y compras inteligentes.",
+    "icon": "🛒",
+    "description": "Comparativas de supermercados, ahorro, promociones, calidad, practicidad y compras inteligentes en Rosario.",
     "subcategories": [
       "ahorro",
       "promociones",
       "comparativas",
-      "compras-inteligentes",
-      "precios"
+      "marcas-propias",
+      "precios",
+      "compras-inteligentes"
     ]
   }
 ]

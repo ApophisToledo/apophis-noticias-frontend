@@ -1,42 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://apophis.com.ar/</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/motos</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/autos</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/tecnologia</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/supermercados</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/privacidad.html</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/cookies.html</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/contacto.html</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/sobre-nosotros.html</loc>
-  </url>
-  <url>
-    <loc>https://apophis.com.ar/motos/rouser-ns200-vs-honda-cb190.html</loc>
-  </url>
 
-<url>
-<loc>https://apophis.com.ar/motos/rouser-ns200-vs-honda-cb190-vs-fz3-rosario.html</loc>
-</url>
-
-<url>
-<loc>https://apophis.com.ar/supermercados/mejor-supermercado-rosario-calidad-precio.html</loc>
-</url>
+<url><loc>https://apophis.com.ar/admin.html</loc></url><url><loc>https://apophis.com.ar/categoria.html</loc></url><url><loc>https://apophis.com.ar/contacto.html</loc></url><url><loc>https://apophis.com.ar/cookies.html</loc></url><url><loc>https://apophis.com.ar/index.html</loc></url><url><loc>https://apophis.com.ar/noticia.html</loc></url><url><loc>https://apophis.com.ar/privacidad.html</loc></url><url><loc>https://apophis.com.ar/sobre-nosotros.html</loc></url><url><loc>https://apophis.com.ar/sobre.html</loc></url><url><loc>https://apophis.com.ar/privacy.html</loc></url><url><loc>https://apophis.com.ar/terms.html</loc></url><url><loc>https://apophis.com.ar/admin/cms.html</loc></url><url><loc>https://apophis.com.ar/admin/config-admin.html</loc></url><url><loc>https://apophis.com.ar/admin/index.html</loc></url><url><loc>https://apophis.com.ar/admin/login.html</loc></url><url><loc>https://apophis.com.ar/admin/seo-audit.html</loc></url><url><loc>https://apophis.com.ar/admin/advanced-editor.html</loc></url><url><loc>https://apophis.com.ar/admin/comparison-builder.html</loc></url><url><loc>https://apophis.com.ar/admin/seo-final.html</loc></url><url><loc>https://apophis.com.ar/autos/index.html</loc></url><url><loc>https://apophis.com.ar/autos/mejor-primer-auto-argentina.html</loc></url><url><loc>https://apophis.com.ar/components/article-checklist.html</loc></url><url><loc>https://apophis.com.ar/components/breadcrumbs.html</loc></url><url><loc>https://apophis.com.ar/components/comparison-template.html</loc></url><url><loc>https://apophis.com.ar/motos/index.html</loc></url><url><loc>https://apophis.com.ar/motos/mejor-moto-delivery-argentina.html</loc></url><url><loc>https://apophis.com.ar/motos/rouser-ns200-vs-cb190.html</loc></url><url><loc>https://apophis.com.ar/motos/rouser-ns200-vs-honda-cb190.html</loc></url><url><loc>https://apophis.com.ar/motos/rouser-ns200-vs-honda-cb190-vs-fz3-rosario.html</loc></url><url><loc>https://apophis.com.ar/pages/guia-template.html</loc></url><url><loc>https://apophis.com.ar/supermercados/como-ahorrar-en-supermercados.html</loc></url><url><loc>https://apophis.com.ar/supermercados/index.html</loc></url><url><loc>https://apophis.com.ar/supermercados/mejor-supermercado-rosario-calidad-precio.html</loc></url><url><loc>https://apophis.com.ar/tecnologia/como-acelerar-notebook-vieja.html</loc></url><url><loc>https://apophis.com.ar/tecnologia/index.html</loc></url>
 
 </urlset>

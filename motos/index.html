@@ -1,48 +1,84 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motos | Apophis</title>
-<meta name="description" content="Comparativas y guías de motos en Rosario y Argentina.">
+<title>Motos | Apophis Guías</title>
+<meta name="description" content="Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://apophis.com.ar/motos/">
 <link rel="stylesheet" href="../css/styles.css">
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#d4af37">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="google-site-verification" content="REEMPLAZAR_CON_TOKEN_SEARCH_CONSOLE">
 </head>
 <body>
 
-<header class="header">
-<div class="logo-area">
-<h1>Motos</h1>
-<p>Comparativas y guías de motos en Rosario y Argentina.</p>
-</div>
+<header class="ap-header">
+  <a class="brand" href="../index.html" aria-label="Ir al inicio">
+    <span class="brand-mark">A</span>
+    <span>
+      <strong>APOPHIS</strong>
+      <small>Guías de compra inteligentes</small>
+    </span>
+  </a>
+  <button class="mobile-menu" data-mobile-menu aria-label="Abrir menú">☰</button>
+  <nav class="site-nav">
+    <a class="active" href="../motos/index.html">Motos</a>
+<a class="" href="../autos/index.html">Autos</a>
+<a class="" href="../tecnologia/index.html">Tecnología</a>
+<a class="" href="../supermercados/index.html">Supermercados</a>
+  </nav>
+  <button class="theme-toggle" data-theme-toggle aria-label="Cambiar modo">☾ / ☀</button>
 </header>
 
-<section class="seo-block">
+<main>
+  <section class="category-hero">
+    <a class="back-home" href="../index.html">← Volver a la página principal</a>
+    <span class="category-icon">🏍️</span>
+    <span class="eyebrow">Categoría Apophis</span>
+    <h1>Motos</h1>
+    <p>Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.</p>
+    <div class="subcategory-list" data-subcategory-list>
+      <a class="subcategory-pill" href="#sub-110cc">110cc</a>
+<a class="subcategory-pill" href="#sub-150cc">150cc</a>
+<a class="subcategory-pill" href="#sub-200cc">200cc</a>
+<a class="subcategory-pill" href="#sub-250cc">250cc</a>
+<a class="subcategory-pill" href="#sub-400cc">400cc</a>
+<a class="subcategory-pill" href="#sub-delivery">delivery</a>
+<a class="subcategory-pill" href="#sub-viajes">viajes</a>
+<a class="subcategory-pill" href="#sub-enduro">enduro</a>
+    </div>
+  </section>
 
-<h2>Guías disponibles</h2>
+  <section class="ap-section">
+    <div data-category-guides></div>
+  </section>
+</main>
 
-<div id="category-guides" class="guide-grid"></div>
+<footer class="ap-footer">
+  <div>
+    <strong>APOPHIS</strong>
+    <p>Comparativas profundas para comprar mejor en Rosario y Argentina.</p>
+  </div>
+  <nav>
+    <a href="../privacy.html">Privacidad</a>
+    <a href="../terms.html">Términos</a>
+    <a href="../contacto.html">Contacto</a>
+  </nav>
+</footer>
+<script src="../js/apophis-ui.js"></script>
 
-</section>
+<script src="../js/apophis-catalog.js"></script>
+<script>document.addEventListener("DOMContentLoaded",()=>renderCategoryPage("motos"));</script>
 
-<script>
-async function loadCategory(){
-    const response = await fetch("../data/articles.json");
-    const articles = await response.json();
-
-    const filtered = articles.filter(a => a.category === "motos");
-
-    document.querySelector("#category-guides").innerHTML =
-        filtered.map(article => `
-            <article class="guide-card">
-                <span>${article.category}</span>
-                <h3>${article.title}</h3>
-                <p>${article.description}</p>
-            </article>
-        `).join("");
-}
-
-loadCategory();
-</script>
-
+<script src="/js/performance.js"></script>
+<script src="/js/accessibility.js"></script>
+<script src="../js/analytics.js"></script>
 </body>
+
 </html>

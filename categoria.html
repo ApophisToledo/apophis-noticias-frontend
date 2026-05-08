@@ -534,13 +534,20 @@ footer a{
   }
 }
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#d4af37">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="google-site-verification" content="REEMPLAZAR_CON_TOKEN_SEARCH_CONSOLE">
 </head>
 
 <body>
 
 <div class="header">
   <a href="index.html" class="logo-link" aria-label="Ir al inicio">
-    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+    <img alt="Imagen Apophis" src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
   </a>
 
   <button class="dark-btn" onclick="toggleDark(event)" id="darkBtn">🌙</button>
@@ -712,7 +719,7 @@ async function cargarDestacadasLaterales(catOriginal){
 
     document.getElementById("destacadasSide").innerHTML = otras.map(n => `
       <div class="mini-item" onclick="ir('${n._id}')">
-        <img src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
+        <img alt="Imagen Apophis" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
         <span>${escaparHTML(n.titulo || "Sin título")}</span>
       </div>
     `).join("");
@@ -803,5 +810,10 @@ window.onload = () => {
 };
 </script>
 
+
+<script src="/js/performance.js"></script>
+<script src="/js/accessibility.js"></script>
+<script src="./js/analytics.js"></script>
 </body>
+
 </html>

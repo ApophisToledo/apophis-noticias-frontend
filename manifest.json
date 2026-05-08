@@ -1,0 +1,10 @@
+{
+  "name": "Apophis Guías Argentina",
+  "short_name": "Apophis",
+  "description": "Comparativas y guías reales para comprar mejor en Rosario y Argentina.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090806",
+  "theme_color": "#d4af37",
+  "icons": []
+}

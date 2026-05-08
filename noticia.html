@@ -660,13 +660,19 @@ footer a{color:gold;margin:0 10px;}
   }
 }
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#d4af37">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 </head>
 
 <body>
 
 <div class="header">
   <a href="index.html" class="logo-link" aria-label="Ir al inicio">
-    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
+    <img alt="Imagen Apophis" src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
   </a>
 
   <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
@@ -977,7 +983,7 @@ function renderNoticia(n){
         <span class="meta-pill">📰 <a class="categoria-link" href="categoria.html?cat=${encodeURIComponent(categoria)}">${escaparHTML(categoria)}</a></span>
       </div>
 
-      ${n.imagen ? `<img src="${escaparHTML(n.imagen)}" alt="${escaparHTML(n.titulo || "Imagen de la noticia")}" class="noticia-imagen">` : ""}
+      ${n.imagen ? `<img alt="Imagen Apophis" src="${escaparHTML(n.imagen)}" alt="${escaparHTML(n.titulo || "Imagen de la noticia")}" class="noticia-imagen">` : ""}
 
       <div class="noticia-contenido">${contenidoSeguro}</div>
     </div>
@@ -1210,5 +1216,10 @@ window.onload = () => {
 };
 </script>
 
+
+<script src="/js/performance.js"></script>
+<script src="/js/accessibility.js"></script>
+<script src="./js/analytics.js"></script>
 </body>
+
 </html>

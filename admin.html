@@ -380,6 +380,13 @@ body.dark .empty-box{
   }
 }
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#d4af37">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="google-site-verification" content="REEMPLAZAR_CON_TOKEN_SEARCH_CONSOLE">
 </head>
 
 <body>
@@ -646,7 +653,7 @@ function actualizarPreviewPrincipal(){
 
   if(url){
     box.style.display = "block";
-    box.innerHTML = `<div><strong>Vista previa principal</strong></div><img src="${url}" alt="Vista previa">`;
+    box.innerHTML = `<div><strong>Vista previa principal</strong></div><img alt="Imagen Apophis" src="${url}" alt="Vista previa">`;
   }else{
     box.style.display = "none";
     box.innerHTML = "";
@@ -706,7 +713,7 @@ async function subirImagen(file){
       actualizarGaleria();
       actualizarPreviewPrincipal();
 
-      document.execCommand("insertHTML", false, `<img src="${data.url}" style="max-width:100%;border-radius:8px;margin:10px 0;">`);
+      document.execCommand("insertHTML", false, `<img alt="Imagen Apophis" src="${data.url}" style="max-width:100%;border-radius:8px;margin:10px 0;">`);
 
       mostrarEstado("ok", "✅ Imagen subida correctamente");
     }else{
@@ -737,7 +744,7 @@ function actualizarGaleria(){
   document.getElementById("gallery").innerHTML =
     galeriaArray.map(u=>`
       <div class="img-box">
-        <img src="${u}">
+        <img alt="Imagen Apophis" src="${u}">
         <div class="delete-img" onclick="eliminarImagen('${u.replace(/'/g,"&#39;")}')">✕</div>
       </div>
     `).join("");
@@ -1057,5 +1064,10 @@ window.onload = ()=>{
 };
 </script>
 
+
+<script src="/js/performance.js"></script>
+<script src="/js/accessibility.js"></script>
+<script src="./js/analytics.js"></script>
 </body>
+
 </html>
