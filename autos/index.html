@@ -3,49 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autos | Apophis Guías Argentina</title>
-<meta name="description" content="Guías de compra, autos usados, primer auto, mantenimiento y consumo.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://apophis.com.ar/autos">
+<title>Autos | Apophis</title>
+<meta name="description" content="Comparativas y guías de autos según calidad, precio y necesidad.">
 <link rel="stylesheet" href="../css/styles.css">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Autos",
-  "description": "Guías de compra, autos usados, primer auto, mantenimiento y consumo."
-}
-</script>
 </head>
 <body>
+
 <header class="header">
-    <div class="logo-area">
-        <h1>Autos</h1>
-        <p>Guías de compra, autos usados, primer auto, mantenimiento y consumo.</p>
-    </div>
+<div class="logo-area">
+<h1>Autos</h1>
+<p>Comparativas y guías de autos según calidad, precio y necesidad.</p>
+</div>
 </header>
 
 <section class="seo-block">
-    <nav class="breadcrumb">
-        <a href="../index.html">Inicio</a>
-        <span>›</span>
-        <span>Autos</span>
-    </nav>
 
-    <h2>Guías de Autos</h2>
-    <p>Guías de compra, autos usados, primer auto, mantenimiento y consumo.</p>
+<h2>Guías disponibles</h2>
 
-    <div class="tag-list">
-        <span>usados</span><span>primer-auto</span><span>economicos</span><span>sedanes</span><span>suv</span><span>mantenimiento</span>
-    </div>
+<div id="category-guides" class="guide-grid"></div>
 
-    <div data-guides data-category="autos" class="guide-grid"></div>
 </section>
 
-<footer class="footer">
-    <p>© 2026 Apophis Guías Argentina</p>
-</footer>
+<script>
+async function loadCategory(){
+    const response = await fetch("../data/articles.json");
+    const articles = await response.json();
 
-<script src="../js/article-catalog.js"></script>
+    const filtered = articles.filter(a => a.category === "autos");
+
+    document.querySelector("#category-guides").innerHTML =
+        filtered.map(article => `
+            <article class="guide-card">
+                <span>${article.category}</span>
+                <h3>${article.title}</h3>
+                <p>${article.description}</p>
+            </article>
+        `).join("");
+}
+
+loadCategory();
+</script>
+
 </body>
 </html>

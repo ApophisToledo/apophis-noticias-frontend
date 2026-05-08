@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador Premium | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-area">
+        <h1>Comparador Premium</h1>
+        <p>Comparativas reales enfocadas en decisión de compra.</p>
+    </div>
+</header>
+
+<main class="advanced-editor-layout">
+
+<section class="admin-panel">
+
+<h2>Producto A</h2>
+
+<label>Nombre</label>
+<input id="product-a" value="Rouser NS200">
+
+<label>Calidad</label>
+<input id="a-quality" type="range" min="1" max="10" value="8">
+
+<label>Precio</label>
+<input id="a-price" type="range" min="1" max="10" value="9">
+
+<label>Lujo</label>
+<input id="a-luxury" type="range" min="1" max="10" value="7">
+
+<label>Practicidad</label>
+<input id="a-practical" type="range" min="1" max="10" value="8">
+
+<label>Mantenimiento</label>
+<input id="a-maintenance" type="range" min="1" max="10" value="7">
+
+<hr>
+
+<h2>Producto B</h2>
+
+<label>Nombre</label>
+<input id="product-b" value="Honda CB190">
+
+<label>Calidad</label>
+<input id="b-quality" type="range" min="1" max="10" value="9">
+
+<label>Precio</label>
+<input id="b-price" type="range" min="1" max="10" value="6">
+
+<label>Lujo</label>
+<input id="b-luxury" type="range" min="1" max="10" value="8">
+
+<label>Practicidad</label>
+<input id="b-practical" type="range" min="1" max="10" value="9">
+
+<label>Mantenimiento</label>
+<input id="b-maintenance" type="range" min="1" max="10" value="9">
+
+</section>
+
+<section class="admin-preview">
+
+<h2>Vista previa</h2>
+
+<div id="comparison-output" class="comparison-ratings"></div>
+
+<h2>HTML generado</h2>
+
+<textarea id="comparison-html" class="large-output"></textarea>
+
+<div class="admin-actions">
+<button id="copy-comparison" type="button">Copiar HTML</button>
+</div>
+
+</section>
+
+</main>
+
+<script src="./comparison-builder.js"></script>
+
+</body>
+</html>

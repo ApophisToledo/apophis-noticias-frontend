@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor Largo SEO | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo-area">
+        <h1>Editor Largo SEO</h1>
+        <p>Construcción de artículos evergreen listos para AdSense.</p>
+    </div>
+</header>
+
+<main class="advanced-editor-layout">
+    <section class="admin-panel">
+        <h2>Datos SEO</h2>
+
+        <label>Título</label>
+        <input id="article-title" value="Mejor moto 200 calidad precio en Argentina">
+
+        <label>Categoría</label>
+        <select id="article-category">
+            <option value="motos">Motos</option>
+            <option value="autos">Autos</option>
+            <option value="tecnologia">Tecnología</option>
+            <option value="supermercados">Supermercados</option>
+        </select>
+
+        <label>Subcategoría</label>
+        <input id="article-subcategory" value="200cc">
+
+        <label>Meta descripción</label>
+        <textarea id="article-description">Guía completa para elegir una moto 200cc en Argentina considerando precio, consumo, mantenimiento, uso real y relación calidad/precio.</textarea>
+
+        <label>Keywords separadas por coma</label>
+        <input id="article-keywords" value="moto 200, motos argentina, calidad precio, mejor moto">
+
+        <label>Estado</label>
+        <select id="article-status">
+            <option value="draft">Borrador</option>
+            <option value="published">Publicado</option>
+        </select>
+
+        <label>Tiempo lectura</label>
+        <input id="article-reading" value="12 min">
+
+        <label>Objetivo palabras</label>
+        <input id="article-word-target" value="1800">
+
+        <label>Imagen destacada URL</label>
+        <input id="article-image" placeholder="https://...">
+
+        <h2>Bloques editoriales</h2>
+
+        <label>Introducción</label>
+        <textarea id="block-intro">Escribir una introducción clara, útil y humana explicando el problema de compra y para quién sirve esta guía.</textarea>
+
+        <label>
+            <input id="enable-comparison" type="checkbox" checked>
+            Incluir tabla comparativa
+        </label>
+
+        <label>Columna 1</label>
+        <input id="comparison-col-1" value="Opción 1">
+
+        <label>Columna 2</label>
+        <input id="comparison-col-2" value="Opción 2">
+
+        <label>Precio relativo opción 1</label>
+        <input id="comp-price-1" value="Medio">
+
+        <label>Precio relativo opción 2</label>
+        <input id="comp-price-2" value="Medio/alto">
+
+        <label>Mantenimiento opción 1</label>
+        <input id="comp-maintenance-1" value="Normal">
+
+        <label>Mantenimiento opción 2</label>
+        <input id="comp-maintenance-2" value="Bajo">
+
+        <label>Uso recomendado opción 1</label>
+        <input id="comp-use-1" value="Uso mixto">
+
+        <label>Uso recomendado opción 2</label>
+        <input id="comp-use-2" value="Uso urbano">
+
+        <label>Criterios de decisión</label>
+        <textarea id="block-criteria">Explicar qué debe mirar el lector antes de comprar: presupuesto, repuestos, consumo, seguro, uso diario y reventa.</textarea>
+
+        <h2>Pros</h2>
+        <input class="pro-input" value="Buena relación entre precio y prestaciones.">
+        <input class="pro-input" value="Sirve para ciudad y trayectos cortos de ruta.">
+        <input class="pro-input" value="Hay opciones con repuestos accesibles.">
+
+        <h2>Contras</h2>
+        <input class="con-input" value="El costo final depende mucho del estado de la unidad.">
+        <input class="con-input" value="Algunos modelos pueden tener seguro más caro.">
+        <input class="con-input" value="Conviene revisar disponibilidad real de repuestos.">
+
+        <label>Costos reales y mantenimiento</label>
+        <textarea id="block-costs">Explicar costos de seguro, service, cubiertas, transmisión, consumo y repuestos comunes.</textarea>
+
+        <label>Recomendación final</label>
+        <textarea id="block-recommendation">Cerrar con una recomendación honesta según distintos perfiles de usuario.</textarea>
+
+        <h2>FAQ</h2>
+        <div id="faq-list">
+            <div class="faq-item">
+                <label>Pregunta</label>
+                <input class="faq-question" value="¿Cuál conviene más para ciudad?">
+                <label>Respuesta</label>
+                <textarea class="faq-answer">Para ciudad conviene priorizar consumo, maniobrabilidad, mantenimiento bajo y comodidad.</textarea>
+            </div>
+            <div class="faq-item">
+                <label>Pregunta</label>
+                <input class="faq-question" value="¿Qué revisar antes de comprar?">
+                <label>Respuesta</label>
+                <textarea class="faq-answer">Revisar papeles, estado general, service, cubiertas, transmisión, frenos y disponibilidad de repuestos.</textarea>
+            </div>
+            <div class="faq-item">
+                <label>Pregunta</label>
+                <input class="faq-question" value="¿Conviene comprar usado o nuevo?">
+                <label>Respuesta</label>
+                <textarea class="faq-answer">Depende del presupuesto. Un usado cuidado puede convenir, pero uno mal mantenido puede salir más caro.</textarea>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <button id="add-faq" type="button">Agregar FAQ</button>
+        </div>
+    </section>
+
+    <section class="admin-preview">
+        <h2>Vista previa de calidad</h2>
+
+        <h3 id="preview-title"></h3>
+        <p id="preview-description"></p>
+
+        <div class="quality-grid">
+            <article class="dashboard-card">
+                <h3>Palabras</h3>
+                <p id="word-count">0</p>
+            </article>
+            <article class="dashboard-card">
+                <h3>SEO</h3>
+                <p id="seo-score-live">0/100</p>
+            </article>
+        </div>
+
+        <h3>Checklist</h3>
+        <ul id="live-checklist"></ul>
+
+        <h3>HTML generado</h3>
+        <textarea id="content-output" class="large-output"></textarea>
+
+        <div class="admin-actions">
+            <button id="copy-content" type="button">Copiar HTML</button>
+            <button id="copy-json" type="button">Copiar JSON</button>
+        </div>
+
+        <h3>JSON completo</h3>
+        <pre id="json-output" class="generated-json"></pre>
+    </section>
+</main>
+
+<script src="./advanced-editor.js"></script>
+</body>
+</html>

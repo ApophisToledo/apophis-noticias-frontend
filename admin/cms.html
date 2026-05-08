@@ -11,15 +11,17 @@
 <header class="header">
     <div class="logo-area">
         <h1>CMS Apophis</h1>
-        <p>CRUD editorial preparado para guías evergreen.</p>
+        <p>Crear, editar y eliminar guías evergreen.</p>
     </div>
 </header>
 
 <main class="admin-layout">
     <section class="admin-panel">
-        <h2>Nueva guía</h2>
+        <h2>Editor de guía</h2>
 
         <form id="cms-form">
+            <input id="cms-current-slug" type="hidden">
+
             <label>Título</label>
             <input id="cms-title" value="Mejor moto 200 calidad precio en Argentina">
 
@@ -37,8 +39,18 @@
             <label>Descripción SEO</label>
             <textarea id="cms-description">Guía completa para elegir una moto 200cc en Argentina considerando precio, consumo y mantenimiento.</textarea>
 
-            <label>Contenido base</label>
-            <textarea id="cms-content">Contenido editorial largo pendiente de completar.</textarea>
+            <label>Contenido largo HTML</label>
+            <textarea id="cms-content"><h2>Introducción</h2><p>Contenido editorial largo pendiente de completar.</p></textarea>
+
+            <label>Imagen destacada</label>
+            <input id="cms-image" type="file" accept="image/*">
+
+            <div class="admin-actions">
+                <button id="upload-image" type="button">Subir imagen a Cloudinary</button>
+            </div>
+
+            <label>URL imagen</label>
+            <input id="cms-image-url" placeholder="https://...">
 
             <label>Keywords</label>
             <input id="cms-keywords" value="moto 200, motos argentina, calidad precio">
@@ -53,7 +65,8 @@
             <input id="cms-reading" value="10 min">
 
             <div class="admin-actions">
-                <button type="submit">Guardar guía</button>
+                <button type="submit">Guardar</button>
+                <button id="clear-form" type="button">Nueva guía</button>
             </div>
         </form>
 

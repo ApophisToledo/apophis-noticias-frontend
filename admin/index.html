@@ -3,59 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editor SEO | Apophis</title>
+<title>Admin Apophis</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 <header class="header">
     <div class="logo-area">
-        <h1>Editor SEO Apophis</h1>
-        <p>Preparador de guías evergreen para el nuevo portal.</p>
-    </div>
+        <h1>Admin Apophis</h1>
+        <p>Herramientas editoriales y SEO.</p>
+    
+        <article class="guide-card">
+            <h3>Comparador Premium</h3>
+            <p>Crear comparativas reales con ratings visuales.</p>
+            <a class="read-more" href="./comparison-builder.html">Abrir</a>
+        </article>
+
+</div>
 </header>
 
-<main class="admin-layout">
-    <section class="admin-panel">
-        <span class="status-pill">Borrador seguro</span>
-        <h2>Nueva guía</h2>
-
-        <label for="title">Título SEO</label>
-        <input id="title" value="Mejor moto 200 calidad precio en Argentina">
-
-        <label for="category">Categoría</label>
-        <select id="category">
-            <option value="motos">Motos</option>
-            <option value="autos">Autos</option>
-            <option value="tecnologia">Tecnología</option>
-            <option value="supermercados">Supermercados</option>
-        </select>
-
-        <label for="subcategory">Subcategoría</label>
-        <input id="subcategory" value="200cc">
-
-        <label for="description">Meta descripción</label>
-        <textarea id="description">Guía evergreen para elegir una moto 200cc equilibrando precio, consumo, mantenimiento y uso real.</textarea>
-
-        <label for="keywords">Keywords separadas por coma</label>
-        <input id="keywords" value="moto 200, motos argentina, calidad precio">
-
-        <div class="admin-actions">
-            <button id="copy-json" type="button">Copiar JSON</button>
-        </div>
-    </section>
-
-    <section class="admin-preview">
-        <h2>Vista previa SEO</h2>
-        <h3 id="preview-title"></h3>
-        <p id="preview-description"></p>
-        <p><strong>URL:</strong> <span id="preview-url"></span></p>
-
-        <h3>JSON generado</h3>
-        <pre id="json-output" class="generated-json"></pre>
-    </section>
-</main>
-
-<script src="./admin-editor.js"></script>
+<section class="seo-block">
+    <div class="guide-grid">
+        <article class="guide-card">
+            <h3>Login</h3>
+            <p>Acceso seguro al panel.</p>
+            <a class="read-more" href="./login.html">Abrir</a>
+        </article>
+        <article class="guide-card">
+            <h3>CMS</h3>
+            <p>Crear, editar y eliminar guías.</p>
+            <a class="read-more" href="./cms.html">Abrir</a>
+        </article>
+        <article class="guide-card">
+            <h3>Editor largo SEO</h3>
+            <p>Armar contenido evergreen por bloques.</p>
+            <a class="read-more" href="./advanced-editor.html">Abrir</a>
+        </article>
+        <article class="guide-card">
+            <h3>Auditor SEO</h3>
+            <p>Revisar calidad editorial.</p>
+            <a class="read-more" href="./seo-audit.html">Abrir</a>
+        </article>
+    </div>
+</section>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurar Admin | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo-area">
+    <h1>Configurar Admin</h1>
+    <p>Guía rápida para activar login real.</p>
+  </div>
+</header>
+
+<section class="seo-block">
+  <h2>Generar contraseña segura</h2>
+  <p>Desde la carpeta backend ejecutá:</p>
+  <pre class="generated-json">node scripts/generate-admin-hash.js TU_PASSWORD_SEGURA</pre>
+
+  <h2>Variables necesarias</h2>
+  <pre class="generated-json">ADMIN_EMAIL=admin@apophis.com
+ADMIN_PASSWORD_HASH=hash_generado
+JWT_SECRET=clave_larga_segura</pre>
+
+  <p>Después reiniciá el backend y entrá desde <strong>/admin/login.html</strong>.</p>
+</section>
+</body>
+</html>

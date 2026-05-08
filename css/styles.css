@@ -586,3 +586,189 @@ body{
 #cms-content{
  min-height:180px;
 }
+
+#cms-image{
+ background:#fff;
+}
+
+#cms-image-url{
+ font-size:13px;
+}
+
+.generated-json{
+ text-align:left;
+}
+
+.admin-actions button{
+ margin-right:8px;
+ margin-bottom:8px;
+}
+
+#cms-guides .admin-actions{
+ margin-top:14px;
+}
+
+#cms-guides .admin-actions button:last-child{
+ background:#4a0d0d;
+ color:#fff;
+}
+
+#cms-current-slug{
+ display:none;
+}
+
+.advanced-editor-layout{
+ max-width:1400px;
+ margin:auto;
+ padding:24px;
+ display:grid;
+ grid-template-columns:minmax(360px, 520px) minmax(0,1fr);
+ gap:24px;
+}
+
+.advanced-editor-layout textarea{
+ min-height:110px;
+}
+
+.faq-item{
+ border:1px solid rgba(0,0,0,.12);
+ border-radius:18px;
+ padding:16px;
+ margin:14px 0;
+ background:rgba(255,255,255,.35);
+}
+
+.quality-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:16px;
+ margin:20px 0;
+}
+
+.large-output{
+ width:100%;
+ min-height:360px;
+ font-family:Consolas, monospace;
+ font-size:13px;
+}
+
+#live-checklist{
+ padding-left:24px;
+ margin:16px 0 24px;
+}
+
+#live-checklist li{
+ margin-bottom:8px;
+}
+
+@media(max-width:1000px){
+ .advanced-editor-layout{
+  grid-template-columns:1fr;
+ }
+}
+
+
+.comparison-ratings{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+ gap:20px;
+ margin-top:20px;
+}
+
+.rating-card{
+ background:var(--card);
+ border-radius:24px;
+ padding:24px;
+ box-shadow:var(--shadow);
+}
+
+.rating-line{
+ margin-bottom:18px;
+}
+
+.rating-line span{
+ display:block;
+ margin-bottom:6px;
+ font-weight:bold;
+}
+
+.rating-bar{
+ width:100%;
+ height:14px;
+ border-radius:999px;
+ overflow:hidden;
+ background:rgba(0,0,0,.12);
+ margin-bottom:6px;
+}
+
+.rating-fill{
+ height:100%;
+ background:linear-gradient(90deg,#b8860b,#d4af37,#f4e3b2);
+}
+
+input[type="range"]{
+ width:100%;
+}
+
+hr{
+ margin:30px 0;
+ opacity:.2;
+}
+
+
+.hero-premium{
+ padding:60px 24px;
+ text-align:center;
+ max-width:1000px;
+ margin:auto;
+}
+
+.hero-premium h2{
+ font-size:42px;
+ margin-bottom:18px;
+}
+
+.hero-premium p{
+ font-size:18px;
+ line-height:1.7;
+ opacity:.85;
+ max-width:760px;
+ margin:auto;
+}
+
+.hero-buttons{
+ display:flex;
+ flex-wrap:wrap;
+ gap:14px;
+ justify-content:center;
+ margin-top:28px;
+}
+
+.hero-buttons a{
+ min-width:170px;
+}
+
+@media(max-width:700px){
+
+ .hero-premium h2{
+  font-size:30px;
+ }
+
+ .hero-premium p{
+  font-size:16px;
+ }
+
+}
+
+
+.featured-evergreen{
+ max-width:1200px;
+ margin:auto;
+ padding:50px 24px;
+}
+
+.featured-evergreen h2{
+ margin-bottom:24px;
+ text-align:center;
+}
+
