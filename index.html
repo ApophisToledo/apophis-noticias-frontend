@@ -3,1382 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" id="metaDesc" content="Apophis Noticias - Información actualizada de Argentina y el mundo">
-<meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="lJglm09bqinSVZ3sCMJ9hOFpgenFldmc6TcWZe5eE28" />
 
-<title id="metaTitle">Apophis Noticias</title>
+<title>Apophis Guías Argentina | Motos, Autos, Tecnología y Supermercados</title>
 
-<meta property="og:title" id="ogTitle" content="Apophis Noticias">
-<meta property="og:description" id="ogDesc" content="Noticias actualizadas">
+<meta name="description" content="Portal argentino de guías y comparativas sobre motos, autos, tecnología, ahorro y supermercados.">
+<meta name="keywords" content="motos argentina, autos argentina, comparativas, tecnología, supermercados, ahorro">
+<meta name="robots" content="index,follow">
+
+<meta property="og:title" content="Apophis Guías Argentina">
+<meta property="og:description" content="Guías evergreen y comparativas reales para comprar mejor.">
 <meta property="og:type" content="website">
-<meta property="og:url" id="ogUrl" content="">
-<meta property="og:image" id="ogImg" content="">
 
-<script>
-window.__cmp = window.__cmp || function(){};
+<link rel="canonical" href="https://apophis.com.ar/">
+<link rel="stylesheet" href="./css/styles.css">
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "name":"Apophis Guías Argentina",
+ "url":"https://apophis.com.ar/"
+}
 </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-:root{
-  --bg:#f4e3b2;
-  --bg-card:#fdf5d7;
-  --text:#111;
-  --gold:gold;
-  --line:rgba(255,215,0,.18);
-  --shadow:0 6px 18px rgba(0,0,0,.10);
-  --shadow-strong:0 10px 22px rgba(0,0,0,.18);
-}
-
-*{box-sizing:border-box;}
-
-html, body{
-  margin:0;
-  padding:0;
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-  width: 100%;
-}
-
-body{
-  font-family:Georgia, serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:.3s;
-}
-
-body.dark{
-  --bg:#111;
-  --bg-card:#1a1a1a;
-  --text:#f0e68c;
-}
-
-img{
-  display:block;
-  max-width:100%;
-}
-
-/* HEADER */
-.header{
-  background:black;
-  color:gold;
-  padding:22px 18px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  position:relative;
-  flex-wrap:wrap;
-  border-bottom:2px solid var(--line);
-  box-shadow:0 6px 18px rgba(0,0,0,.25);
-}
-
-.logo-link{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  cursor:pointer;
-  max-width:100%;
-}
-
-.logo-img{
-  max-width:520px;
-  width:min(92vw, 520px);
-  height:auto;
-  border-radius:12px;
-  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
-  box-shadow:0 0 0 rgba(255,215,0,0);
-}
-
-.logo-link:hover .logo-img{
-  transform:scale(1.03) translateY(-2px);
-  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
-  filter:brightness(1.08);
-}
-
-.logo-link:active .logo-img{
-  transform:scale(.99);
-}
-
-.dark-btn,
-.admin-btn{
-  position:absolute;
-  top:10px;
-  background:#111;
-  color:gold;
-  border:none;
-  padding:7px 11px;
-  border-radius:8px;
-  cursor:pointer;
-  z-index:9999;
-  font-family:Georgia, serif;
-  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
-  min-height:42px;
-}
-
-.dark-btn{ right:10px; }
-.admin-btn{ left:10px; }
-
-.admin-btn:hover,
-.dark-btn:hover{
-  opacity:.92;
-  transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(0,0,0,.2);
-}
-
-/* NAV */
-.top-nav-row{
-  width:100%;
-  max-width:1200px;
-  margin:0 auto;
-  padding:14px 12px 8px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:start;
-  gap:10px;
-}
-
-.top-nav-left{
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-  min-width:0;
-}
-
-.top-nav-center{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:8px;
-  min-width:0;
-}
-
-.volver-btn,
-.cat-btn{
-  padding:9px 13px;
-  border-radius:999px;
-  background:#111;
-  color:gold;
-  cursor:pointer;
-  border:none;
-  font-family:Georgia, serif;
-  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
-  white-space:nowrap;
-  min-height:42px;
-}
-
-.cat-btn:hover,
-.volver-btn:hover{
-  opacity:.92;
-  transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-
-/* STATS */
-.stats{
-  position:fixed;
-  top:86px;
-  right:10px;
-  background:black;
-  color:gold;
-  padding:10px 12px;
-  border-radius:10px;
-  font-size:12px;
-  z-index:1000;
-  box-shadow:0 6px 16px rgba(0,0,0,.25);
-  min-width:86px;
-  text-align:center;
-}
-
-/* INTRO */
-.intro{
-  max-width:1200px;
-  margin:18px auto 0;
-  padding:0 12px;
-}
-
-.intro-box{
-  background:var(--bg-card);
-  padding:22px;
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  animation:aparecer .45s ease;
-}
-
-.intro h1{
-  margin:0 0 10px;
-  font-size:2rem;
-  line-height:1.15;
-}
-
-.intro p{
-  margin:0;
-  line-height:1.7;
-  font-size:1.02rem;
-}
-
-/* BUSCADOR */
-.buscador-box{
-  max-width:1200px;
-  margin:18px auto;
-  padding:0 12px;
-}
-
-.buscador-wrap{
-  background:var(--bg-card);
-  padding:16px;
-  border-radius:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-}
-
-#buscador{
-  padding:13px 14px;
-  width:100%;
-  border-radius:12px;
-  border:1px solid #b99c49;
-  font-family:Georgia, serif;
-  font-size:1rem;
-  outline:none;
-}
-
-body.dark #buscador{
-  background:#111;
-  color:#f0e68c;
-  border-color:#7c6420;
-}
-
-/* LAYOUT */
-.home-layout,
-.home-main,
-.home-side,
-.portada-box,
-.flayer-box,
-.lista-box,
-.side-box,
-.portada,
-.portada-sec-wrap,
-.contenedor-home,
-.flayer{
-  min-width:0;
-}
-
-.home-layout{
-  display:flex;
-  max-width:1200px;
-  margin:auto;
-  gap:20px;
-  align-items:flex-start;
-  padding:0 12px;
-}
-
-.home-main{
-  flex:3;
-  min-width:0;
-}
-
-.home-side{
-  flex:1;
-  min-width:280px;
-}
-
-.portada-box,
-.flayer-box,
-.lista-box,
-.side-box{
-  width:100%;
-  overflow:hidden;
-  background:var(--bg-card);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-}
-
-.side-box{
-  padding:16px;
-  margin-bottom:20px;
-}
-
-.side-title,
-.seccion-titulo{
-  margin:0 0 14px;
-  font-size:1.15rem;
-  border-bottom:2px solid rgba(255,215,0,.35);
-  padding-bottom:8px;
-}
-
-/* PORTADA */
-.portada-box{
-  padding:18px;
-  animation:aparecer .45s ease;
-}
-
-.portada{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:15px;
-  width:100%;
-}
-
-.portada-principal,
-.portada-sec{
-  position:relative;
-  overflow:hidden;
-  max-width:100%;
-  width:100%;
-  cursor:pointer;
-}
-
-.portada-principal{
-  min-height:390px;
-  border-radius:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
-}
-
-.portada-sec-wrap{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-}
-
-.portada-sec{
-  min-height:116px;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
-
-.card-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-
-.portada-principal::after,
-.portada-sec::after,
-.noticia-card::after,
-.flayer-item::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.84), rgba(0,0,0,.14));
-  pointer-events:none;
-}
-
-.portada-principal h1{
-  position:absolute;
-  bottom:14px;
-  left:14px;
-  right:14px;
-  background:rgba(0,0,0,.82);
-  color:gold;
-  padding:14px;
-  border-radius:10px;
-  z-index:2;
-  margin:0;
-  font-size:1.8rem;
-  line-height:1.18;
-}
-
-.portada-sec h3{
-  position:absolute;
-  bottom:8px;
-  left:8px;
-  right:8px;
-  background:rgba(0,0,0,.82);
-  color:gold;
-  padding:8px;
-  font-size:.92rem;
-  line-height:1.22;
-  border-radius:8px;
-  z-index:2;
-  margin:0;
-}
-
-/* FLAYER */
-.flayer-box{
-  margin-top:20px;
-  padding:16px;
-}
-
-.flayer{
-  overflow:hidden;
-  width:100%;
-  max-width:100%;
-}
-
-.flayer-track{
-  display:flex;
-  width:max-content;
-  max-width:none;
-  animation:scroll 28s linear infinite;
-  gap:10px;
-}
-
-.flayer-item{
-  position:relative;
-  flex:0 0 auto;
-  width:220px;
-  height:132px;
-  max-width:100%;
-  border-radius:10px;
-  overflow:hidden;
-  cursor:pointer;
-  box-shadow:0 6px 16px rgba(0,0,0,.12);
-}
-
-.flayer-item span{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(0,0,0,.84);
-  color:gold;
-  font-size:12px;
-  padding:7px;
-  line-height:1.2;
-  z-index:2;
-}
-
-@keyframes scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-
-/* ÚLTIMAS NOTICIAS */
-.lista-box{
-  margin-top:20px;
-  padding:18px;
-}
-
-.contenedor-home{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:16px;
-  width:100%;
-  max-width:100%;
-  padding:0;
-}
-
-.noticia-card{
-  width:100%;
-  max-width:100%;
-  height:210px;
-  border-radius:14px;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-  transition:transform .25s ease, box-shadow .25s ease;
-  position:relative;
-  overflow:hidden;
-  background:#222;
-}
-
-.noticia-card:hover{
-  transform:translateY(-2px);
-  box-shadow:var(--shadow-strong);
-}
-
-.noticia-card-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-}
-
-.noticia-card h2{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  right:10px;
-  background:rgba(0,0,0,.82);
-  color:white;
-  padding:9px 10px;
-  border-radius:8px;
-  font-size:1rem;
-  line-height:1.2;
-  z-index:2;
-  margin:0;
-  overflow:hidden;
-  display:-webkit-box;
-  -webkit-line-clamp:3;
-  -webkit-box-orient:vertical;
-}
-
-/* SIDEBAR */
-.mini-lista{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.mini-item{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  cursor:pointer;
-  transition:transform .2s ease, opacity .2s ease;
-  min-width:0;
-}
-
-.mini-item:hover{
-  transform:translateY(-1px);
-  opacity:.93;
-}
-
-.mini-item-img{
-  width:92px;
-  height:66px;
-  object-fit:cover;
-  border-radius:8px;
-  flex-shrink:0;
-}
-
-.mini-item span{
-  font-size:.95rem;
-  line-height:1.3;
-}
-
-/* MISC */
-.mensaje-estado{
-  text-align:center;
-  padding:14px;
-  border-radius:10px;
-  background:rgba(0,0,0,.06);
-}
-
-.ad{
-  margin:25px auto;
-  text-align:center;
-  max-width:900px;
-  padding:0 12px;
-}
-
-footer{
-  margin-top:40px;
-  padding:22px 14px 26px;
-  text-align:center;
-  background:#111;
-  color:gold;
-}
-
-footer a{
-  color:gold;
-  margin:0 8px;
-  display:inline-block;
-}
-
-@keyframes aparecer{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-body.dark .intro-box,
-body.dark .buscador-wrap,
-body.dark .side-box,
-body.dark .portada-box,
-body.dark .flayer-box,
-body.dark .lista-box{
-  box-shadow:0 6px 18px rgba(0,0,0,.35);
-}
-
-/* TABLET */
-@media(max-width:1080px){
-  .home-layout{
-    flex-direction:column;
-  }
-  .home-side{
-    width:100%;
-    min-width:0;
-  }
-  .side-box:last-child{
-    margin-bottom:0;
-  }
-}
-
-@media(max-width:950px){
-  .portada{
-    grid-template-columns:1fr;
-  }
-
-  .contenedor-home{
-    grid-template-columns:1fr;
-  }
-
-  .logo-img{
-    width:min(94vw, 440px);
-  }
-
-  .top-nav-row{
-    grid-template-columns:1fr;
-    justify-items:center;
-    padding-top:12px;
-  }
-
-  .top-nav-left{
-    width:100%;
-    justify-content:center;
-  }
-
-  .top-nav-center{
-    width:100%;
-    justify-content:center;
-  }
-
-  .stats{
-    position:static;
-    margin:0 auto 16px;
-    width:max-content;
-  }
-}
-
-/* MOBILE ONLY */
-@media(max-width:760px){
-  /* MEJORA: Asegurar que el layout no exceda el viewport */
-  .home-layout, .home-main, .lista-box, .contenedor-home {
-    width: 100% !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .header{
-    padding:64px 12px 16px;
-  }
-
-  .logo-img{
-    width:min(96vw,360px);
-    border-radius:10px;
-  }
-
-  .admin-btn,
-  .dark-btn{
-    top:8px;
-    padding:6px 10px;
-    font-size:.92rem;
-  }
-
-  .top-nav-row{
-    padding:10px 10px 4px;
-    gap:8px;
-  }
-
-  .top-nav-left{
-    justify-content:center;
-  }
-
-  .top-nav-center{
-    display:grid;
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-    gap:8px;
-    width:100%;
-  }
-
-  .volver-btn,
-  .cat-btn{
-    width:100%;
-    min-height:42px;
-    border-radius:12px;
-    text-align:center;
-    font-size:.95rem;
-    padding:10px 8px;
-  }
-
-  .intro,
-  .buscador-box,
-  .home-layout{
-    padding-left:10px;
-    padding-right:10px;
-  }
-
-  .home-layout{
-    gap:16px;
-  }
-
-  .intro-box,
-  .buscador-wrap,
-  .portada-box,
-  .flayer-box,
-  .lista-box,
-  .side-box{
-    border-radius:12px;
-    overflow:hidden;
-  }
-
-  .intro-box{
-    padding:16px;
-  }
-
-  .intro h1{
-    font-size:1.5rem;
-    line-height:1.15;
-  }
-
-  .intro p{
-    font-size:.98rem;
-    line-height:1.55;
-  }
-
-  .buscador-wrap{
-    padding:12px;
-  }
-
-  #buscador{
-    font-size:16px;
-    padding:12px;
-  }
-
-  .portada-box{
-    padding:10px;
-  }
-
-  .flayer-box{
-    padding:10px;
-  }
-
-  .lista-box{
-    padding:10px;
-  }
-
-  .portada{
-    grid-template-columns:1fr;
-    gap:10px;
-  }
-
-  .portada-principal{
-    height:240px;
-    width:100%;
-    max-width:100%;
-    margin:0 auto;
-  }
-
-  .portada-principal .card-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .portada-principal h1{
-    left:10px;
-    right:10px;
-    bottom:10px;
-    font-size:1.04rem;
-    padding:8px 9px;
-    border-radius:8px;
-  }
-
-  .portada-sec-wrap{
-    gap:10px;
-  }
-
-  .portada-sec{
-    height:84px;
-    width:100%;
-    max-width:100%;
-    margin:0 auto;
-  }
-
-  .portada-sec .card-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .portada-sec h3{
-    font-size:.79rem;
-    line-height:1.12;
-    left:7px;
-    right:7px;
-    bottom:7px;
-    padding:5px 6px;
-  }
-
-  .flayer{
-    width:100%;
-    overflow:hidden;
-  }
-
-  .flayer-track{
-    gap:7px;
-  }
-
-  .flayer-item{
-    width:136px;
-    height:80px;
-    max-width:136px;
-    flex:0 0 136px;
-    border-radius:10px;
-  }
-
-  .flayer-item .card-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .flayer-item span{
-    font-size:9.8px;
-    padding:5px;
-    line-height:1.08;
-  }
-
-  .seccion-titulo,
-  .side-title{
-    font-size:1.03rem;
-    margin-bottom:12px;
-  }
-
-  .contenedor-home{
-    grid-template-columns:1fr;
-    gap:10px;
-    padding:0 4px;
-    width:100%;
-    max-width:100%;
-  }
-
-  .noticia-card{
-    width:100% !important; /* MEJORA: Forzar ancho total para evitar choque lateral */
-    max-width:100% !important;
-    height:126px;
-    margin:0 auto;
-    border-radius:12px;
-    overflow:hidden;
-  }
-
-  .noticia-card-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .noticia-card h2{
-    left:7px;
-    right:7px;
-    bottom:7px;
-    font-size:.78rem;
-    line-height:1.1;
-    padding:5px 6px;
-    -webkit-line-clamp:2;
-  }
-
-  .side-box{
-    padding:14px;
-  }
-
-  .mini-item{
-    gap:8px;
-    width:100%;
-    max-width:100%;
-  }
-
-  .mini-item-img{
-    width:78px;
-    height:56px;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .mini-item span{
-    font-size:.88rem;
-    line-height:1.22;
-  }
-
-  footer{
-    font-size:.95rem;
-    line-height:1.8;
-  }
-
-  footer a{
-    margin:0 6px;
-  }
-}
-
-@media(max-width:480px){
-  .header{
-    padding:62px 8px 14px;
-  }
-
-  .admin-btn{
-    left:8px;
-  }
-
-  .dark-btn{
-    right:8px;
-  }
-
-  .top-nav-row{
-    padding-left:8px;
-    padding-right:8px;
-  }
-
-  .top-nav-center{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .intro,
-  .buscador-box,
-  .home-layout{
-    padding-left:8px;
-    padding-right:8px;
-  }
-
-  .home-layout{
-    gap:12px;
-  }
-
-  .intro h1{
-    font-size:1.28rem;
-  }
-
-  .intro p{
-    font-size:.93rem;
-  }
-
-  .portada-box,
-  .flayer-box,
-  .lista-box{
-    padding:8px;
-  }
-
-  .portada-principal{
-    height:220px;
-  }
-
-  .portada-principal h1{
-    font-size:.96rem;
-    line-height:1.12;
-    left:8px;
-    right:8px;
-    bottom:8px;
-    padding:7px 8px;
-  }
-
-  .portada-sec{
-    height:78px;
-  }
-
-  .portada-sec h3{
-    font-size:.75rem;
-    line-height:1.08;
-    left:6px;
-    right:6px;
-    bottom:6px;
-    padding:5px;
-  }
-
-  .flayer-item{
-    width:128px;
-    height:76px;
-    max-width:128px;
-    flex:0 0 128px;
-  }
-
-  .flayer-item span{
-    font-size:9.5px;
-    padding:4px 5px;
-  }
-
-  .contenedor-home{
-    padding:0 3px;
-    gap:8px;
-  }
-
-  .noticia-card{
-    height:118px;
-    width:100% !important; /* MEJORA: Refuerzo para móviles pequeños */
-  }
-
-  .noticia-card h2{
-    left:6px;
-    right:6px;
-    bottom:6px;
-    font-size:.75rem;
-    line-height:1.06;
-    padding:4px 5px;
-  }
-
-  .mini-item-img{
-    width:74px;
-    height:52px;
-  }
-
-  .mini-item span{
-    font-size:.85rem;
-  }
-
-  .stats{
-    font-size:11px;
-    padding:8px 10px;
-  }
-}
-</style>
 </head>
-
 <body>
 
-<div class="header">
-  <button class="admin-btn" onclick="loginAdmin()">Admin</button>
+<header class="header">
+    <div class="logo-area">
+        <h1>APOPHIS</h1>
+        <p>Guías argentinas de consumo inteligente</p>
+    </div>
 
-  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
-    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
-  </a>
+    <nav class="nav">
+        <a href="#motos">Motos</a>
+        <a href="#autos">Autos</a>
+        <a href="#tecnologia">Tecnología</a>
+        <a href="#supermercados">Supermercados</a>
+    </nav>
+</header>
 
-  <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
-</div>
+<section class="hero">
+    <div class="hero-content">
+        <span class="badge">Portal Evergreen 2026</span>
+        <h2>Comparativas reales, ahorro y decisiones inteligentes</h2>
+        <p>
+            Apophis evoluciona hacia un portal guía premium optimizado para SEO, velocidad y experiencia móvil.
+        </p>
 
-<div class="top-nav-row">
-  <div class="top-nav-left">
-    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
-  </div>
+        <div class="hero-buttons">
+            <a href="#guias" class="btn-primary">Ver guías</a>
+            <a href="#categorias" class="btn-secondary">Explorar categorías</a>
+        </div>
+    </div>
+</section>
 
-  <div class="top-nav-center">
-    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-    <button class="cat-btn" onclick="verCat('Show')">Show</button>
-    <button class="cat-btn" onclick="verCat('Pais')">País</button>
-    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
-  </div>
+<section id="categorias" class="categories">
 
-  <div></div>
-</div>
+    <article class="category-card" id="motos">
+        <h3>Motos</h3>
+        <p>Comparativas, consumos, mantenimiento y mejores motos calidad/precio.</p>
+    </article>
 
-<div class="stats">
-  👁 <span id="visitas">0</span><br>
-  🟢 <span id="online">0</span>
-</div>
+    <article class="category-card" id="autos">
+        <h3>Autos</h3>
+        <p>Primer auto, usados recomendados y costos reales de mantenimiento.</p>
+    </article>
 
-<div class="intro">
-  <div class="intro-box">
-    <h1>Apophis Noticias - Actualidad en tiempo real</h1>
+    <article class="category-card" id="tecnologia">
+        <h3>Tecnología</h3>
+        <p>SSD, RAM, notebooks, gaming y optimización.</p>
+    </article>
+
+    <article class="category-card" id="supermercados">
+        <h3>Supermercados</h3>
+        <p>Comparativas, ahorro y estrategias para gastar menos.</p>
+    </article>
+
+</section>
+
+<section id="guias" class="guides">
+    <h2>Guías destacadas</h2>
+
+    <div class="guide-grid">
+
+        <article class="guide-card">
+            <span>Motos</span>
+            <h3>Rouser NS200 vs Honda CB190</h3>
+            <p>Comparativa completa de consumo, velocidad y mantenimiento.</p>
+        </article>
+
+        <article class="guide-card">
+            <span>Autos</span>
+            <h3>Mejor primer auto en Argentina</h3>
+            <p>Qué conviene comprar según presupuesto y mantenimiento.</p>
+        </article>
+
+        <article class="guide-card">
+            <span>Tecnología</span>
+            <h3>Cómo acelerar una notebook vieja</h3>
+            <p>Guía completa para mejorar rendimiento sin gastar de más.</p>
+        </article>
+
+        <article class="guide-card">
+            <span>Supermercados</span>
+            <h3>Coto vs Carrefour</h3>
+            <p>Qué supermercado conviene más para ahorrar.</p>
+        </article>
+
+    </div>
+</section>
+
+<section class="seo-block">
+    <h2>Contenido pensado para durar años</h2>
+
     <p>
-      Apophis Noticias es un medio digital independiente que cubre los hechos más importantes de Argentina y el mundo.
+        El nuevo Apophis está diseñado como un portal evergreen optimizado para Google AdSense,
+        Core Web Vitals y posicionamiento SEO profesional.
     </p>
-  </div>
+</section>
+
+<footer class="footer">
+    <p>© 2026 Apophis Guías Argentina</p>
+
+<section class="ranking-section">
+
+<h2>Rankings y comparativas más buscadas</h2>
+
+<div class="guide-grid">
+
+<article class="guide-card">
+<h3>Mejor moto 200 calidad/precio</h3>
+<p>Comparativa completa para ciudad y ruta.</p>
+</article>
+
+<article class="guide-card">
+<h3>Autos usados que menos consumen</h3>
+<p>Guía evergreen de consumo y mantenimiento.</p>
+</article>
+
+<article class="guide-card">
+<h3>Mejores SSD baratos</h3>
+<p>Opciones recomendadas para acelerar tu PC.</p>
+</article>
+
+<article class="guide-card">
+<h3>Cómo ahorrar en supermercados</h3>
+<p>Estrategias reales para reducir gastos mensuales.</p>
+</article>
+
 </div>
 
-<div class="buscador-box">
-  <div class="buscador-wrap">
-    <input id="buscador" placeholder="🔍 Buscar noticias...">
-  </div>
-</div>
+</section>
 
-<div class="home-layout">
-  <main class="home-main">
-    <div class="portada-box">
-      <div class="portada" id="portada"></div>
-    </div>
-
-    <div class="flayer-box">
-      <div class="flayer">
-        <div id="flayerInner" class="flayer-track"></div>
-      </div>
-    </div>
-
-    <div class="lista-box">
-      <h2 class="seccion-titulo">Últimas noticias</h2>
-      <div id="contenedorHome" class="contenedor-home"></div>
-    </div>
-  </main>
-
-  <aside class="home-side">
-    <div class="side-box">
-      <h3 class="side-title">Destacadas</h3>
-      <div id="destacadasSide" class="mini-lista">
-        <div class="mensaje-estado">Cargando noticias...</div>
-      </div>
-    </div>
-
-    <div class="side-box">
-      <h3 class="side-title">Publicidad</h3>
-      <div class="ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-6641245592697930"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-      </div>
-    </div>
-  </aside>
-</div>
-
-<footer>
-  <p>© 2026 Apophis Noticias</p>
-  <div>
-    <a href="privacidad.html">Privacidad</a> |
-    <a href="contacto.html">Contacto</a> |
-    <a href="sobre.html">Sobre Nosotros</a>
-  </div>
 </footer>
 
-<script>
-const API = "https://apophis-noticias-backend.vercel.app";
-const CACHE_TIME = 5 * 60 * 1000;
+<script src="./js/app.js"></script>
 
-// 🌙 DARK MODE
-function aplicarDarkMode(){
-  let dark = localStorage.getItem("darkMode");
-  if(dark === null){
-    dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }else{
-    dark = dark === "true";
-  }
-  document.body.classList.toggle("dark", dark);
-  const btn = document.getElementById("darkBtn");
-  if(btn) btn.innerText = dark ? "☀️" : "🌙";
-}
 
-function toggleDark(){
-  const activo = document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", activo);
-  const btn = document.getElementById("darkBtn");
-  if(btn) btn.innerText = activo ? "☀️" : "🌙";
-}
+<section class="guides">
 
-// SEO HOME
-function actualizarSEOHogar(){
-  const titulo = "Apophis Noticias";
-  const descripcion = "Apophis Noticias - Información actualizada de Argentina y el mundo";
-  const url = location.href;
+<h2>Guías dinámicas evergreen</h2>
 
-  document.title = titulo;
+<div id="dynamic-guides" class="guide-grid"></div>
 
-  const metaTitle = document.getElementById("metaTitle");
-  if(metaTitle) metaTitle.innerText = titulo;
+</section>
 
-  const metaDesc = document.getElementById("metaDesc");
-  if(metaDesc) metaDesc.setAttribute("content", descripcion);
-
-  const ogTitle = document.getElementById("ogTitle");
-  if(ogTitle) ogTitle.setAttribute("content", titulo);
-
-  const ogDesc = document.getElementById("ogDesc");
-  if(ogDesc) ogDesc.setAttribute("content", descripcion);
-
-  const ogUrl = document.getElementById("ogUrl");
-  if(ogUrl) ogUrl.setAttribute("content", url);
-
-  const ogImg = document.getElementById("ogImg");
-  if(ogImg) ogImg.setAttribute("content", "");
-}
-
-function activarAds(){
-  try{
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  }catch(e){}
-}
-
-function escaparHTML(texto){
-  if(texto === undefined || texto === null) return "";
-  return String(texto)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#39;");
-}
-
-function urlImagenSegura(url){
-  return escaparHTML(url || "");
-}
-
-async function cargarHome(){
-  try{
-    const cache = localStorage.getItem("noticias_cache");
-    const time = Number(localStorage.getItem("noticias_time") || 0);
-
-    if(cache && time && (Date.now() - time < CACHE_TIME)){
-      render(JSON.parse(cache));
-      return;
-    }
-
-    const res = await fetch(API + "/noticias");
-    if(!res.ok) throw new Error("No se pudieron cargar las noticias");
-
-    const data = await res.json();
-
-    localStorage.setItem("noticias_cache", JSON.stringify(data));
-    localStorage.setItem("noticias_time", String(Date.now()));
-
-    render(data);
-
-  }catch(e){
-    console.log(e);
-    document.getElementById("portada").innerHTML = `
-      <div class="mensaje-estado" style="grid-column:1/-1;">No se pudieron cargar las noticias destacadas.</div>
-    `;
-    document.getElementById("contenedorHome").innerHTML = `
-      <div class="mensaje-estado">No se pudo cargar la portada en este momento.</div>
-    `;
-    document.getElementById("flayerInner").innerHTML = "";
-    document.getElementById("destacadasSide").innerHTML = `
-      <div class="mensaje-estado">No se pudieron cargar las destacadas.</div>
-    `;
-  }
-}
-
-function render(data){
-  if(!Array.isArray(data) || data.length === 0){
-    document.getElementById("portada").innerHTML = `
-      <div class="mensaje-estado" style="grid-column:1/-1;">No hay noticias disponibles por el momento.</div>
-    `;
-    document.getElementById("contenedorHome").innerHTML = `
-      <div class="mensaje-estado">Todavía no se publicaron noticias.</div>
-    `;
-    document.getElementById("flayerInner").innerHTML = "";
-    document.getElementById("destacadasSide").innerHTML = `
-      <div class="mensaje-estado">No hay noticias destacadas.</div>
-    `;
-    return;
-  }
-
-  const p = data[0];
-  const sec = data.slice(1, 5);
-  const side = data.slice(0, 5);
-
-  document.getElementById("portada").innerHTML = `
-    <div class="portada-principal" onclick="ir('${p._id}')">
-      <img class="card-img" src="${urlImagenSegura(p.imagen)}" alt="${escaparHTML(p.titulo || "Noticia principal")}">
-      <h1>${escaparHTML(p.titulo || "Sin título")}</h1>
-    </div>
-
-    <div class="portada-sec-wrap">
-      ${sec.map(n => `
-        <div class="portada-sec" onclick="ir('${n._id}')">
-          <img class="card-img" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
-          <h3>${escaparHTML(n.titulo || "Sin título")}</h3>
-        </div>
-      `).join("")}
-    </div>
-  `;
-
-  document.getElementById("contenedorHome").innerHTML = data.map(n => `
-    <div class="noticia-card" onclick="ir('${n._id}')">
-      <img class="noticia-card-img" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
-      <h2>${escaparHTML(n.titulo || "Sin título")}</h2>
-    </div>
-  `).join("");
-
-  const flayerHtml = data.map(n => `
-    <div class="flayer-item" onclick="ir('${n._id}')">
-      <img class="card-img" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
-      <span>${escaparHTML(n.titulo || "Sin título")}</span>
-    </div>
-  `).join("");
-
-  document.getElementById("flayerInner").innerHTML = flayerHtml + flayerHtml;
-
-  document.getElementById("destacadasSide").innerHTML = side.map(n => `
-    <div class="mini-item" onclick="ir('${n._id}')">
-      <img class="mini-item-img" src="${urlImagenSegura(n.imagen)}" alt="${escaparHTML(n.titulo || "Noticia")}">
-      <span>${escaparHTML(n.titulo || "Sin título")}</span>
-    </div>
-  `).join("");
-
-  activarAds();
-}
-
-// 👁 VISITAS
-async function visitas(){
-  try{
-    const res = await fetch(API + "/visitas");
-    if(!res.ok) throw new Error("Error visitas");
-    const d = await res.json();
-    document.getElementById("visitas").innerText = d.visitas || 0;
-  }catch(e){}
-}
-
-// 🟢 ONLINE
-function onlineReal(){
-  const key = "usuarios_activos";
-  let usuarios = JSON.parse(localStorage.getItem(key) || "[]");
-  const ahora = Date.now();
-
-  usuarios = usuarios.filter(t => ahora - t < 10000);
-  usuarios.push(ahora);
-
-  localStorage.setItem(key, JSON.stringify(usuarios));
-  document.getElementById("online").innerText = usuarios.length;
-
-  setTimeout(onlineReal, 5000);
-}
-
-function ir(id){
-  location = "noticia.html?id=" + id;
-}
-
-function verCat(c){
-  location = "categoria.html?cat=" + encodeURIComponent(c);
-}
-
-function loginAdmin(){
-  const u = prompt("Usuario");
-  const p = prompt("Pass");
-  if(u === "Apophis" && p === "1234"){
-    location = "admin.html";
-  }
-}
-
-async function buscarNoticias(texto){
-  const res = await fetch(API + "/noticias");
-  if(!res.ok) throw new Error("Error en búsqueda");
-
-  const data = await res.json();
-  const q = texto.trim().toLowerCase();
-  if(!q) return null;
-
-  const exacta = data.find(n =>
-    (n.titulo || "").toLowerCase().includes(q) ||
-    (n.categoria || "").toLowerCase().includes(q) ||
-    String(n.contenido || "").toLowerCase().includes(q)
-  );
-
-  return exacta || null;
-}
-
-function activarBuscador(){
-  const buscador = document.getElementById("buscador");
-  if(!buscador) return;
-
-  buscador.addEventListener("keydown", async function(e){
-    if(e.key === "Enter"){
-      const valor = buscador.value.trim();
-      if(!valor) return;
-
-      try{
-        const encontrada = await buscarNoticias(valor);
-        if(encontrada && encontrada._id){
-          ir(encontrada._id);
-        }else{
-          alert("No se encontraron noticias con esa búsqueda.");
-        }
-      }catch(err){
-        alert("No se pudo realizar la búsqueda.");
-      }
-    }
-  });
-}
-
-window.onload = () => {
-  actualizarSEOHogar();
-  aplicarDarkMode();
-  activarBuscador();
-  cargarHome();
-  visitas();
-  onlineReal();
-};
-</script>
+<script src="./js/dynamic-guides.js"></script>
 
 </body>
 </html>

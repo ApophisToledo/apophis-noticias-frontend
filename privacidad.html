@@ -1,339 +1,36 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Política de Privacidad | Apophis Noticias</title>
-<meta name="description" content="Política de Privacidad de Apophis Noticias. Información sobre datos, cookies, publicidad, Google AdSense y derechos del usuario.">
-<meta name="robots" content="index, follow">
 
-<meta property="og:title" content="Política de Privacidad | Apophis Noticias">
-<meta property="og:description" content="Conocé cómo Apophis Noticias trata la información, utiliza cookies y gestiona la publicidad digital.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="">
-<meta property="og:image" content="">
+<title>Política de Privacidad | Apophis</title>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6641245592697930" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="./css/styles.css">
 
-<style>
-body{
-  margin:0;
-  font-family:Georgia, serif;
-  background:#f4e3b2;
-  color:#111;
-  transition:.3s;
-}
-body.dark{
-  background:#111;
-  color:#f0e68c;
-}
-*{box-sizing:border-box;}
-
-.header{
-  background:black;
-  color:gold;
-  padding:22px 20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  position:relative;
-  flex-wrap:wrap;
-  border-bottom:2px solid rgba(255,215,0,.18);
-  box-shadow:0 6px 18px rgba(0,0,0,.25);
-}
-
-.logo-link{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  cursor:pointer;
-}
-
-.logo-img{
-  max-width:520px;
-  width:min(92vw, 520px);
-  height:auto;
-  display:block;
-  border-radius:12px;
-  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
-}
-
-.logo-link:hover .logo-img{
-  transform:scale(1.03) translateY(-2px);
-  box-shadow:0 0 24px rgba(255,215,0,.28), 0 0 50px rgba(255,215,0,.12);
-  filter:brightness(1.08);
-}
-
-.dark-btn{
-  position:absolute;
-  right:10px;
-  top:10px;
-  background:#111;
-  color:gold;
-  border:none;
-  padding:6px 10px;
-  border-radius:6px;
-  cursor:pointer;
-  z-index:9999;
-}
-
-.top-nav-row{
-  width:100%;
-  max-width:1200px;
-  margin:0 auto;
-  padding:14px 12px 8px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:10px;
-}
-
-.top-nav-left{
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-}
-
-.top-nav-center{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.volver-btn,
-.cat-btn{
-  padding:8px 12px;
-  border-radius:8px;
-  background:#111;
-  color:gold;
-  cursor:pointer;
-  border:none;
-  font-family:Georgia, serif;
-  transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
-}
-
-.cat-btn{margin:3px;}
-
-.volver-btn:hover,
-.cat-btn:hover{
-  opacity:.92;
-  transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-
-.page-wrap{
-  max-width:1100px;
-  margin:20px auto;
-  padding:0 12px;
-}
-
-.content-box{
-  background:#fdf5d7;
-  padding:24px;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-  line-height:1.75;
-}
-body.dark .content-box{
-  background:#1a1a1a;
-  box-shadow:0 6px 18px rgba(0,0,0,.35);
-}
-
-h1{
-  margin-top:0;
-  font-size:2rem;
-  line-height:1.2;
-}
-
-h2{
-  margin-top:26px;
-  font-size:1.25rem;
-  border-bottom:2px solid rgba(255,215,0,.35);
-  padding-bottom:6px;
-}
-
-p, li{
-  font-size:1.02rem;
-}
-
-ul{
-  padding-left:20px;
-}
-
-.info{
-  background:rgba(0,0,0,.05);
-  padding:12px 14px;
-  border-radius:10px;
-  margin:16px 0;
-}
-body.dark .info{
-  background:rgba(255,255,255,.05);
-}
-
-footer{
-  margin-top:40px;
-  padding:20px;
-  text-align:center;
-  background:#111;
-  color:gold;
-}
-footer a{
-  color:gold;
-  margin:0 10px;
-}
-
-@media(max-width:950px){
-  .logo-img{
-    width:min(94vw, 440px);
-  }
-  .top-nav-row{
-    grid-template-columns:1fr;
-    justify-items:center;
-  }
-  .top-nav-left{
-    width:100%;
-    justify-content:flex-start;
-  }
-  .top-nav-center{
-    width:100%;
-    justify-content:center;
-  }
-}
-</style>
 </head>
+
 <body>
 
-<div class="header">
-  <a href="index.html" class="logo-link" aria-label="Ir al inicio">
-    <img src="658175444_25680405581633658_3668668824201018733_n.jpg" alt="Apophis Noticias" class="logo-img">
-  </a>
+<header class="header">
+<h1>Política de Privacidad</h1>
+</header>
 
-  <button class="dark-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
-</div>
+<section class="seo-block">
 
-<div class="top-nav-row">
-  <div class="top-nav-left">
-    <button class="volver-btn" onclick="location.href='index.html'">🏠 Volver al inicio</button>
-  </div>
+<h2>Política de Privacidad</h2>
 
-  <div class="top-nav-center">
-    <button class="cat-btn" onclick="verCat('Politica')">Política</button>
-    <button class="cat-btn" onclick="verCat('Deportes')">Deportes</button>
-    <button class="cat-btn" onclick="verCat('Policiales')">Policiales</button>
-    <button class="cat-btn" onclick="verCat('Arte')">Arte</button>
-    <button class="cat-btn" onclick="verCat('Show')">Show</button>
-    <button class="cat-btn" onclick="verCat('Pais')">País</button>
-    <button class="cat-btn" onclick="verCat('Mundo')">Mundo</button>
-    <button class="cat-btn" onclick="verCat('Ciudad')">Ciudad</button>
-  </div>
+<p>
+Esta página forma parte de la estructura profesional de Apophis Guías Argentina.
+</p>
 
-  <div></div>
-</div>
+</section>
 
-<div class="page-wrap">
-  <div class="content-box">
-    <h1>Política de Privacidad</h1>
-
-    <div class="info">
-      En Apophis Noticias valoramos la privacidad de nuestros usuarios y nos comprometemos a tratar la información de manera responsable, transparente y acorde al funcionamiento del sitio.
-    </div>
-
-    <h2>1. Información que podemos recopilar</h2>
-    <p>
-      Al navegar por Apophis Noticias, podemos recopilar información técnica y de uso, como por ejemplo dirección IP, tipo de dispositivo, navegador, páginas visitadas, tiempo de permanencia, interacciones dentro del sitio y datos básicos relacionados con el funcionamiento normal de la web.
-    </p>
-
-    <h2>2. Uso de la información</h2>
-    <p>
-      La información recopilada puede utilizarse para mejorar la experiencia del usuario, optimizar el rendimiento del sitio, comprender el comportamiento general de navegación, detectar errores técnicos, reforzar la seguridad y ofrecer una experiencia más estable y útil para los visitantes.
-    </p>
-
-    <h2>3. Cookies</h2>
-    <p>
-      Este sitio puede utilizar cookies y tecnologías similares para recordar preferencias, medir el rendimiento del contenido, analizar tráfico y mejorar la navegación. Las cookies son pequeños archivos que se almacenan en el dispositivo del usuario y ayudan al correcto funcionamiento de determinadas funciones del sitio.
-    </p>
-    <p>
-      El usuario puede configurar su navegador para bloquear o eliminar cookies, aunque esto podría afectar algunas funcionalidades o la visualización correcta de ciertas secciones.
-    </p>
-
-    <h2>4. Google AdSense y publicidad de terceros</h2>
-    <p>
-      Apophis Noticias puede mostrar anuncios provistos por Google AdSense u otras plataformas publicitarias. Estos servicios pueden utilizar cookies para ofrecer anuncios basados en visitas previas del usuario a este u otros sitios web.
-    </p>
-    <p>
-      Google puede usar tecnologías como cookies publicitarias para personalizar la publicidad y medir su rendimiento. Para más información, los usuarios pueden consultar la configuración de anuncios de Google y las políticas correspondientes del proveedor publicitario.
-    </p>
-
-    <h2>5. Enlaces a sitios externos</h2>
-    <p>
-      Algunas publicaciones o anuncios pueden contener enlaces a sitios de terceros. Apophis Noticias no controla el contenido, políticas ni prácticas de privacidad de esos sitios externos, por lo que se recomienda revisar sus propias políticas antes de interactuar con ellos.
-    </p>
-
-    <h2>6. Protección de la información</h2>
-    <p>
-      Procuramos aplicar medidas razonables para proteger la información y mantener la integridad del sitio. Sin embargo, ningún sistema en internet puede garantizar seguridad absoluta, por lo que no es posible prometer protección total frente a todos los riesgos existentes.
-    </p>
-
-    <h2>7. Derechos del usuario</h2>
-    <p>
-      Los usuarios pueden realizar consultas relacionadas con el uso general de la información, la privacidad o el funcionamiento del sitio comunicándose a través del canal de contacto publicado en esta página.
-    </p>
-
-    <h2>8. Cambios en esta política</h2>
-    <p>
-      Esta Política de Privacidad puede actualizarse cuando resulte necesario para reflejar cambios técnicos, editoriales, legales o vinculados al funcionamiento del sitio. Se recomienda revisar esta sección periódicamente.
-    </p>
-
-    <h2>9. Contacto</h2>
-    <p>
-      Para consultas sobre privacidad o uso del sitio, podés comunicarte a:
-      <strong>alanwaltetoledo@gmail.com</strong>
-    </p>
-  </div>
-</div>
-
-<footer>
-  <p>© 2026 Apophis Noticias</p>
-  <div>
-    <a href="privacidad.html">Privacidad</a> |
-    <a href="contacto.html">Contacto</a> |
-    <a href="sobre.html">Sobre Nosotros</a>
-  </div>
+<footer class="footer">
+<p>© 2026 Apophis</p>
 </footer>
-
-<script>
-function aplicarDarkMode(){
-  let dark = localStorage.getItem("darkMode");
-  if(dark === null){
-    dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }else{
-    dark = dark === "true";
-  }
-  document.body.classList.toggle("dark", dark);
-  const btn = document.getElementById("darkBtn");
-  if(btn) btn.innerText = dark ? "☀️" : "🌙";
-}
-
-function toggleDark(){
-  const activo = document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", activo);
-  const btn = document.getElementById("darkBtn");
-  if(btn) btn.innerText = activo ? "☀️" : "🌙";
-}
-
-function verCat(c){
-  location = "categoria.html?cat=" + encodeURIComponent(c);
-}
-
-window.onload = () => {
-  aplicarDarkMode();
-};
-</script>
 
 </body>
 </html>
