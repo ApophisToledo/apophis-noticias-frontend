@@ -505,8 +505,9 @@ body.dark .empty-box{
 
 </div>
 
+<script src="js/config.js"></script>
 <script>
-const API="https://apophis-noticias-backend.vercel.app";
+const API=(window.APOPHIS_API && window.APOPHIS_API.base) || "https://apophis-noticias-backend.vercel.app";
 let TOKEN="";
 let galeriaArray=[];
 let noticiasCache=[];
@@ -580,6 +581,7 @@ async function loginAdmin(){
 
     TOKEN = data.token;
     localStorage.setItem("admin_token_apophis", TOKEN);
+    localStorage.setItem("apophis_admin_token", TOKEN);
     mostrarEstado("ok", "✅ Sesión iniciada correctamente");
     cargarNoticias();
 
@@ -592,7 +594,7 @@ async function loginAdmin(){
 
 // intentar restaurar token guardado
 async function restaurarToken(){
-  const saved = localStorage.getItem("admin_token_apophis");
+  const saved = localStorage.getItem("admin_token_apophis") || localStorage.getItem("apophis_admin_token");
 
   if(!saved){
     return;
@@ -606,6 +608,7 @@ async function restaurarToken(){
       TOKEN = saved;
     }else{
       localStorage.removeItem("admin_token_apophis");
+      localStorage.removeItem("apophis_admin_token");
     }
 
   }catch(e){
@@ -613,6 +616,7 @@ async function restaurarToken(){
     console.error("❌ Error restaurando token:", e);
 
     localStorage.removeItem("admin_token_apophis");
+    localStorage.removeItem("apophis_admin_token");
   }
 }
 

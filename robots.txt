@@ -1,5 +1,18 @@
 User-agent: *
 Allow: /
+
+# Áreas privadas o técnicas: no deben aparecer en Google.
 Disallow: /admin/
+Disallow: /admin.html
+Disallow: /components/
+Disallow: /pages/
+Disallow: /data/
+Disallow: /js/config.js
+
+# Archivos públicos permitidos.
+Allow: /assets/
+Allow: /img/
+Allow: /css/
+Allow: /js/
 
 Sitemap: https://apophis.com.ar/sitemap.xml

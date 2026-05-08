@@ -1,4 +1,16 @@
 
+const API = window.APOPHIS_API || {
+    base:"",
+    url(path){ return path; }
+};
+
+function setLoginStatus(target, message, isError = false){
+    if(target){
+        target.textContent = message;
+        target.style.color = isError ? "red" : "green";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.querySelector("#login-form");
@@ -12,13 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.querySelector("#password").value.trim();
 
         if(!email || !password){
-            status.innerHTML = "<p style='color:red'>Completa todos los campos.</p>";
+            setLoginStatus(status, "Completa todos los campos.", true);
             return;
         }
 
         try{
 
-            const response = await fetch("/api/auth/login", {
+            const response = await fetch(API.url("/api/auth/login"), {
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
@@ -32,15 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if(!data.ok){
-                status.innerHTML = `<p style='color:red'>${data.error || "No se pudo iniciar sesión."}</p>`;
+                setLoginStatus(status, data.error || "No se pudo iniciar sesión.", true);
                 return;
             }
 
             localStorage.setItem("apophis_admin_token", data.token);
-            status.innerHTML = "<p style='color:green'>Login correcto. Ya podés abrir cms.html.</p>";
+            localStorage.setItem("admin_token_apophis", data.token);
+            setLoginStatus(status, "Login correcto. Ya podés abrir cms.html o admin.html.");
 
         }catch(error){
-            status.innerHTML = "<p style='color:red'>No se pudo conectar con el backend.</p>";
+            setLoginStatus(status, "No se pudo conectar con el backend.", true);
         }
 
     });

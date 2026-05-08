@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparador de Canasta | Apophis</title>
-<meta name="description" content="Compará supermercados y mayoristas en Rosario según tu canasta de productos.">
+<title>Comparador de Canasta Rosario | Apophis</title>
+<meta name="description" content="Compará supermercados y mayoristas en Rosario por zona, promoción, billetera y tamaño de compra.">
+<link rel="canonical" href="https://apophis.com.ar/canasta.html">
 <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
@@ -20,13 +21,26 @@
 <section class="ap-hero comparator-hero">
   <div class="hero-copy">
     <span class="eyebrow">Ahorro real</span>
-    <h1>Compará tu canasta entre supermercados y mayoristas.</h1>
-    <p>Seleccioná productos y Apophis calcula dónde conviene comprar según precios estimados auditados.</p>
+    <h1>Compará tu canasta por zona, promoción y tipo de compra.</h1>
+    <p>Seleccioná productos, cantidades, zona de Rosario, billetera/promoción y perfil de compra. Apophis estima dónde conviene comprar.</p>
   </div>
 
   <div class="hero-panel">
-    <h2>¿Qué analiza?</h2>
-    <p>Precio total estimado, tipo de comercio y conveniencia general.</p>
+    <h2>Importante</h2>
+    <p>Los valores son estimativos. Antes de comprar, verificá precio final, stock, tope de reintegro y sucursal.</p>
+  </div>
+</section>
+
+<section class="ap-section">
+  <div class="section-head">
+    <span class="eyebrow">Configurar compra</span>
+    <h2>Tu escenario</h2>
+  </div>
+
+  <div class="basket-control-grid">
+    <label>Zona<select id="basket-zone"></select></label>
+    <label>Promoción<select id="basket-promo"></select></label>
+    <label>Perfil<select id="basket-profile"></select></label>
   </div>
 </section>
 
@@ -34,6 +48,7 @@
   <div class="section-head">
     <span class="eyebrow">Seleccionar productos</span>
     <h2>Armá tu canasta</h2>
+    <p>Podés cambiar cantidades antes de calcular.</p>
   </div>
 
   <div id="basket-items" class="guide-grid"></div>

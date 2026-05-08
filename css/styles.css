@@ -1571,3 +1571,51 @@ iframe{
 .canasta-home{
  border-top:1px solid var(--ap-border);
 }
+
+.basket-control-grid{
+ max-width:1050px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px;
+ background:var(--ap-surface);
+ border:1px solid var(--ap-border);
+ border-radius:28px;
+ padding:22px;
+ box-shadow:var(--ap-shadow);
+}
+
+.basket-control-grid label{
+ display:grid;
+ gap:8px;
+ color:var(--ap-muted);
+ font-weight:900;
+}
+
+.basket-control-grid select{
+ border-radius:16px;
+ border:1px solid var(--ap-border);
+ padding:14px;
+ background:var(--ap-bg);
+ color:var(--ap-text);
+}
+
+.basket-card{
+ display:grid;
+ gap:14px;
+}
+
+.basket-qty{
+ width:100%;
+ border-radius:14px;
+ border:1px solid var(--ap-border);
+ background:var(--ap-bg);
+ color:var(--ap-text);
+ padding:12px;
+}
+
+@media(max-width:850px){
+ .basket-control-grid{
+  grid-template-columns:1fr;
+ }
+}

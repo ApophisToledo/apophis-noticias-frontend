@@ -1,14 +1,33 @@
-const API_BASE = "/api";
+const API = window.APOPHIS_API || {
+    base:"",
+    url(path){ return path; }
+};
+const API_BASE = API.url("/api");
 
 function getToken(){
-    return localStorage.getItem("apophis_admin_token") || "";
+    return localStorage.getItem("apophis_admin_token") || localStorage.getItem("admin_token_apophis") || "";
+}
+
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function safeSlug(value){
+    return String(value || "").replace(/[^a-z0-9-]/gi, "");
 }
 
 function setStatus(message, isError = false){
     const target = document.querySelector("#cms-status");
 
     if(target){
-        target.innerHTML = `<p style="color:${isError ? "red" : "green"}">${message}</p>`;
+        target.textContent = message;
+        target.style.color = isError ? "red" : "green";
     }
 }
 
@@ -63,20 +82,38 @@ async function loadGuides(){
 
         const guides = data.guides || [];
 
-        list.innerHTML = guides.map(guide => `
-            <article class="guide-card">
-                <span>${guide.category}</span>
-                <h3>${guide.title}</h3>
-                <p>${guide.description}</p>
-                <p><strong>Estado:</strong> ${guide.status}</p>
-                <p><strong>SEO:</strong> ${guide.seoScore ?? 0}/100</p>
-                <p><strong>Slug:</strong> ${guide.slug}</p>
-                <div class="admin-actions">
-                    <button type="button" onclick="editGuide('${guide.slug}')">Editar</button>
-                    <button type="button" onclick="deleteGuide('${guide.slug}')">Eliminar</button>
-                </div>
-            </article>
-        `).join("");
+        list.innerHTML = guides.map(guide => {
+            const slug = safeSlug(guide.slug);
+
+            return `
+                <article class="guide-card">
+                    <span>${escapeHTML(guide.category)}</span>
+                    <h3>${escapeHTML(guide.title)}</h3>
+                    <p>${escapeHTML(guide.description)}</p>
+                    <p><strong>Estado:</strong> ${escapeHTML(guide.status || "draft")}</p>
+                    <p><strong>SEO:</strong> ${Number(guide.seoScore ?? 0)}/100</p>
+                    <p><strong>Slug:</strong> ${escapeHTML(slug)}</p>
+                    <div class="admin-actions">
+                        <button type="button" data-action="edit" data-slug="${escapeHTML(slug)}">Editar</button>
+                        <button type="button" data-action="delete" data-slug="${escapeHTML(slug)}">Eliminar</button>
+                    </div>
+                </article>
+            `;
+        }).join("");
+
+        list.querySelectorAll("button[data-action]").forEach(button => {
+            button.addEventListener("click", () => {
+                const slug = button.dataset.slug;
+
+                if(button.dataset.action === "edit"){
+                    editGuide(slug);
+                }
+
+                if(button.dataset.action === "delete"){
+                    deleteGuide(slug);
+                }
+            });
+        });
 
     }catch(error){
         list.innerHTML = "<p>No se pudieron cargar las guías.</p>";

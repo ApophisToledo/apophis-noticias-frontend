@@ -115,6 +115,236 @@
         "la-gallega": 5980,
         "la-reina": 6150
       }
+    },
+    {
+      "id": "yerba",
+      "name": "Yerba mate 1kg",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 4300,
+        "coto": 4450,
+        "micropack": 4100,
+        "makro": 4180,
+        "la-gallega": 4380,
+        "la-reina": 4500
+      }
+    },
+    {
+      "id": "fideos",
+      "name": "Fideos secos 500g",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 980,
+        "coto": 1030,
+        "micropack": 890,
+        "makro": 920,
+        "la-gallega": 990,
+        "la-reina": 1050
+      }
+    },
+    {
+      "id": "harina",
+      "name": "Harina 000 1kg",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 980,
+        "coto": 1020,
+        "micropack": 920,
+        "makro": 940,
+        "la-gallega": 990,
+        "la-reina": 1030
+      }
+    },
+    {
+      "id": "galletitas",
+      "name": "Galletitas surtidas 300g",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 1450,
+        "coto": 1520,
+        "micropack": 1360,
+        "makro": 1390,
+        "la-gallega": 1480,
+        "la-reina": 1540
+      }
+    },
+    {
+      "id": "jabon-polvo",
+      "name": "Jabón en polvo 800g",
+      "category": "limpieza",
+      "prices": {
+        "carrefour": 4200,
+        "coto": 4380,
+        "micropack": 3990,
+        "makro": 4050,
+        "la-gallega": 4300,
+        "la-reina": 4420
+      }
+    },
+    {
+      "id": "shampoo",
+      "name": "Shampoo 400ml",
+      "category": "higiene",
+      "prices": {
+        "carrefour": 3650,
+        "coto": 3800,
+        "micropack": 3490,
+        "makro": 3520,
+        "la-gallega": 3720,
+        "la-reina": 3890
+      }
+    },
+    {
+      "id": "pollo",
+      "name": "Pollo fresco 1kg",
+      "category": "frescos",
+      "prices": {
+        "carrefour": 3900,
+        "coto": 4050,
+        "micropack": 3750,
+        "makro": 3780,
+        "la-gallega": 3950,
+        "la-reina": 4100
+      }
+    },
+    {
+      "id": "carne-picada",
+      "name": "Carne picada 1kg",
+      "category": "frescos",
+      "prices": {
+        "carrefour": 6800,
+        "coto": 7050,
+        "micropack": 6500,
+        "makro": 6600,
+        "la-gallega": 6900,
+        "la-reina": 7150
+      }
+    },
+    {
+      "id": "huevos",
+      "name": "Huevos docena",
+      "category": "frescos",
+      "prices": {
+        "carrefour": 3100,
+        "coto": 3250,
+        "micropack": 2950,
+        "makro": 3000,
+        "la-gallega": 3180,
+        "la-reina": 3300
+      }
+    },
+    {
+      "id": "pan-lactal",
+      "name": "Pan lactal",
+      "category": "panificados",
+      "prices": {
+        "carrefour": 2800,
+        "coto": 2950,
+        "micropack": 2650,
+        "makro": 2700,
+        "la-gallega": 2880,
+        "la-reina": 3000
+      }
     }
-  ]
+  ],
+  "zones": [
+    {
+      "id": "centro",
+      "name": "Centro",
+      "storeAdjustments": {
+        "carrefour": 1.0,
+        "coto": 1.0,
+        "micropack": 1.03,
+        "makro": 1.05,
+        "la-gallega": 1.0,
+        "la-reina": 1.0
+      }
+    },
+    {
+      "id": "norte",
+      "name": "Zona Norte",
+      "storeAdjustments": {
+        "carrefour": 1.0,
+        "coto": 1.02,
+        "micropack": 1.0,
+        "makro": 1.01,
+        "la-gallega": 1.02,
+        "la-reina": 1.02
+      }
+    },
+    {
+      "id": "sur",
+      "name": "Zona Sur",
+      "storeAdjustments": {
+        "carrefour": 1.02,
+        "coto": 1.03,
+        "micropack": 1.0,
+        "makro": 1.0,
+        "la-gallega": 1.01,
+        "la-reina": 1.02
+      }
+    },
+    {
+      "id": "oeste",
+      "name": "Zona Oeste",
+      "storeAdjustments": {
+        "carrefour": 1.01,
+        "coto": 1.03,
+        "micropack": 1.0,
+        "makro": 1.0,
+        "la-gallega": 1.02,
+        "la-reina": 1.02
+      }
+    }
+  ],
+  "promotions": [
+    {
+      "id": "none",
+      "name": "Sin promoción",
+      "discount": 0,
+      "appliesTo": [
+        "carrefour",
+        "coto",
+        "micropack",
+        "makro",
+        "la-gallega",
+        "la-reina"
+      ],
+      "note": "Precio base estimado."
+    },
+    {
+      "id": "billetera-10",
+      "name": "Billetera virtual 10%",
+      "discount": 0.1,
+      "appliesTo": [
+        "carrefour",
+        "coto",
+        "la-gallega",
+        "la-reina"
+      ],
+      "note": "Promoción genérica estimativa; verificar vigencia real."
+    },
+    {
+      "id": "banco-15",
+      "name": "Banco / tarjeta 15%",
+      "discount": 0.15,
+      "appliesTo": [
+        "carrefour",
+        "coto"
+      ],
+      "note": "Promoción genérica estimativa; puede tener tope."
+    },
+    {
+      "id": "mayorista-8",
+      "name": "Compra mayorista 8%",
+      "discount": 0.08,
+      "appliesTo": [
+        "micropack",
+        "makro"
+      ],
+      "note": "Estimación por compra grande; verificar mínimos."
+    }
+  ],
+  "updatedAt": "2026-05-08",
+  "disclaimer": "Valores estimativos para comparar tendencia de compra. Los precios y promociones reales cambian por fecha, stock, barrio, sucursal, banco y billetera."
 }
