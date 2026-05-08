@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- SEO técnico Apophis -->
 <title>Motos | Apophis Guías</title>
 <meta name="description" content="Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://apophis.com.ar/motos/">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Apophis Guías Argentina">
+<meta property="og:title" content="Motos | Apophis Guías">
+<meta property="og:description" content="Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://apophis.com.ar/motos/">
+<meta property="og:image" content="https://apophis.com.ar/assets/og/apophis-og-default.png">
+<meta property="og:image:alt" content="Motos | Apophis Guías">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Motos | Apophis Guías">
+<meta name="twitter:description" content="Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.">
+<meta name="twitter:image" content="https://apophis.com.ar/assets/og/apophis-og-default.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Motos | Apophis Guías",
+  "description": "Comparativas de motos en Rosario y Argentina por precio, consumo, repuestos, mantenimiento, potencia, comodidad y uso real.",
+  "url": "https://apophis.com.ar/motos/",
+  "inLanguage": "es-AR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Apophis Guías Argentina",
+    "url": "https://apophis.com.ar/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://apophis.com.ar/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Motos",
+      "item": "https://apophis.com.ar/motos/"
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="../css/styles.css">
 
 <link rel="manifest" href="/manifest.json">
@@ -15,6 +62,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <meta name="google-site-verification" content="REEMPLAZAR_CON_TOKEN_SEARCH_CONSOLE">
+
+
+
 </head>
 <body>
 
@@ -75,6 +125,105 @@
 </section>
 
 
+
+<section class="ap-section motos-completas" data-motos-completas>
+  <div class="section-head">
+    <span class="eyebrow">Base de motos profunda</span>
+    <h2>Motos de Argentina cargadas por marca, uso, cilindrada, precio y criterio real de compra</h2>
+    <p>Fase enfocada solo en motos: se amplió la base con cubs, 125/150, naked 160/200, on-off, scooters, 250/300, 350 retro, 400/500 y adventure. Los precios se cargan solo cuando hay referencia útil; el resto queda marcado como consulta vigente para no inventar valores.</p>
+  </div>
+
+  <div class="moto-stats-grid" id="motos-complete-stats" aria-live="polite"></div>
+
+  <div class="moto-control-panel moto-control-panel-wide">
+    <input id="moto-search" type="search" placeholder="Buscar por marca, modelo o uso: Rouser, delivery, Tornado, ruta, scooter...">
+    <select id="moto-brand">
+      <option value="all">Todas las marcas</option>
+    </select>
+    <select id="moto-displacement">
+      <option value="all">Todas las cilindradas</option>
+      <option value="110">Cub / hasta 115cc</option>
+      <option value="150">116cc a 160cc</option>
+      <option value="200">161cc a 220cc</option>
+      <option value="300">221cc a 320cc</option>
+      <option value="350">321cc a 380cc</option>
+      <option value="500">381cc a 500cc</option>
+      <option value="plus">Más de 500cc</option>
+    </select>
+    <select id="moto-use">
+      <option value="all">Todos los usos</option>
+      <option value="trabajo">Trabajo / delivery</option>
+      <option value="ciudad">Ciudad</option>
+      <option value="ruta">Ruta</option>
+      <option value="tierra">Tierra / on-off</option>
+      <option value="principiante">Principiante</option>
+      <option value="scooter">Scooter / automática</option>
+      <option value="adventure">Adventure</option>
+      <option value="retro">Retro / paseo</option>
+    </select>
+    <select id="moto-price-status">
+      <option value="all">Todos los precios</option>
+      <option value="referencial">Con precio referencial</option>
+      <option value="pendiente">Precio a verificar</option>
+    </select>
+    <select id="moto-sort">
+      <option value="marca">Ordenar por marca</option>
+      <option value="precio">Ordenar por precio</option>
+      <option value="cilindrada">Ordenar por cilindrada</option>
+      <option value="valor">Mejor valor Apophis</option>
+      <option value="ciudad">Mejor ciudad</option>
+      <option value="trabajo">Mejor trabajo</option>
+      <option value="ruta">Mejor ruta</option>
+    </select>
+  </div>
+
+  <div class="moto-ranking-grid" id="motos-recommended-rankings"></div>
+
+  <p class="moto-count" id="motos-complete-count">Cargando motos...</p>
+  <div class="moto-complete-grid" id="motos-complete-grid"></div>
+
+  <div class="comparison-table-wrapper technical-table motos-summary-table">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Rango</th>
+          <th>Precio</th>
+          <th>Consumo</th>
+          <th>Vel. final</th>
+          <th>Lectura Apophis</th>
+        </tr>
+      </thead>
+      <tbody id="motos-complete-table"></tbody>
+    </table>
+  </div>
+
+  <div class="source-box moto-source-note">
+    <strong>Transparencia de precios</strong>
+    <small>Los valores numéricos se conservaron o cargaron solo cuando había una referencia útil. Muchos modelos quedan como “Consultar precio vigente” porque en Argentina el precio final cambia por versión, stock, flete, patentamiento, financiación y concesionaria. Esta sección prioriza no inventar precios y sí dejar la ficha lista para actualización constante.</small>
+  </div>
+</section>
+
+
+
+<section class="ap-section motos-brand-guides-section">
+  <div class="section-head">
+    <span class="eyebrow">Guías por marca</span>
+    <h2>Motos por marca: comparativas internas antes de elegir modelo</h2>
+    <p>Primero completamos motos por marca para que puedas comparar Bajaj contra Bajaj, Honda contra Honda, Yamaha contra Yamaha y así decidir con más criterio antes de saltar al comparador general.</p>
+  </div>
+  <div class="moto-brand-guides-grid" data-motos-brand-guides></div>
+</section>
+
+<section class="ap-section motos-decision-engine-section">
+  <div class="section-head">
+    <span class="eyebrow">Decisión de compra</span>
+    <h2>Elegí moto por uso real antes que por marca o cilindrada</h2>
+    <p>Esta sección ordena la compra como lo haría un asesor: primero uso, después presupuesto final, mantenimiento, repuestos, comodidad y recién al final gusto personal.</p>
+  </div>
+  <div data-motos-decision-engine></div>
+</section>
+
 <section class="ap-section">
 
 <div class="section-head">
@@ -119,6 +268,9 @@
 <script src="/js/accessibility.js"></script>
 <script src="../js/analytics.js"></script>
 <script src="../js/category-rankings.js"></script>
+<script src="../js/motos-catalog.js"></script>
+<script src="../js/motos-brand-guides.js"></script>
+<script src="../js/motos-decision-engine.js"></script>
 <script src="../js/dynamic-pricing.js"></script>
 </body>
 

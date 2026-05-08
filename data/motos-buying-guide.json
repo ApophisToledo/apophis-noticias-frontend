@@ -1,0 +1,18 @@
+{
+  "updatedAt": "2026-05-08",
+  "scope": "Sección motos Argentina: cub, 125/150, 160/200, on-off, scooter, 250/300, 350 retro, 400/500 y adventure.",
+  "rules": [
+    "No inventar precios: si no hay referencia clara, mostrar Consultar precio vigente.",
+    "Separar precio de lista, precio promocional, precio usado y precio final patentado.",
+    "Comparar siempre por uso: trabajo, ciudad, principiante, ruta, tierra, paseo o adventure.",
+    "Revisar stock local, repuestos, service oficial, financiación, flete, patentamiento y seguro antes de recomendar compra."
+  ],
+  "usageBuckets": [
+    { "id": "trabajo", "label": "Trabajo / delivery", "priority": ["consumo", "repuestos", "mantenimiento", "reventa", "comodidad"] },
+    { "id": "ciudad", "label": "Ciudad diaria", "priority": ["agilidad", "frenos", "consumo", "peso", "confort"] },
+    { "id": "principiante", "label": "Primera moto", "priority": ["peso", "respuesta progresiva", "costo de reparación", "altura", "seguridad"] },
+    { "id": "ruta", "label": "Ruta", "priority": ["potencia", "estabilidad", "ABS", "protección aerodinámica", "autonomía"] },
+    { "id": "tierra", "label": "Tierra / calles malas", "priority": ["suspensión", "altura libre", "rodado", "repuestos", "resistencia"] },
+    { "id": "paseo", "label": "Paseo / retro", "priority": ["comodidad", "estética", "torque", "postura", "autonomía"] }
+  ]
+}

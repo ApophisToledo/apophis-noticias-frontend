@@ -1,0 +1,250 @@
+{
+  "version": "2026-05-08-fase-motos-decision",
+  "section": "motos",
+  "editorialRule": "No se fuerza una recomendación única: la mejor moto depende de uso real, presupuesto final, repuestos, postura, consumo, financiación y disponibilidad local.",
+  "scoreWeights": {
+    "trabajo_delivery": {
+      "workScore": 35,
+      "cityScore": 25,
+      "valueScore": 20,
+      "maintenance": 10,
+      "resale": 10
+    },
+    "ciudad_diaria": {
+      "cityScore": 35,
+      "beginnerScore": 20,
+      "valueScore": 20,
+      "maintenance": 15,
+      "resale": 10
+    },
+    "ruta_viajes": {
+      "routeScore": 40,
+      "valueScore": 15,
+      "resale": 15,
+      "comfort": 15,
+      "safety": 15
+    },
+    "primera_moto": {
+      "beginnerScore": 35,
+      "cityScore": 25,
+      "maintenance": 20,
+      "valueScore": 10,
+      "resale": 10
+    },
+    "on_off_tierra": {
+      "routeScore": 20,
+      "workScore": 10,
+      "valueScore": 20,
+      "suspension": 25,
+      "robustness": 25
+    }
+  },
+  "buyerProfiles": [
+    {
+      "id": "delivery-economico",
+      "title": "Delivery o trabajo diario con presupuesto ajustado",
+      "priority": "Costo por kilómetro, consumo, repuestos, cubiertas económicas, facilidad de reparación y reventa.",
+      "recommendedSegments": [
+        "Cub 110",
+        "125 urbana",
+        "150 utilitaria"
+      ],
+      "avoid": "Motos pesadas, muy caras de cubiertas, con repuestos difíciles o consumo alto para uso intensivo.",
+      "checklist": [
+        "Calcular consumo semanal real",
+        "Consultar precio de transmisión/cubiertas/pastillas",
+        "Revisar garantía si se usa comercialmente",
+        "Priorizar baulera, asiento cómodo y freno confiable"
+      ]
+    },
+    {
+      "id": "ciudad-estudio",
+      "title": "Ciudad, estudio o traslado corto",
+      "priority": "Maniobrabilidad, bajo peso, arranque confiable, consumo bajo y comodidad en tránsito lento.",
+      "recommendedSegments": [
+        "110",
+        "125",
+        "150",
+        "scooter"
+      ],
+      "avoid": "Más cilindrada de la necesaria si el uso será casi todo urbano.",
+      "checklist": [
+        "Probar altura del asiento",
+        "Ver radio de giro",
+        "Comparar seguro y patente",
+        "Priorizar posición cómoda antes que velocidad final"
+      ]
+    },
+    {
+      "id": "ruta-finde",
+      "title": "Ruta ocasional y escapadas de fin de semana",
+      "priority": "Estabilidad, potencia suficiente, frenos, postura, vibraciones y margen para sobrepaso prudente.",
+      "recommendedSegments": [
+        "200",
+        "250",
+        "300",
+        "400"
+      ],
+      "avoid": "Cub o 125 si se pretende viajar seguido por ruta abierta.",
+      "checklist": [
+        "Mirar velocidad crucero, no solo velocidad final",
+        "Consultar disponibilidad de parabrisas/soportes",
+        "Revisar ABS si el presupuesto lo permite",
+        "Evaluar comodidad del acompañante"
+      ]
+    },
+    {
+      "id": "primera-moto",
+      "title": "Primera moto",
+      "priority": "Que perdone errores, sea liviana, simple de mantener y no obligue a gastar de más al principio.",
+      "recommendedSegments": [
+        "110",
+        "125",
+        "150"
+      ],
+      "avoid": "Modelos muy pesados, altos o nerviosos para aprender.",
+      "checklist": [
+        "Probar apoyo de ambos pies",
+        "Priorizar casco, guantes y campera antes que cilindrada",
+        "Ver costo de seguro",
+        "Comprar algo revendible"
+      ]
+    },
+    {
+      "id": "salto-premium",
+      "title": "Salto a media cilindrada o moto aspiracional",
+      "priority": "Frenos, ABS, neumáticos, electrónica, disponibilidad de service oficial y costo total de propiedad.",
+      "recommendedSegments": [
+        "300",
+        "400",
+        "500"
+      ],
+      "avoid": "Comprar solo por potencia sin calcular patente, seguro, cubiertas y service.",
+      "checklist": [
+        "Pedir presupuesto completo patentada",
+        "Consultar intervalos de service",
+        "Comparar cubiertas originales y reemplazo",
+        "Revisar financiación real con CFT"
+      ]
+    }
+  ],
+  "usageGuides": [
+    {
+      "title": "Para delivery",
+      "summary": "La ganadora no siempre es la más barata: gana la que combina bajo consumo, repuestos, comodidad y poco tiempo parada.",
+      "mustHave": [
+        "consumo bajo",
+        "baulera o parrilla",
+        "service simple",
+        "repuestos disponibles"
+      ],
+      "redFlags": [
+        "repuestos lentos",
+        "cubiertas caras",
+        "posición incómoda",
+        "precio sin patentamiento"
+      ]
+    },
+    {
+      "title": "Para ciudad",
+      "summary": "Conviene priorizar peso, freno, arranque y maniobrabilidad. La potencia de sobra rara vez compensa si solo se usa en tránsito.",
+      "mustHave": [
+        "bajo peso",
+        "freno confiable",
+        "buena autonomía",
+        "asiento cómodo"
+      ],
+      "redFlags": [
+        "moto muy alta",
+        "consumo elevado",
+        "embrague pesado",
+        "calor excesivo en tránsito"
+      ]
+    },
+    {
+      "title": "Para ruta",
+      "summary": "Mirar velocidad crucero y estabilidad real, no únicamente velocidad final estimada.",
+      "mustHave": [
+        "margen de potencia",
+        "buenos frenos",
+        "postura descansada",
+        "neumáticos adecuados"
+      ],
+      "redFlags": [
+        "vibraciones fuertes",
+        "sin ABS en presupuesto alto",
+        "tanque chico",
+        "poca protección aerodinámica"
+      ]
+    },
+    {
+      "title": "Para tierra/on-off",
+      "summary": "Importan suspensión, despeje, llantas, peso y disponibilidad de neumáticos mixtos.",
+      "mustHave": [
+        "suspensión robusta",
+        "despeje",
+        "cubiertas mixtas",
+        "protecciones"
+      ],
+      "redFlags": [
+        "plásticos caros",
+        "peso alto",
+        "repuestos de caída difíciles",
+        "altura incontrolable para el usuario"
+      ]
+    },
+    {
+      "title": "Para principiante",
+      "summary": "La mejor primera moto es la que permite aprender sin miedo y revender sin perder demasiado.",
+      "mustHave": [
+        "peso contenido",
+        "mandos simples",
+        "reventa",
+        "mantenimiento económico"
+      ],
+      "redFlags": [
+        "demasiada potencia",
+        "asiento muy alto",
+        "costo fijo alto",
+        "falta de service local"
+      ]
+    }
+  ],
+  "localPurchaseChecklist": [
+    "Pedir precio final patentada, no solo precio de lista.",
+    "Consultar flete, formularios, gestoría, casco incluido o no incluido.",
+    "Verificar stock físico y color antes de señar.",
+    "Pedir fecha estimada de entrega por escrito.",
+    "Consultar garantía y primer service: precio, kilometraje y taller habilitado.",
+    "Comparar seguro contra terceros y todo riesgo cuando corresponda.",
+    "Consultar repuestos de desgaste: transmisión, pastillas, filtros, espejos, manijas y cubiertas.",
+    "En usada: revisar papeles, multas, deuda de patente, motor, cuadro, choque y consumo de aceite."
+  ],
+  "seoClusters": [
+    {
+      "title": "Motos para trabajo",
+      "url": "/motos/mejores-motos-trabajo-delivery-argentina-2026.html",
+      "intent": "delivery, reparto, economía de uso"
+    },
+    {
+      "title": "Motos para ciudad",
+      "url": "/motos/mejores-motos-ciudad-argentina-2026.html",
+      "intent": "traslado diario, estudio, primera moto urbana"
+    },
+    {
+      "title": "Motos para ruta",
+      "url": "/motos/mejores-motos-ruta-argentina-2026.html",
+      "intent": "viajes cortos, escapadas, estabilidad"
+    },
+    {
+      "title": "Motos 400cc",
+      "url": "/motos/mejores-motos-400cc-argentina-2026.html",
+      "intent": "media cilindrada, salto de categoría"
+    },
+    {
+      "title": "Guía completa",
+      "url": "/motos/guia-completa-comprar-moto-argentina-2026.html",
+      "intent": "cómo elegir moto en Argentina"
+    }
+  ]
+}

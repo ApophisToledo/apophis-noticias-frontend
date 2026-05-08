@@ -1,3 +1,17 @@
+async function fetchPricingReference(){
+    const paths = ["./data/pricing-reference.json", "../data/pricing-reference.json", "/data/pricing-reference.json"];
+    let lastError = null;
+    for(const path of paths){
+        try{
+            const response = await fetch(path, { cache:"no-store" });
+            if(response.ok) return await response.json();
+            lastError = new Error(`No se pudo cargar ${path}: ${response.status}`);
+        }catch(error){
+            lastError = error;
+        }
+    }
+    throw lastError || new Error("No se pudo cargar pricing-reference.json");
+}
 
 async function loadDynamicPricing(){
 
@@ -5,40 +19,42 @@ async function loadDynamicPricing(){
 
     if(!targets.length) return;
 
-    const response = await fetch("./data/pricing-reference.json", {
-        cache:"no-store"
-    });
+    try{
+        const pricing = await fetchPricingReference();
 
-    const pricing = await response.json();
+        targets.forEach(target => {
 
-    targets.forEach(target => {
+            const category = target.dataset.dynamicPricing;
 
-        const category = target.dataset.dynamicPricing;
+            const rows = pricing[category] || [];
 
-        const rows = pricing[category] || [];
+            target.innerHTML = `
+                <div class="price-widget">
 
-        target.innerHTML = `
-            <div class="price-widget">
-
-                <div class="price-widget-head">
-                    Referencia rápida de mercado
-                </div>
-
-                ${rows.map(row => `
-                    <div class="price-row">
-                        <strong>${row[0]}</strong>
-                        <span>${row[1]}</span>
+                    <div class="price-widget-head">
+                        Referencia rápida de mercado
                     </div>
-                `).join("")}
 
-                <small>
-                    Valores aproximados y orientativos.
-                </small>
+                    ${rows.map(row => `
+                        <div class="price-row">
+                            <strong>${row[0]}</strong>
+                            <span>${row[1]}</span>
+                        </div>
+                    `).join("")}
 
-            </div>
-        `;
+                    <small>
+                        Valores aproximados y orientativos. Verificar siempre precio final, patentamiento, flete, financiación y stock.
+                    </small>
 
-    });
+                </div>
+            `;
+
+        });
+    }catch(error){
+        targets.forEach(target => {
+            target.innerHTML = `<div class="price-widget"><div class="price-widget-head">Referencia rápida no disponible</div><small>${error.message}</small></div>`;
+        });
+    }
 
 }
 

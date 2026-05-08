@@ -1,10 +1,49 @@
+async function fetchProductSpecs(){
+  const paths = ["../data/product-specs.json", "./data/product-specs.json", "/data/product-specs.json"];
+  let lastError = null;
+  for(const path of paths){
+    try{
+      const response = await fetch(path, { cache:"no-store" });
+      if(response.ok) return await response.json();
+      lastError = new Error(`No se pudo cargar ${path}: ${response.status}`);
+    }catch(error){
+      lastError = error;
+    }
+  }
+  throw lastError || new Error("No se pudo cargar product-specs.json");
+}
+
+function escapeProductHTML(value){
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function safeProductURL(value){
+  const raw = String(value || "").trim();
+  if(raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/") || raw.startsWith("../") || raw.startsWith("./")) return raw;
+  return "#";
+}
+
+function formatProductPrice(product){
+  if(typeof product.price === "number" && product.price > 0){
+    return new Intl.NumberFormat("es-AR", {
+      style:"currency",
+      currency:product.currency || "ARS",
+      maximumFractionDigits:0
+    }).format(product.price);
+  }
+  return product.priceLabel || product.priceReference || "Consultar precio vigente";
+}
 
 async function loadProductSpecs(){
   const boxes = document.querySelectorAll("[data-product-specs]");
   if(!boxes.length) return;
 
-  const response = await fetch("../data/product-specs.json", { cache:"no-store" });
-  const products = await response.json();
+  const products = await fetchProductSpecs();
 
   boxes.forEach(box => {
     const category = box.dataset.category;
@@ -30,13 +69,14 @@ async function loadProductSpecs(){
           ${selected.map(p => `
             <article class="real-product-card">
               <div class="real-product-image">
-                <img src="${p.image}" alt="${p.name}" onerror="this.closest('.real-product-image').classList.add('image-error')">
+                <img src="${escapeProductHTML(safeProductURL(p.image))}" alt="${escapeProductHTML(p.name)}" onerror="this.closest('.real-product-image').classList.add('image-error')">
               </div>
               <div class="real-product-body">
-                <span class="card-kicker">${p.brand} · ${p.segment}</span>
-                <h3>${p.name}</h3>
-                <p><strong>Precio actual/ref.:</strong> ${p.priceReference}</p>
-                <a class="ap-btn ap-btn-small" href="${p.sourceUrl}" target="_blank" rel="noopener">Ver fuente / imagen real</a>
+                <span class="card-kicker">${escapeProductHTML(p.brand)} · ${escapeProductHTML(p.segment)}</span>
+                <h3>${escapeProductHTML(p.name)}</h3>
+                <p><strong>Precio actual/ref.:</strong> ${escapeProductHTML(formatProductPrice(p))}</p>
+                <p><strong>Fecha precio:</strong> ${escapeProductHTML(p.priceDate || "A verificar")}</p>
+                <a class="ap-btn ap-btn-small" href="${escapeProductHTML(safeProductURL(p.sourceUrl))}" target="_blank" rel="noopener">Ver fuente / imagen real</a>
               </div>
             </article>
           `).join("")}
@@ -47,14 +87,14 @@ async function loadProductSpecs(){
             <thead>
               <tr>
                 <th>Dato</th>
-                ${selected.map(p => `<th>${p.name}</th>`).join("")}
+                ${selected.map(p => `<th>${escapeProductHTML(p.name)}</th>`).join("")}
               </tr>
             </thead>
             <tbody>
               ${specKeys.map(key => `
                 <tr>
-                  <td>${key}</td>
-                  ${selected.map(p => `<td>${(p.specs && p.specs[key]) ? p.specs[key] : "—"}</td>`).join("")}
+                  <td>${escapeProductHTML(key)}</td>
+                  ${selected.map(p => `<td>${escapeProductHTML((p.specs && p.specs[key]) ? p.specs[key] : "—")}</td>`).join("")}
                 </tr>
               `).join("")}
             </tbody>

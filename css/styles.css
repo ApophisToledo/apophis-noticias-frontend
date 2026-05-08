@@ -1619,3 +1619,339 @@ iframe{
   grid-template-columns:1fr;
  }
 }
+
+/* Fase motos completas: fichas normalizadas */
+.motos-completas{
+ border-top:1px solid var(--ap-border);
+ border-bottom:1px solid var(--ap-border);
+}
+
+.moto-control-panel{
+ display:grid;
+ grid-template-columns:2fr repeat(3, minmax(170px, 1fr));
+ gap:14px;
+ align-items:center;
+ max-width:1180px;
+ margin:0 auto 24px;
+ background:var(--ap-surface);
+ border:1px solid var(--ap-border);
+ border-radius:28px;
+ padding:18px;
+ box-shadow:var(--ap-shadow);
+}
+
+.moto-control-panel input,
+.moto-control-panel select{
+ width:100%;
+ border-radius:18px;
+ border:1px solid var(--ap-border);
+ background:var(--ap-bg);
+ color:var(--ap-text);
+ padding:15px;
+ font-size:15px;
+}
+
+.moto-count{
+ text-align:center;
+ color:var(--ap-muted);
+ font-weight:900;
+ margin:12px 0 26px;
+}
+
+.moto-complete-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+ gap:22px;
+}
+
+.moto-complete-card{
+ background:var(--ap-surface);
+ border:1px solid var(--ap-border);
+ border-radius:30px;
+ overflow:hidden;
+ box-shadow:var(--ap-shadow);
+ display:flex;
+ flex-direction:column;
+ min-height:100%;
+}
+
+.moto-complete-image{
+ aspect-ratio:16/10;
+ background:#fff;
+ display:grid;
+ place-items:center;
+ overflow:hidden;
+}
+
+.moto-complete-image img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+ padding:12px;
+}
+
+.moto-complete-image.image-error::after{
+ content:"Imagen no disponible: abrir fuente";
+ color:#555;
+ padding:20px;
+ text-align:center;
+}
+
+.moto-complete-body{
+ padding:22px;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+ flex:1;
+}
+
+.moto-complete-body h3{
+ margin:0;
+ font-size:24px;
+}
+
+.moto-complete-body p{
+ margin:0;
+ color:var(--ap-muted);
+ line-height:1.65;
+}
+
+.moto-price strong{
+ color:var(--ap-gold);
+ font-size:20px;
+}
+
+.moto-price small{
+ display:block;
+ color:var(--ap-muted);
+ margin-top:4px;
+}
+
+.moto-chip-row,
+.moto-score-row,
+.moto-card-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+}
+
+.moto-chip-row span,
+.moto-score-pill{
+ border-radius:999px;
+ padding:8px 11px;
+ background:rgba(212,175,55,.12);
+ border:1px solid var(--ap-border);
+ color:var(--ap-muted);
+ font-size:13px;
+ font-weight:800;
+}
+
+.moto-score-pill strong{
+ color:var(--ap-text);
+}
+
+.moto-spec-list{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ margin:6px 0;
+}
+
+.moto-spec-list div{
+ background:rgba(0,0,0,.04);
+ border:1px solid var(--ap-border);
+ border-radius:18px;
+ padding:10px;
+}
+
+.moto-spec-list dt{
+ font-size:12px;
+ color:var(--ap-muted);
+ font-weight:900;
+ text-transform:uppercase;
+ letter-spacing:.04em;
+}
+
+.moto-spec-list dd{
+ margin:4px 0 0;
+ color:var(--ap-text);
+ font-weight:800;
+ line-height:1.35;
+}
+
+.moto-card-actions{
+ margin-top:auto;
+ padding-top:8px;
+}
+
+.ap-btn-ghost{
+ background:transparent;
+ color:var(--ap-text);
+ border:1px solid var(--ap-border);
+}
+
+.motos-summary-table{
+ margin-top:34px;
+}
+
+.motos-summary-table td small{
+ display:block;
+ color:var(--ap-muted);
+ margin-top:4px;
+}
+
+.moto-source-note{
+ max-width:1040px;
+ margin-left:auto;
+ margin-right:auto;
+}
+
+@media(max-width:1050px){
+ .moto-control-panel{
+  grid-template-columns:1fr 1fr;
+ }
+}
+
+@media(max-width:700px){
+ .moto-control-panel,
+ .moto-spec-list{
+  grid-template-columns:1fr;
+ }
+}
+
+/* Fase Motos Profundas: filtros, métricas y rankings */
+.moto-stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:18px 0 22px;
+}
+.moto-stats-grid div{
+  padding:16px;
+  border:1px solid rgba(167,123,54,.24);
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(246,238,222,.72));
+  box-shadow:0 14px 32px rgba(32,24,14,.07);
+}
+.moto-stats-grid strong{
+  display:block;
+  font-size:clamp(1.35rem,3vw,2rem);
+  color:#22180d;
+}
+.moto-stats-grid span{
+  display:block;
+  color:#6f604d;
+  font-size:.88rem;
+}
+.moto-control-panel-wide{
+  grid-template-columns:2fr repeat(5,minmax(150px,1fr));
+}
+.moto-ranking-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:14px;
+  margin:20px 0 26px;
+}
+.moto-ranking-card{
+  border:1px solid rgba(167,123,54,.22);
+  background:#fffaf1;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 14px 28px rgba(31,23,12,.06);
+}
+.moto-ranking-card h3{
+  margin:0 0 10px;
+  font-size:1rem;
+  color:#2c2115;
+}
+.moto-ranking-card ol{
+  margin:0;
+  padding-left:18px;
+}
+.moto-ranking-card li{
+  margin:0 0 10px;
+}
+.moto-ranking-card small{
+  display:block;
+  color:#6f604d;
+  line-height:1.35;
+  margin-top:2px;
+}
+@media (max-width:1100px){
+  .moto-control-panel-wide{grid-template-columns:1fr 1fr;}
+  .moto-ranking-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .moto-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:680px){
+  .moto-control-panel-wide,
+  .moto-ranking-grid,
+  .moto-stats-grid{grid-template-columns:1fr;}
+}
+
+
+/* Fase Motos Profundización Editorial */
+.motos-decision-engine-section{position:relative;}
+.moto-decision-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.5rem 0;}
+.moto-decision-card,.moto-usage-card,.moto-checklist-box,.moto-cluster-box{background:var(--card-bg,#fff);border:1px solid rgba(212,175,55,.22);border-radius:22px;padding:1.1rem;box-shadow:0 16px 40px rgba(0,0,0,.08);}
+.moto-decision-card h3,.moto-usage-card h3,.moto-checklist-box h3,.moto-cluster-box h3{margin:.25rem 0 .65rem;}
+.moto-decision-card ul,.moto-usage-card ul,.moto-checklist-box ol{padding-left:1.1rem;line-height:1.65;}
+.moto-usage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0 1.5rem;}
+.moto-two-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;}
+.moto-checklist-box{margin:1.2rem 0;}
+.moto-cluster-box > div{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin-top:.75rem;}
+.moto-cluster-link{display:block;text-decoration:none;color:inherit;border:1px solid rgba(212,175,55,.22);border-radius:18px;padding:.9rem;background:rgba(212,175,55,.06);transition:transform .16s ease, box-shadow .16s ease;}
+.moto-cluster-link:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.1);}
+.moto-cluster-link strong{display:block;margin-bottom:.25rem;}
+.moto-cluster-link small{display:block;opacity:.75;line-height:1.4;}
+.section-head-small{margin-top:1.4rem;}
+@media (max-width:720px){.moto-two-cols{grid-template-columns:1fr}.moto-decision-card,.moto-usage-card,.moto-checklist-box,.moto-cluster-box{border-radius:18px;padding:1rem}}
+
+/* Fase motos por marca - Apophis */
+.motos-brand-guides-section,
+.brand-hero{
+  position: relative;
+}
+.moto-brand-guides-grid,
+.brand-model-grid,
+.brand-verdict-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.moto-brand-guide-card,
+.brand-model-card{
+  background: var(--card-bg, rgba(255,255,255,.9));
+  border: 1px solid var(--border-color, rgba(120,90,35,.18));
+  border-radius: 22px;
+  padding: 1.1rem;
+  box-shadow: var(--soft-shadow, 0 14px 35px rgba(0,0,0,.08));
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.moto-brand-guide-card h3,
+.brand-model-card h3{
+  margin: 0;
+  font-size: 1.35rem;
+}
+.moto-brand-guide-card p,
+.brand-model-card p{
+  margin: 0;
+  line-height: 1.55;
+}
+.brand-stats-grid{
+  margin-top: 1.2rem;
+}
+.brand-verdict-grid .ap-card h2{
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+}
+.moto-spec-list.compact{
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+@media (max-width: 720px){
+  .moto-brand-guides-grid,
+  .brand-model-grid,
+  .brand-verdict-grid{
+    grid-template-columns: 1fr;
+  }
+}
