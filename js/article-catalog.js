@@ -32,7 +32,7 @@ function buildGuideCard(article){
     `;
 }
 
-async function loadGuides(){
+async function loadGuideCatalog(){
     const containers = document.querySelectorAll("[data-guides]");
     if(!containers.length) return;
 
@@ -58,4 +58,4 @@ async function loadGuides(){
     }
 }
 
-document.addEventListener("DOMContentLoaded", loadGuides);
+document.addEventListener("DOMContentLoaded", loadGuideCatalog);

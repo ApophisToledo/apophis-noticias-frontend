@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-<url>
-<loc>https://apophis.com.ar/</loc>
-</url>
-
-<url>
-<loc>https://apophis.com.ar/motos</loc>
-</url>
-
-<url>
-<loc>https://apophis.com.ar/autos</loc>
-</url>
-
-<url>
-<loc>https://apophis.com.ar/tecnologia</loc>
-</url>
-
-<url>
-<loc>https://apophis.com.ar/supermercados</loc>
-</url>
-
+  <url>
+    <loc>https://apophis.com.ar/</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/motos</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/autos</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/tecnologia</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/supermercados</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/privacidad.html</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/cookies.html</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/contacto.html</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/sobre-nosotros.html</loc>
+  </url>
+  <url>
+    <loc>https://apophis.com.ar/motos/rouser-ns200-vs-honda-cb190.html</loc>
+  </url>
 </urlset>

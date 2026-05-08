@@ -1,0 +1,55 @@
+[
+  {
+    "slug": "motos",
+    "title": "Motos",
+    "description": "Comparativas, mantenimiento, consumo y guías de compra de motos en Argentina.",
+    "subcategories": [
+      "110cc",
+      "150cc",
+      "200cc",
+      "250cc",
+      "400cc",
+      "trabajo",
+      "viajes",
+      "enduro"
+    ]
+  },
+  {
+    "slug": "autos",
+    "title": "Autos",
+    "description": "Guías de compra, autos usados, primer auto, mantenimiento y consumo.",
+    "subcategories": [
+      "usados",
+      "primer-auto",
+      "economicos",
+      "sedanes",
+      "suv",
+      "mantenimiento"
+    ]
+  },
+  {
+    "slug": "tecnologia",
+    "title": "Tecnología",
+    "description": "Hardware, notebooks, SSD, RAM, Windows y optimización.",
+    "subcategories": [
+      "ssd",
+      "ram",
+      "notebooks",
+      "windows",
+      "gaming",
+      "perifericos"
+    ]
+  },
+  {
+    "slug": "supermercados",
+    "title": "Supermercados",
+    "description": "Ahorro, comparativas de supermercados, promociones y compras inteligentes.",
+    "subcategories": [
+      "ahorro",
+      "promociones",
+      "comparativas",
+      "compras-inteligentes",
+      "precios"
+    ]
+  }
+]

@@ -1,26 +1,124 @@
 [
   {
-    "title": "Rouser NS200 vs Honda CB190",
-    "slug": "rouser-ns200-vs-cb190",
+    "id": "motos-rouser-ns200-vs-honda-cb190",
+    "title": "Rouser NS200 vs Honda CB190: cuál conviene más en Argentina",
+    "slug": "rouser-ns200-vs-honda-cb190",
     "category": "motos",
-    "description": "Comparativa real de motos 200cc en Argentina."
+    "subcategory": "200cc",
+    "description": "Comparativa evergreen entre dos motos muy buscadas: consumo, mantenimiento, potencia, comodidad y precio relativo.",
+    "keywords": [
+      "rouser ns200",
+      "honda cb190",
+      "motos 200cc",
+      "comparativa motos"
+    ],
+    "status": "published",
+    "readingTime": "8 min",
+    "updatedAt": "2026-05-08",
+    "excerpt": "Una comparación clara para decidir entre una moto más potente y deportiva o una opción más tranquila, simple y confiable.",
+    "pros": [
+      "La Rouser NS200 ofrece una sensación más deportiva.",
+      "La Honda CB190 prioriza simpleza, consumo contenido y respaldo de marca.",
+      "Ambas son opciones buscadas para uso urbano y escapadas cortas."
+    ],
+    "cons": [
+      "La Rouser puede requerir más atención si se usa exigida.",
+      "La Honda puede sentirse menos potente para quien busca velocidad.",
+      "Los precios y repuestos deben verificarse siempre según ciudad."
+    ],
+    "faq": [
+      {
+        "question": "¿Cuál conviene para ciudad?",
+        "answer": "Para ciudad, conviene priorizar consumo, postura cómoda, mantenimiento y disponibilidad de repuestos. La CB190 puede ser más simple, mientras que la NS200 ofrece más reacción."
+      },
+      {
+        "question": "¿Cuál conviene si quiero más potencia?",
+        "answer": "La Rouser NS200 suele ser más atractiva para quien busca una moto con carácter más deportivo."
+      },
+      {
+        "question": "¿Cuál es mejor para ahorrar?",
+        "answer": "Depende del precio de compra, seguro, repuestos y consumo real. Por eso conviene evaluar costo total y no solo cilindrada."
+      }
+    ],
+    "seoScore": 100,
+    "contentStatus": "draft",
+    "wordTarget": 1800
   },
   {
-    "title": "Mejor auto usado barato",
-    "slug": "mejor-auto-usado-barato",
+    "id": "motos-mejor-moto-delivery-argentina",
+    "title": "Mejor moto para delivery en Argentina: guía de compra inteligente",
+    "slug": "mejor-moto-delivery-argentina",
+    "category": "motos",
+    "subcategory": "trabajo",
+    "description": "Guía para elegir una moto de delivery económica, resistente y barata de mantener.",
+    "keywords": [
+      "moto delivery",
+      "motos baratas",
+      "trabajo en moto"
+    ],
+    "status": "draft",
+    "readingTime": "10 min",
+    "updatedAt": "2026-05-08",
+    "seoScore": 40,
+    "contentStatus": "draft",
+    "wordTarget": 1800
+  },
+  {
+    "id": "autos-mejor-primer-auto-argentina",
+    "title": "Mejor primer auto en Argentina: qué mirar antes de comprar",
+    "slug": "mejor-primer-auto-argentina",
     "category": "autos",
-    "description": "Qué auto usado conviene comprar."
+    "subcategory": "primer-auto",
+    "description": "Consejos para elegir un primer auto confiable, económico y fácil de mantener.",
+    "keywords": [
+      "primer auto",
+      "auto usado",
+      "autos baratos argentina"
+    ],
+    "status": "draft",
+    "readingTime": "11 min",
+    "updatedAt": "2026-05-08",
+    "seoScore": 40,
+    "contentStatus": "draft",
+    "wordTarget": 1800
   },
   {
-    "title": "Mejor SSD calidad precio",
-    "slug": "mejor-ssd-calidad-precio",
+    "id": "tecnologia-acelerar-notebook-vieja",
+    "title": "Cómo acelerar una notebook vieja: SSD, RAM y limpieza de Windows",
+    "slug": "como-acelerar-notebook-vieja",
     "category": "tecnologia",
-    "description": "SSD recomendados para notebooks y PCs."
+    "subcategory": "optimización",
+    "description": "Guía práctica para mejorar el rendimiento de una notebook antigua sin gastar de más.",
+    "keywords": [
+      "acelerar notebook",
+      "ssd",
+      "ram",
+      "windows lento"
+    ],
+    "status": "draft",
+    "readingTime": "9 min",
+    "updatedAt": "2026-05-08",
+    "seoScore": 40,
+    "contentStatus": "draft",
+    "wordTarget": 1800
   },
   {
-    "title": "Cómo ahorrar en supermercados",
+    "id": "supermercados-como-ahorrar",
+    "title": "Cómo ahorrar en supermercados: guía argentina para gastar menos",
     "slug": "como-ahorrar-en-supermercados",
     "category": "supermercados",
-    "description": "Consejos reales para ahorrar todos los meses."
+    "subcategory": "ahorro",
+    "description": "Método práctico para organizar compras, comparar precios y reducir gastos mensuales.",
+    "keywords": [
+      "ahorrar supermercado",
+      "compras inteligentes",
+      "supermercados argentina"
+    ],
+    "status": "draft",
+    "readingTime": "9 min",
+    "updatedAt": "2026-05-08",
+    "seoScore": 40,
+    "contentStatus": "draft",
+    "wordTarget": 1800
   }
 ]

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMS Guías | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo-area">
+        <h1>CMS Apophis</h1>
+        <p>CRUD editorial preparado para guías evergreen.</p>
+    </div>
+</header>
+
+<main class="admin-layout">
+    <section class="admin-panel">
+        <h2>Nueva guía</h2>
+
+        <form id="cms-form">
+            <label>Título</label>
+            <input id="cms-title" value="Mejor moto 200 calidad precio en Argentina">
+
+            <label>Categoría</label>
+            <select id="cms-category">
+                <option value="motos">Motos</option>
+                <option value="autos">Autos</option>
+                <option value="tecnologia">Tecnología</option>
+                <option value="supermercados">Supermercados</option>
+            </select>
+
+            <label>Subcategoría</label>
+            <input id="cms-subcategory" value="200cc">
+
+            <label>Descripción SEO</label>
+            <textarea id="cms-description">Guía completa para elegir una moto 200cc en Argentina considerando precio, consumo y mantenimiento.</textarea>
+
+            <label>Contenido base</label>
+            <textarea id="cms-content">Contenido editorial largo pendiente de completar.</textarea>
+
+            <label>Keywords</label>
+            <input id="cms-keywords" value="moto 200, motos argentina, calidad precio">
+
+            <label>Estado</label>
+            <select id="cms-status-select">
+                <option value="draft">Borrador</option>
+                <option value="published">Publicado</option>
+            </select>
+
+            <label>Tiempo de lectura</label>
+            <input id="cms-reading" value="10 min">
+
+            <div class="admin-actions">
+                <button type="submit">Guardar guía</button>
+            </div>
+        </form>
+
+        <div id="cms-status"></div>
+    </section>
+
+    <section class="admin-preview">
+        <h2>Guías existentes</h2>
+        <div id="cms-guides" class="guide-grid"></div>
+    </section>
+</main>
+
+<script src="./cms.js"></script>
+</body>
+</html>

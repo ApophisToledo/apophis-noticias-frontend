@@ -1,49 +1,61 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SEO Panel | Apophis</title>
-
+<title>Editor SEO | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
 <link rel="stylesheet" href="../css/styles.css">
-
 </head>
-
 <body>
-
 <header class="header">
-<h1>Panel SEO</h1>
+    <div class="logo-area">
+        <h1>Editor SEO Apophis</h1>
+        <p>Preparador de guías evergreen para el nuevo portal.</p>
+    </div>
 </header>
 
-<section class="seo-block">
+<main class="admin-layout">
+    <section class="admin-panel">
+        <span class="status-pill">Borrador seguro</span>
+        <h2>Nueva guía</h2>
 
-<div class="guide-grid">
+        <label for="title">Título SEO</label>
+        <input id="title" value="Mejor moto 200 calidad precio en Argentina">
 
-<article class="guide-card">
-<h3>Sitemap</h3>
-<p>Activo</p>
-</article>
+        <label for="category">Categoría</label>
+        <select id="category">
+            <option value="motos">Motos</option>
+            <option value="autos">Autos</option>
+            <option value="tecnologia">Tecnología</option>
+            <option value="supermercados">Supermercados</option>
+        </select>
 
-<article class="guide-card">
-<h3>Schema</h3>
-<p>Activo</p>
-</article>
+        <label for="subcategory">Subcategoría</label>
+        <input id="subcategory" value="200cc">
 
-<article class="guide-card">
-<h3>SEO dinámico</h3>
-<p>Preparado</p>
-</article>
+        <label for="description">Meta descripción</label>
+        <textarea id="description">Guía evergreen para elegir una moto 200cc equilibrando precio, consumo, mantenimiento y uso real.</textarea>
 
-<article class="guide-card">
-<h3>Core Web Vitals</h3>
-<p>Optimización inicial aplicada</p>
-</article>
+        <label for="keywords">Keywords separadas por coma</label>
+        <input id="keywords" value="moto 200, motos argentina, calidad precio">
 
-</div>
+        <div class="admin-actions">
+            <button id="copy-json" type="button">Copiar JSON</button>
+        </div>
+    </section>
 
-</section>
+    <section class="admin-preview">
+        <h2>Vista previa SEO</h2>
+        <h3 id="preview-title"></h3>
+        <p id="preview-description"></p>
+        <p><strong>URL:</strong> <span id="preview-url"></span></p>
 
+        <h3>JSON generado</h3>
+        <pre id="json-output" class="generated-json"></pre>
+    </section>
+</main>
+
+<script src="./admin-editor.js"></script>
 </body>
 </html>

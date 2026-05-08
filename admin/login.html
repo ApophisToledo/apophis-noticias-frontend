@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin | Apophis</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<header class="header">
+<div class="logo-area">
+<h1>Apophis Admin</h1>
+<p>Acceso editorial seguro</p>
+</div>
+</header>
+
+<main class="admin-auth-layout">
+
+<section class="admin-auth-card">
+
+<h2>Panel editorial</h2>
+
+<form id="login-form">
+
+<label>Email</label>
+<input type="email" id="email" placeholder="admin@apophis.com">
+
+<label>Contraseña</label>
+<input type="password" id="password" placeholder="********">
+
+<button type="submit">Ingresar</button>
+
+</form>
+
+<p class="auth-note">
+Fase segura inicial preparada para JWT y backend real.
+</p>
+
+<div id="login-status"></div>
+
+</section>
+
+</main>
+
+<script src="./login.js"></script>
+
+</body>
+</html>
