@@ -1,0 +1,121 @@
+[
+  {
+    "id": "bajaj-oficial-rouser-ns200",
+    "title": "Bajaj Argentina - Rouser NS200",
+    "category": "motos",
+    "url": "https://www.bajajauto.com/es-ar/motocicletas/rouser-200-ns",
+    "note": "Ficha oficial con frenos, neumáticos, chasis y equipamiento."
+  },
+  {
+    "id": "motos0km-rouser-ns200-fi",
+    "title": "Motos0km - Bajaj Rouser NS200 Fi",
+    "category": "motos",
+    "url": "https://motos0km.com.ar/fichas-tecnicas/bajaj/rouser-ns-200-fi/",
+    "note": "Ficha técnica y opiniones de usuarios sobre consumo, velocidad y calidad/precio."
+  },
+  {
+    "id": "honda-cb190r-oficial",
+    "title": "Honda Argentina - CB190R 2.0",
+    "category": "motos",
+    "url": "https://motos.honda.com.ar/modelos/cb190r-2-0",
+    "note": "Ficha oficial: motor 184 cc, inyección PGM-FI, enfoque urbano y bajo nivel de vibraciones."
+  },
+  {
+    "id": "autoblog-honda-cb190r-2026",
+    "title": "Autoblog Argentina - Lanzamiento Honda CB190R 2026",
+    "category": "motos",
+    "url": "https://autoblog.com.ar/lanzamiento-honda-nx-190-y-cb-190-r-2026/",
+    "note": "Referencia de lanzamiento/precio y novedades de equipamiento."
+  },
+  {
+    "id": "yamaha-argentina",
+    "title": "Yamaha Motor Argentina",
+    "category": "motos",
+    "url": "https://www.yamaha-motor.com.ar/",
+    "note": "Referencia oficial de modelos Yamaha comercializados en Argentina."
+  },
+  {
+    "id": "precios-claros",
+    "title": "Precios Claros Argentina",
+    "category": "supermercados",
+    "url": "https://www.preciosclaros.gob.ar/",
+    "note": "Herramienta pública para comparar precios de productos en comercios adheridos."
+  },
+  {
+    "id": "ratoneando",
+    "title": "Ratoneando Argentina",
+    "category": "supermercados",
+    "url": "https://ratoneando.ar/",
+    "note": "Comparador público de precios de supermercados en Argentina."
+  },
+  {
+    "id": "duenodirecto-supermercados-rosario",
+    "title": "Dueño Directo Rosario - Supermercado más barato",
+    "category": "supermercados",
+    "url": "https://duenodirectorosario.com.ar/ciudad/supermercado-mas-barato/",
+    "note": "Referencia local sobre cadenas relevantes en Rosario."
+  },
+  {
+    "id": "coto-oficial",
+    "title": "Coto - Ofertas y catálogos",
+    "category": "supermercados",
+    "url": "https://www.coto.com.ar/",
+    "note": "Referencia oficial de ofertas y catálogos."
+  },
+  {
+    "id": "fravega-notebooks",
+    "title": "Frávega - Notebooks Argentina",
+    "category": "tecnologia",
+    "url": "https://www.fravega.com/l/informatica/notebooks/",
+    "note": "Referencia retail para notebooks Lenovo, Acer, HP, Exo y otros modelos."
+  },
+  {
+    "id": "fravega-lenovo",
+    "title": "Frávega - Notebooks Lenovo",
+    "category": "tecnologia",
+    "url": "https://www.fravega.com/l/informatica/notebooks/?marcas=lenovo",
+    "note": "Referencia de notebooks Lenovo y precios de mercado."
+  },
+  {
+    "id": "asus-argentina",
+    "title": "ASUS Argentina",
+    "category": "tecnologia",
+    "url": "https://www.asus.com/ar/",
+    "note": "Referencia oficial de líneas ASUS para hogar, trabajo, estudiantes, creadores y gaming."
+  },
+  {
+    "id": "mexx-notebooks",
+    "title": "Mexx - Notebooks Argentina",
+    "category": "tecnologia",
+    "url": "https://www.mexx.com.ar/productos-rubro/notebooks/",
+    "note": "Referencia retail para hardware y notebooks en Argentina."
+  },
+  {
+    "id": "mercadolibre-toyota-etios",
+    "title": "MercadoLibre Argentina - Toyota Etios usados",
+    "category": "autos",
+    "url": "https://listado.mercadolibre.com.ar/toyota-etios-usado",
+    "note": "Referencia de mercado para publicaciones de Toyota Etios usados."
+  },
+  {
+    "id": "autocosmos-etios-2026",
+    "title": "Autocosmos - Toyota Etios ficha técnica",
+    "category": "autos",
+    "url": "https://www.autocosmos.com.ar/catalogo/2026/toyota/etios-hatchback/x/170297",
+    "note": "Ficha técnica: motor 1.5, 1496 cc, 103 cv y 137 Nm."
+  },
+  {
+    "id": "kavak-etios-consumo",
+    "title": "Kavak - Toyota Etios consumo y ficha técnica",
+    "category": "autos",
+    "url": "https://www.kavak.com/ar/blog/compra-tu-toyota-etios-en-kavak",
+    "note": "Referencia de consumo urbano/ruta/combinado y tanque."
+  },
+  {
+    "id": "autocosmos-etios-usados",
+    "title": "Autocosmos - Toyota Etios usados",
+    "category": "autos",
+    "url": "https://www.autocosmos.com.ar/auto/usado/toyota/etios-sedan",
+    "note": "Referencia de publicaciones y precios de Etios usados."
+  }
+]

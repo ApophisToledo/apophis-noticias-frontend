@@ -1,0 +1,58 @@
+{
+  "motos": [
+    [
+      "Rouser NS200",
+      "$5.800.000"
+    ],
+    [
+      "Honda CB190R",
+      "$6.200.000"
+    ],
+    [
+      "Yamaha FZ25",
+      "$7.100.000"
+    ]
+  ],
+  "autos": [
+    [
+      "Gol Trend",
+      "$11.500.000"
+    ],
+    [
+      "Toyota Etios",
+      "$13.800.000"
+    ],
+    [
+      "Ford Fiesta KD",
+      "$14.500.000"
+    ]
+  ],
+  "tecnologia": [
+    [
+      "Lenovo IdeaPad",
+      "$1.250.000"
+    ],
+    [
+      "ASUS TUF",
+      "$1.850.000"
+    ],
+    [
+      "HP Pavilion",
+      "$1.620.000"
+    ]
+  ],
+  "supermercados": [
+    [
+      "Carrefour",
+      "Ahorro alto"
+    ],
+    [
+      "Coto",
+      "Promos fuertes"
+    ],
+    [
+      "La Gallega",
+      "Muy equilibrado"
+    ]
+  ]
+}
