@@ -1,0 +1,992 @@
+[
+  {
+    "id": "bajaj-rouser-ns200",
+    "category": "motos",
+    "name": "Bajaj Rouser NS200",
+    "brand": "Bajaj",
+    "segment": "naked / street 200cc",
+    "priceReference": "AR$ 5.010.990 aprox. referencia publicada 2025; verificar valor vigente en concesionario",
+    "image": "https://cdn.bajajauto.com/es-ar/-/media/globalbajajauto/common-media/product-detail-page-banners/rouser/rouser_ns200_1640x997_1.webp",
+    "imageSource": "Bajaj Auto Argentina",
+    "sourceUrl": "https://www.bajajauto.com/es-ar/motocicletas",
+    "specs": {
+      "motor": "Monocilíndrico 199,5 cc",
+      "potencia": "23,2 HP",
+      "torque": "18,3 Nm",
+      "transmision": "Manual 6 velocidades",
+      "alimentacion": "Inyección electrónica",
+      "frenos": "Disco delantero y trasero; ABS según versión",
+      "usoIdeal": "Ciudad, ruta corta, manejo activo, calidad/precio",
+      "fortalezas": "Potencia, diseño, comunidad, repuestos",
+      "debilidades": "Menos refinada que japonesas, vibraciones según uso"
+    },
+    "searchKeywords": [
+      "Bajaj",
+      "Bajaj Rouser NS200",
+      "medio",
+      "motos",
+      "naked / street 200cc"
+    ],
+    "suggestedCompare": [
+      "honda-cb190r-2026",
+      "yamaha-fz-v4",
+      "motomel-s2-150",
+      "corven-hunter-150",
+      "zanella-rx150",
+      "benelli-tnt15"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "honda-cb190r-2026",
+    "category": "motos",
+    "name": "Honda CB190R 2.0",
+    "brand": "Honda",
+    "segment": "naked urbana 184cc",
+    "priceReference": "AR$ 5.867.000 precio comunicado lanzamiento 2026; verificar valor vigente",
+    "image": "https://motos.honda.com.ar/assets/uploads/models_feature_slides/6984afbcd1ec5.webp",
+    "imageSource": "Honda Motos Argentina",
+    "sourceUrl": "https://motos.honda.com.ar/modelos/cb190r-2-0",
+    "specs": {
+      "motor": "Monocilíndrico 184 cc",
+      "potencia": "No visible en ficha pública resumida; verificar ficha Honda",
+      "torque": "No visible en ficha pública resumida; verificar ficha Honda",
+      "transmision": "Manual 5 velocidades",
+      "alimentacion": "Inyección electrónica PGM-FI",
+      "peso": "141 kg en orden de marcha",
+      "equipamiento": "TFT 5”, USB-C, HSTC, LED",
+      "usoIdeal": "Ciudad, uso diario, suavidad, respaldo de marca",
+      "fortalezas": "Suavidad, bajo nivel de vibraciones, tecnología",
+      "debilidades": "Menos potencia percibida que NS200"
+    },
+    "searchKeywords": [
+      "Honda",
+      "Honda CB190R 2.0",
+      "medio",
+      "motos",
+      "naked urbana 184cc"
+    ],
+    "suggestedCompare": [
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4",
+      "royal-enfield-hunter-350",
+      "cfmoto-300nk",
+      "motomel-s2-150",
+      "corven-hunter-150"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "yamaha-fz-v4",
+    "category": "motos",
+    "name": "Yamaha FZ V4.0 ABS",
+    "brand": "Yamaha",
+    "segment": "street 149cc",
+    "priceReference": "Referencia mercado 0km vista: AR$ 5.150.000 aprox.; verificar concesionario",
+    "image": "https://www.yamaha-motor.com.ar/images/modelos/fz-v4-0-abs/colores/negro.png",
+    "imageSource": "Yamaha Motor Argentina",
+    "sourceUrl": "https://www.yamaha-motor.com.ar/modelo/fz-v4-0-abs",
+    "specs": {
+      "motor": "Monocilíndrico 4T SOHC refrigerado por aire",
+      "cilindrada": "149 cc",
+      "transmision": "Manual 5 velocidades",
+      "alimentacion": "Inyección electrónica",
+      "frenoDelantero": "Disco 282 mm con ABS",
+      "frenoTrasero": "Disco 220 mm",
+      "neumaticos": "100/80-17 delantero, 140/60-R17 trasero",
+      "peso": "137 kg",
+      "tanque": "13 L",
+      "usoIdeal": "Ciudad, consumo, practicidad",
+      "fortalezas": "Consumo, suavidad, confiabilidad",
+      "debilidades": "Menos potencia que 200cc reales"
+    },
+    "searchKeywords": [
+      "Yamaha",
+      "Yamaha FZ V4.0 ABS",
+      "medio",
+      "motos",
+      "street 149cc"
+    ],
+    "suggestedCompare": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "motomel-s2-150",
+      "corven-hunter-150",
+      "zanella-rx150",
+      "benelli-tnt15"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "toyota-etios",
+    "category": "autos",
+    "name": "Toyota Etios Hatchback X",
+    "brand": "Toyota",
+    "segment": "hatchback segmento B",
+    "priceReference": "Usados vistos desde AR$ 14,8M aprox. y 0km/rivales según publicación; verificar año/estado",
+    "image": "https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_48e01d974fcc4d20a9178b645526b693.jpg",
+    "imageSource": "Autocosmos",
+    "sourceUrl": "https://www.autocosmos.com.ar/catalogo/2026/toyota/etios-hatchback/x/170297",
+    "specs": {
+      "motor": "Nafta 1.5 L, 1496 cc",
+      "potencia": "103 cv a 6000 rpm",
+      "torque": "137 Nm a 4200 rpm",
+      "transmision": "Manual 6 velocidades",
+      "frenos": "Discos ventilados delanteros, tambor trasero",
+      "neumaticos": "175/65 R14",
+      "largo": "3777 mm",
+      "ancho": "1695 mm",
+      "alto": "1510 mm",
+      "baul": "270 dm3",
+      "tanque": "45 L",
+      "consumo": "7,5 l/100 km ciudad; 5,9 ruta; 6,5 combinado según referencia Kavak",
+      "usoIdeal": "Primer auto, bajo consumo, confiabilidad"
+    },
+    "searchKeywords": [
+      "Toyota",
+      "Toyota Etios Hatchback X",
+      "autos",
+      "hatchback segmento B",
+      "medio"
+    ],
+    "suggestedCompare": [
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd",
+      "peugeot-208",
+      "fiat-cronos",
+      "renault-sandero"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "volkswagen-gol-trend",
+    "category": "autos",
+    "name": "Volkswagen Gol Trend 1.6",
+    "brand": "Volkswagen",
+    "segment": "hatchback usado segmento B",
+    "priceReference": "Ejemplo Autocity: AR$ 18.600.000; MercadoLibre blog: valores usados desde AR$ 12,5M/14,2M/13,3M según versión",
+    "image": "https://www.volkswagen.com.ar/idhub/content/dam/onehub_pkw/importers/ar/modelos/gol/gol.jpg",
+    "imageSource": "Volkswagen / referencias usadas",
+    "sourceUrl": "https://autocity.com.ar/catalogo/usados/m-volkswagen/m-gol/1-6-trend-trendline-5p-l16/",
+    "specs": {
+      "motor": "Nafta 1.6 L",
+      "potencia": "101 cv aprox. según versión",
+      "transmision": "Manual",
+      "usoIdeal": "Primer auto, reventa, repuestos",
+      "fortalezas": "Mecánica conocida, repuestos, salida de reventa",
+      "debilidades": "Seguridad/equipamiento dependen mucho de año y versión"
+    },
+    "searchKeywords": [
+      "Volkswagen",
+      "Volkswagen Gol Trend 1.6",
+      "autos",
+      "hatchback usado segmento B",
+      "medio"
+    ],
+    "suggestedCompare": [
+      "ford-fiesta-kd",
+      "toyota-etios",
+      "peugeot-208",
+      "renault-sandero",
+      "fiat-cronos"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "ford-fiesta-kd",
+    "category": "autos",
+    "name": "Ford Fiesta Kinetic 1.6",
+    "brand": "Ford",
+    "segment": "hatchback usado segmento B",
+    "priceReference": "MercadoLibre: publicaciones vistas entre AR$ 14M y AR$ 17,7M aprox.; verificar versión/estado",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_2X_925694-MLA.jpg",
+    "imageSource": "Kavak / Mercado usado",
+    "sourceUrl": "https://listado.mercadolibre.com.ar/ford-fiesta-usado",
+    "specs": {
+      "motor": "1.6 Ti-VCT",
+      "potencia": "120 cv aprox.",
+      "torque": "152 Nm aprox.",
+      "baul": "281 L según prueba publicada",
+      "usoIdeal": "Primer auto más equipado, manejo agradable",
+      "fortalezas": "Manejo, equipamiento, seguridad según versión",
+      "debilidades": "Revisar caja/versión/estado; repuestos pueden costar más que Gol/Corsa"
+    },
+    "searchKeywords": [
+      "Ford",
+      "Ford Fiesta Kinetic 1.6",
+      "autos",
+      "hatchback usado segmento B",
+      "medio"
+    ],
+    "suggestedCompare": [
+      "volkswagen-gol-trend",
+      "toyota-etios",
+      "peugeot-208",
+      "renault-sandero",
+      "fiat-cronos"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "hp-255-g10-ryzen5",
+    "category": "tecnologia",
+    "name": "HP 255 G10 Ryzen 5 7530U",
+    "brand": "HP",
+    "segment": "notebook oficina/estudio",
+    "priceReference": "Mexx: AR$ 1.000.719 a AR$ 1.190.709 aprox. según RAM/SO al momento auditado",
+    "image": "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c08250347.png",
+    "imageSource": "HP / Mexx",
+    "sourceUrl": "https://www.mexx.com.ar/productos-rubro/notebooks/",
+    "specs": {
+      "procesador": "Ryzen 5 7530U",
+      "ram": "8 GB o 16 GB según versión",
+      "almacenamiento": "SSD 512 GB o 1 TB según versión",
+      "pantalla": "15,6 pulgadas",
+      "usoIdeal": "Estudio, oficina, home office",
+      "fortalezas": "Precio/rendimiento, SSD, bajo consumo",
+      "debilidades": "No es gaming dedicada"
+    },
+    "searchKeywords": [
+      "HP",
+      "HP 255 G10 Ryzen 5 7530U",
+      "medio",
+      "notebook oficina/estudio",
+      "tecnologia"
+    ],
+    "suggestedCompare": [
+      "acer-aspire-5",
+      "asus-tuf-gaming",
+      "lenovo-ideapad-ryzen5"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "asus-tuf-gaming",
+    "category": "tecnologia",
+    "name": "ASUS TUF Gaming",
+    "brand": "ASUS",
+    "segment": "notebook gaming",
+    "priceReference": "Variable según GPU/CPU; verificar retail. MercadoLibre/Mexx muestran valores según configuración",
+    "image": "https://dlcdnwebimgs.asus.com/gain/82a54e8b-36e9-43a7-889e-2ee13f3347b8/",
+    "imageSource": "ASUS Argentina",
+    "sourceUrl": "https://www.asus.com/ar/laptops/for-gaming/tuf-gaming/",
+    "specs": {
+      "procesador": "Varía por modelo",
+      "gpu": "GPUs dedicadas en configuraciones TUF",
+      "pantalla": "Alta frecuencia según modelo",
+      "usoIdeal": "Gaming, diseño, rendimiento",
+      "fortalezas": "Refrigeración, construcción, GPU dedicada",
+      "debilidades": "Mayor peso, precio y consumo"
+    },
+    "searchKeywords": [
+      "ASUS",
+      "ASUS TUF Gaming",
+      "alto",
+      "notebook gaming",
+      "tecnologia"
+    ],
+    "suggestedCompare": [
+      "hp-255-g10-ryzen5",
+      "lenovo-ideapad-ryzen5",
+      "acer-aspire-5"
+    ],
+    "priceTier": "alto",
+    "needTags": []
+  },
+  {
+    "id": "motomel-s2-150",
+    "category": "motos",
+    "name": "Motomel S2 150",
+    "brand": "Motomel",
+    "segment": "street 150cc económica",
+    "priceReference": "Referencia mercado Argentina: gama baja/media; verificar concesionaria Rosario",
+    "image": "https://motomel.com.ar/wp-content/uploads/2023/10/S2-150-Rojo.png",
+    "imageSource": "Motomel Argentina",
+    "sourceUrl": "https://motomel.com.ar/",
+    "specs": {
+      "motor": "Monocilíndrico 150 cc",
+      "transmision": "Manual 5 velocidades",
+      "usoIdeal": "Trabajo, ciudad, bajo presupuesto",
+      "fortalezas": "Precio accesible, repuestos económicos",
+      "debilidades": "Menos refinada y menos potente que 200cc"
+    },
+    "searchKeywords": [
+      "Motomel",
+      "Motomel S2 150",
+      "bajo",
+      "motos",
+      "street 150cc económica"
+    ],
+    "suggestedCompare": [
+      "corven-hunter-150",
+      "keller-stratus-150",
+      "zanella-rx150",
+      "benelli-tnt15",
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "corven-hunter-150",
+    "category": "motos",
+    "name": "Corven Hunter 150",
+    "brand": "Corven",
+    "segment": "street 150cc económica",
+    "priceReference": "Referencia mercado Argentina: entrada de gama; verificar precio local",
+    "image": "https://corven.com.ar/wp-content/uploads/2023/03/Hunter-150-R2.png",
+    "imageSource": "Corven Argentina",
+    "sourceUrl": "https://corven.com.ar/",
+    "specs": {
+      "motor": "Monocilíndrico 150 cc",
+      "transmision": "Manual",
+      "usoIdeal": "Ciudad, trabajo, primer moto",
+      "fortalezas": "Costo inicial, simplicidad",
+      "debilidades": "Menor equipamiento y calidad percibida que marcas premium"
+    },
+    "searchKeywords": [
+      "Corven",
+      "Corven Hunter 150",
+      "bajo",
+      "motos",
+      "street 150cc económica"
+    ],
+    "suggestedCompare": [
+      "motomel-s2-150",
+      "keller-stratus-150",
+      "zanella-rx150",
+      "benelli-tnt15",
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "zanella-rx150",
+    "category": "motos",
+    "name": "Zanella RX 150",
+    "brand": "Zanella",
+    "segment": "street 150cc",
+    "priceReference": "Referencia mercado Argentina: económica; verificar concesionaria",
+    "image": "https://zanella.com.ar/wp-content/uploads/2023/05/rx-150-z7-negro.png",
+    "imageSource": "Zanella Argentina",
+    "sourceUrl": "https://zanella.com.ar/",
+    "specs": {
+      "motor": "Monocilíndrico 150 cc",
+      "transmision": "Manual",
+      "usoIdeal": "Ciudad, uso básico, ahorro",
+      "fortalezas": "Precio, repuestos, simplicidad",
+      "debilidades": "No apunta a lujo ni alto rendimiento"
+    },
+    "searchKeywords": [
+      "Zanella",
+      "Zanella RX 150",
+      "bajo",
+      "motos",
+      "street 150cc"
+    ],
+    "suggestedCompare": [
+      "motomel-s2-150",
+      "corven-hunter-150",
+      "keller-stratus-150",
+      "benelli-tnt15",
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "benelli-tnt15",
+    "category": "motos",
+    "name": "Benelli TNT 15",
+    "brand": "Benelli",
+    "segment": "street 150cc con estética premium",
+    "priceReference": "Referencia mercado Argentina: gama media; verificar stock/precio",
+    "image": "https://benelli.com.ar/wp-content/uploads/2022/09/tnt15-negra.png",
+    "imageSource": "Benelli Argentina",
+    "sourceUrl": "https://benelli.com.ar/",
+    "specs": {
+      "motor": "Monocilíndrico 150 cc",
+      "transmision": "Manual",
+      "usoIdeal": "Ciudad, estética, primer moto con diseño",
+      "fortalezas": "Diseño, presencia, percepción premium",
+      "debilidades": "Puede costar más que otras 150 económicas"
+    },
+    "searchKeywords": [
+      "Benelli",
+      "Benelli TNT 15",
+      "alto",
+      "motos",
+      "street 150cc con estética premium"
+    ],
+    "suggestedCompare": [
+      "motomel-s2-150",
+      "corven-hunter-150",
+      "zanella-rx150",
+      "keller-stratus-150",
+      "royal-enfield-hunter-350",
+      "cfmoto-300nk"
+    ],
+    "priceTier": "alto",
+    "needTags": []
+  },
+  {
+    "id": "keller-stratus-150",
+    "category": "motos",
+    "name": "Keller Stratus 150",
+    "brand": "Keller",
+    "segment": "street 150cc económica",
+    "priceReference": "Referencia mercado Argentina: entrada/media; verificar local",
+    "image": "https://kellermotos.com.ar/wp-content/uploads/2023/04/stratus150.png",
+    "imageSource": "Keller Motos",
+    "sourceUrl": "https://kellermotos.com.ar/",
+    "specs": {
+      "motor": "Monocilíndrico 150 cc",
+      "transmision": "Manual",
+      "usoIdeal": "Trabajo, ciudad, bajo costo",
+      "fortalezas": "Precio accesible",
+      "debilidades": "Menor reventa que marcas más buscadas"
+    },
+    "searchKeywords": [
+      "Keller",
+      "Keller Stratus 150",
+      "bajo",
+      "motos",
+      "street 150cc económica"
+    ],
+    "suggestedCompare": [
+      "motomel-s2-150",
+      "corven-hunter-150",
+      "zanella-rx150",
+      "benelli-tnt15",
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "fiat-cronos",
+    "category": "autos",
+    "name": "Fiat Cronos",
+    "brand": "Fiat",
+    "segment": "sedán compacto",
+    "priceReference": "Referencia Argentina: uno de los 0km más vendidos; verificar concesionaria Rosario",
+    "image": "https://www.fiat.com.ar/content/dam/fiat/products/358/AF/02/2024/page/profile.png",
+    "imageSource": "Fiat Argentina",
+    "sourceUrl": "https://www.fiat.com.ar/",
+    "specs": {
+      "motor": "Nafta 1.3 / 1.8 según versión",
+      "usoIdeal": "Familia, ciudad, baúl, 0km accesible",
+      "fortalezas": "Baúl, disponibilidad, financiación",
+      "debilidades": "Lujo/equipamiento dependen mucho de versión"
+    },
+    "searchKeywords": [
+      "Fiat",
+      "Fiat Cronos",
+      "autos",
+      "medio",
+      "sedán compacto"
+    ],
+    "suggestedCompare": [
+      "peugeot-208",
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd",
+      "renault-sandero"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "peugeot-208",
+    "category": "autos",
+    "name": "Peugeot 208",
+    "brand": "Peugeot",
+    "segment": "hatchback compacto",
+    "priceReference": "Referencia Argentina: gama media; verificar versión/financiación",
+    "image": "https://www.peugeot.com.ar/content/dam/peugeot/argentina/b2c/our-range/showroom/208/2024/208.png",
+    "imageSource": "Peugeot Argentina",
+    "sourceUrl": "https://www.peugeot.com.ar/",
+    "specs": {
+      "motor": "Nafta 1.6 / turbo según versión",
+      "usoIdeal": "Ciudad, diseño, confort",
+      "fortalezas": "Diseño, interior, tecnología",
+      "debilidades": "Precio y mantenimiento pueden ser más altos"
+    },
+    "searchKeywords": [
+      "Peugeot",
+      "Peugeot 208",
+      "autos",
+      "hatchback compacto",
+      "medio"
+    ],
+    "suggestedCompare": [
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd",
+      "fiat-cronos",
+      "renault-sandero"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "renault-sandero",
+    "category": "autos",
+    "name": "Renault Sandero",
+    "brand": "Renault",
+    "segment": "hatchback usado/económico",
+    "priceReference": "Referencia mercado usados; verificar año/estado",
+    "image": "https://www.renault.com.ar/content/dam/renault/ar/vehicles/sandero/sandero.png",
+    "imageSource": "Renault Argentina",
+    "sourceUrl": "https://www.renault.com.ar/",
+    "specs": {
+      "motor": "Nafta 1.6 según versión",
+      "usoIdeal": "Primer auto, familia chica, uso diario",
+      "fortalezas": "Espacio, simpleza, repuestos",
+      "debilidades": "Terminaciones simples en versiones base"
+    },
+    "searchKeywords": [
+      "Renault",
+      "Renault Sandero",
+      "autos",
+      "bajo",
+      "hatchback usado/económico"
+    ],
+    "suggestedCompare": [
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd",
+      "peugeot-208",
+      "fiat-cronos"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "lenovo-ideapad-ryzen5",
+    "category": "tecnologia",
+    "name": "Lenovo IdeaPad Ryzen 5",
+    "brand": "Lenovo",
+    "segment": "notebook estudio/trabajo",
+    "priceReference": "Referencia retail Argentina: gama media; verificar Frávega/MercadoLibre/Mexx",
+    "image": "https://p1-ofp.static.pub/fes/cms/2023/03/22/8yasmy3u6egfdm5kfbbnm4gdt0m7kt281873.png",
+    "imageSource": "Lenovo",
+    "sourceUrl": "https://www.lenovo.com/ar/es/",
+    "specs": {
+      "procesador": "Ryzen 5 según versión",
+      "ram": "8/16 GB según configuración",
+      "almacenamiento": "SSD",
+      "usoIdeal": "Estudio, oficina, home office",
+      "fortalezas": "Equilibrio, teclado, rendimiento",
+      "debilidades": "No siempre apta gaming pesado"
+    },
+    "searchKeywords": [
+      "Lenovo",
+      "Lenovo IdeaPad Ryzen 5",
+      "bajo",
+      "notebook estudio/trabajo",
+      "tecnologia"
+    ],
+    "suggestedCompare": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming",
+      "acer-aspire-5"
+    ],
+    "priceTier": "bajo",
+    "needTags": []
+  },
+  {
+    "id": "acer-aspire-5",
+    "category": "tecnologia",
+    "name": "Acer Aspire 5",
+    "brand": "Acer",
+    "segment": "notebook gama media",
+    "priceReference": "Referencia retail Argentina: gama media; verificar stock/precio",
+    "image": "https://images.acer.com/is/image/acer/Aspire-5-A515-57-55K8-01a-1?$Visual-Filter-L$",
+    "imageSource": "Acer",
+    "sourceUrl": "https://www.acer.com/ar-es/",
+    "specs": {
+      "procesador": "Intel/Ryzen según versión",
+      "ram": "8/16 GB según configuración",
+      "almacenamiento": "SSD",
+      "usoIdeal": "Estudio, oficina, multitarea liviana",
+      "fortalezas": "Precio/rendimiento",
+      "debilidades": "Pantalla/materiales dependen de versión"
+    },
+    "searchKeywords": [
+      "Acer",
+      "Acer Aspire 5",
+      "medio",
+      "notebook gama media",
+      "tecnologia"
+    ],
+    "suggestedCompare": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming",
+      "lenovo-ideapad-ryzen5"
+    ],
+    "priceTier": "medio",
+    "needTags": []
+  },
+  {
+    "id": "carrefour-leche-entera-1l",
+    "category": "supermercados",
+    "name": "Leche entera 1L Carrefour / marcas equivalentes",
+    "brand": "Carrefour / marcas lácteas",
+    "segment": "lácteos básicos",
+    "priceReference": "Precio variable por marca, promoción y zona; verificar Precios Claros / tienda online",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.preciosclaros.gob.ar/",
+    "priceTier": "bajo",
+    "needTags": [
+      "ahorro",
+      "familia",
+      "canasta-basica",
+      "lacteos"
+    ],
+    "specs": {
+      "rubro": "Lácteos",
+      "unidad": "1 litro",
+      "usoIdeal": "Compra semanal/familiar",
+      "claveDeCompra": "Comparar precio por litro y promociones 2x1 o segunda unidad",
+      "fortalezas": "Producto básico de alta rotación",
+      "debilidades": "Precio cambia rápido por marca y cadena"
+    },
+    "searchKeywords": [
+      "Carrefour / marcas lácteas",
+      "Leche entera 1L Carrefour / marcas equivalentes",
+      "ahorro",
+      "bajo",
+      "canasta-basica",
+      "familia",
+      "lacteos",
+      "lácteos básicos",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "coto-arroz-1kg",
+      "la-gallega-azucar-1kg",
+      "micropack-aceite-girasol-15l",
+      "la-reina-detergente-750ml",
+      "makro-papel-higienico-pack"
+    ]
+  },
+  {
+    "id": "coto-arroz-1kg",
+    "category": "supermercados",
+    "name": "Arroz largo fino 1kg Coto / marcas equivalentes",
+    "brand": "Coto / marcas de almacén",
+    "segment": "almacén básico",
+    "priceReference": "Precio variable; verificar Coto Digital, Precios Claros o comparador",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.coto.com.ar/",
+    "priceTier": "bajo",
+    "needTags": [
+      "ahorro",
+      "familia",
+      "almacen",
+      "canasta-basica"
+    ],
+    "specs": {
+      "rubro": "Almacén",
+      "unidad": "1 kg",
+      "usoIdeal": "Compra mensual",
+      "claveDeCompra": "Mirar precio por kilo, marca propia y promociones por cantidad",
+      "fortalezas": "Rinde mucho y permite comparar fácil",
+      "debilidades": "Calidad varía por marca"
+    },
+    "searchKeywords": [
+      "Arroz largo fino 1kg Coto / marcas equivalentes",
+      "Coto / marcas de almacén",
+      "ahorro",
+      "almacen",
+      "almacén básico",
+      "bajo",
+      "canasta-basica",
+      "familia",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "la-gallega-azucar-1kg",
+      "carrefour-leche-entera-1l",
+      "micropack-aceite-girasol-15l",
+      "la-reina-detergente-750ml",
+      "makro-papel-higienico-pack"
+    ]
+  },
+  {
+    "id": "micropack-aceite-girasol-15l",
+    "category": "supermercados",
+    "name": "Aceite de girasol 1.5L Micropack / mayoristas",
+    "brand": "Micropack / mayoristas",
+    "segment": "almacén / cocina",
+    "priceReference": "Precio muy variable; verificar comercio local y mayoristas",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.preciosclaros.gob.ar/",
+    "priceTier": "medio",
+    "needTags": [
+      "ahorro",
+      "familia",
+      "almacen",
+      "mayorista"
+    ],
+    "specs": {
+      "rubro": "Aceites",
+      "unidad": "1.5 litros",
+      "usoIdeal": "Compra familiar/mensual",
+      "claveDeCompra": "Comparar precio por litro, límites de compra y promociones bancarias",
+      "fortalezas": "Impacta mucho en gasto mensual",
+      "debilidades": "Suele cambiar mucho por stock y marca"
+    },
+    "searchKeywords": [
+      "Aceite de girasol 1.5L Micropack / mayoristas",
+      "Micropack / mayoristas",
+      "ahorro",
+      "almacen",
+      "almacén / cocina",
+      "familia",
+      "mayorista",
+      "medio",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "makro-papel-higienico-pack",
+      "coto-arroz-1kg",
+      "la-gallega-azucar-1kg",
+      "la-reina-detergente-750ml",
+      "carrefour-leche-entera-1l"
+    ]
+  },
+  {
+    "id": "la-gallega-azucar-1kg",
+    "category": "supermercados",
+    "name": "Azúcar 1kg La Gallega / marcas equivalentes",
+    "brand": "La Gallega / marcas varias",
+    "segment": "almacén básico",
+    "priceReference": "Precio variable; verificar sucursal, app y góndola",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.preciosclaros.gob.ar/",
+    "priceTier": "bajo",
+    "needTags": [
+      "ahorro",
+      "familia",
+      "almacen",
+      "rosario"
+    ],
+    "specs": {
+      "rubro": "Almacén",
+      "unidad": "1 kg",
+      "usoIdeal": "Compra básica",
+      "claveDeCompra": "Comparar precio por kilo y marca propia/económica",
+      "fortalezas": "Producto de comparación rápida",
+      "debilidades": "Diferencias chicas pueden acumularse en compra mensual"
+    },
+    "searchKeywords": [
+      "Azúcar 1kg La Gallega / marcas equivalentes",
+      "La Gallega / marcas varias",
+      "ahorro",
+      "almacen",
+      "almacén básico",
+      "bajo",
+      "familia",
+      "rosario",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "coto-arroz-1kg",
+      "carrefour-leche-entera-1l",
+      "micropack-aceite-girasol-15l",
+      "la-reina-detergente-750ml",
+      "makro-papel-higienico-pack"
+    ]
+  },
+  {
+    "id": "la-reina-detergente-750ml",
+    "category": "supermercados",
+    "name": "Detergente 750ml La Reina / marcas equivalentes",
+    "brand": "La Reina / limpieza",
+    "segment": "limpieza",
+    "priceReference": "Precio variable por marca; verificar sucursal y promociones",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.preciosclaros.gob.ar/",
+    "priceTier": "medio",
+    "needTags": [
+      "limpieza",
+      "ahorro",
+      "familia",
+      "rosario"
+    ],
+    "specs": {
+      "rubro": "Limpieza",
+      "unidad": "750 ml",
+      "usoIdeal": "Reposición mensual",
+      "claveDeCompra": "Comparar precio por ml y rendimiento real",
+      "fortalezas": "Buenas oportunidades en marcas propias/económicas",
+      "debilidades": "Rendimiento varía mucho"
+    },
+    "searchKeywords": [
+      "Detergente 750ml La Reina / marcas equivalentes",
+      "La Reina / limpieza",
+      "ahorro",
+      "familia",
+      "limpieza",
+      "medio",
+      "rosario",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "micropack-aceite-girasol-15l",
+      "makro-papel-higienico-pack",
+      "la-gallega-azucar-1kg",
+      "carrefour-leche-entera-1l",
+      "coto-arroz-1kg"
+    ]
+  },
+  {
+    "id": "makro-papel-higienico-pack",
+    "category": "supermercados",
+    "name": "Papel higiénico pack familiar Makro / mayoristas",
+    "brand": "Makro / mayoristas",
+    "segment": "higiene / compra mayorista",
+    "priceReference": "Precio variable por pack; verificar mayoristas, unidad y metros totales",
+    "image": "./assets/placeholder-apophis.svg",
+    "imageSource": "Referencia genérica",
+    "sourceUrl": "https://www.preciosclaros.gob.ar/",
+    "priceTier": "medio",
+    "needTags": [
+      "mayorista",
+      "familia",
+      "higiene",
+      "ahorro"
+    ],
+    "specs": {
+      "rubro": "Higiene",
+      "unidad": "Pack familiar",
+      "usoIdeal": "Compra mensual/familiar",
+      "claveDeCompra": "Comparar precio por rollo y metros por rollo, no solo pack",
+      "fortalezas": "Puede ahorrar mucho en volumen",
+      "debilidades": "Requiere espacio y gasto inicial mayor"
+    },
+    "searchKeywords": [
+      "Makro / mayoristas",
+      "Papel higiénico pack familiar Makro / mayoristas",
+      "ahorro",
+      "familia",
+      "higiene",
+      "higiene / compra mayorista",
+      "mayorista",
+      "medio",
+      "supermercados"
+    ],
+    "suggestedCompare": [
+      "micropack-aceite-girasol-15l",
+      "la-reina-detergente-750ml",
+      "carrefour-leche-entera-1l",
+      "coto-arroz-1kg",
+      "la-gallega-azucar-1kg"
+    ]
+  },
+  {
+    "id": "royal-enfield-hunter-350",
+    "category": "motos",
+    "name": "Royal Enfield Hunter 350",
+    "brand": "Royal Enfield",
+    "segment": "retro urbana 350cc",
+    "priceReference": "Gama media/alta; verificar concesionaria Rosario/Argentina",
+    "image": "https://www.royalenfield.com/content/dam/royal-enfield/hunter-350/colors/rebel-blue/rebel-blue.png",
+    "imageSource": "Royal Enfield",
+    "sourceUrl": "https://www.royalenfield.com/ar/es/motorcycles/hunter-350/",
+    "priceTier": "alto",
+    "needTags": [
+      "lujo",
+      "ciudad",
+      "retro",
+      "estilo"
+    ],
+    "specs": {
+      "motor": "Monocilíndrico 349 cc",
+      "usoIdeal": "Estilo, ciudad, paseo",
+      "fortalezas": "Diseño, presencia, torque urbano",
+      "debilidades": "Más pesada/cara que 150-200 económicas"
+    },
+    "searchKeywords": [
+      "Royal Enfield",
+      "Royal Enfield Hunter 350",
+      "alto",
+      "ciudad",
+      "estilo",
+      "lujo",
+      "motos",
+      "retro",
+      "retro urbana 350cc"
+    ],
+    "suggestedCompare": [
+      "cfmoto-300nk",
+      "benelli-tnt15",
+      "honda-cb190r-2026",
+      "bajaj-rouser-ns200",
+      "yamaha-fz-v4",
+      "motomel-s2-150"
+    ]
+  },
+  {
+    "id": "cfmoto-300nk",
+    "category": "motos",
+    "name": "CFMoto 300NK",
+    "brand": "CFMoto",
+    "segment": "naked 300cc",
+    "priceReference": "Gama media/alta; verificar concesionaria y stock",
+    "image": "https://cfmoto.com.ar/wp-content/uploads/2023/08/300NK.png",
+    "imageSource": "CFMoto Argentina",
+    "sourceUrl": "https://cfmoto.com.ar/",
+    "priceTier": "alto",
+    "needTags": [
+      "potencia",
+      "lujo",
+      "ruta",
+      "naked"
+    ],
+    "specs": {
+      "motor": "Monocilíndrico 292 cc aprox.",
+      "usoIdeal": "Ruta corta, ciudad, diseño moderno",
+      "fortalezas": "Equipamiento, potencia, estética",
+      "debilidades": "Costo inicial y mantenimiento superiores"
+    },
+    "searchKeywords": [
+      "CFMoto",
+      "CFMoto 300NK",
+      "alto",
+      "lujo",
+      "motos",
+      "naked",
+      "naked 300cc",
+      "potencia",
+      "ruta"
+    ],
+    "suggestedCompare": [
+      "royal-enfield-hunter-350",
+      "benelli-tnt15",
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4",
+      "motomel-s2-150"
+    ]
+  }
+]

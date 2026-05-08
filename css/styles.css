@@ -1321,3 +1321,253 @@ iframe{
 .guias-completadas-panel{
  border-top:1px solid var(--ap-border);
 }
+
+.footer-links{
+ display:flex;
+ gap:14px;
+ flex-wrap:wrap;
+ margin-top:16px;
+}
+
+.footer-links a{
+ color:var(--ap-gold-2);
+}
+
+.big-number{
+ font-size:48px;
+ font-weight:900;
+ color:var(--ap-gold);
+}
+
+.pending-box{
+ margin-top:28px;
+}
+
+.pending-box ul{
+ padding-left:24px;
+ line-height:1.9;
+}
+
+.product-real-section{
+ margin-top:48px;
+ padding-top:12px;
+}
+
+.real-product-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+ gap:20px;
+ margin:28px 0;
+}
+
+.real-product-card{
+ background:var(--ap-surface);
+ border:1px solid var(--ap-border);
+ border-radius:26px;
+ overflow:hidden;
+ box-shadow:var(--ap-shadow);
+}
+
+.real-product-image{
+ aspect-ratio:16/10;
+ background:#fff;
+ display:grid;
+ place-items:center;
+ overflow:hidden;
+}
+
+.real-product-image img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+ padding:10px;
+}
+
+.real-product-image.image-error::after{
+ content:"Imagen no disponible: abrir fuente";
+ color:var(--ap-muted);
+ padding:20px;
+ text-align:center;
+}
+
+.real-product-body{
+ padding:20px;
+}
+
+.real-product-body h3{
+ margin:12px 0;
+ font-size:22px;
+}
+
+.real-product-body p{
+ color:var(--ap-muted);
+ line-height:1.6;
+}
+
+.technical-table{
+ margin-top:24px;
+}
+
+.technical-table td:first-child{
+ font-weight:900;
+ color:var(--ap-text);
+ text-transform:capitalize;
+}
+
+.base-productos-reales{
+ border-top:1px solid var(--ap-border);
+}
+
+.comparator-hero{
+ padding-bottom:30px;
+}
+
+.comparator-search{
+ display:grid;
+ grid-template-columns:1fr 240px;
+ gap:14px;
+ align-items:center;
+}
+
+.comparator-search select,
+.manual-compare-box select{
+ width:100%;
+ border-radius:18px;
+ border:1px solid var(--ap-border);
+ background:var(--ap-surface);
+ color:var(--ap-text);
+ padding:16px;
+ font-size:16px;
+ box-shadow:var(--ap-shadow);
+}
+
+.product-search-card h3{
+ margin-bottom:8px;
+}
+
+.product-search-card .admin-actions{
+ margin-top:14px;
+}
+
+.product-search-card button,
+.suggestion-chip{
+ border:0;
+ border-radius:999px;
+ padding:10px 14px;
+ background:#050505;
+ color:var(--ap-gold-2);
+ font-weight:900;
+ cursor:pointer;
+ margin:4px;
+}
+
+.manual-compare-box{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:18px;
+ background:var(--ap-surface);
+ border:1px solid var(--ap-border);
+ border-radius:28px;
+ padding:22px;
+ box-shadow:var(--ap-shadow);
+ margin-bottom:24px;
+}
+
+.manual-compare-box label{
+ display:grid;
+ gap:8px;
+ font-weight:900;
+ color:var(--ap-muted);
+}
+
+.suggestion-box{
+ margin:24px 0;
+ padding:22px;
+ border-radius:24px;
+ background:linear-gradient(135deg,rgba(212,175,55,.12),transparent),var(--ap-surface);
+ border:1px solid var(--ap-border);
+}
+
+.suggestion-list{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+}
+
+.comparador-libre-home{
+ border-top:1px solid var(--ap-border);
+ border-bottom:1px solid var(--ap-border);
+}
+
+@media(max-width:800px){
+ .comparator-search,
+ .manual-compare-box{
+  grid-template-columns:1fr;
+ }
+}
+
+.comparator-search-v2{
+ grid-template-columns:2fr repeat(4, minmax(150px, 1fr));
+}
+
+.comparator-search-v2 select{
+ width:100%;
+ border-radius:18px;
+ border:1px solid var(--ap-border);
+ background:var(--ap-surface);
+ color:var(--ap-text);
+ padding:16px;
+ font-size:15px;
+ box-shadow:var(--ap-shadow);
+}
+
+.manual-compare-box-3{
+ grid-template-columns:1fr 1fr 1fr;
+}
+
+.three-products{
+ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+
+.product-search-card p{
+ line-height:1.55;
+}
+
+@media(max-width:1100px){
+ .comparator-search-v2,
+ .manual-compare-box-3{
+  grid-template-columns:1fr;
+ }
+}
+
+.basket-card{
+ padding:20px;
+}
+
+.basket-check{
+ display:flex;
+ align-items:center;
+ gap:14px;
+ cursor:pointer;
+}
+
+.basket-check input{
+ width:22px;
+ height:22px;
+}
+
+.basket-check small{
+ display:block;
+ color:var(--ap-muted);
+ margin-top:4px;
+}
+
+.basket-actions{
+ margin:28px 0;
+ display:flex;
+ justify-content:center;
+}
+
+.canasta-home{
+ border-top:1px solid var(--ap-border);
+}

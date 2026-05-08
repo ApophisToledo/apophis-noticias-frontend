@@ -76,7 +76,12 @@
       "autoblog-honda-cb190r-2026",
       "yamaha-argentina"
     ],
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "id": "motos-mejor-moto-delivery-argentina",
@@ -129,7 +134,12 @@
       "autoblog-honda-cb190r-2026",
       "yamaha-argentina"
     ],
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "id": "autos-mejor-primer-auto-argentina",
@@ -182,7 +192,12 @@
       "kavak-etios-consumo",
       "autocosmos-etios-usados"
     ],
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd"
+    ]
   },
   {
     "id": "tecnologia-acelerar-notebook-vieja",
@@ -235,7 +250,11 @@
       "asus-argentina",
       "mexx-notebooks"
     ],
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming"
+    ]
   },
   {
     "id": "supermercados-como-ahorrar",
@@ -288,7 +307,8 @@
       "duenodirecto-supermercados-rosario",
       "coto-oficial"
     ],
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": []
   },
   {
     "title": "Rouser NS200 vs Honda CB190R vs Yamaha FZ 3.0: cuál conviene más en Rosario",
@@ -365,7 +385,12 @@
       "yamaha-argentina"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "title": "Qué supermercado conviene más en Rosario según precios, calidad y promociones",
@@ -442,7 +467,8 @@
       "coto-oficial"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": []
   },
   {
     "title": "Las mejores motos 200cc calidad/precio en Argentina 2026",
@@ -489,7 +515,12 @@
       "yamaha-argentina"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "title": "Qué supermercado conviene más en Rosario en 2026",
@@ -533,7 +564,8 @@
       "coto-oficial"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": []
   },
   {
     "title": "Mejor notebook calidad/precio Argentina 2026",
@@ -578,7 +610,11 @@
       "mexx-notebooks"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming"
+    ]
   },
   {
     "title": "Mejor primer auto usado en Argentina 2026",
@@ -624,7 +660,12 @@
       "autocosmos-etios-usados"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd"
+    ]
   },
   {
     "title": "Rouser NS200: precio, consumo, problemas y si conviene comprarla en 2026",
@@ -671,7 +712,12 @@
     "wordTarget": 1800,
     "updatedAt": "2026-05-08",
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "title": "Supermercados en Rosario: Carrefour, Coto, Micropack, La Gallega y La Reina",
@@ -716,7 +762,8 @@
     "wordTarget": 1800,
     "updatedAt": "2026-05-08",
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": []
   },
   {
     "title": "Notebook para estudiar, trabajar o jugar: Lenovo, ASUS, HP, Acer y Dell en Argentina",
@@ -762,7 +809,11 @@
     "wordTarget": 1800,
     "updatedAt": "2026-05-08",
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming"
+    ]
   },
   {
     "title": "Mejor primer auto usado: Gol, Etios, Fiesta, Corsa y alternativas en Argentina",
@@ -808,7 +859,12 @@
     "wordTarget": 1800,
     "updatedAt": "2026-05-08",
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "toyota-etios",
+      "volkswagen-gol-trend",
+      "ford-fiesta-kd"
+    ]
   },
   {
     "title": "Mejor moto para delivery en Argentina 2026",
@@ -855,7 +911,12 @@
       "yamaha-argentina"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "bajaj-rouser-ns200",
+      "honda-cb190r-2026",
+      "yamaha-fz-v4"
+    ]
   },
   {
     "title": "SSD o más RAM: qué mejora más una PC en 2026",
@@ -900,6 +961,10 @@
       "mexx-notebooks"
     ],
     "contentStatus": "complete_publication_v1",
-    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas."
+    "editorialNote": "Guía completada con estructura evergreen y fuentes públicas documentadas.",
+    "comparedProducts": [
+      "hp-255-g10-ryzen5",
+      "asus-tuf-gaming"
+    ]
   }
 ]

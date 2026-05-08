@@ -1,0 +1,20 @@
+{
+  "date": "2026-05-08",
+  "publishedGuides": 17,
+  "completeGuides": 17,
+  "highSeoGuides": 17,
+  "hasRobots": true,
+  "hasSitemap": true,
+  "hasPrivacy": true,
+  "hasTerms": true,
+  "hasAdsTxt": true,
+  "remaining": [
+    "Reemplazar GA4 ID real",
+    "Reemplazar token real de Search Console",
+    "Reemplazar publisher real de AdSense en ads.txt",
+    "Subir versión a Render y revisar Lighthouse",
+    "Enviar sitemap a Search Console",
+    "Esperar indexación antes de solicitar AdSense"
+  ],
+  "recommendation": "Candidata técnica lista; falta configuración real de Google y revisión post-deploy."
+}

@@ -1,8 +1,10 @@
 {
   "siteName": "Apophis Guías Argentina",
   "siteUrl": "https://apophis.com.ar",
-  "googleAnalyticsId": "G-XXXXXXXXXX",
-  "googleSiteVerification": "REEMPLAZAR_CON_TOKEN_SEARCH_CONSOLE",
-  "adsensePublisherId": "pub-XXXXXXXXXXXXXXXX",
-  "environment": "production-ready-template"
+  "description": "Guías y comparativas reales para comprar mejor motos, autos, tecnología y supermercados en Rosario y Argentina.",
+  "language": "es-AR",
+  "adsenseStatus": "candidate_pending_real_publisher_id",
+  "analyticsStatus": "candidate_pending_real_ga4_id",
+  "searchConsoleStatus": "candidate_pending_real_verification_token",
+  "lastCandidateAudit": "2026-05-08"
 }

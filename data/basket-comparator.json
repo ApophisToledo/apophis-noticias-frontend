@@ -1,0 +1,120 @@
+{
+  "stores": [
+    {
+      "id": "carrefour",
+      "name": "Carrefour Rosario",
+      "type": "hipermercado",
+      "savingLevel": "medio"
+    },
+    {
+      "id": "coto",
+      "name": "Coto Rosario",
+      "type": "hipermercado",
+      "savingLevel": "medio"
+    },
+    {
+      "id": "micropack",
+      "name": "Micropack Rosario",
+      "type": "mayorista",
+      "savingLevel": "alto"
+    },
+    {
+      "id": "makro",
+      "name": "Makro Rosario",
+      "type": "mayorista",
+      "savingLevel": "alto"
+    },
+    {
+      "id": "la-gallega",
+      "name": "La Gallega",
+      "type": "supermercado",
+      "savingLevel": "medio"
+    },
+    {
+      "id": "la-reina",
+      "name": "La Reina",
+      "type": "supermercado",
+      "savingLevel": "medio"
+    }
+  ],
+  "items": [
+    {
+      "id": "leche",
+      "name": "Leche entera 1L",
+      "category": "lacteos",
+      "prices": {
+        "carrefour": 1550,
+        "coto": 1620,
+        "micropack": 1490,
+        "makro": 1510,
+        "la-gallega": 1580,
+        "la-reina": 1600
+      }
+    },
+    {
+      "id": "arroz",
+      "name": "Arroz largo fino 1kg",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 1890,
+        "coto": 1930,
+        "micropack": 1750,
+        "makro": 1790,
+        "la-gallega": 1870,
+        "la-reina": 1910
+      }
+    },
+    {
+      "id": "aceite",
+      "name": "Aceite girasol 1.5L",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 4200,
+        "coto": 4350,
+        "micropack": 3980,
+        "makro": 4050,
+        "la-gallega": 4300,
+        "la-reina": 4370
+      }
+    },
+    {
+      "id": "azucar",
+      "name": "Azúcar 1kg",
+      "category": "almacen",
+      "prices": {
+        "carrefour": 1350,
+        "coto": 1390,
+        "micropack": 1280,
+        "makro": 1290,
+        "la-gallega": 1360,
+        "la-reina": 1400
+      }
+    },
+    {
+      "id": "detergente",
+      "name": "Detergente 750ml",
+      "category": "limpieza",
+      "prices": {
+        "carrefour": 2150,
+        "coto": 2200,
+        "micropack": 1990,
+        "makro": 2050,
+        "la-gallega": 2140,
+        "la-reina": 2190
+      }
+    },
+    {
+      "id": "papel",
+      "name": "Papel higiénico pack",
+      "category": "higiene",
+      "prices": {
+        "carrefour": 5900,
+        "coto": 6100,
+        "micropack": 5500,
+        "makro": 5590,
+        "la-gallega": 5980,
+        "la-reina": 6150
+      }
+    }
+  ]
+}

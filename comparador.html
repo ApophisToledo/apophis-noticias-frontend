@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador interactivo de productos | Apophis</title>
+<meta name="description" content="Buscá productos de manera individual, filtrá por marca, precio o necesidad y compará hasta 3 productos en Apophis.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://apophis.com.ar/comparador.html">
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<header class="ap-header">
+  <a class="brand" href="./index.html">
+    <span class="brand-mark">A</span>
+    <span><strong>APOPHIS</strong><small>Comparador interactivo</small></span>
+  </a>
+  <button class="theme-toggle" data-theme-toggle>☾ / ☀</button>
+</header>
+
+<main>
+  <section class="ap-hero comparator-hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Comparador libre</span>
+      <h1>Compará hasta 3 productos y elegí con criterio real.</h1>
+      <p>Buscá por marca, categoría, presupuesto o necesidad. Después elegí Producto A, B y C para ver fichas técnicas, precios de referencia, imágenes y fuentes.</p>
+    </div>
+    <div class="hero-panel">
+      <h2>Apophis te sugiere rivales</h2>
+      <p>Las sugerencias se basan en categoría, rango de precio, necesidad y segmento.</p>
+    </div>
+  </section>
+
+  <section class="ap-section comparator-controls">
+    <div class="section-head">
+      <span class="eyebrow">Buscar producto</span>
+      <h2>Buscador individual avanzado</h2>
+      <p>Filtrá por categoría, marca, presupuesto y necesidad.</p>
+    </div>
+
+    <div class="smart-search-box comparator-search comparator-search-v2">
+      <input id="product-search" type="text" placeholder="Buscar: Rouser, Motomel, Etios, Lenovo, arroz, leche...">
+      <select id="product-category">
+        <option value="all">Todas las categorías</option>
+        <option value="motos">Motos</option>
+        <option value="autos">Autos</option>
+        <option value="tecnologia">Tecnología</option>
+        <option value="supermercados">Supermercados</option>
+      </select>
+      <select id="brand-filter"></select>
+      <select id="price-filter">
+        <option value="all">Todos los precios</option>
+        <option value="bajo">Bajo</option>
+        <option value="medio">Medio</option>
+        <option value="alto">Alto</option>
+      </select>
+      <select id="need-filter"></select>
+    </div>
+
+    <div id="product-results" class="guide-grid"></div>
+  </section>
+
+  <section class="ap-section">
+    <div class="section-head">
+      <span class="eyebrow">Comparación manual</span>
+      <h2>Producto A vs Producto B vs Producto C</h2>
+      <p>Elegí libremente hasta tres productos.</p>
+    </div>
+
+    <div class="manual-compare-box manual-compare-box-3">
+      <label>Producto A<select id="product-a"></select></label>
+      <label>Producto B<select id="product-b"></select></label>
+      <label>Producto C<select id="product-c"></select></label>
+    </div>
+
+    <div class="suggestion-box">
+      <h3>Apophis sugiere comparar con:</h3>
+      <div id="suggestions" class="suggestion-list"></div>
+    </div>
+
+    <div id="comparison-output"></div>
+  </section>
+</main>
+
+<footer class="ap-footer">
+  <div><strong>APOPHIS</strong><p>Comparativas reales para comprar mejor.</p></div>
+</footer>
+
+<script src="./js/apophis-ui.js"></script>
+<script src="./js/interactive-comparator.js"></script>
+</body>
+</html>

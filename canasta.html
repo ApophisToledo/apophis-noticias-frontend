@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador de Canasta | Apophis</title>
+<meta name="description" content="Compará supermercados y mayoristas en Rosario según tu canasta de productos.">
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+<header class="ap-header">
+  <a class="brand" href="./index.html">
+    <span class="brand-mark">A</span>
+    <span><strong>APOPHIS</strong><small>Canasta Inteligente</small></span>
+  </a>
+  <button class="theme-toggle" data-theme-toggle>☾ / ☀</button>
+</header>
+
+<main>
+<section class="ap-hero comparator-hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Ahorro real</span>
+    <h1>Compará tu canasta entre supermercados y mayoristas.</h1>
+    <p>Seleccioná productos y Apophis calcula dónde conviene comprar según precios estimados auditados.</p>
+  </div>
+
+  <div class="hero-panel">
+    <h2>¿Qué analiza?</h2>
+    <p>Precio total estimado, tipo de comercio y conveniencia general.</p>
+  </div>
+</section>
+
+<section class="ap-section">
+  <div class="section-head">
+    <span class="eyebrow">Seleccionar productos</span>
+    <h2>Armá tu canasta</h2>
+  </div>
+
+  <div id="basket-items" class="guide-grid"></div>
+
+  <div class="basket-actions">
+    <button id="calculate-basket" class="ap-btn">Calcular dónde conviene comprar</button>
+  </div>
+
+  <div id="basket-results"></div>
+</section>
+</main>
+
+<footer class="ap-footer">
+  <div><strong>APOPHIS</strong><p>Comparativas reales para comprar mejor.</p></div>
+</footer>
+
+<script src="./js/apophis-ui.js"></script>
+<script src="./js/basket-comparator.js"></script>
+</body>
+</html>
