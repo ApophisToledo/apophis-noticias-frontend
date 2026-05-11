@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Zanella ZB 110 - Ilustración editorial Apophis</title>
+<desc id="desc">Ilustración editorial original de una cub 110 urbana estilo Zanella ZB 110.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8f0dd"/><stop offset="1" stop-color="#e3c987"/></linearGradient><filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#1b160a" flood-opacity=".22"/></filter></defs>
+<rect width="1200" height="675" fill="url(#bg)"/><circle cx="975" cy="105" r="130" fill="#d6a73f" opacity=".18"/><circle cx="220" cy="575" r="210" fill="#111" opacity=".05"/>
+<g filter="url(#s)" transform="translate(150 120)">
+<ellipse cx="450" cy="405" rx="390" ry="42" fill="#1a1712" opacity=".18"/>
+<g fill="none" stroke="#171717" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M260 365 L435 305 L620 340"/><path d="M455 300 L510 225 L610 220"/><path d="M375 290 L470 280"/></g>
+<circle cx="245" cy="360" r="82" fill="#191919"/><circle cx="245" cy="360" r="55" fill="#f7efd8"/><circle cx="245" cy="360" r="18" fill="#191919"/>
+<circle cx="680" cy="360" r="88" fill="#191919"/><circle cx="680" cy="360" r="59" fill="#f7efd8"/><circle cx="680" cy="360" r="19" fill="#191919"/>
+<path d="M400 230 C475 185 575 192 635 230 L590 312 L420 306 Z" fill="#c81927" stroke="#151515" stroke-width="10"/>
+<path d="M462 200 H585 C620 200 648 223 658 255 L535 270 C492 276 445 267 412 244 C425 220 438 207 462 200 Z" fill="#f4f4f0" stroke="#151515" stroke-width="8"/>
+<path d="M390 260 C350 270 315 298 295 330" stroke="#151515" stroke-width="12" fill="none"/><path d="M635 235 L735 270 L750 315" stroke="#151515" stroke-width="11" fill="none"/><path d="M720 275 L790 245" stroke="#151515" stroke-width="10"/><rect x="785" y="235" width="78" height="20" rx="10" fill="#151515"/>
+<path d="M520 306 L455 370" stroke="#151515" stroke-width="12"/><path d="M570 310 L625 370" stroke="#151515" stroke-width="12"/><path d="M440 365 L510 365" stroke="#151515" stroke-width="8"/><path d="M605 365 L675 365" stroke="#151515" stroke-width="8"/>
+<rect x="410" y="330" width="135" height="38" rx="14" fill="#222"/><path d="M400 230 C455 252 545 258 632 232" stroke="#fff" stroke-opacity=".5" stroke-width="6" fill="none"/>
+</g>
+<text x="90" y="95" font-family="Georgia, serif" font-size="50" font-weight="700" fill="#1b160a">Zanella ZB 110</text><text x="92" y="145" font-family="Arial, sans-serif" font-size="24" fill="#5d4a1b">Guía completa Argentina 2026 · Apophis</text>
+</svg>

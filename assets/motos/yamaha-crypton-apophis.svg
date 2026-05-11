@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Yamaha Crypton 110 editorial Apophis</title>
+<desc id="desc">Ilustración editorial original de una moto cub urbana Yamaha Crypton 110 para guía de compra argentina.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eff6ff"/><stop offset="1" stop-color="#fef3c7"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#172554" flood-opacity="0.24"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<circle cx="930" cy="130" r="210" fill="#93c5fd" opacity="0.25"/>
+<path d="M115 530 C285 470 470 462 665 518 C810 558 965 550 1090 495" fill="none" stroke="#c4a66d" stroke-width="18" opacity="0.28"/>
+<g filter="url(#shadow)">
+  <circle cx="318" cy="492" r="80" fill="#111827"/>
+  <circle cx="318" cy="492" r="52" fill="#f8fafc"/>
+  <circle cx="318" cy="492" r="24" fill="#94a3b8"/>
+  <circle cx="830" cy="492" r="80" fill="#111827"/>
+  <circle cx="830" cy="492" r="52" fill="#f8fafc"/>
+  <circle cx="830" cy="492" r="24" fill="#94a3b8"/>
+  <path d="M318 435 C410 350 590 350 706 414 C760 445 800 452 840 438" fill="none" stroke="#1f2937" stroke-width="24" stroke-linecap="round"/>
+  <path d="M410 374 C506 308 651 310 730 383 C763 414 739 462 679 479 C576 506 414 493 360 455 C333 436 350 403 410 374Z" fill="url(#blue)"/>
+  <path d="M472 330 C540 293 642 300 702 357 C630 357 565 366 500 393Z" fill="#0f172a"/>
+  <path d="M388 395 C355 405 326 433 311 464" fill="none" stroke="#111827" stroke-width="15" stroke-linecap="round"/>
+  <path d="M715 377 C782 374 846 411 888 452 L828 469 C779 432 746 421 700 419Z" fill="#2563eb"/>
+  <path d="M500 424 L650 424 C682 424 702 450 700 475 L463 475 C465 446 475 424 500 424Z" fill="#111827"/>
+  <path d="M702 350 C743 307 790 299 846 312" fill="none" stroke="#111827" stroke-width="12" stroke-linecap="round"/>
+  <path d="M835 311 C874 312 904 323 932 344" fill="none" stroke="#111827" stroke-width="10" stroke-linecap="round"/>
+  <path d="M858 328 L913 315" stroke="#111827" stroke-width="9" stroke-linecap="round"/>
+  <path d="M506 376 C557 394 650 389 700 365" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.55"/>
+  <path d="M690 458 C735 464 774 484 807 504" fill="none" stroke="#e5e7eb" stroke-width="7" opacity="0.75"/>
+</g>
+<text x="84" y="118" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#172554">Yamaha Crypton 110</text>
+<text x="88" y="169" font-family="Arial, sans-serif" font-size="26" fill="#475569">Guía Apophis Argentina · cub urbana, bajo consumo y trabajo liviano</text>
+<rect x="86" y="205" width="370" height="54" rx="18" fill="#111827" opacity="0.92"/>
+<text x="109" y="241" font-family="Arial, sans-serif" font-size="24" fill="#fef3c7">Precio: consultar vigente</text>
+<text x="86" y="612" font-family="Arial, sans-serif" font-size="20" fill="#64748b">Ilustración editorial original. Confirmar precio final con concesionario Yamaha.</text>
+</svg>

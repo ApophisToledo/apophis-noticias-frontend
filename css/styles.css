@@ -1955,3 +1955,51 @@ iframe{
     grid-template-columns: 1fr;
   }
 }
+
+/* Fase guía completa Rouser NS200 */
+.product-hero-card{
+  margin: 0 0 2rem;
+  padding: 1rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(212,175,55,.12), rgba(255,255,255,.04));
+  border: 1px solid rgba(212,175,55,.24);
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+}
+.product-hero-card img{
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+  border-radius: 18px;
+  background: #111;
+}
+.product-hero-card figcaption{
+  margin-top: .75rem;
+  font-size: .92rem;
+  opacity: .78;
+}
+.apophis-verdict{
+  padding: 1.3rem;
+  border-radius: 22px;
+  border: 1px solid rgba(212,175,55,.32);
+  background: rgba(212,175,55,.08);
+  margin-bottom: 2rem;
+}
+.apophis-verdict h2{ margin-top: 0; }
+.article-body .specs-table td:first-child{ font-weight: 700; }
+.internal-links-block .guide-card{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.72);
+}
+.internal-links-block .guide-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+/* Fichas editoriales motos completas */
+.guide-page{max-width:1120px;margin:0 auto;padding:32px 18px}.guide-hero,.content-card,.product-hero-card{background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);border-radius:22px;padding:24px;margin:18px 0;box-shadow:0 14px 38px rgba(0,0,0,.08)}.guide-hero h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0}.eyebrow{letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#9a6a08}.lead{font-size:1.18rem;line-height:1.7}.guide-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.guide-meta span{padding:8px 12px;border-radius:999px;background:#f4ead3}.product-hero-card img{width:100%;max-height:560px;object-fit:contain;background:#fafafa;border-radius:18px}.apophis-table{width:100%;border-collapse:collapse;margin:18px 0;overflow:hidden;border-radius:16px}.apophis-table th,.apophis-table td{border:1px solid rgba(0,0,0,.12);padding:12px;text-align:left;vertical-align:top}.apophis-table th{background:#151515;color:#f6df9d}.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.content-card li{margin:8px 0}.site-header,.site-footer{max-width:1120px;margin:0 auto;padding:18px}.site-header{display:flex;justify-content:space-between;gap:18px;align-items:center}.site-header nav{display:flex;gap:14px;flex-wrap:wrap}.brand{font-weight:900;font-size:1.4rem;text-decoration:none;color:#111}@media (max-width:720px){.guide-page{padding:18px 12px}.content-card,.guide-hero,.product-hero-card{padding:18px}.apophis-table{font-size:.92rem}}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Honda Navi editorial Apophis</title>
+<desc id="desc">Ilustración editorial original de una mini moto urbana automática inspirada en la Honda Navi.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7ed"/><stop offset="1" stop-color="#f3e1c7"/></linearGradient>
+  <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#991b1b"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#3f2b1a" flood-opacity="0.22"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<circle cx="935" cy="130" r="210" fill="#facc15" opacity="0.22"/>
+<path d="M130 520 C300 455 470 455 650 515 C810 565 960 550 1085 488" fill="none" stroke="#d6b98c" stroke-width="18" opacity="0.35"/>
+<g filter="url(#shadow)">
+  <circle cx="332" cy="490" r="87" fill="#1f2937"/>
+  <circle cx="332" cy="490" r="55" fill="#f8fafc"/>
+  <circle cx="332" cy="490" r="28" fill="#9ca3af"/>
+  <circle cx="817" cy="490" r="74" fill="#1f2937"/>
+  <circle cx="817" cy="490" r="45" fill="#f8fafc"/>
+  <circle cx="817" cy="490" r="23" fill="#9ca3af"/>
+  <path d="M290 420 C360 350 486 330 590 360 C684 387 735 436 814 430" fill="none" stroke="#374151" stroke-width="24" stroke-linecap="round"/>
+  <path d="M410 382 C478 320 625 304 702 352 C735 374 743 421 705 447 C615 502 438 488 374 455 C346 441 354 411 410 382Z" fill="url(#red)"/>
+  <path d="M476 319 C552 278 646 288 695 337 C632 338 566 348 500 374Z" fill="#111827"/>
+  <path d="M710 353 C765 362 835 405 877 447 L816 463 C772 432 738 404 696 396Z" fill="#ef4444"/>
+  <path d="M485 420 L625 420 C652 420 674 442 674 469 L455 469 C455 442 461 420 485 420Z" fill="#111827" opacity="0.95"/>
+  <rect x="452" y="443" width="176" height="50" rx="16" fill="#0f172a"/>
+  <path d="M696 344 C740 298 783 293 833 305" fill="none" stroke="#111827" stroke-width="13" stroke-linecap="round"/>
+  <path d="M824 303 C860 305 886 314 910 331" fill="none" stroke="#111827" stroke-width="11" stroke-linecap="round"/>
+  <path d="M840 318 L893 306" stroke="#111827" stroke-width="9" stroke-linecap="round"/>
+  <path d="M382 374 C344 384 313 407 294 442" fill="none" stroke="#111827" stroke-width="17" stroke-linecap="round"/>
+  <path d="M503 369 C545 387 638 386 677 365" fill="none" stroke="#fff7ed" stroke-width="9" stroke-linecap="round" opacity="0.55"/>
+</g>
+<text x="84" y="118" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#1f2937">Honda Navi 110</text>
+<text x="88" y="169" font-family="Arial, sans-serif" font-size="26" fill="#6b4f2f">Guía Apophis Argentina · automática, compacta y urbana</text>
+<rect x="86" y="205" width="315" height="54" rx="18" fill="#111827" opacity="0.92"/>
+<text x="109" y="241" font-family="Arial, sans-serif" font-size="24" fill="#fef3c7">Precio ref. mayo 2026</text>
+<text x="86" y="612" font-family="Arial, sans-serif" font-size="20" fill="#8a6a3e">Ilustración editorial original. Confirmar precio final con concesionario.</text>
+</svg>

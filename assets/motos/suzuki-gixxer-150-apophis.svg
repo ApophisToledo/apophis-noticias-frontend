@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<title id="title">Suzuki Gixxer 150 guía Apophis Argentina 2026</title><desc id="desc">Ilustración editorial de una moto naked urbana Suzuki Gixxer 150 para guía de compra Apophis</desc>
+<defs><linearGradient id="bg" x1="0" x2="1"><stop offset="0" stop-color="#f6eddc"/><stop offset="1" stop-color="#e0f2fe"/></linearGradient><linearGradient id="blue" x1="0" x2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs>
+<rect width="1200" height="720" rx="48" fill="url(#bg)"/><rect x="70" y="75" width="1060" height="570" rx="42" fill="#0f172a" opacity=".08"/>
+<ellipse cx="342" cy="508" rx="126" ry="126" fill="#111827"/><ellipse cx="342" cy="508" rx="76" ry="76" fill="#f8fafc"/><ellipse cx="865" cy="508" rx="126" ry="126" fill="#111827"/><ellipse cx="865" cy="508" rx="76" ry="76" fill="#f8fafc"/>
+<path d="M288 471 L424 344 L650 350 L793 489 L625 489 L538 421 L451 490 Z" fill="#171717"/>
+<path d="M455 315 C545 255 690 265 760 330 L705 395 L500 382 Z" fill="url(#blue)"/>
+<path d="M585 286 L724 301 L787 352 L716 376 L606 348 Z" fill="#111827"/>
+<path d="M720 333 L872 350 L970 427 L925 459 L835 394 L732 382 Z" fill="#202020"/>
+<path d="M858 318 L965 332 L1030 374" fill="none" stroke="#111827" stroke-width="24" stroke-linecap="round"/>
+<path d="M288 462 L254 414 L238 365" fill="none" stroke="#111827" stroke-width="22" stroke-linecap="round"/>
+<path d="M475 410 L625 410 L698 482" fill="none" stroke="#d4af37" stroke-width="14" stroke-linecap="round"/>
+<path d="M502 318 L656 318" stroke="#d4af37" stroke-width="10" stroke-linecap="round"/>
+<text x="95" y="135" font-family="Georgia,serif" font-size="52" fill="#17130d" font-weight="700">Suzuki Gixxer 150</text>
+<text x="95" y="188" font-family="Arial,sans-serif" font-size="24" fill="#4b4335">Guía completa Argentina 2026 · Apophis</text>
+</svg>

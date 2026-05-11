@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<title id="title">Bajaj Rouser NS160 guía Apophis</title><desc id="desc">Ilustración editorial de una moto naked roja y negra estilo urbana para guía de compra</desc>
+<defs><linearGradient id="bg" x1="0" x2="1"><stop offset="0" stop-color="#f6eddc"/><stop offset="1" stop-color="#e7c98b"/></linearGradient><linearGradient id="red" x1="0" x2="1"><stop offset="0" stop-color="#7f1d1d"/><stop offset="1" stop-color="#ef4444"/></linearGradient></defs>
+<rect width="1200" height="720" rx="48" fill="url(#bg)"/><rect x="70" y="75" width="1060" height="570" rx="42" fill="#1b160f" opacity=".08"/>
+<ellipse cx="345" cy="505" rx="126" ry="126" fill="#151515"/><ellipse cx="345" cy="505" rx="78" ry="78" fill="#f6eddc"/><ellipse cx="870" cy="505" rx="126" ry="126" fill="#151515"/><ellipse cx="870" cy="505" rx="78" ry="78" fill="#f6eddc"/>
+<path d="M285 468 L410 335 L652 352 L790 487 L620 487 L535 420 L448 488 Z" fill="#1d1d1d"/>
+<path d="M448 318 C545 262 672 258 752 326 L700 392 L502 384 Z" fill="url(#red)"/>
+<path d="M585 285 L715 301 L770 354 L710 374 L604 348 Z" fill="#111827"/>
+<path d="M720 333 L875 350 L968 430 L924 459 L835 394 L732 382 Z" fill="#202020"/>
+<path d="M860 318 L965 332 L1028 374" fill="none" stroke="#151515" stroke-width="24" stroke-linecap="round"/>
+<path d="M287 462 L252 415 L235 365" fill="none" stroke="#151515" stroke-width="22" stroke-linecap="round"/>
+<path d="M475 410 L625 410 L698 482" fill="none" stroke="#d4af37" stroke-width="14" stroke-linecap="round"/>
+<path d="M502 318 L656 318" stroke="#d4af37" stroke-width="10" stroke-linecap="round"/>
+<text x="95" y="135" font-family="Georgia,serif" font-size="50" fill="#17130d" font-weight="700">Bajaj Rouser NS160</text>
+<text x="95" y="188" font-family="Arial,sans-serif" font-size="24" fill="#4b4335">Guía completa Argentina 2026 · Apophis</text>
+</svg>
